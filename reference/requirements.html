@@ -1,0 +1,175 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Requirements for running Symfony2 &mdash; Symfony2Docs v0 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="up" title="Reference Documents" href="index.html" />
+    <link rel="next" title="Symfony SE Bundles" href="../bundles/index.html" />
+    <link rel="prev" title="YAML" href="YAML.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../bundles/index.html" title="Symfony SE Bundles"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="YAML.html" title="YAML"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Reference Documents</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="requirements-for-running-symfony2">
+<span id="index-0"></span><h1>Requirements for running Symfony2<a class="headerlink" href="#requirements-for-running-symfony2" title="Permalink to this headline">¶</a></h1>
+<p>To run Symfony2, your system needs to adhere to a list of requirements. You can
+easily see if your system passes all requirements by running the <tt class="docutils literal"><span class="pre">web/config.php</span></tt>
+in your symfony distribution. Since the CLI often uses a different <tt class="docutils literal"><span class="pre">php.ini</span></tt>
+configuration file, it&#8217;s also a good idea to check your requirements from
+the command line via:</p>
+<div class="highlight-bash"><div class="highlight"><pre>php app/check.php
+</pre></div>
+</div>
+<p>Below is the list of required and optional requirements.</p>
+<div class="section" id="required">
+<h2>Required<a class="headerlink" href="#required" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>PHP needs to be a minimum version of PHP 5.3.2</li>
+<li>Your PHP.ini needs to have the date.timezone setting</li>
+</ul>
+</div>
+<div class="section" id="optional">
+<h2>Optional<a class="headerlink" href="#optional" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p class="first">You need to have the PHP-XML module installed</p>
+</li>
+<li><p class="first">You need to have at least version 2.6.21 of libxml</p>
+</li>
+<li><p class="first">PHP tokenizer needs to be enabled</p>
+</li>
+<li><p class="first">mbstring functions need to be enabled</p>
+</li>
+<li><p class="first">iconv needs to be enabled</p>
+</li>
+<li><p class="first">POSIX needs to be enabled</p>
+</li>
+<li><p class="first">Intl needs to be installed</p>
+</li>
+<li><p class="first">APC (or another opcode cache needs to be installed)</p>
+</li>
+<li><p class="first">PHP.ini recommended settings</p>
+<blockquote>
+<div><ul class="simple">
+<li>short_open_tags: off</li>
+<li>magic_quotes_gpc: off</li>
+<li>register_globals: off</li>
+<li>session.autostart: off</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="doctrine">
+<h2>Doctrine<a class="headerlink" href="#doctrine" title="Permalink to this headline">¶</a></h2>
+<p>If you want to use Doctrine, you will need to have PDO installed. Additionally,
+you need to have the PDO driver installed for the database server you want
+to use.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Requirements for running Symfony2</a><ul>
+<li><a class="reference internal" href="#required">Required</a></li>
+<li><a class="reference internal" href="#optional">Optional</a></li>
+<li><a class="reference internal" href="#doctrine">Doctrine</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="YAML.html"
+                        title="previous chapter">YAML</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../bundles/index.html"
+                        title="next chapter">Symfony SE Bundles</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/requirements.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../bundles/index.html" title="Symfony SE Bundles"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="YAML.html" title="YAML"
+             >previous</a> |</li>
+        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Reference Documents</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Rafael Goulart.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

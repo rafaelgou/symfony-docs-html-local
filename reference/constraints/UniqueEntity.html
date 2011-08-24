@@ -1,0 +1,167 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>UniqueEntity &mdash; Symfony2Docs v0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
+    <link rel="next" title="Regex" href="Regex.html" />
+    <link rel="prev" title="Null" href="Null.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Regex.html" title="Regex"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Null.html" title="Null"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
+          <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="uniqueentity">
+<h1>UniqueEntity<a class="headerlink" href="#uniqueentity" title="Permalink to this headline">¶</a></h1>
+<p>Validates that a particular field (or fields) in a Doctrine entity are unique.
+For example, suppose you have an <tt class="docutils literal"><span class="pre">AcmeUserBundle</span></tt> with a <tt class="docutils literal"><span class="pre">User</span></tt> entity
+that has an <tt class="docutils literal"><span class="pre">email</span></tt> field. You can use the <tt class="docutils literal"><span class="pre">Unique</span></tt> constraint to guarantee
+that the <tt class="docutils literal"><span class="pre">email</span></tt> field remains unique between all of the constrains in your
+user table:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// Acme/UserBundle/Entity/User.php
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @DoctrineAssert\UniqueEntity("email")
+ */
+class Author
+{
+    /**
+     * @var string $email
+     *
+     * @ORM\Column(name="email", type="string", length=255, unique=true)
+     * @Assert\Email()
+     */
+    protected $email;
+
+    // ...
+}</pre>
+</div>
+</li>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/UserBundle/Resources/config/validation.yml</span>
+<span class="l-Scalar-Plain">constraints</span><span class="p-Indicator">:</span>
+    <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">UniqueEntity</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">email</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">fields</span></tt>: The field (or list of fields) on which this entity should be
+unique. For example,</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">UniqueEntity</a><ul>
+<li><a class="reference internal" href="#options">Options</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Null.html"
+                        title="previous chapter">Null</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Regex.html"
+                        title="next chapter">Regex</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/constraints/UniqueEntity.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Regex.html" title="Regex"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Null.html" title="Null"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
+          <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Rafael Goulart.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

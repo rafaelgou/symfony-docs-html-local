@@ -1,0 +1,214 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>File &mdash; Symfony2Docs v0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
+    <link rel="next" title="Max" href="Max.html" />
+    <link rel="prev" title="Email" href="Email.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="Max.html" title="Max"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="Email.html" title="Email"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
+          <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="file">
+<h1>File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h1>
+<p>Validates that a value is the path to an existing file.</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">filename</span><span class="p-Indicator">:</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">File</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
+</pre></div>
+</div>
+<div class="section" id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">maxSize</span></tt>: The maximum allowed file size. Can be provided in bytes, kilobytes
+(with the suffix &#8220;k&#8221;) or megabytes (with the suffix &#8220;M&#8221;)</li>
+<li><tt class="docutils literal"><span class="pre">mimeTypes</span></tt>: One or more allowed mime types</li>
+<li><tt class="docutils literal"><span class="pre">notFoundMessage</span></tt>: The error message if the file was not found</li>
+<li><tt class="docutils literal"><span class="pre">notReadableMessage</span></tt>: The error message if the file could not be read</li>
+<li><tt class="docutils literal"><span class="pre">maxSizeMessage</span></tt>: The error message if <tt class="docutils literal"><span class="pre">maxSize</span></tt> validation fails</li>
+<li><tt class="docutils literal"><span class="pre">mimeTypesMessage</span></tt>: The error message if <tt class="docutils literal"><span class="pre">mimeTypes</span></tt> validation fails</li>
+</ul>
+</div>
+<div class="section" id="example-validating-the-file-size-and-mime-type">
+<h2>Example: Validating the file size and mime type<a class="headerlink" href="#example-validating-the-file-size-and-mime-type" title="Permalink to this headline">¶</a></h2>
+<p>In this example we use the <tt class="docutils literal"><span class="pre">File</span></tt> constraint to verify that the file does
+not exceed a maximum size of 128 kilobytes and is a PDF document.</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">filename</span><span class="p-Indicator">:</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">File</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">maxSize</span><span class="p-Indicator">:</span> <span class="nv">128k</span><span class="p-Indicator">,</span> <span class="nv">mimeTypes</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">application/pdf</span><span class="p-Indicator">,</span> <span class="nv">application/x-pdf</span><span class="p-Indicator">]</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/HelloBundle/Resources/config/validation.xml --&gt;</span>
+<span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\HelloBundle\Author&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;filename&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;File&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;maxSize&quot;</span><span class="nt">&gt;</span>128k<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;mimeTypes&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;value&gt;</span>application/pdf<span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;value&gt;</span>application/x-pdf<span class="nt">&lt;/value&gt;</span>
+            <span class="nt">&lt;/option&gt;</span>
+        <span class="nt">&lt;/constraint&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/class&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/HelloBundle/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\File(maxSize = "128k", mimeTypes = {
+     *   "application/pdf",
+     *   "application/x-pdf"
+     * })
+     */
+    private $filename;
+}</pre>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/Author.php</span>
+<span class="x">use Symfony\Component\Validator\Mapping\ClassMetadata;</span>
+<span class="x">use Symfony\Component\Validator\Constraints\File;</span>
+
+<span class="x">class Author</span>
+<span class="x">{</span>
+<span class="x">    private $filename;</span>
+
+<span class="x">    public static function loadValidatorMetadata(ClassMetadata $metadata)</span>
+<span class="x">    {</span>
+<span class="x">        $metadata-&gt;addPropertyConstraint(&#39;filename&#39;, new File(array(</span>
+<span class="x">            &#39;maxSize&#39; =&gt; &#39;128k&#39;,</span>
+<span class="x">            &#39;mimeTypes&#39; =&gt; array(</span>
+<span class="x">                &#39;application/pdf&#39;,</span>
+<span class="x">                &#39;application/x-pdf&#39;,</span>
+<span class="x">            ),</span>
+<span class="x">        )));</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>When you validate the object with a file that doesn&#8217;t satisfy one of these
+constraints, a proper error message is returned by the validator:</p>
+<div class="highlight-text"><div class="highlight"><pre>Acme\HelloBundle\Author.filename:
+    The file is too large (150 kB). Allowed maximum size is 128 kB
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">File</a><ul>
+<li><a class="reference internal" href="#options">Options</a></li>
+<li><a class="reference internal" href="#example-validating-the-file-size-and-mime-type">Example: Validating the file size and mime type</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="Email.html"
+                        title="previous chapter">Email</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="Max.html"
+                        title="next chapter">Max</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/constraints/File.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="Max.html" title="Max"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="Email.html" title="Email"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
+          <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Rafael Goulart.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

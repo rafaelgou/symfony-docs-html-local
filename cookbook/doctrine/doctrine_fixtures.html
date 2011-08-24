@@ -1,0 +1,406 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How to create Fixtures in Symfony2 &mdash; Symfony2Docs v0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="up" title="Cookbook" href="../index.html" />
+    <link rel="next" title="How to use MongoDB" href="mongodb.html" />
+    <link rel="prev" title="How to Apply an Assetic Filter to a Specific File Extension" href="../assetic/apply_to_option.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="mongodb.html" title="How to use MongoDB"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../assetic/apply_to_option.html" title="How to Apply an Assetic Filter to a Specific File Extension"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="how-to-create-fixtures-in-symfony2">
+<span id="index-0"></span><h1>How to create Fixtures in Symfony2<a class="headerlink" href="#how-to-create-fixtures-in-symfony2" title="Permalink to this headline">¶</a></h1>
+<p>Fixtures are used to load a controlled set of data into a database. This data
+can be used for testing or could be the initial data required for the
+application to run smoothly. Symfony2 has no built in way to manage fixtures
+but Doctrine2 has a library to help you write fixtures for the Doctrine
+<a class="reference internal" href="../../book/doctrine.html"><em>ORM</em></a> or <a class="reference internal" href="mongodb.html"><em>ODM</em></a>.</p>
+<div class="section" id="setup-and-configuration">
+<h2>Setup and Configuration<a class="headerlink" href="#setup-and-configuration" title="Permalink to this headline">¶</a></h2>
+<p>If you don&#8217;t have the <a class="reference external" href="https://github.com/doctrine/data-fixtures">Doctrine Data Fixtures</a> library configured with Symfony2
+yet, follow these steps to do so.</p>
+<p>If you&#8217;re using the Standard Distribution, add the following to your <tt class="docutils literal"><span class="pre">deps</span></tt>
+file:</p>
+<div class="highlight-text"><div class="highlight"><pre>[doctrine-fixtures]
+    git=http://github.com/doctrine/data-fixtures.git
+
+[DoctrineFixturesBundle]
+    git=http://github.com/symfony/DoctrineFixturesBundle.git
+    target=/bundles/Symfony/Bundle/DoctrineFixturesBundle
+</pre></div>
+</div>
+<p>Update the vendor libraries:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php bin/vendors install
+</pre></div>
+</div>
+<p>If everything worked, the <tt class="docutils literal"><span class="pre">doctrine-fixtures</span></tt> library can now be found
+at <tt class="docutils literal"><span class="pre">vendor/doctrine-fixtures</span></tt>.</p>
+<p>Register the <tt class="docutils literal"><span class="pre">Doctrine\Common\DataFixtures</span></tt> namespace in <tt class="docutils literal"><span class="pre">app/autoload.php</span></tt>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">// ...</span>
+<span class="x">$loader-&gt;registerNamespaces(array(</span>
+<span class="x">    // ...</span>
+<span class="x">    &#39;Doctrine\\Common\\DataFixtures&#39; =&gt; __DIR__.&#39;/../vendor/doctrine-fixtures/lib&#39;,</span>
+<span class="x">    &#39;Doctrine\\Common&#39; =&gt; __DIR__.&#39;/../vendor/doctrine-common/lib&#39;,</span>
+<span class="x">    // ...</span>
+<span class="x">));</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">Be sure to register the new namespace <em>before</em> <tt class="docutils literal"><span class="pre">Doctrine\Common</span></tt>. Otherwise,
+Symfony will look for data fixture classes inside the <tt class="docutils literal"><span class="pre">Doctrine\Common</span></tt>
+directory. Symfony&#8217;s autoloader always looks for a class inside the directory
+of the first matching namespace, so more specific namespaces should always
+come first.</p>
+</div>
+<p>Finally, register the Bundle <tt class="docutils literal"><span class="pre">DoctrineFixturesBundle</span></tt> in <tt class="docutils literal"><span class="pre">app/AppKernel.php</span></tt>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">// ...</span>
+<span class="x">public function registerBundles()</span>
+<span class="x">{</span>
+<span class="x">    $bundles = array(</span>
+<span class="x">        // ...</span>
+<span class="x">        new Symfony\Bundle\DoctrineFixturesBundle\DoctrineFixturesBundle(),</span>
+<span class="x">        // ...</span>
+<span class="x">    );</span>
+<span class="x">    // ...</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="writing-simple-fixtures">
+<h2>Writing Simple Fixtures<a class="headerlink" href="#writing-simple-fixtures" title="Permalink to this headline">¶</a></h2>
+<p>Doctrine2 fixtures are PHP classes where you can create objects and persist
+them to the database. Like all classes in Symfony2, fixtures should live inside
+one of your application bundles.</p>
+<p>For a bundle located at <tt class="docutils literal"><span class="pre">src/Acme/HelloBundle</span></tt>, the fixture classes
+should live inside <tt class="docutils literal"><span class="pre">src/Acme/HelloBundle/DataFixtures/ORM</span></tt> or
+<tt class="docutils literal"><span class="pre">src/Acme/HelloBundle/DataFixtures/MongoDB</span></tt> respectively for the ORM and ODM,
+This tutorial assumes that you are using the ORM - but fixtures can be added
+just as easily if you&#8217;re using the ODM.</p>
+<p>Imagine that you have a <tt class="docutils literal"><span class="pre">User</span></tt> class, and you&#8217;d like to load one <tt class="docutils literal"><span class="pre">User</span></tt>
+entry:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/DataFixtures/ORM/LoadUserData.php</span>
+<span class="x">namespace Acme\HelloBundle\DataFixtures\ORM;</span>
+
+<span class="x">use Doctrine\Common\DataFixtures\FixtureInterface;</span>
+<span class="x">use Acme\HelloBundle\Entity\User;</span>
+
+<span class="x">class LoadUserData implements FixtureInterface</span>
+<span class="x">{</span>
+<span class="x">    public function load($manager)</span>
+<span class="x">    {</span>
+<span class="x">        $userAdmin = new User();</span>
+<span class="x">        $userAdmin-&gt;setUsername(&#39;admin&#39;);</span>
+<span class="x">        $userAdmin-&gt;setPassword(&#39;test&#39;);</span>
+
+<span class="x">        $manager-&gt;persist($userAdmin);</span>
+<span class="x">        $manager-&gt;flush();</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>In Doctrine2, fixtures are just objects where you load data by interacting
+with your entities as you normally do. This allows you to create the exact
+fixtures you need for your application.</p>
+<p>The most serious limitation is that you cannot share objects between fixtures.
+Later, you&#8217;ll see how to overcome this limitation.</p>
+</div>
+<div class="section" id="executing-fixtures">
+<h2>Executing Fixtures<a class="headerlink" href="#executing-fixtures" title="Permalink to this headline">¶</a></h2>
+<p>Once your fixtures have been written, you can load them via the command
+line by using the <tt class="docutils literal"><span class="pre">doctrine:fixtures:load</span></tt> command:</p>
+<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:fixtures:load
+</pre></div>
+</div>
+<p>If you&#8217;re using the ODM, use the <tt class="docutils literal"><span class="pre">doctrine:mongodb:fixtures:load</span></tt> command instead:</p>
+<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:mongodb:fixtures:load
+</pre></div>
+</div>
+<p>The task will look inside the <tt class="docutils literal"><span class="pre">DataFixtures/ORM</span></tt> (or <tt class="docutils literal"><span class="pre">DataFixtures/MongoDB</span></tt>
+for the ODM) directory of each bundle and execute each class that implements
+the <tt class="docutils literal"><span class="pre">FixtureInterface</span></tt>.</p>
+<p>Both commands come with a few options:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">--fixtures=/path/to/fixture</span></tt> - Use this option to manually specify the
+directory where the fixtures classes should be loaded;</li>
+<li><tt class="docutils literal"><span class="pre">--append</span></tt> - Use this flag to append data instead of deleting data before
+loading it (deleting first is the default behavior);</li>
+<li><tt class="docutils literal"><span class="pre">--em=manager_name</span></tt> - Manually specify the entity manager to use for
+loading the data.</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If using the <tt class="docutils literal"><span class="pre">doctrine:mongodb:fixtures:load</span></tt> task, replace the <tt class="docutils literal"><span class="pre">--em=</span></tt>
+option with <tt class="docutils literal"><span class="pre">--dm=</span></tt> to manually specify the document manager.</p>
+</div>
+<p>A full example use might look like this:</p>
+<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:fixtures:load --fixtures<span class="o">=</span>/path/to/fixture1 --fixtures<span class="o">=</span>/path/to/fixture2 --append --em<span class="o">=</span>foo_manager
+</pre></div>
+</div>
+</div>
+<div class="section" id="sharing-objects-between-fixtures">
+<h2>Sharing Objects between Fixtures<a class="headerlink" href="#sharing-objects-between-fixtures" title="Permalink to this headline">¶</a></h2>
+<p>Writing a basic fixture is simple. But what if you have multiple fixture classes
+and want to be able to refer to the data loaded in other fixture classes?
+For example, what if you load a <tt class="docutils literal"><span class="pre">User</span></tt> object in one fixture, and then
+want to refer to reference it in a different fixture in order to assign that
+user to a particular group?</p>
+<p>The Doctrine fixtures library handles this easily by allowing you to specify
+the order in which fixtures are loaded.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/DataFixtures/ORM/LoadUserData.php</span>
+<span class="x">namespace Acme\HelloBundle\DataFixtures\ORM;</span>
+
+<span class="x">use Doctrine\Common\DataFixtures\AbstractFixture;</span>
+<span class="x">use Doctrine\Common\DataFixtures\OrderedFixtureInterface;</span>
+<span class="x">use Acme\HelloBundle\Entity\User;</span>
+
+<span class="x">class LoadUserData extends AbstractFixture implements OrderedFixtureInterface</span>
+<span class="x">{</span>
+<span class="x">    public function load($manager)</span>
+<span class="x">    {</span>
+<span class="x">        $userAdmin = new User();</span>
+<span class="x">        $userAdmin-&gt;setUsername(&#39;admin&#39;);</span>
+<span class="x">        $userAdmin-&gt;setPassword(&#39;test&#39;);</span>
+
+<span class="x">        $manager-&gt;persist($userAdmin);</span>
+<span class="x">        $manager-&gt;flush();</span>
+
+<span class="x">        $this-&gt;addReference(&#39;admin-user&#39;, $userAdmin);</span>
+<span class="x">    }</span>
+
+<span class="x">    public function getOrder()</span>
+<span class="x">    {</span>
+<span class="x">        return 1; // the order in which fixtures will be loaded</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>The fixture class now implements <tt class="docutils literal"><span class="pre">OrderedFixtureInterface</span></tt>, which tells
+Doctrine that you want to control the order of your fixtures. Create another
+fixture class and make it load after <tt class="docutils literal"><span class="pre">LoadUserData</span></tt> by returning an order
+of 2:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/DataFixtures/ORM/LoadGroupData.php</span>
+<span class="x">namespace Acme\HelloBundle\DataFixtures\ORM;</span>
+
+<span class="x">use Doctrine\Common\DataFixtures\AbstractFixture;</span>
+<span class="x">use Doctrine\Common\DataFixtures\OrderedFixtureInterface;</span>
+<span class="x">use Acme\HelloBundle\Entity\Group;</span>
+
+<span class="x">class LoadGroupData extends AbstractFixture implements OrderedFixtureInterface</span>
+<span class="x">{</span>
+<span class="x">    public function load($manager)</span>
+<span class="x">    {</span>
+<span class="x">        $groupAdmin = new Group();</span>
+<span class="x">        $groupAdmin-&gt;setGroupName(&#39;admin&#39;);</span>
+
+<span class="x">        $manager-&gt;persist($groupAdmin);</span>
+<span class="x">        $manager-&gt;flush();</span>
+
+<span class="x">        $this-&gt;addReference(&#39;admin-group&#39;, $groupAdmin);</span>
+<span class="x">    }</span>
+
+<span class="x">    public function getOrder()</span>
+<span class="x">    {</span>
+<span class="x">        return 2; // the order in which fixtures will be loaded</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>Both of the fixture classes extend <tt class="docutils literal"><span class="pre">AbstractFixture</span></tt>, which allows you
+to create objects and then set them as references so that they can be used
+later in other fixtures. For example, the <tt class="docutils literal"><span class="pre">$userAdmin</span></tt> and <tt class="docutils literal"><span class="pre">$groupAdmin</span></tt>
+objects can be referenced later via the <tt class="docutils literal"><span class="pre">admin-user</span></tt> and <tt class="docutils literal"><span class="pre">admin-group</span></tt>
+references:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/DataFixtures/ORM/LoadUserGroupData.php</span>
+<span class="x">namespace Acme\HelloBundle\DataFixtures\ORM;</span>
+
+<span class="x">use Doctrine\Common\DataFixtures\AbstractFixture;</span>
+<span class="x">use Doctrine\Common\DataFixtures\OrderedFixtureInterface;</span>
+<span class="x">use Acme\HelloBundle\Entity\UserGroup;</span>
+
+<span class="x">class LoadUserGroupData extends AbstractFixture implements OrderedFixtureInterface</span>
+<span class="x">{</span>
+<span class="x">    public function load($manager)</span>
+<span class="x">    {</span>
+<span class="x">        $userGroupAdmin = new UserGroup();</span>
+<span class="x">        $userGroupAdmin-&gt;setUser($manager-&gt;merge($this-&gt;getReference(&#39;admin-user&#39;)));</span>
+<span class="x">        $userGroupAdmin-&gt;setGroup($manager-&gt;merge($this-&gt;getReference(&#39;admin-group&#39;)));</span>
+
+<span class="x">        $manager-&gt;persist($userGroupAdmin);</span>
+<span class="x">        $manager-&gt;flush();</span>
+<span class="x">    }</span>
+
+<span class="x">    public function getOrder()</span>
+<span class="x">    {</span>
+<span class="x">        return 3;</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>The fixtures will now be executed in the ascending order of the value returned
+by <tt class="docutils literal"><span class="pre">getOrder()</span></tt>. Any object that is set with the <tt class="docutils literal"><span class="pre">setReference()</span></tt> method
+can be accessed via <tt class="docutils literal"><span class="pre">getReference()</span></tt> in fixture classes that have a higher
+order.</p>
+<p>Fixtures allow you to create any type of data you need via the normal PHP
+interface for creating and persisting objects. By controlling the order of
+fixtures and setting references, almost anything can be handled by fixtures.</p>
+</div>
+<div class="section" id="using-the-container-in-the-fixtures">
+<h2>Using the Container in the Fixtures<a class="headerlink" href="#using-the-container-in-the-fixtures" title="Permalink to this headline">¶</a></h2>
+<p>In some cases you may need to access some services to load the fixtures.
+Symfony2 makes it really easy: the container will be injected in all fixture
+classes implementing <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DependencyInjection\ContainerAwareInterface</span></tt>.</p>
+<p>Let&#8217;s rewrite the first fixture to encode the password before it&#8217;s stored
+in the database (a very good practice). This will use the encoder factory
+to encode the password, ensuring it is encoded in the way used by the security
+component when checking it:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/DataFixtures/ORM/LoadUserData.php</span>
+<span class="x">namespace Acme\HelloBundle\DataFixtures\ORM;</span>
+
+<span class="x">use Doctrine\Common\DataFixtures\FixtureInterface;</span>
+<span class="x">use Symfony\Component\DependencyInjection\ContainerAwareInterface;</span>
+<span class="x">use Symfony\Component\DependencyInjection\ContainerInterface;</span>
+<span class="x">use Acme\HelloBundle\Entity\User;</span>
+
+<span class="x">class LoadUserData implements FixtureInterface, ContainerAwareInterface</span>
+<span class="x">{</span>
+<span class="x">    private $container;</span>
+
+<span class="x">    public function setContainer(ContainerInterface $container = null)</span>
+<span class="x">    {</span>
+<span class="x">        $this-&gt;container = $container;</span>
+<span class="x">    }</span>
+
+<span class="x">    public function load($manager)</span>
+<span class="x">    {</span>
+<span class="x">        $userAdmin = new User();</span>
+<span class="x">        $userAdmin-&gt;setUsername(&#39;admin&#39;);</span>
+<span class="x">        $userAdmin-&gt;setSalt(md5(time()));</span>
+
+<span class="x">        $encoder = $this-&gt;container-&gt;get(&#39;security.encoder_factory&#39;)-&gt;getEncoder($userAdmin);</span>
+<span class="x">        $userAdmin-&gt;setPassword($encoder-&gt;encodePassword(&#39;test&#39;, $userAdmin-&gt;getSalt()));</span>
+
+<span class="x">        $manager-&gt;persist($userAdmin);</span>
+<span class="x">        $manager-&gt;flush();</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>As you can see, all you need to do is add <tt class="docutils literal"><span class="pre">ContainerAwareInterface</span></tt> to
+the class and then create a new <tt class="docutils literal"><span class="pre">setContainer()</span></tt> method that implements
+that interface. Before the fixture is executed, Symfony will call the <tt class="docutils literal"><span class="pre">setContainer()</span></tt>
+method automatically. As long as you store the container as a property on
+the class (as shown above), you can access it in the <tt class="docutils literal"><span class="pre">load()</span></tt> method.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">How to create Fixtures in Symfony2</a><ul>
+<li><a class="reference internal" href="#setup-and-configuration">Setup and Configuration</a></li>
+<li><a class="reference internal" href="#writing-simple-fixtures">Writing Simple Fixtures</a></li>
+<li><a class="reference internal" href="#executing-fixtures">Executing Fixtures</a></li>
+<li><a class="reference internal" href="#sharing-objects-between-fixtures">Sharing Objects between Fixtures</a></li>
+<li><a class="reference internal" href="#using-the-container-in-the-fixtures">Using the Container in the Fixtures</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../assetic/apply_to_option.html"
+                        title="previous chapter">How to Apply an Assetic Filter to a Specific File Extension</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="mongodb.html"
+                        title="next chapter">How to use MongoDB</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/cookbook/doctrine/doctrine_fixtures.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="mongodb.html" title="How to use MongoDB"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../assetic/apply_to_option.html" title="How to Apply an Assetic Filter to a Specific File Extension"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Rafael Goulart.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

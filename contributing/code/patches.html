@@ -1,0 +1,254 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Submitting a Patch &mdash; Symfony2Docs v0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="up" title="Contributing Code" href="index.html" />
+    <link rel="next" title="Reporting a Security Issue" href="security.html" />
+    <link rel="prev" title="Reporting a Bug" href="bugs.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="security.html" title="Reporting a Security Issue"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="bugs.html" title="Reporting a Bug"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Contributing</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Contributing Code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="submitting-a-patch">
+<h1>Submitting a Patch<a class="headerlink" href="#submitting-a-patch" title="Permalink to this headline">¶</a></h1>
+<p>Patches are the best way to provide a bug fix or to propose enhancements to
+Symfony2.</p>
+<div class="section" id="initial-setup">
+<h2>Initial Setup<a class="headerlink" href="#initial-setup" title="Permalink to this headline">¶</a></h2>
+<p>Before working on Symfony2, setup a friendly environment with the following
+software:</p>
+<ul class="simple">
+<li>Git;</li>
+<li>PHP version 5.3.2 or above;</li>
+<li>PHPUnit 3.5.11 or above.</li>
+</ul>
+<p>Set up your user information with your real name and a working email address:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git config --global user.name <span class="s2">&quot;Your Name&quot;</span>
+<span class="nv">$ </span>git config --global user.email you@example.com
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If you are new to Git, we highly recommend you to read the excellent and
+free <a class="reference external" href="http://progit.org/">ProGit</a> book.</p>
+</div>
+<p>Get the Symfony2 source code:</p>
+<ul class="simple">
+<li>Create a <a class="reference external" href="https://github.com/signup/free">GitHub</a> account and sign in;</li>
+<li>Fork the <a class="reference external" href="https://github.com/symfony/symfony">Symfony2 repository</a> (click on the &#8220;Fork&#8221; button);</li>
+<li>After the &#8220;hardcore forking action&#8221; has completed, clone your fork locally
+(this will create a <cite>symfony</cite> directory):</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git clone git@github.com:USERNAME/symfony.git
+</pre></div>
+</div>
+<ul class="simple">
+<li>Add the upstream repository as <tt class="docutils literal"><span class="pre">remote</span></tt>:</li>
+</ul>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>symfony
+<span class="nv">$ </span>git remote add upstream git://github.com/symfony/symfony.git
+</pre></div>
+</div>
+<p>Now that Symfony2 is installed, check that all unit tests pass for your
+environment as explained in the dedicated <a class="reference internal" href="tests.html"><em>document</em></a>.</p>
+</div>
+<div class="section" id="working-on-a-patch">
+<h2>Working on a Patch<a class="headerlink" href="#working-on-a-patch" title="Permalink to this headline">¶</a></h2>
+<p>Each time you want to work on a patch for a bug or on an enhancement, you need
+to create a topic branch.</p>
+<p>The branch should be based on the <cite>master</cite> branch if you want to add a new
+feature. But if you want to fix a bug, use the oldest but still maintained
+version of Symfony where the bug happens (like <cite>2.0</cite>).</p>
+<p>Create the topic branch with the following command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git checkout -b BRANCH_NAME master
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Use a descriptive name for your branch (<cite>ticket_XXX</cite> where <cite>XXX</cite> is the
+ticket number is a good convention for bug fixes).</p>
+</div>
+<p>The above command automatically switches the code to the newly created branch
+(check the branch you are working on with <cite>git branch</cite>).</p>
+<p>Work on the code as much as you want and commit as much as you want; but keep
+in mind the following:</p>
+<ul class="simple">
+<li>Follow the coding <a class="reference internal" href="standards.html"><em>standards</em></a> (use <cite>git diff &#8211;check</cite> to
+check for trailing spaces);</li>
+<li>Add unit tests to prove that the bug is fixed or that the new feature
+actually works;</li>
+<li>Do atomic and logically separate commits (use the power of <cite>git rebase</cite> to
+have a clean and logical history);</li>
+<li>Write good commit messages.</li>
+</ul>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">A good commit message is composed of a summary (the first line),
+optionally followed by a blank line and a more detailed description. The
+summary should start with the Component you are working on in square
+brackets (<tt class="docutils literal"><span class="pre">[DependencyInjection]</span></tt>, <tt class="docutils literal"><span class="pre">[FrameworkBundle]</span></tt>, ...). Use a
+verb (<tt class="docutils literal"><span class="pre">fixed</span> <span class="pre">...</span></tt>, <tt class="docutils literal"><span class="pre">added</span> <span class="pre">...</span></tt>, ...) to start the summary and don&#8217;t
+add a period at the end.</p>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>Submitting a Patch<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>Before submitting your patch, update your branch (needed if it takes you a
+while to finish your changes):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git checkout master
+<span class="nv">$ </span>git fetch upstream
+<span class="nv">$ </span>git merge upstream/master
+<span class="nv">$ </span>git checkout BRANCH_NAME
+<span class="nv">$ </span>git rebase master
+</pre></div>
+</div>
+<p>When doing the <tt class="docutils literal"><span class="pre">rebase</span></tt> command, you might have to fix merge conflicts.
+<tt class="docutils literal"><span class="pre">git</span> <span class="pre">status</span></tt> will show you the <em>unmerged</em> files. Resolve all the conflicts,
+then continue the rebase:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git add ... <span class="c"># add resolved files</span>
+<span class="nv">$ </span>git rebase --continue
+</pre></div>
+</div>
+<p>Check that all tests still pass and push your branch remotely:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git push origin BRANCH_NAME
+</pre></div>
+</div>
+<p>You can now discuss your patch on the <a class="reference external" href="http://groups.google.com/group/symfony-devs">dev mailing-list</a> or make a pull
+request (they must be done on the <tt class="docutils literal"><span class="pre">symfony/symfony</span></tt> repository). To ease the
+core team work, always include the modified components in your pull request
+message, like in:</p>
+<div class="highlight-text"><div class="highlight"><pre>[Yaml] foo bar
+[Form] [Validator] [FrameworkBundle] foo bar
+</pre></div>
+</div>
+<p>If you are going to send an email to the mailing-list, don&#8217;t forget to
+reference you branch URL (<tt class="docutils literal"><span class="pre">https://github.com/USERNAME/symfony.git</span>
+<span class="pre">BRANCH_NAME</span></tt>) or the pull request URL.</p>
+<p>Based on the feedback from the mailing-list or via the pull request on GitHub,
+you might need to rework your patch. Before re-submitting the patch, rebase
+with master, don&#8217;t merge; and force the push to the origin:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git rebase -f upstream/master
+<span class="nv">$ </span>git push -f origin BRANCH_NAME
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All patches you are going to submit must be released under the MIT
+license, unless explicitly specified in the code.</p>
+</div>
+<p>All bug fixes merged into maintenance branches are also merged into more
+recent branches on a regular basis. For instance, if you submit a patch for
+the <cite>2.0</cite> branch, the patch will also be applied by the core team on the
+<cite>master</cite> branch.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Submitting a Patch</a><ul>
+<li><a class="reference internal" href="#initial-setup">Initial Setup</a></li>
+<li><a class="reference internal" href="#working-on-a-patch">Working on a Patch</a></li>
+<li><a class="reference internal" href="#id1">Submitting a Patch</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="bugs.html"
+                        title="previous chapter">Reporting a Bug</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="security.html"
+                        title="next chapter">Reporting a Security Issue</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/contributing/code/patches.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="security.html" title="Reporting a Security Issue"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="bugs.html" title="Reporting a Bug"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Contributing</a> &raquo;</li>
+          <li><a href="index.html" >Contributing Code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Rafael Goulart.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

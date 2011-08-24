@@ -1,0 +1,225 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>How to extend a Class without using Inheritance &mdash; Symfony2Docs v0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="up" title="Cookbook" href="../index.html" />
+    <link rel="next" title="How to customize a Method Behavior without using Inheritance" href="method_behavior.html" />
+    <link rel="prev" title="How to use Monolog to write Logs" href="../logging/monolog.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="method_behavior.html" title="How to customize a Method Behavior without using Inheritance"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="../logging/monolog.html" title="How to use Monolog to write Logs"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="how-to-extend-a-class-without-using-inheritance">
+<span id="index-0"></span><h1>How to extend a Class without using Inheritance<a class="headerlink" href="#how-to-extend-a-class-without-using-inheritance" title="Permalink to this headline">¶</a></h1>
+<p>To allow multiple classes to add methods to another one, you can define the
+magic <tt class="docutils literal"><span class="pre">__call()</span></tt> method in the class you want to be extended like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">class Foo</span>
+<span class="x">{</span>
+<span class="x">    // ...</span>
+
+<span class="x">    public function __call($method, $arguments)</span>
+<span class="x">    {</span>
+<span class="x">        // create an event named &#39;foo.method_is_not_found&#39;</span>
+<span class="x">        $event = new HandleUndefinedMethodEvent($this, $method, $arguments);</span>
+<span class="x">        $this-&gt;dispatcher-&gt;dispatch($this, &#39;foo.method_is_not_found&#39;, $event);</span>
+
+<span class="x">        // no listener was able to process the event? The method does not exist</span>
+<span class="x">        if (!$event-&gt;isProcessed()) {</span>
+<span class="x">            throw new \Exception(sprintf(&#39;Call to undefined method %s::%s.&#39;, get_class($this), $method));</span>
+<span class="x">        }</span>
+
+<span class="x">        // return the listener returned value</span>
+<span class="x">        return $event-&gt;getReturnValue();</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>This uses a special <tt class="docutils literal"><span class="pre">HandleUndefinedMethodEvent</span></tt> that should also be
+created. This is a generic class that could be reused each time you need to
+use this pattern of class extension:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\EventDispatcher\Event;</span>
+
+<span class="x">class HandleUndefinedMethodEvent extends Event</span>
+<span class="x">{</span>
+<span class="x">    protected $subject;</span>
+<span class="x">    protected $method;</span>
+<span class="x">    protected $arguments;</span>
+<span class="x">    protected $returnValue;</span>
+<span class="x">    protected $isProcessed = false;</span>
+
+<span class="x">    public function __construct($subject, $method, $arguments)</span>
+<span class="x">    {</span>
+<span class="x">        $this-&gt;subject = $subject;</span>
+<span class="x">        $this-&gt;method = $method;</span>
+<span class="x">        $this-&gt;arguments = $arguments;</span>
+<span class="x">    }</span>
+
+<span class="x">    public function getSubject()</span>
+<span class="x">    {</span>
+<span class="x">        return $this-&gt;subject;</span>
+<span class="x">    }</span>
+
+<span class="x">    public function getMethod()</span>
+<span class="x">    {</span>
+<span class="x">        return $this-&gt;method;</span>
+<span class="x">    }</span>
+
+<span class="x">    public function getArguments()</span>
+<span class="x">    {</span>
+<span class="x">        return $this-&gt;arguments;</span>
+<span class="x">    }</span>
+
+<span class="x">    /**</span>
+<span class="x">     * Sets the value to return and stops other listeners from being notified</span>
+<span class="x">     */</span>
+<span class="x">    public function setReturnValue($val)</span>
+<span class="x">    {</span>
+<span class="x">        $this-&gt;returnValue = $val;</span>
+<span class="x">        $this-&gt;isProcessed = true;</span>
+<span class="x">        $this-&gt;stopPropagation();</span>
+<span class="x">    }</span>
+
+<span class="x">    public function getReturnValue($val)</span>
+<span class="x">    {</span>
+<span class="x">        return $this-&gt;returnValue;</span>
+<span class="x">    }</span>
+
+<span class="x">    public function isProcessed()</span>
+<span class="x">    {</span>
+<span class="x">        return $this-&gt;isProcessed;</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>Next, create a class that will listen to the <tt class="docutils literal"><span class="pre">foo.method_is_not_found</span></tt> event
+and <em>add</em> the method <tt class="docutils literal"><span class="pre">bar()</span></tt>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">class Bar</span>
+<span class="x">{</span>
+<span class="x">    public function onFooMethodIsNotFound(HandleUndefinedMethodEvent $event)</span>
+<span class="x">    {</span>
+<span class="x">        // we only want to respond to the calls to the &#39;bar&#39; method</span>
+<span class="x">        if (&#39;bar&#39; != $event-&gt;getMethod()) {</span>
+<span class="x">            // allow another listener to take care of this unknown method</span>
+<span class="x">            return;</span>
+<span class="x">        }</span>
+
+<span class="x">        // the subject object (the foo instance)</span>
+<span class="x">        $foo = $event-&gt;getSubject();</span>
+
+<span class="x">        // the bar method arguments</span>
+<span class="x">        $arguments = $event-&gt;getArguments();</span>
+
+<span class="x">        // do something</span>
+<span class="x">        // ...</span>
+
+<span class="x">        // set the return value</span>
+<span class="x">        $event-&gt;setReturnValue($someValue);</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p>Finally, add the new <tt class="docutils literal"><span class="pre">bar</span></tt> method to the <tt class="docutils literal"><span class="pre">Foo</span></tt> class by register an
+instance of <tt class="docutils literal"><span class="pre">Bar</span></tt> with the <tt class="docutils literal"><span class="pre">foo.method_is_not_found</span></tt> event:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">$bar = new Bar();</span>
+<span class="x">$dispatcher-&gt;addListener(&#39;foo.method_is_not_found&#39;, $bar);</span>
+</pre></div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../logging/monolog.html"
+                        title="previous chapter">How to use Monolog to write Logs</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="method_behavior.html"
+                        title="next chapter">How to customize a Method Behavior without using Inheritance</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/cookbook/event_dispatcher/class_extension.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="method_behavior.html" title="How to customize a Method Behavior without using Inheritance"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="../logging/monolog.html" title="How to use Monolog to write Logs"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Rafael Goulart.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

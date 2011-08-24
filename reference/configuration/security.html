@@ -1,0 +1,314 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Security Configuration Reference &mdash; Symfony2Docs v0 documentation</title>
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="up" title="Reference Documents" href="../index.html" />
+    <link rel="next" title="SwiftmailerBundle Configuration" href="swiftmailer.html" />
+    <link rel="prev" title="Configuration Reference" href="doctrine.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="swiftmailer.html" title="SwiftmailerBundle Configuration"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="doctrine.html" title="Configuration Reference"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Reference Documents</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="security-configuration-reference">
+<span id="index-0"></span><h1>Security Configuration Reference<a class="headerlink" href="#security-configuration-reference" title="Permalink to this headline">¶</a></h1>
+<p>The security system is one of the most powerful parts of Symfony2, and can
+largely be controlled via its configuration.</p>
+<div class="section" id="full-default-configuration">
+<h2>Full Default Configuration<a class="headerlink" href="#full-default-configuration" title="Permalink to this headline">¶</a></h2>
+<p>The following is the full default configuration for the security system.
+Each part will be explained in the next section.</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><pre># app/config/security.yml
+security:
+    access_denied_url: /foo/error403
+
+    always_authenticate_before_granting: false
+
+    # strategy can be: none, migrate, invalidate
+    session_fixation_strategy: migrate
+
+    access_decision_manager:
+        strategy: affirmative
+        allow_if_all_abstain: false
+        allow_if_equal_granted_denied: true
+
+    acl:
+        connection: default # any name configured in doctrine.dbal section
+        tables:
+            class: acl_classes
+            entry: acl_entries
+            object_identity: acl_object_identities
+            object_identity_ancestors: acl_object_identity_ancestors
+            security_identity: acl_security_identities
+        cache:
+            id: service_id
+            prefix: sf2_acl_
+        voter:
+            allow_if_object_identity_unavailable: true
+
+    encoders:
+        somename:
+            class: Acme\DemoBundle\Entity\User
+        Acme\DemoBundle\Entity\User: sha512
+        Acme\DemoBundle\Entity\User: plaintext
+        Acme\DemoBundle\Entity\User:
+            algorithm: sha512
+            encode_as_base64: true
+            iterations: 5000
+        Acme\DemoBundle\Entity\User:
+            id: my.custom.encoder.service.id
+
+    providers:
+        memory:
+            name: memory
+            users:
+                foo: { password: foo, roles: ROLE_USER }
+                bar: { password: bar, roles: [ROLE_USER, ROLE_ADMIN] }
+        entity:
+            entity: { class: SecurityBundle:User, property: username }
+
+    factories:
+        MyFactory: %kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml
+
+    firewalls:
+        somename:
+            pattern: .*
+            request_matcher: some.service.id
+            access_denied_url: /foo/error403
+            access_denied_handler: some.service.id
+            entry_point: some.service.id
+            provider: name
+            context: name
+            stateless: false
+            x509:
+                provider: name
+            http_basic:
+                provider: name
+            http_digest:
+                provider: name
+            form_login:
+                check_path: /login_check
+                login_path: /login
+                use_forward: false
+                always_use_default_target_path: false
+                default_target_path: /
+                target_path_parameter: _target_path
+                use_referer: false
+                failure_path: /foo
+                failure_forward: false
+                failure_handler: some.service.id
+                success_handler: some.service.id
+                username_parameter: _username
+                password_parameter: _password
+                csrf_parameter: _csrf_token
+                csrf_page_id: form_login
+                csrf_provider: my.csrf_provider.id
+                post_only: true
+                remember_me: false
+            remember_me:
+                token_provider: name
+                key: someS3cretKey
+                name: NameOfTheCookie
+                lifetime: 3600 # in seconds
+                path: /foo
+                domain: somedomain.foo
+                secure: true
+                httponly: true
+                always_remember_me: false
+                remember_me_parameter: _remember_me
+            logout:
+                path:   /logout
+                target: /
+                invalidate_session: false
+                delete_cookies:
+                    a: { path: null, domain: null }
+                    b: { path: null, domain: null }
+                handlers: [some.service.id, another.service.id]
+                success_handler: some.service.id
+            anonymous: ~
+
+    access_control:
+        -
+            path: ^/foo
+            host: mydomain.foo
+            ip: 192.0.0.0/8
+            roles: [ROLE_A, ROLE_B]
+            requires_channel: https
+
+    role_hierarchy:
+        ROLE_SUPERADMIN: ROLE_ADMIN
+        ROLE_SUPERADMIN: 'ROLE_ADMIN, ROLE_USER'
+        ROLE_SUPERADMIN: [ROLE_ADMIN, ROLE_USER]
+        anything: { id: ROLE_SUPERADMIN, value: 'ROLE_USER, ROLE_ADMIN' }
+        anything: { id: ROLE_SUPERADMIN, value: [ROLE_USER, ROLE_ADMIN] }</pre>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="form-login-configuration">
+<span id="reference-security-firewall-form-login"></span><h2>Form Login Configuration<a class="headerlink" href="#form-login-configuration" title="Permalink to this headline">¶</a></h2>
+<p>When using the <tt class="docutils literal"><span class="pre">form_login</span></tt> authentication listener beneath a firewall,
+there are several common options for configuring the &#8220;form login&#8221; experience:</p>
+<div class="section" id="the-login-form-and-process">
+<h3>The Login Form and Process<a class="headerlink" href="#the-login-form-and-process" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><tt class="docutils literal"><span class="pre">login_path</span></tt> (type: <tt class="docutils literal"><span class="pre">string</span></tt>, default: <tt class="docutils literal"><span class="pre">/login</span></tt>)
+This is the URL that the user will be redirected to (unless <tt class="docutils literal"><span class="pre">use_forward</span></tt>
+is set to <tt class="docutils literal"><span class="pre">true</span></tt>) when he/she tries to access a protected resource
+but isn&#8217;t fully authenticated.</p>
+<p>This URL <strong>must</strong> be accessible by a normal, un-authenticated user, else
+you may create a redirect loop. For details, see
+&#8220;<a class="reference internal" href="../../book/security.html#book-security-common-pitfalls"><em>Avoid Common Pitfalls</em></a>&#8221;.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">check_path</span></tt> (type: <tt class="docutils literal"><span class="pre">string</span></tt>, default: <tt class="docutils literal"><span class="pre">/login_check</span></tt>)
+This is the URL that your login form must submit to. The firewall will
+intercept any requests (<tt class="docutils literal"><span class="pre">POST</span></tt> requests only, be default) to this URL
+and process the submitted login credentials.</p>
+<p>Be sure that this URL is covered by your main firewall (i.e. don&#8217;t create
+a separate firewall just for <tt class="docutils literal"><span class="pre">check_path</span></tt> URL).</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">use_forward</span></tt> (type: <tt class="docutils literal"><span class="pre">Boolean</span></tt>, default: <tt class="docutils literal"><span class="pre">false</span></tt>)
+If you&#8217;d like the user to be forwarded to the login form instead of being
+redirected, set this option to <tt class="docutils literal"><span class="pre">true</span></tt>.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">username_parameter</span></tt> (type: <tt class="docutils literal"><span class="pre">string</span></tt>, default: <tt class="docutils literal"><span class="pre">_username</span></tt>)
+This is the field name that you should give to the username field of
+your login form. When you submit the form to <tt class="docutils literal"><span class="pre">check_path</span></tt>, the security
+system will look for a POST parameter with this name.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">password_parameter</span></tt> (type: <tt class="docutils literal"><span class="pre">string</span></tt>, default: <tt class="docutils literal"><span class="pre">_password</span></tt>)
+This is the field name that you should give to the password field of
+your login form. When you submit the form to <tt class="docutils literal"><span class="pre">check_path</span></tt>, the security
+system will look for a POST parameter with this name.</p>
+</li>
+<li><p class="first"><tt class="docutils literal"><span class="pre">post_only</span></tt> (type: <tt class="docutils literal"><span class="pre">Boolean</span></tt>, default: <tt class="docutils literal"><span class="pre">true</span></tt>)
+By default, you must submit your login form to the <tt class="docutils literal"><span class="pre">check_path</span></tt> URL
+as a POST request. By setting this option to <tt class="docutils literal"><span class="pre">true</span></tt>, you can send a
+GET request to the <tt class="docutils literal"><span class="pre">check_path</span></tt> URL.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="redirecting-after-login">
+<h3>Redirecting after Login<a class="headerlink" href="#redirecting-after-login" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">always_use_default_target_path</span></tt> (type: <tt class="docutils literal"><span class="pre">Boolean</span></tt>, default: <tt class="docutils literal"><span class="pre">false</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">default_target_path</span></tt> (type: <tt class="docutils literal"><span class="pre">string</span></tt>, default: <tt class="docutils literal"><span class="pre">/</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">target_path_parameter</span></tt> (type: <tt class="docutils literal"><span class="pre">string</span></tt>, default: <tt class="docutils literal"><span class="pre">_target_path</span></tt>)</li>
+<li><tt class="docutils literal"><span class="pre">use_referer</span></tt> (type: <tt class="docutils literal"><span class="pre">Boolean</span></tt>, default: <tt class="docutils literal"><span class="pre">false</span></tt>)</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Security Configuration Reference</a><ul>
+<li><a class="reference internal" href="#full-default-configuration">Full Default Configuration</a></li>
+<li><a class="reference internal" href="#form-login-configuration">Form Login Configuration</a><ul>
+<li><a class="reference internal" href="#the-login-form-and-process">The Login Form and Process</a></li>
+<li><a class="reference internal" href="#redirecting-after-login">Redirecting after Login</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="doctrine.html"
+                        title="previous chapter">Configuration Reference</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="swiftmailer.html"
+                        title="next chapter">SwiftmailerBundle Configuration</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../../_sources/reference/configuration/security.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="swiftmailer.html" title="SwiftmailerBundle Configuration"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="doctrine.html" title="Configuration Reference"
+             >previous</a> |</li>
+        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Reference Documents</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2011, Rafael Goulart.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
