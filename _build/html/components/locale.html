@@ -1,0 +1,179 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Locale Component &mdash; Symfony2Docs v1 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
+    <link rel="up" title="The Components" href="index.html" />
+    <link rel="next" title="The Process Component" href="process.html" />
+    <link rel="prev" title="The HttpFoundation Component" href="http_foundation.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="process.html" title="The Process Component"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="http_foundation.html" title="The HttpFoundation Component"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Components</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-locale-component">
+<span id="index-0"></span><h1>The Locale Component<a class="headerlink" href="#the-locale-component" title="Permalink to this headline">¶</a></h1>
+<blockquote>
+<div>Locale component provides fallback code to handle cases when the <tt class="docutils literal"><span class="pre">intl</span></tt> extension is missing.
+Additionally it extends the implementation of a native <a href="#id1"><span class="problematic" id="id2">:phpclass:`Locale`</span></a> class with several handy methods.</div></blockquote>
+<p>Replacement for the following functions and classes is provided:</p>
+<ul class="simple">
+<li><a href="#id3"><span class="problematic" id="id4">:phpfunction:`intl_is_failure()`</span></a></li>
+<li><a href="#id5"><span class="problematic" id="id6">:phpfunction:`intl_get_error_code()`</span></a></li>
+<li><a href="#id7"><span class="problematic" id="id8">:phpfunction:`intl_get_error_message()`</span></a></li>
+<li><a href="#id9"><span class="problematic" id="id10">:phpclass:`Collator`</span></a></li>
+<li><a href="#id11"><span class="problematic" id="id12">:phpclass:`IntlDateFormatter`</span></a></li>
+<li><a href="#id13"><span class="problematic" id="id14">:phpclass:`Locale`</span></a></li>
+<li><a href="#id15"><span class="problematic" id="id16">:phpclass:`NumberFormatter`</span></a></li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Stub implementation only supports the <tt class="docutils literal"><span class="pre">en</span></tt> locale.</p>
+</div>
+<div class="section" id="installation">
+<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>You can install the component in many different ways:</p>
+<ul class="simple">
+<li>Use the official Git repository (<a class="reference external" href="https://github.com/symfony/Locale">https://github.com/symfony/Locale</a>);</li>
+<li>Install it via PEAR ( <cite>pear.symfony.com/Locale</cite>);</li>
+<li>Install it via Composer (<cite>symfony/locale</cite> on Packagist).</li>
+</ul>
+</div>
+<div class="section" id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p>Taking advantage of the fallback code includes requiring function stubs and adding class stubs to the autoloader.</p>
+<p>When using the ClassLoader component following code is sufficient to supplement missing <tt class="docutils literal"><span class="pre">intl</span></tt> extension:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">if (!function_exists(&#39;intl_get_error_code&#39;)) {</span>
+<span class="x">    require __DIR__.&#39;/path/to/src/Symfony/Component/Locale/Resources/stubs/functions.php&#39;;</span>
+
+<span class="x">    $loader-&gt;registerPrefixFallbacks(array(__DIR__.&#39;/path/to/src/Symfony/Component/Locale/Resources/stubs&#39;));</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+<p><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Locale\Locale</span></tt> class enriches native <a href="#id17"><span class="problematic" id="id18">:phpclass:`Locale`</span></a> class with additional features:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Locale\Locale;</span>
+
+<span class="x">// Get the country names for a locale or get all country codes</span>
+<span class="x">$countries = Locale::getDisplayCountries(&#39;pl&#39;);</span>
+<span class="x">$countryCodes = Locale::getCountries();</span>
+
+<span class="x">// Get the language names for a locale or get all language codes</span>
+<span class="x">$languages = Locale::getDisplayLanguages(&#39;fr&#39;);</span>
+<span class="x">$languageCodes = Locale::getLanguages();</span>
+
+<span class="x">// Get the locale names for a given code or get all locale codes</span>
+<span class="x">$locales = Locale::getDisplayLocales(&#39;en&#39;);</span>
+<span class="x">$localeCodes = Locale::getLocales();</span>
+
+<span class="x">// Get ICU versions</span>
+<span class="x">$icuVersion = Locale::getIcuVersion();</span>
+<span class="x">$icuDataVersion = Locale::getIcuDataVersion();</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Locale Component</a><ul>
+<li><a class="reference internal" href="#installation">Installation</a></li>
+<li><a class="reference internal" href="#usage">Usage</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="http_foundation.html"
+                        title="previous chapter">The HttpFoundation Component</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="process.html"
+                        title="next chapter">The Process Component</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/components/locale.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="process.html" title="The Process Component"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="http_foundation.html" title="The HttpFoundation Component"
+             >previous</a> |</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >The Components</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>

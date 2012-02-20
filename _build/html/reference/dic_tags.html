@@ -1,0 +1,512 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>The Dependency Injection Tags &mdash; Symfony2Docs v1 documentation</title>
+    <link rel="stylesheet" href="../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
+    <link rel="up" title="Reference Documents" href="index.html" />
+    <link rel="next" title="Requirements for running Symfony2" href="requirements.html" />
+    <link rel="prev" title="Valid" href="constraints/Valid.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="requirements.html" title="Requirements for running Symfony2"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="constraints/Valid.html" title="Valid"
+             accesskey="P">previous</a> |</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Reference Documents</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="the-dependency-injection-tags">
+<h1>The Dependency Injection Tags<a class="headerlink" href="#the-dependency-injection-tags" title="Permalink to this headline">¶</a></h1>
+<p>Tags:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">data_collector</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">form.type</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">form.type_extension</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">form.type_guesser</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">kernel.cache_warmer</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">kernel.event_listener</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">kernel.event_subscriber</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">monolog.logger</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">monolog.processor</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">templating.helper</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">routing.loader</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">translation.loader</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">twig.extension</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">validator.initializer</span></tt></li>
+</ul>
+<div class="section" id="enabling-custom-php-template-helpers">
+<h2>Enabling Custom PHP Template Helpers<a class="headerlink" href="#enabling-custom-php-template-helpers" title="Permalink to this headline">¶</a></h2>
+<p>To enable a custom template helper, add it as a regular service in one
+of your configuration, tag it with <tt class="docutils literal"><span class="pre">templating.helper</span></tt> and define an
+<tt class="docutils literal"><span class="pre">alias</span></tt> attribute (the helper will be accessible via this alias in the
+templates):</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">templating.helper.your_helper_name</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Fully\Qualified\Helper\Class\Name</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">templating.helper</span><span class="p-Indicator">,</span> <span class="nv">alias</span><span class="p-Indicator">:</span> <span class="nv">alias_name</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;templating.helper.your_helper_name&quot;</span> <span class="na">class=</span><span class="s">&quot;Fully\Qualified\Helper\Class\Name&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;templating.helper&quot;</span> <span class="na">alias=</span><span class="s">&quot;alias_name&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$container</span>
+<span class="x">    -&gt;register(&#39;templating.helper.your_helper_name&#39;, &#39;Fully\Qualified\Helper\Class\Name&#39;)</span>
+<span class="x">    -&gt;addTag(&#39;templating.helper&#39;, array(&#39;alias&#39; =&gt; &#39;alias_name&#39;))</span>
+<span class="x">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="enabling-custom-twig-extensions">
+<span id="reference-dic-tags-twig-extension"></span><h2>Enabling Custom Twig Extensions<a class="headerlink" href="#enabling-custom-twig-extensions" title="Permalink to this headline">¶</a></h2>
+<p>To enable a Twig extension, add it as a regular service in one of your
+configuration, and tag it with <tt class="docutils literal"><span class="pre">twig.extension</span></tt>:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">twig.extension.your_extension_name</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Fully\Qualified\Extension\Class\Name</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">twig.extension</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;twig.extension.your_extension_name&quot;</span> <span class="na">class=</span><span class="s">&quot;Fully\Qualified\Extension\Class\Name&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;twig.extension&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$container</span>
+<span class="x">    -&gt;register(&#39;twig.extension.your_extension_name&#39;, &#39;Fully\Qualified\Extension\Class\Name&#39;)</span>
+<span class="x">    -&gt;addTag(&#39;twig.extension&#39;)</span>
+<span class="x">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>For information on how to create the actual Twig Extension class, see
+<a class="reference external" href="http://twig.sensiolabs.org/doc/extensions.html">Twig&#8217;s documentation</a> on the topic.</p>
+<p>Before writing your own extensions, have a look at the
+<a class="reference external" href="http://github.com/fabpot/Twig-extensions">Twig official extension repository</a> which already includes several
+useful extensions. For example <tt class="docutils literal"><span class="pre">Intl</span></tt> and its <tt class="docutils literal"><span class="pre">localizeddate</span></tt> filter
+that formats a date according to user&#8217;s locale. These official Twig extensions
+also have to be added as regular services:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">twig.extension.intl</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Twig_Extensions_Extension_Intl</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">twig.extension</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;twig.extension.intl&quot;</span> <span class="na">class=</span><span class="s">&quot;Twig_Extensions_Extension_Intl&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;twig.extension&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$container</span>
+<span class="x">    -&gt;register(&#39;twig.extension.intl&#39;, &#39;Twig_Extensions_Extension_Intl&#39;)</span>
+<span class="x">    -&gt;addTag(&#39;twig.extension&#39;)</span>
+<span class="x">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="enabling-custom-listeners">
+<span id="dic-tags-kernel-event-listener"></span><h2>Enabling Custom Listeners<a class="headerlink" href="#enabling-custom-listeners" title="Permalink to this headline">¶</a></h2>
+<p>To enable a custom listener, add it as a regular service in one of your
+configuration, and tag it with <tt class="docutils literal"><span class="pre">kernel.event_listener</span></tt>. You must provide
+the name of the event your service listens to, as well as the method that
+will be called:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">kernel.listener.your_listener_name</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Fully\Qualified\Listener\Class\Name</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">kernel.event_listener</span><span class="p-Indicator">,</span> <span class="nv">event</span><span class="p-Indicator">:</span> <span class="nv">xxx</span><span class="p-Indicator">,</span> <span class="nv">method</span><span class="p-Indicator">:</span> <span class="nv">onXxx</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;kernel.listener.your_listener_name&quot;</span> <span class="na">class=</span><span class="s">&quot;Fully\Qualified\Listener\Class\Name&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;kernel.event_listener&quot;</span> <span class="na">event=</span><span class="s">&quot;xxx&quot;</span> <span class="na">method=</span><span class="s">&quot;onXxx&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$container</span>
+<span class="x">    -&gt;register(&#39;kernel.listener.your_listener_name&#39;, &#39;Fully\Qualified\Listener\Class\Name&#39;)</span>
+<span class="x">    -&gt;addTag(&#39;kernel.event_listener&#39;, array(&#39;event&#39; =&gt; &#39;xxx&#39;, &#39;method&#39; =&gt; &#39;onXxx&#39;))</span>
+<span class="x">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can also specify priority as an attribute of the kernel.event_listener
+tag (much like the method or event attributes), with either a positive
+or negative integer. This allows you to make sure your listener will always
+be called before or after another listener listening for the same event.</p>
+</div>
+</div>
+<div class="section" id="enabling-custom-subscribers">
+<span id="dic-tags-kernel-event-subscriber"></span><h2>Enabling Custom Subscribers<a class="headerlink" href="#enabling-custom-subscribers" title="Permalink to this headline">¶</a></h2>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1.</span></p>
+<p>To enable a custom subscriber, add it as a regular service in one of your
+configuration, and tag it with <tt class="docutils literal"><span class="pre">kernel.event_subscriber</span></tt>:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">kernel.subscriber.your_subscriber_name</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Fully\Qualified\Subscriber\Class\Name</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">kernel.event_subscriber</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;kernel.subscriber.your_subscriber_name&quot;</span> <span class="na">class=</span><span class="s">&quot;Fully\Qualified\Subscriber\Class\Name&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;kernel.event_subscriber&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$container</span>
+<span class="x">    -&gt;register(&#39;kernel.subscriber.your_subscriber_name&#39;, &#39;Fully\Qualified\Subscriber\Class\Name&#39;)</span>
+<span class="x">    -&gt;addTag(&#39;kernel.event_subscriber&#39;)</span>
+<span class="x">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Your service must implement the <tt class="xref py py-class docutils literal"><span class="pre">SymfonyComponentEventDispatcherEventSubscriberInterface</span></tt>
+interface.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If your service is created by a factory, you <strong>MUST</strong> correctly set the <tt class="docutils literal"><span class="pre">class</span></tt>
+parameter for this tag to work correctly.</p>
+</div>
+</div>
+<div class="section" id="enabling-custom-template-engines">
+<h2>Enabling Custom Template Engines<a class="headerlink" href="#enabling-custom-template-engines" title="Permalink to this headline">¶</a></h2>
+<p>To enable a custom template engine, add it as a regular service in one
+of your configuration, tag it with <tt class="docutils literal"><span class="pre">templating.engine</span></tt>:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">templating.engine.your_engine_name</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Fully\Qualified\Engine\Class\Name</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">templating.engine</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;templating.engine.your_engine_name&quot;</span> <span class="na">class=</span><span class="s">&quot;Fully\Qualified\Engine\Class\Name&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;templating.engine&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$container</span>
+<span class="x">    -&gt;register(&#39;templating.engine.your_engine_name&#39;, &#39;Fully\Qualified\Engine\Class\Name&#39;)</span>
+<span class="x">    -&gt;addTag(&#39;templating.engine&#39;)</span>
+<span class="x">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="enabling-custom-routing-loaders">
+<h2>Enabling Custom Routing Loaders<a class="headerlink" href="#enabling-custom-routing-loaders" title="Permalink to this headline">¶</a></h2>
+<p>To enable a custom routing loader, add it as a regular service in one
+of your configuration, and tag it with <tt class="docutils literal"><span class="pre">routing.loader</span></tt>:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">routing.loader.your_loader_name</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Fully\Qualified\Loader\Class\Name</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">routing.loader</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;routing.loader.your_loader_name&quot;</span> <span class="na">class=</span><span class="s">&quot;Fully\Qualified\Loader\Class\Name&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;routing.loader&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$container</span>
+<span class="x">    -&gt;register(&#39;routing.loader.your_loader_name&#39;, &#39;Fully\Qualified\Loader\Class\Name&#39;)</span>
+<span class="x">    -&gt;addTag(&#39;routing.loader&#39;)</span>
+<span class="x">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="using-a-custom-logging-channel-with-monolog">
+<span id="dic-tags-monolog"></span><h2>Using a custom logging channel with Monolog<a class="headerlink" href="#using-a-custom-logging-channel-with-monolog" title="Permalink to this headline">¶</a></h2>
+<p>Monolog allows you to share its handlers between several logging channels.
+The logger service uses the channel <tt class="docutils literal"><span class="pre">app</span></tt> but you can change the
+channel when injecting the logger in a service.</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><pre>services:
+    my_service:
+        class: Fully\Qualified\Loader\Class\Name
+        arguments: [@logger]
+        tags:
+            - { name: monolog.logger, channel: acme }</pre>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;my_service&quot;</span> <span class="na">class=</span><span class="s">&quot;Fully\Qualified\Loader\Class\Name&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;argument</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;logger&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;monolog.logger&quot;</span> <span class="na">channel=</span><span class="s">&quot;acme&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$definition = new Definition(&#39;Fully\Qualified\Loader\Class\Name&#39;, array(new Reference(&#39;logger&#39;));</span>
+<span class="x">$definition-&gt;addTag(&#39;monolog.logger&#39;, array(&#39;channel&#39; =&gt; &#39;acme&#39;));</span>
+<span class="x">$container-&gt;register(&#39;my_service&#39;, $definition);;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This works only when the logger service is a constructor argument,
+not when it is injected through a setter.</p>
+</div>
+</div>
+<div class="section" id="adding-a-processor-for-monolog">
+<span id="dic-tags-monolog-processor"></span><h2>Adding a processor for Monolog<a class="headerlink" href="#adding-a-processor-for-monolog" title="Permalink to this headline">¶</a></h2>
+<p>Monolog allows you to add processors in the logger or in the handlers to add
+extra data in the records. A processor receives the record as an argument and
+must return it after adding some extra data in the <tt class="docutils literal"><span class="pre">extra</span></tt> attribute of
+the record.</p>
+<p>Let&#8217;s see how you can use the built-in <tt class="docutils literal"><span class="pre">IntrospectionProcessor</span></tt> to add
+the file, the line, the class and the method where the logger was triggered.</p>
+<p>You can add a processor globally:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">my_service</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Monolog\Processor\IntrospectionProcessor</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">monolog.processor</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;my_service&quot;</span> <span class="na">class=</span><span class="s">&quot;Monolog\Processor\IntrospectionProcessor&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;monolog.processor&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$definition = new Definition(&#39;Monolog\Processor\IntrospectionProcessor&#39;);</span>
+<span class="x">$definition-&gt;addTag(&#39;monolog.processor&#39;);</span>
+<span class="x">$container-&gt;register(&#39;my_service&#39;, $definition);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If your service is not a callable (using <tt class="docutils literal"><span class="pre">__invoke</span></tt>) you can add the
+<tt class="docutils literal"><span class="pre">method</span></tt> attribute in the tag to use a specific method.</p>
+</div>
+<p>You can add also a processor for a specific handler by using the <tt class="docutils literal"><span class="pre">handler</span></tt>
+attribute:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">my_service</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Monolog\Processor\IntrospectionProcessor</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">monolog.processor</span><span class="p-Indicator">,</span> <span class="nv">handler</span><span class="p-Indicator">:</span> <span class="nv">firephp</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;my_service&quot;</span> <span class="na">class=</span><span class="s">&quot;Monolog\Processor\IntrospectionProcessor&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;monolog.processor&quot;</span> <span class="na">handler=</span><span class="s">&quot;firephp&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$definition = new Definition(&#39;Monolog\Processor\IntrospectionProcessor&#39;);</span>
+<span class="x">$definition-&gt;addTag(&#39;monolog.processor&#39;, array(&#39;handler&#39; =&gt; &#39;firephp&#39;);</span>
+<span class="x">$container-&gt;register(&#39;my_service&#39;, $definition);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>You can also add a processor for a specific logging channel by using the <tt class="docutils literal"><span class="pre">channel</span></tt>
+attribute. This will register the processor only for the <tt class="docutils literal"><span class="pre">security</span></tt> logging
+channel used in the Security component:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">my_service</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Monolog\Processor\IntrospectionProcessor</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">monolog.processor</span><span class="p-Indicator">,</span> <span class="nv">channel</span><span class="p-Indicator">:</span> <span class="nv">security</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;my_service&quot;</span> <span class="na">class=</span><span class="s">&quot;Monolog\Processor\IntrospectionProcessor&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;monolog.processor&quot;</span> <span class="na">channel=</span><span class="s">&quot;security&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$definition = new Definition(&#39;Monolog\Processor\IntrospectionProcessor&#39;);</span>
+<span class="x">$definition-&gt;addTag(&#39;monolog.processor&#39;, array(&#39;channel&#39; =&gt; &#39;security&#39;);</span>
+<span class="x">$container-&gt;register(&#39;my_service&#39;, $definition);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You cannot use both the <tt class="docutils literal"><span class="pre">handler</span></tt> and <tt class="docutils literal"><span class="pre">channel</span></tt> attributes for the
+same tag as handlers are shared between all channels.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">The Dependency Injection Tags</a><ul>
+<li><a class="reference internal" href="#enabling-custom-php-template-helpers">Enabling Custom PHP Template Helpers</a></li>
+<li><a class="reference internal" href="#enabling-custom-twig-extensions">Enabling Custom Twig Extensions</a></li>
+<li><a class="reference internal" href="#enabling-custom-listeners">Enabling Custom Listeners</a></li>
+<li><a class="reference internal" href="#enabling-custom-subscribers">Enabling Custom Subscribers</a></li>
+<li><a class="reference internal" href="#enabling-custom-template-engines">Enabling Custom Template Engines</a></li>
+<li><a class="reference internal" href="#enabling-custom-routing-loaders">Enabling Custom Routing Loaders</a></li>
+<li><a class="reference internal" href="#using-a-custom-logging-channel-with-monolog">Using a custom logging channel with Monolog</a></li>
+<li><a class="reference internal" href="#adding-a-processor-for-monolog">Adding a processor for Monolog</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="constraints/Valid.html"
+                        title="previous chapter">Valid</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="requirements.html"
+                        title="next chapter">Requirements for running Symfony2</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="../_sources/reference/dic_tags.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" size="18" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="requirements.html" title="Requirements for running Symfony2"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="constraints/Valid.html" title="Valid"
+             >previous</a> |</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+          <li><a href="index.html" >Reference Documents</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2012, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+    </div>
+  </body>
+</html>
