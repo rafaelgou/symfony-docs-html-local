@@ -758,6 +758,8 @@ a slash. URLs matching this route might look like:
  * ``/articles/en/2010/my-post``
  * ``/articles/fr/2010/my-post.rss``
 
+.. _book-routing-format-param:
+
 .. sidebar:: The Special ``_format`` Routing Parameter
 
     This example also highlights the special ``_format`` routing parameter.
@@ -768,6 +770,25 @@ a slash. URLs matching this route might look like:
     It can also be used in the controller to render a different template for
     each value of ``_format``. The ``_format`` parameter is a very powerful way
     to render the same content in different formats.
+
+Special Routing Parameters
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+As you've seen, each routing parameter or default value is eventually available
+as an argument in the controller method. Additionally, there are three parameters
+that are special: each adds a unique piece of functionality inside your application:
+
+* ``_controller``: As you've seen, this parameter is used to determine which
+  controller is executed when the route is matched;
+
+* ``_format``: Used to set the request format (:ref:`read more<book-routing-format-param>`);
+
+* ``_locale``: Used to set the locale on the request (:ref:`read more<book-translation-locale-url>`);
+
+.. tip::
+
+    If you use the ``_locale`` parameter in a route, that value will also
+    be stored on the session so that subsequent requests keep this same locale.
 
 .. index::
    single: Routing; Controllers
@@ -1067,6 +1088,18 @@ that route. With this information, any URL can easily be generated:
 
 In an upcoming section, you'll learn how to generate URLs from inside templates.
 
+.. tip::
+
+    If the frontend of your application uses AJAX requests, you might want
+    to be able to generate URLs in JavaScript based on your routing configuration.
+    By using the `FOSJsRoutingBundle`_, you can do exactly that:
+    
+    .. code-block:: javascript
+    
+        var url = Routing.generate('blog_show', { "slug": 'my-blog-post});
+
+    For more information, see the documentation for that bundle.
+
 .. index::
    single: Routing; Absolute URLs
 
@@ -1156,3 +1189,5 @@ Learn more from the Cookbook
 ----------------------------
 
 * :doc:`/cookbook/routing/scheme`
+
+.. _`FOSJsRoutingBundle`: https://github.com/FriendsOfSymfony/FOSJsRoutingBundle

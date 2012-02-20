@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to work with Multiple Entity Managers &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to work with Multiple Entity Managers &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
     <link rel="next" title="Registering Custom DQL Functions" href="custom_dql_functions.html" />
     <link rel="prev" title="How to use Doctrine’s DBAL Layer" href="dbal.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="dbal.html" title="How to use Doctrine’s DBAL Layer"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -85,10 +85,10 @@ adding in this layer of complexity.</p>
 </ul>
 </div>
 <p>In this case, you&#8217;ve defined two entity managers and called them <tt class="docutils literal"><span class="pre">default</span></tt>
-and <tt class="docutils literal"><span class="pre">customer</span></tt>. The <tt class="docutils literal"><span class="pre">default</span></tt> entity managers managers any entities in
-the <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt> and <tt class="docutils literal"><span class="pre">AcmeStoreBundle</span></tt>, while the <tt class="docutils literal"><span class="pre">customer</span></tt> entity
-manager manages any bundle in the <tt class="docutils literal"><span class="pre">AcmeCustomerBundle</span></tt>.</p>
-<p>When working with your entity managers, you should now be explicit about which
+and <tt class="docutils literal"><span class="pre">customer</span></tt>. The <tt class="docutils literal"><span class="pre">default</span></tt> entity manager manages entities in the
+<tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt> and <tt class="docutils literal"><span class="pre">AcmeStoreBundle</span></tt>, while the <tt class="docutils literal"><span class="pre">customer</span></tt> entity
+manager manages entities in the <tt class="docutils literal"><span class="pre">AcmeCustomerBundle</span></tt>.</p>
+<p>When working with multiple entity managers, you should be explicit about which
 entity manager you want. If you <em>do</em> omit the entity manager&#8217;s name when
 asking for it, the default entity manager (i.e. <tt class="docutils literal"><span class="pre">default</span></tt>) is returned:</p>
 <div class="highlight-python"><pre>class UserController extends Controller
@@ -154,12 +154,12 @@ entity manager to persist and fetch its entities.</p>
         <li class="right" >
           <a href="dbal.html" title="How to use Doctrine’s DBAL Layer"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

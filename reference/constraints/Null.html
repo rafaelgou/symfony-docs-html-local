@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Null &mdash; Symfony2Docs v0 documentation</title>
+    <title>Null &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
-    <link rel="next" title="UniqueEntity" href="UniqueEntity.html" />
-    <link rel="prev" title="Blank" href="Blank.html" /> 
+    <link rel="next" title="True" href="True.html" />
+    <link rel="prev" title="NotNull" href="NotNull.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="UniqueEntity.html" title="UniqueEntity"
+          <a href="True.html" title="True"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Blank.html" title="Blank"
+          <a href="NotNull.html" title="NotNull"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -63,7 +63,7 @@ constraint. To ensure that a property is not null, see <a class="reference inter
 </colgroup>
 <tbody valign="top">
 <tr><td>Applies to</td>
-<td><a class="reference internal" href="../../book/validation.html#validation-property-target"><em>property</em></a></td>
+<td><a class="reference internal" href="../../book/validation.html#validation-property-target"><em>property or method</em></a></td>
 </tr>
 <tr><td>Options</td>
 <td><ul class="first last simple">
@@ -85,13 +85,17 @@ constraint. To ensure that a property is not null, see <a class="reference inter
 of an <tt class="docutils literal"><span class="pre">Author</span></tt> class exactly equal to <tt class="docutils literal"><span class="pre">null</span></tt>, you could do the following:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">firstName</span><span class="p-Indicator">:</span>
-        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Null</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/BlogBundle/Resources/config/validation.yml</span>
+<span class="l-Scalar-Plain">Acme\BlogBundle\Entity\Author</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">firstName</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Null</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
 </pre></div>
 </div>
 </li>
 <li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/BlogBundle/Entity/Author.php
+namespace Acme\BlogBundle\Entity;
+
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Author
@@ -135,11 +139,11 @@ class Author
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="Blank.html"
-                        title="previous chapter">Blank</a></p>
+  <p class="topless"><a href="NotNull.html"
+                        title="previous chapter">NotNull</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="UniqueEntity.html"
-                        title="next chapter">UniqueEntity</a></p>
+  <p class="topless"><a href="True.html"
+                        title="next chapter">True</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/reference/constraints/Null.txt"
@@ -169,18 +173,18 @@ class Author
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="UniqueEntity.html" title="UniqueEntity"
+          <a href="True.html" title="True"
              >next</a> |</li>
         <li class="right" >
-          <a href="Blank.html" title="Blank"
+          <a href="NotNull.html" title="NotNull"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

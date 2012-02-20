@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Internals &mdash; Symfony2Docs v0 documentation</title>
+    <title>Internals &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="The Symfony2 Stable API" href="stable_api.html" />
     <link rel="prev" title="Performance" href="performance.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="performance.html" title="Performance"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -69,7 +69,7 @@ on top of the previous one.</p>
 <p class="last">Autoloading is not managed by the framework directly; it&#8217;s done
 independently with the help of the
 <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\ClassLoader\UniversalClassLoader</span></tt> class
-and the <tt class="docutils literal"><span class="pre">src/autoload.php</span></tt> file. Read the <a class="reference internal" href="../cookbook/tools/autoloader.html"><em>dedicated chapter</em></a> for more information.</p>
+and the <tt class="docutils literal"><span class="pre">src/autoload.php</span></tt> file. Read the <a class="reference internal" href="../components/class_loader.html"><em>dedicated chapter</em></a> for more information.</p>
 </div>
 <div class="section" id="httpfoundation-component">
 <h3><tt class="docutils literal"><span class="pre">HttpFoundation</span></tt> Component<a class="headerlink" href="#httpfoundation-component" title="Permalink to this headline">¶</a></h3>
@@ -317,7 +317,7 @@ ESI tags.</li>
 <div class="section" id="kernel-exception-event">
 <span id="kernel-kernel-exception"></span><span id="index-10"></span><h4><tt class="docutils literal"><span class="pre">kernel.exception</span></tt> Event<a class="headerlink" href="#kernel-exception-event" title="Permalink to this headline">¶</a></h4>
 <p><em>Event Class</em>: <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent</span></tt></p>
-<p><tt class="docutils literal"><span class="pre">FrameworkBundle</span></tt> registers a
+<p><tt class="docutils literal"><span class="pre">FrameworkBundle</span></tt> registers an
 <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\HttpKernel\EventListener\ExceptionListener</span></tt> that
 forwards the <tt class="docutils literal"><span class="pre">Request</span></tt> to a given Controller (the value of the
 <tt class="docutils literal"><span class="pre">exception_listener.controller</span></tt> parameter &#8211; must be in the
@@ -344,7 +344,7 @@ and set a new <tt class="docutils literal"><span class="pre">Exception</span></t
 </div>
 </div>
 <div class="section" id="the-event-dispatcher">
-<span id="index-11"></span><h2>The Event Dispatcher<a class="headerlink" href="#the-event-dispatcher" title="Permalink to this headline">¶</a></h2>
+<span id="book-internals-event-dispatcher"></span><span id="index-11"></span><h2>The Event Dispatcher<a class="headerlink" href="#the-event-dispatcher" title="Permalink to this headline">¶</a></h2>
 <p>Objected Oriented code has gone a long way to ensuring code extensibility. By
 creating classes that have well defined responsibilities, your code becomes
 more flexible and a developer can extend them with subclasses to modify their
@@ -362,7 +362,7 @@ truly extensible.</p>
 <tt class="docutils literal"><span class="pre">Response</span></tt> object has been created, it may be useful to allow other elements
 in the system to modify it (e.g. add some cache headers) before it&#8217;s actually
 used. To make this possible, the Symfony2 kernel throws an event -
-<tt class="docutils literal"><span class="pre">kernel.response</span></tt>. Here&#8217;s how it work:</p>
+<tt class="docutils literal"><span class="pre">kernel.response</span></tt>. Here&#8217;s how it works:</p>
 <ul class="simple">
 <li>A <em>listener</em> (PHP object) tells a central <em>dispatcher</em> object that it wants
 to listen to the <tt class="docutils literal"><span class="pre">kernel.response</span></tt> event;</li>
@@ -370,13 +370,13 @@ to listen to the <tt class="docutils literal"><span class="pre">kernel.response<
 the <tt class="docutils literal"><span class="pre">kernel.response</span></tt> event, passing with it an <tt class="docutils literal"><span class="pre">Event</span></tt> object that has
 access to the <tt class="docutils literal"><span class="pre">Response</span></tt> object;</li>
 <li>The dispatcher notifies (i.e. calls a method on) all listeners of the
-<tt class="docutils literal"><span class="pre">kernel.response</span></tt> event, allowing each of them to make any modification to
+<tt class="docutils literal"><span class="pre">kernel.response</span></tt> event, allowing each of them to make modifications to
 the <tt class="docutils literal"><span class="pre">Response</span></tt> object.</li>
 </ul>
 <div class="section" id="event-dispatcher">
 <span id="index-12"></span><span id="id11"></span><h3>Events<a class="headerlink" href="#event-dispatcher" title="Permalink to this headline">¶</a></h3>
 <p>When an event is dispatched, it&#8217;s identified by a unique name (e.g.
-<tt class="docutils literal"><span class="pre">kernel.response</span></tt>), which any number of listeners might be listening to. A
+<tt class="docutils literal"><span class="pre">kernel.response</span></tt>), which any number of listeners might be listening to. An
 <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\EventDispatcher\Event</span></tt> instance is also created
 and passed to all of the listeners. As you&#8217;ll see later, the <tt class="docutils literal"><span class="pre">Event</span></tt> object
 itself often contains data about the event being dispatched.</p>
@@ -573,7 +573,7 @@ object. Create an <tt class="docutils literal"><span class="pre">Event</span></t
 <span class="x">}</span>
 </pre></div>
 </div>
-<p>Each listener now has access to to <tt class="docutils literal"><span class="pre">Order</span></tt> object via the <tt class="docutils literal"><span class="pre">getOrder</span></tt>
+<p>Each listener now has access to the <tt class="docutils literal"><span class="pre">Order</span></tt> object via the <tt class="docutils literal"><span class="pre">getOrder</span></tt>
 method.</p>
 </div>
 <div class="section" id="dispatch-the-event">
@@ -648,9 +648,17 @@ time. But when you have a long list of dependencies, using setter injection
 can be the way to go, especially for optional dependencies.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">If you use dependency injection like we did in the two examples above, you
+<p>If you use dependency injection like we did in the two examples above, you
 can then use the <a class="reference external" href="https://github.com/symfony/DependencyInjection">Symfony2 Dependency Injection component</a> to elegantly
-manage these objects.</p>
+manage the injection of the <tt class="docutils literal"><span class="pre">event_dispatcher</span></tt> service for these objects.</p>
+<blockquote class="last">
+<div><div class="highlight-yaml"><pre># src/Acme/HelloBundle/Resources/config/services.yml
+services:
+    foo_service:
+        class: Acme/HelloBundle/Foo/FooService
+        arguments: [@event_dispatcher]</pre>
+</div>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="using-event-subscribers">
@@ -704,9 +712,15 @@ method:</p>
 </pre></div>
 </div>
 <p>The dispatcher will automatically register the subscriber for each event
-returned by the <tt class="docutils literal"><span class="pre">getSubscribedEvents</span></tt> method. Like with listeners, the
-<tt class="docutils literal"><span class="pre">addSubscriber</span></tt> method has an optional second argument, which is the
-priority that should be given to each event.</p>
+returned by the <tt class="docutils literal"><span class="pre">getSubscribedEvents</span></tt> method. This method returns an array
+indexed by event names and whose values are either the method name to call or
+an array composed of the method name to call and a priority.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If you use the Symfony2 MVC framework, subscribers can be registered via
+your <a class="reference internal" href="../reference/dic_tags.html#dic-tags-kernel-event-subscriber"><em>configuration</em></a>. As an added
+bonus, the subscriber objects are instantiated only when needed.</p>
+</div>
 </div>
 <div class="section" id="stopping-event-flow-propagation">
 <span id="event-dispatcher-event-propagation"></span><span id="index-18"></span><h3>Stopping Event Flow/Propagation<a class="headerlink" href="#stopping-event-flow-propagation" title="Permalink to this headline">¶</a></h3>
@@ -1097,12 +1111,12 @@ portion of the website? You can use a request matcher:</p>
         <li class="right" >
           <a href="performance.html" title="Performance"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

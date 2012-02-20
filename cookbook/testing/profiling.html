@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use the Profiler in a Functional Test &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to use the Profiler in a Functional Test &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +22,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to add “Remember Me” Login Functionality" href="../security/remember_me.html" />
+    <link rel="next" title="How to test Doctrine Repositories" href="doctrine.html" />
     <link rel="prev" title="How to test the Interaction of several Clients" href="insulating_clients.html" /> 
   </head>
   <body>
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../security/remember_me.html" title="How to add “Remember Me” Login Functionality"
+          <a href="doctrine.html" title="How to test Doctrine Repositories"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="insulating_clients.html" title="How to test the Interaction of several Clients"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -74,10 +74,10 @@ check that the profiler is indeed available (it is enabled by default in the
         // Check that the profiler is enabled
         if ($profile = $client-&gt;getProfile()) {
             // check the number of requests
-            $this-&gt;assertTrue($profile-&gt;get('db')-&gt;getQueryCount() &lt; 10);
+            $this-&gt;assertTrue($profile-&gt;getCollector('db')-&gt;getQueryCount() &lt; 10);
 
             // check the time spent in the framework
-            $this-&gt;assertTrue( $profile-&gt;get('timer')-&gt;getTime() &lt; 0.5);
+            $this-&gt;assertTrue( $profile-&gt;getCollector('timer')-&gt;getTime() &lt; 0.5);
         }
     }
 }</pre>
@@ -118,8 +118,8 @@ to learn more about their interfaces.</p>
   <p class="topless"><a href="insulating_clients.html"
                         title="previous chapter">How to test the Interaction of several Clients</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../security/remember_me.html"
-                        title="next chapter">How to add &#8220;Remember Me&#8221; Login Functionality</a></p>
+  <p class="topless"><a href="doctrine.html"
+                        title="next chapter">How to test Doctrine Repositories</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/testing/profiling.txt"
@@ -149,17 +149,17 @@ to learn more about their interfaces.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../security/remember_me.html" title="How to add “Remember Me” Login Functionality"
+          <a href="doctrine.html" title="How to test Doctrine Repositories"
              >next</a> |</li>
         <li class="right" >
           <a href="insulating_clients.html" title="How to test the Interaction of several Clients"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Create a SOAP Web Service in a Symfony2 Controller &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to Create a SOAP Web Service in a Symfony2 Controller &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
     <link rel="next" title="How Symfony2 differs from symfony1" href="../symfony1.html" />
     <link rel="prev" title="How to create a custom Data Collector" href="../profiler/data_collector.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="../profiler/data_collector.html" title="How to create a custom Data Collector"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -59,7 +59,7 @@ create one from scratch or use a 3rd party generator.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">There are several SOAP server implementations available for use with
-PHP.  <a class="reference external" href="http://framework.zend.com/manual/en/zend.soap.server.html">Zend SOAP</a> and <a class="reference external" href="http://sourceforge.net/projects/nusoap">NuSOAP</a> are two examples.  Although we use
+PHP. <a class="reference external" href="http://framework.zend.com/manual/en/zend.soap.server.html">Zend SOAP</a> and <a class="reference external" href="http://sourceforge.net/projects/nusoap">NuSOAP</a> are two examples. Although we use
 the PHP SOAP extension in our examples, the general idea should still
 be applicable to other implementations.</p>
 </div>
@@ -67,7 +67,7 @@ be applicable to other implementations.</p>
 (i.e. the person using the SOAP service). To start, create a class - <tt class="docutils literal"><span class="pre">HelloService</span></tt> -
 which represents the functionality that you&#8217;ll expose in your SOAP service.
 In this case, the SOAP service will allow the client to call a method called
-<tt class="docutils literal"><span class="pre">hello</span></tt>, which happens to send an email address:</p>
+<tt class="docutils literal"><span class="pre">hello</span></tt>, which happens to send an email:</p>
 <div class="highlight-python"><pre>namespace Acme\SoapBundle;
 
 class HelloService
@@ -92,7 +92,6 @@ class HelloService
 
         return 'Hello, ' . $name;
     }
-
 }</pre>
 </div>
 <p>Next, you can train Symfony to be able to create an instance of this class.
@@ -156,7 +155,7 @@ buffering the STDOUT and use  <tt class="docutils literal"><span class="pre">ob_
 into the content of the Response and clear the output buffer.  Finally, you&#8217;re
 ready to return the <tt class="docutils literal"><span class="pre">Response</span></tt>.</p>
 <p>Below is an example calling the service using <a class="reference external" href="http://sourceforge.net/projects/nusoap">NuSOAP</a> client.  This example
-assumes the <tt class="docutils literal"><span class="pre">indexAction</span></tt> in the controller above is accessible via the
+assumes that the <tt class="docutils literal"><span class="pre">indexAction</span></tt> in the controller above is accessible via the
 route <tt class="docutils literal"><span class="pre">/soap</span></tt>:</p>
 <div class="highlight-python"><pre>$client = new \soapclient('http://example.com/app.php/soap?wsdl', true);
 
@@ -262,12 +261,12 @@ $result = $client-&gt;call('hello', array('name' =&gt; 'Scott'));</pre>
         <li class="right" >
           <a href="../profiler/data_collector.html" title="How to create a custom Data Collector"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

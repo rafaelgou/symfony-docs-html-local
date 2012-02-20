@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Validation &mdash; Symfony2Docs v0 documentation</title>
+    <title>Validation &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Forms" href="forms.html" />
     <link rel="prev" title="Testing" href="testing.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="testing.html" title="Testing"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -107,7 +107,7 @@ class Author
 <span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
 <span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
     <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>
@@ -253,7 +253,7 @@ public function updateAction(Request $request)
         if ($form-&gt;isValid()) {
             // the validation passed, do something with the $author object
 
-            $this-&gt;redirect($this-&gt;generateUrl('...'));
+            return $this-&gt;redirect($this-&gt;generateUrl('...'));
         }
     }
 
@@ -310,9 +310,76 @@ is true. Given a value, a constraint will tell you whether or not that value
 adheres to the rules of the constraint.</p>
 <div class="section" id="supported-constraints">
 <h3>Supported Constraints<a class="headerlink" href="#supported-constraints" title="Permalink to this headline">¶</a></h3>
-<p>Symfony2 packages a large number of the most commonly-needed constraints.
-The full list of constraints with details is available in the
-<a class="reference internal" href="../reference/constraints.html"><em>constraints reference section</em></a>.</p>
+<p>Symfony2 packages a large number of the most commonly-needed constraints:</p>
+</div>
+<div class="section" id="basic-constraints">
+<h3>Basic Constraints<a class="headerlink" href="#basic-constraints" title="Permalink to this headline">¶</a></h3>
+<p>These are the basic constraints: use them to assert very basic things about
+the value of properties or the return value of methods on your object.</p>
+<ul class="simple">
+<li><a class="reference internal" href="../reference/constraints/NotBlank.html"><em>NotBlank</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Blank.html"><em>Blank</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/NotNull.html"><em>NotNull</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Null.html"><em>Null</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/True.html"><em>True</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/False.html"><em>False</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Type.html"><em>Type</em></a></li>
+</ul>
+</div>
+<div class="section" id="string-constraints">
+<h3>String Constraints<a class="headerlink" href="#string-constraints" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../reference/constraints/Email.html"><em>Email</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/MinLength.html"><em>MinLength</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/MaxLength.html"><em>MaxLength</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Url.html"><em>Url</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Regex.html"><em>Regex</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Ip.html"><em>Ip</em></a></li>
+</ul>
+</div>
+<div class="section" id="number-constraints">
+<h3>Number Constraints<a class="headerlink" href="#number-constraints" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../reference/constraints/Max.html"><em>Max</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Min.html"><em>Min</em></a></li>
+</ul>
+</div>
+<div class="section" id="date-constraints">
+<h3>Date Constraints<a class="headerlink" href="#date-constraints" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../reference/constraints/Date.html"><em>Date</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/DateTime.html"><em>DateTime</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Time.html"><em>Time</em></a></li>
+</ul>
+</div>
+<div class="section" id="collection-constraints">
+<h3>Collection Constraints<a class="headerlink" href="#collection-constraints" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../reference/constraints/Choice.html"><em>Choice</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Collection.html"><em>Collection</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/UniqueEntity.html"><em>UniqueEntity</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Language.html"><em>Language</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Locale.html"><em>Locale</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Country.html"><em>Country</em></a></li>
+</ul>
+</div>
+<div class="section" id="file-constraints">
+<h3>File Constraints<a class="headerlink" href="#file-constraints" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../reference/constraints/File.html"><em>File</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Image.html"><em>Image</em></a></li>
+</ul>
+</div>
+<div class="section" id="other-constraints">
+<h3>Other Constraints<a class="headerlink" href="#other-constraints" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><a class="reference internal" href="../reference/constraints/Callback.html"><em>Callback</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/All.html"><em>All</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/UserPassword.html"><em>UserPassword</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Valid.html"><em>Valid</em></a></li>
+</ul>
+<p>You can also create your own custom constraints. This topic is covered in
+the &#8220;<a class="reference internal" href="../cookbook/validation/custom_constraint.html"><em>How to create a Custom Validation Constraint</em></a>&#8221; article of the cookbook.</p>
 </div>
 <div class="section" id="constraint-configuration">
 <span id="book-validation-constraint-configuration"></span><span id="index-5"></span><h3>Constraint Configuration<a class="headerlink" href="#constraint-configuration" title="Permalink to this headline">¶</a></h3>
@@ -350,7 +417,7 @@ class Author
 <span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
 <span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
     <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;gender&quot;</span><span class="nt">&gt;</span>
@@ -418,7 +485,7 @@ class Author
 <span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
 <span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/services/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
     <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;gender&quot;</span><span class="nt">&gt;</span>
@@ -639,7 +706,7 @@ user registers and when a user updates his/her contact information later:</p>
 <li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/BlogBundle/Entity/User.php
 namespace Acme\BlogBundle\Entity;
 
-use Symfony\Component\Security\Core\User\UserInterface
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class User implements UserInterface
@@ -737,6 +804,46 @@ as the second argument to the <tt class="docutils literal"><span class="pre">val
 library. For information on how to use validation groups inside forms, see
 <a class="reference internal" href="forms.html#book-forms-validation-groups"><em>Validation Groups</em></a>.</p>
 </div>
+<div class="section" id="validating-values-and-arrays">
+<span id="book-validation-raw-values"></span><span id="index-9"></span><h2>Validating Values and Arrays<a class="headerlink" href="#validating-values-and-arrays" title="Permalink to this headline">¶</a></h2>
+<p>So far, you&#8217;ve seen how you can validate entire objects. But sometimes, you
+just want to validate a simple value - like to verify that a string is a valid
+email address. This is actually pretty easy to do. From inside a controller,
+it looks like this:</p>
+<div class="highlight-python"><pre>// add this to the top of your class
+use Symfony\Component\Validator\Constraints\Email;
+
+public function addEmailAction($email)
+{
+    $emailConstraint = new Email();
+    // all constraint "options" can be set this way
+    $emailConstraint-&gt;message = 'Invalid email address';
+
+    // use the validator to validate the value
+    $errorList = $this-&gt;get('validator')-&gt;validateValue($email, $emailConstraint);
+
+    if (count($errorList) == 0) {
+        // this IS a valid email address, do something
+    } else {
+        // this is *not* a valid email address
+        $errorMessage = $errorList[0]-&gt;getMessage()
+
+        // do something with the error
+    }
+
+    // ...
+}</pre>
+</div>
+<p>By calling <tt class="docutils literal"><span class="pre">validateValue</span></tt> on the validator, you can pass in a raw value and
+the constraint object that you want to validate that value against. A full
+list of the available constraints - as well as the full class name for each
+constraint - is available in the <a class="reference internal" href="../reference/constraints.html"><em>constraints reference</em></a>
+section .</p>
+<p>The <tt class="docutils literal"><span class="pre">validateValue</span></tt> method returns a <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\ConstraintViolationList</span></tt>
+object, which acts just like an array of errors. Each error in the collection
+is a <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\ConstraintViolation</span></tt> object,
+which holds the error message on its <cite>getMessage</cite> method.</p>
+</div>
 <div class="section" id="final-thoughts">
 <h2>Final Thoughts<a class="headerlink" href="#final-thoughts" title="Permalink to this headline">¶</a></h2>
 <p>The Symfony2 <tt class="docutils literal"><span class="pre">validator</span></tt> is a powerful tool that can be leveraged to
@@ -771,6 +878,13 @@ to validate any object.</p>
 <li><a class="reference internal" href="#configuration">Configuration</a></li>
 <li><a class="reference internal" href="#constraints">Constraints</a><ul>
 <li><a class="reference internal" href="#supported-constraints">Supported Constraints</a></li>
+<li><a class="reference internal" href="#basic-constraints">Basic Constraints</a></li>
+<li><a class="reference internal" href="#string-constraints">String Constraints</a></li>
+<li><a class="reference internal" href="#number-constraints">Number Constraints</a></li>
+<li><a class="reference internal" href="#date-constraints">Date Constraints</a></li>
+<li><a class="reference internal" href="#collection-constraints">Collection Constraints</a></li>
+<li><a class="reference internal" href="#file-constraints">File Constraints</a></li>
+<li><a class="reference internal" href="#other-constraints">Other Constraints</a></li>
 <li><a class="reference internal" href="#constraint-configuration">Constraint Configuration</a></li>
 </ul>
 </li>
@@ -781,6 +895,7 @@ to validate any object.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#validation-groups">Validation Groups</a></li>
+<li><a class="reference internal" href="#validating-values-and-arrays">Validating Values and Arrays</a></li>
 <li><a class="reference internal" href="#final-thoughts">Final Thoughts</a></li>
 <li><a class="reference internal" href="#learn-more-from-the-cookbook">Learn more from the Cookbook</a></li>
 </ul>
@@ -827,12 +942,12 @@ to validate any object.</p>
         <li class="right" >
           <a href="testing.html" title="Testing"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

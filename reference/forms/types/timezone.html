@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>timezone Field Type &mdash; Symfony2Docs v0 documentation</title>
+    <title>timezone Field Type &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../../index.html" />
     <link rel="up" title="Form Types Reference" href="../types.html" />
     <link rel="next" title="url Field Type" href="url.html" />
     <link rel="prev" title="time Field Type" href="time.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="time.html" title="time Field Type"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" accesskey="U">Form Types Reference</a> &raquo;</li> 
       </ul>
@@ -76,6 +76,7 @@ options</td>
 <li><a class="reference internal" href="#multiple">multiple</a></li>
 <li><a class="reference internal" href="#expanded">expanded</a></li>
 <li><a class="reference internal" href="#preferred-choices">preferred_choices</a></li>
+<li><a class="reference internal" href="#empty-value">empty_value</a></li>
 <li><a class="reference internal" href="#error-bubbling">error_bubbling</a></li>
 <li><a class="reference internal" href="#required">required</a></li>
 <li><a class="reference internal" href="#label">label</a></li>
@@ -135,12 +136,41 @@ This can be customized when rendering the field:</p>
 </li>
 </ul>
 </div>
+</div>
+<div class="section" id="empty-value">
+<h3>empty_value<a class="headerlink" href="#empty-value" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> or <tt class="docutils literal"><span class="pre">Boolean</span></tt></p>
+<p>This option determines whether or not a special &#8220;empty&#8221; option (e.g. &#8220;Choose an option&#8221;)
+will appear at the top of a select widget. This option only applies if both
+the <tt class="docutils literal"><span class="pre">expanded</span></tt> and <tt class="docutils literal"><span class="pre">multiple</span></tt> options are set to false.</p>
+<ul>
+<li><p class="first">Add an empty value with &#8220;Choose an option&#8221; as the text:</p>
+<div class="highlight-python"><pre>$builder-&gt;add('states', 'choice', array(
+    'empty_value' =&gt; 'Choose an option',
+));</pre>
+</div>
+</li>
+<li><p class="first">Guarantee that no &#8220;empty&#8221; value option is displayed:</p>
+<div class="highlight-python"><pre>$builder-&gt;add('states', 'choice', array(
+    'empty_value' =&gt; false,
+));</pre>
+</div>
+</li>
+</ul>
+<p>If you leave the <tt class="docutils literal"><span class="pre">empty_value</span></tt> option unset, then a blank (with no text)
+option will automatically be added if and only if the <tt class="docutils literal"><span class="pre">required</span></tt> option
+is false:</p>
+<div class="highlight-python"><pre>// a blank (with no text) option will be added
+$builder-&gt;add('states', 'choice', array(
+    'required' =&gt; false,
+));</pre>
+</div>
 <p>These options inherit from the <a class="reference internal" href="field.html"><em>field</em></a> type:</p>
 </div>
 <div class="section" id="required">
 <h3>required<a class="headerlink" href="#required" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">true</span></tt></p>
-<p>If true, an <a class="reference external" href="http://diveintohtml5.org/forms.html">HTML5 required attribute</a> will be rendered. The corresponding
+<p>If true, an <a class="reference external" href="http://diveintohtml5.info/forms.html">HTML5 required attribute</a> will be rendered. The corresponding
 <tt class="docutils literal"><span class="pre">label</span></tt> will also render with a <tt class="docutils literal"><span class="pre">required</span></tt> class.</p>
 <p>This is superficial and independent from validation. At best, if you let Symfony
 guess your field type, then the value of this option will be guessed from
@@ -151,7 +181,7 @@ your validation information.</p>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: The label is &#8220;guessed&#8221; from the field name</p>
 <p>Sets the label that will be used when rendering the field. The label can
 also be directly set inside the template:</p>
-<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">render_label</span><span class="o">(</span><span class="nv">form.name</span><span class="o">,</span> <span class="s1">&#39;Your name&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">form_label</span><span class="o">(</span><span class="nv">form.name</span><span class="o">,</span> <span class="s1">&#39;Your name&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
 </pre></div>
 </div>
 </div>
@@ -184,6 +214,7 @@ that field will be attached to the main form, not to the specific field.</p>
 <li><a class="reference internal" href="#multiple">multiple</a></li>
 <li><a class="reference internal" href="#expanded">expanded</a></li>
 <li><a class="reference internal" href="#preferred-choices">preferred_choices</a></li>
+<li><a class="reference internal" href="#empty-value">empty_value</a></li>
 <li><a class="reference internal" href="#required">required</a></li>
 <li><a class="reference internal" href="#label">label</a></li>
 <li><a class="reference internal" href="#read-only">read_only</a></li>
@@ -234,13 +265,13 @@ that field will be attached to the main form, not to the specific field.</p>
         <li class="right" >
           <a href="time.html" title="time Field Type"
              >previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" >Form Types Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

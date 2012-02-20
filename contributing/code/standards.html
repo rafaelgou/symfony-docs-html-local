@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Coding Standards &mdash; Symfony2Docs v0 documentation</title>
+    <title>Coding Standards &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Contributing Code" href="index.html" />
     <link rel="next" title="Conventions" href="conventions.html" />
     <link rel="prev" title="Running Symfony2 Tests" href="tests.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="tests.html" title="Running Symfony2 Tests"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Contributing Code</a> &raquo;</li> 
       </ul>
@@ -96,7 +96,8 @@ example containing most features described below:</p>
     <span class="p">{</span>
         <span class="k">if</span> <span class="p">(</span><span class="k">true</span> <span class="o">===</span> <span class="nv">$dummy</span><span class="p">)</span> <span class="p">{</span>
             <span class="k">return</span><span class="p">;</span>
-        <span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="s1">&#39;string&#39;</span> <span class="o">===</span> <span class="nv">$dummy</span><span class="p">)</span> <span class="p">{</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;string&#39;</span> <span class="o">===</span> <span class="nv">$dummy</span><span class="p">)</span> <span class="p">{</span>
             <span class="nv">$dummy</span> <span class="o">=</span> <span class="nb">substr</span><span class="p">(</span><span class="nv">$dummy</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
         <span class="p">}</span>
 
@@ -117,7 +118,8 @@ example containing most features described below:</p>
 <li>Add a single space around operators (<cite>==</cite>, <cite>&amp;&amp;</cite>, ...);</li>
 <li>Add a single space before the opening parenthesis of a control keyword
 (<cite>if</cite>, <cite>else</cite>, <cite>for</cite>, <cite>while</cite>, ...);</li>
-<li>Add a blank line before <cite>return</cite> statements;</li>
+<li>Add a blank line before <cite>return</cite> statements, unless the return is alone
+inside a statement-group (like an <cite>if</cite> statement);</li>
 <li>Don&#8217;t add trailing spaces at the end of lines;</li>
 <li>Use braces to indicate control structure body regardless of the number of
 statements it contains;</li>
@@ -130,7 +132,9 @@ brace with a single space and no blank line;</li>
 <li>Use lowercase PHP native typed constants: <cite>false</cite>, <cite>true</cite>, and <cite>null</cite>. The
 same goes for <cite>array()</cite>;</li>
 <li>Use uppercase strings for constants with words separated with underscores;</li>
-<li>Define one class per file;</li>
+<li>Define one class per file - this does not apply to private helper classes
+that are not intended to be instantiated from the outside and thus are not
+concerned by the PSR-0 standard;</li>
 <li>Declare class properties before methods;</li>
 <li>Declare public methods first, then protected ones and finally private ones.</li>
 </ul>
@@ -142,7 +146,6 @@ same goes for <cite>array()</cite>;</li>
 names;</li>
 <li>Use underscores for option, argument, parameter names;</li>
 <li>Use namespaces for all classes;</li>
-<li>Use <cite>Symfony</cite> as the first namespace level;</li>
 <li>Suffix interfaces with <cite>Interface</cite>;</li>
 <li>Use alphanumeric characters and underscores for file names;</li>
 <li>Don&#8217;t forget to look at the more verbose <a class="reference internal" href="conventions.html"><em>Conventions</em></a> document for
@@ -153,6 +156,7 @@ more subjective naming considerations.</li>
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li>Add PHPDoc blocks for all classes, methods, and functions;</li>
+<li>Omit the <cite>&#64;return</cite> tag if the method does not return anything;</li>
 <li>The <cite>&#64;package</cite> and <cite>&#64;subpackage</cite> annotations are not used.</li>
 </ul>
 </div>
@@ -222,13 +226,13 @@ present at the top of every PHP file, before the namespace.</li>
         <li class="right" >
           <a href="tests.html" title="Running Symfony2 Tests"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" >Contributing Code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

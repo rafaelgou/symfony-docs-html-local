@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Valid &mdash; Symfony2Docs v0 documentation</title>
+    <title>Valid &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
     <link rel="next" title="The Dependency Injection Tags" href="../dic_tags.html" />
-    <link rel="prev" title="Url" href="Url.html" /> 
+    <link rel="prev" title="UserPassword" href="UserPassword.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,9 +38,9 @@
           <a href="../dic_tags.html" title="The Dependency Injection Tags"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Url.html" title="Url"
+          <a href="UserPassword.html" title="UserPassword"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -53,18 +53,34 @@
             
   <div class="section" id="valid">
 <h1>Valid<a class="headerlink" href="#valid" title="Permalink to this headline">¶</a></h1>
-<p>Marks an associated object to be validated itself.</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">address</span><span class="p-Indicator">:</span>
-        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Valid</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
-</pre></div>
-</div>
-<div class="section" id="example-validate-object-graphs">
-<h2>Example: Validate object graphs<a class="headerlink" href="#example-validate-object-graphs" title="Permalink to this headline">¶</a></h2>
-<p>This constraint helps to validate whole object graphs. In the following example,
-we create two classes <tt class="docutils literal"><span class="pre">Author</span></tt> and <tt class="docutils literal"><span class="pre">Address</span></tt> that both have constraints on
-their properties. Furthermore, <tt class="docutils literal"><span class="pre">Author</span></tt> stores an <tt class="docutils literal"><span class="pre">Address</span></tt> instance in the
-<tt class="docutils literal"><span class="pre">$address</span></tt> property.</p>
+<p>This constraint is used to enable validation on objects that are embedded
+as properties on an object being validated. This allows you to validate an
+object and all sub-objects associated with it.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Applies to</td>
+<td><a class="reference internal" href="../../book/validation.html#validation-property-target"><em>property or method</em></a></td>
+</tr>
+<tr><td>Options</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="#traverse">traverse</a></li>
+</ul>
+</td>
+</tr>
+<tr><td>Class</td>
+<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\Type</span></tt></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>In the following example, we create two classes <tt class="docutils literal"><span class="pre">Author</span></tt> and <tt class="docutils literal"><span class="pre">Address</span></tt>
+that both have constraints on their properties. Furthermore, <tt class="docutils literal"><span class="pre">Author</span></tt> stores
+an <tt class="docutils literal"><span class="pre">Address</span></tt> instance in the <tt class="docutils literal"><span class="pre">$address</span></tt> property.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/Address.php</span>
 <span class="x">class Address</span>
 <span class="x">{</span>
@@ -205,9 +221,9 @@ class Author
 </li>
 </ul>
 </div>
-<p>With this mapping it is possible to successfully validate an author with an
-invalid address. To prevent that, we add the <tt class="docutils literal"><span class="pre">Valid</span></tt> constraint to the
-<tt class="docutils literal"><span class="pre">$address</span></tt> property.</p>
+<p>With this mapping, it is possible to successfully validate an author with an
+invalid address. To prevent that, add the <tt class="docutils literal"><span class="pre">Valid</span></tt> constraint to the <tt class="docutils literal"><span class="pre">$address</span></tt>
+property.</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/HelloBundle/Resources/config/validation.yml</span>
@@ -265,6 +281,16 @@ validation of the <tt class="docutils literal"><span class="pre">Address</span><
 <div>AcmeHelloBundleAuthor.address.zipCode:
 This value is too long. It should have 5 characters or less</div></blockquote>
 </div>
+<div class="section" id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="traverse">
+<h3>traverse<a class="headerlink" href="#traverse" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">true</span></tt></p>
+<p>If this constraint is applied to a property that holds an array of objects,
+then each object in that array will be validated only if this option is set
+to <tt class="docutils literal"><span class="pre">true</span></tt>.</p>
+</div>
+</div>
 </div>
 
 
@@ -276,14 +302,18 @@ This value is too long. It should have 5 characters or less</div></blockquote>
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Valid</a><ul>
-<li><a class="reference internal" href="#example-validate-object-graphs">Example: Validate object graphs</a></li>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li><a class="reference internal" href="#options">Options</a><ul>
+<li><a class="reference internal" href="#traverse">traverse</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="Url.html"
-                        title="previous chapter">Url</a></p>
+  <p class="topless"><a href="UserPassword.html"
+                        title="previous chapter">UserPassword</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../dic_tags.html"
                         title="next chapter">The Dependency Injection Tags</a></p>
@@ -319,15 +349,15 @@ This value is too long. It should have 5 characters or less</div></blockquote>
           <a href="../dic_tags.html" title="The Dependency Injection Tags"
              >next</a> |</li>
         <li class="right" >
-          <a href="Url.html" title="Url"
+          <a href="UserPassword.html" title="UserPassword"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

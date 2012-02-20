@@ -1,14 +1,16 @@
-Symfony Documentation
-=====================
+# Symfony2 Docs in HTML Local version
 
-This documentation is rendered online at http://symfony.com/doc/current/
+GitHub: <http://github.com/rafaelgou/symfony-docs-html-local>
 
-Contributing
-------------
+A locally browseable version of the online documentation in <http://symfony.com/doc/current>
 
->**Note** 
->Unless you're documenting a feature that's new to Symfony 2.1, all pull
->requests must be based off of the **2.0** branch, **not** the master branch.
+Just download (or clone) to a folder and open index.html.
 
-We love contributors! For more information on how you can contribute to the
-Symfony documentation, please read [Contributing to the Documentation](http://symfony.com/doc/current/contributing/documentation/overview.html) 
+For search works, must be in a fully functional web server (a simple local install of Apache is enough)
+
+Want to know how to build for yourself? See:
+
+English: <http://tech.rgou.net/en/symfony/documentacao-symfony2-em-html-local-epub-e-quase-pdf/>
+
+Portuguese: <http://tech.rgou.net/symfony/documentacao-symfony2-em-html-local-epub-e-quase-pdf/>
+

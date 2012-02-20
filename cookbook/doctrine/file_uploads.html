@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to handle File Uploads with Doctrine &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to handle File Uploads with Doctrine &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
     <link rel="next" title="Doctrine Extensions: Timestampable: Sluggable, Translatable, etc." href="common_extensions.html" />
-    <link rel="prev" title="How to use Doctrine Migrations" href="migrations.html" /> 
+    <link rel="prev" title="How to Apply an Assetic Filter to a Specific File Extension" href="../assetic/apply_to_option.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,9 +38,9 @@
           <a href="common_extensions.html" title="Doctrine Extensions: Timestampable: Sluggable, Translatable, etc."
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="migrations.html" title="How to use Doctrine Migrations"
+          <a href="../assetic/apply_to_option.html" title="How to Apply an Assetic Filter to a Specific File Extension"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -132,7 +132,7 @@ understand how the basic upload process works.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you&#8217;re using annotations to specify your annotation rules (as shown
+<p class="last">If you&#8217;re using annotations to specify your validation rules (as shown
 in this example), be sure that you&#8217;ve enabled validation by annotation
 (see <a class="reference internal" href="../../book/validation.html#book-validation-configuration"><em>validation configuration</em></a>).</p>
 </div>
@@ -251,7 +251,7 @@ object, which is what&#8217;s returned after a <tt class="docutils literal"><spa
     $this-&gt;file-&gt;move($this-&gt;getUploadRootDir(), $this-&gt;file-&gt;getClientOriginalName());
 
     // set the path property to the filename where you'ved saved the file
-    $this-&gt;setPath($this-&gt;file-&gt;getClientOriginalName());
+    $this-&gt;path = $this-&gt;file-&gt;getClientOriginalName();
 
     // clean up the file property as you won't need it anymore
     $this-&gt;file = null;
@@ -296,7 +296,7 @@ class Document
     {
         if (null !== $this-&gt;file) {
             // do whatever you want to generate a unique name
-            $this-&gt;setPath(uniqid().'.'.$this-&gt;file-&gt;guessExtension());
+            $this-&gt;path = uniqid().'.'.$this-&gt;file-&gt;guessExtension();
         }
     }
 
@@ -310,9 +310,9 @@ class Document
             return;
         }
 
-        // you must throw an exception here if the file cannot be moved
-        // so that the entity is not persisted to the database
-        // which the UploadedFile move() method does automatically
+        // if there is an error when moving the file, an exception will
+        // be automatically thrown by move(). This will properly prevent
+        // the entity from being persisted to the database on error
         $this-&gt;file-&gt;move($this-&gt;getUploadRootDir(), $this-&gt;path);
 
         unset($this-&gt;file);
@@ -369,7 +369,7 @@ class Document
     public function preUpload()
     {
         if (null !== $this-&gt;file) {
-            $this-&gt;setPath($this-&gt;file-&gt;guessExtension());
+            $this-&gt;path = $this-&gt;file-&gt;guessExtension();
         }
     }
 
@@ -427,8 +427,8 @@ class Document
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="migrations.html"
-                        title="previous chapter">How to use Doctrine Migrations</a></p>
+  <p class="topless"><a href="../assetic/apply_to_option.html"
+                        title="previous chapter">How to Apply an Assetic Filter to a Specific File Extension</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="common_extensions.html"
                         title="next chapter">Doctrine Extensions: Timestampable: Sluggable, Translatable, etc.</a></p>
@@ -464,14 +464,14 @@ class Document
           <a href="common_extensions.html" title="Doctrine Extensions: Timestampable: Sluggable, Translatable, etc."
              >next</a> |</li>
         <li class="right" >
-          <a href="migrations.html" title="How to use Doctrine Migrations"
+          <a href="../assetic/apply_to_option.html" title="How to Apply an Assetic Filter to a Specific File Extension"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

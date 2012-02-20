@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Symfony2 Documentation &mdash; Symfony2Docs v0 documentation</title>
+    <title>Symfony2 Documentation &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="#" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="#" />
     <link rel="next" title="Quick Tour" href="quick_tour/index.html" /> 
   </head>
   <body>
@@ -35,7 +35,7 @@
         <li class="right" >
           <a href="quick_tour/index.html" title="Quick Tour"
              accesskey="N">next</a> |</li>
-        <li><a href="#">Symfony2Docs v0 documentation</a> &raquo;</li> 
+        <li><a href="#">Symfony2Docs v1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -90,33 +90,44 @@
 </div>
 <p>Read the <a class="reference internal" href="cookbook/index.html"><em>Cookbook</em></a>.</p>
 </div>
+<div class="section" id="components">
+<h2>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+</div>
+<p>Read the <a class="reference internal" href="components/index.html"><em>Components</em></a> documentation.</p>
+</div>
 <div class="section" id="reference-documents">
 <h2>Reference Documents<a class="headerlink" href="#reference-documents" title="Permalink to this headline">¶</a></h2>
 <p>Get answers quickly with reference documents:</p>
 <div class="toctree-wrapper compound">
 </div>
+<ul>
+<li><p class="first"><strong>Configuration Options</strong>:</p>
+<p>Ever wondered what configuration options you have available to you in files
+such as <tt class="docutils literal"><span class="pre">app/config/config.yml</span></tt>? In this section, all the available configuration
+is broken down by the key (e.g. <tt class="docutils literal"><span class="pre">framework</span></tt>) that defines each possible
+section of your Symfony2 configuration.</p>
 <ul class="simple">
-<li><strong>Bundle Configuration</strong>:<ul>
-<li><a class="reference internal" href="reference/configuration/framework.html"><em>FrameworkBundle (framework)</em></a></li>
-<li><a class="reference internal" href="reference/configuration/assetic.html"><em>AsseticBundle (assetic)</em></a></li>
-<li><a class="reference internal" href="reference/configuration/doctrine.html"><em>DoctrineBundle (doctrine)</em></a></li>
-<li><a class="reference internal" href="reference/configuration/security.html"><em>SecurityBundle (security)</em></a></li>
-<li><a class="reference internal" href="reference/configuration/swiftmailer.html"><em>SwiftMailerBundle (swiftmailer)</em></a></li>
-<li><a class="reference internal" href="reference/configuration/twig.html"><em>TwigBundle (twig)</em></a></li>
-<li><a class="reference internal" href="reference/configuration/monolog.html"><em>MonologBundle (monolog)</em></a></li>
-<li><a class="reference internal" href="reference/configuration/web_profiler.html"><em>WebProfilerBundle (web_profiler)</em></a></li>
-<li><a class="reference internal" href="reference/configuration/mongodb.html"><em>DoctrineMongoDBBundle (doctrine_mongodb)</em></a></li>
+<li><a class="reference internal" href="reference/configuration/framework.html"><em>framework</em></a></li>
+<li><a class="reference internal" href="reference/configuration/doctrine.html"><em>doctrine</em></a></li>
+<li><a class="reference internal" href="reference/configuration/security.html"><em>security</em></a></li>
+<li><a class="reference internal" href="reference/configuration/assetic.html"><em>assetic</em></a></li>
+<li><a class="reference internal" href="reference/configuration/swiftmailer.html"><em>swiftmailer</em></a></li>
+<li><a class="reference internal" href="reference/configuration/twig.html"><em>twig</em></a></li>
+<li><a class="reference internal" href="reference/configuration/monolog.html"><em>monolog</em></a></li>
+<li><a class="reference internal" href="reference/configuration/web_profiler.html"><em>web_profiler</em></a></li>
 </ul>
 </li>
-<li><strong>Forms</strong><ul>
+<li><p class="first"><strong>Forms and Validation</strong></p>
+<ul class="simple">
 <li><a class="reference internal" href="reference/forms/types.html"><em>Form Field Type Reference</em></a></li>
+<li><a class="reference internal" href="reference/constraints.html"><em>Validation Constraints Reference</em></a></li>
 <li><a class="reference internal" href="reference/forms/twig_reference.html"><em>Twig Template Function Reference</em></a></li>
 </ul>
 </li>
-<li><strong>Other Areas</strong><ul>
-<li><a class="reference internal" href="reference/constraints.html"><em>Validation Constraints Reference</em></a></li>
+<li><p class="first"><strong>Other Areas</strong></p>
+<ul class="simple">
 <li><a class="reference internal" href="reference/dic_tags.html"><em>The Dependency Injection Tags</em></a></li>
-<li><a class="reference internal" href="reference/YAML.html"><em>YAML</em></a></li>
 <li><a class="reference internal" href="reference/requirements.html"><em>Requirements for running Symfony2</em></a></li>
 </ul>
 </li>
@@ -131,6 +142,9 @@
 <li><tt class="xref doc docutils literal"><span class="pre">SensioFrameworkExtraBundle</span></tt></li>
 <li><tt class="xref doc docutils literal"><span class="pre">SensioGeneratorBundle</span></tt></li>
 <li><tt class="xref doc docutils literal"><span class="pre">JMSSecurityExtraBundle</span></tt></li>
+<li><tt class="xref doc docutils literal"><span class="pre">DoctrineFixturesBundle</span></tt></li>
+<li><tt class="xref doc docutils literal"><span class="pre">DoctrineMigrationsBundle</span></tt></li>
+<li><tt class="xref doc docutils literal"><span class="pre">DoctrineMongoDBBundle</span></tt></li>
 </ul>
 </div>
 <div class="section" id="contributing">
@@ -183,6 +197,9 @@
 <li><a class="reference internal" href="#cookbook">Cookbook</a><ul>
 </ul>
 </li>
+<li><a class="reference internal" href="#components">Components</a><ul>
+</ul>
+</li>
 <li><a class="reference internal" href="#reference-documents">Reference Documents</a><ul>
 </ul>
 </li>
@@ -230,11 +247,11 @@
         <li class="right" >
           <a href="quick_tour/index.html" title="Quick Tour"
              >next</a> |</li>
-        <li><a href="#">Symfony2Docs v0 documentation</a> &raquo;</li> 
+        <li><a href="#">Symfony2Docs v1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to create a Custom Validation Constraint &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to create a Custom Validation Constraint &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
     <link rel="next" title="How to Master and Create new Environments" href="../configuration/environments.html" />
     <link rel="prev" title="How to Create a Custom Form Field Type" href="../form/create_custom_field_type.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="../form/create_custom_field_type.html" title="How to Create a Custom Form Field Type"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -139,13 +139,19 @@ tag and an <tt class="docutils literal"><span class="pre">alias</span></tt> attr
 </li>
 </ul>
 </div>
-<p>Your constraint class may now use this alias to reference the appropriate
+<p>Your constraint class should now use this alias to reference the appropriate
 validator:</p>
 <div class="highlight-python"><pre>public function validatedBy()
 {
     return 'alias_name';
 }</pre>
 </div>
+<p>As mentioned above, Symfony2 will automatically look for a class named after
+the constraint, with <tt class="docutils literal"><span class="pre">Validator</span></tt> appended.  If your constraint validator
+is defined as a service, it&#8217;s important that you override the
+<tt class="docutils literal"><span class="pre">validatedBy()</span></tt> method to return the alias used when defining your service,
+otherwise Symfony2 won&#8217;t use the constraint validator service, and will
+instantiate the class instead, without any dependencies injected.</p>
 </div>
 </div>
 
@@ -203,12 +209,12 @@ validator:</p>
         <li class="right" >
           <a href="../form/create_custom_field_type.html" title="How to Create a Custom Form Field Type"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

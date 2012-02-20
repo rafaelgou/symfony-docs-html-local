@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Security &mdash; Symfony2Docs v0 documentation</title>
+    <title>Security &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="HTTP Cache" href="http_cache.html" />
     <link rel="prev" title="Forms" href="forms.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="forms.html" title="Forms"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -51,7 +51,7 @@
           <div class="body">
             
   <div class="section" id="security">
-<h1>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>Security<a class="headerlink" href="#security" title="Permalink to this headline">¶</a></h1>
 <p>Security is a two-step process whose goal is to prevent a user from accessing
 a resource that he/she should not have access to.</p>
 <p>In the first step of the process, the security system identifies who the user
@@ -62,7 +62,7 @@ you are.</p>
 have access to a given resource. This part of the process is called <strong>authorization</strong>,
 and it means that the system is checking to see if you have privileges to
 perform a certain action.</p>
-<img alt="../_images/security_authentication_authorization1.png" class="align-center" src="../_images/security_authentication_authorization1.png" />
+<img alt="../_images/security_authentication_authorization.png" class="align-center" src="../_images/security_authentication_authorization.png" />
 <p>Since the best way to learn is to see an example, let&#8217;s dive right in.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -72,7 +72,7 @@ for use inside any PHP project.</p>
 <div class="section" id="basic-example-http-authentication">
 <h2>Basic Example: HTTP Authentication<a class="headerlink" href="#basic-example-http-authentication" title="Permalink to this headline">¶</a></h2>
 <p>The security component can be configured via your application configuration.
-In fact, most standard security setups are just matter of using the right
+In fact, most standard security setups are just a matter of using the right
 configuration. The following configuration tells Symfony to secure any URL
 matching <tt class="docutils literal"><span class="pre">/admin/*</span></tt> and to ask the user for credentials using basic HTTP
 authentication (i.e. the old-school username/password box):</p>
@@ -92,9 +92,10 @@ authentication (i.e. the old-school username/password box):</p>
 
     <span class="l-Scalar-Plain">providers</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">in_memory</span><span class="p-Indicator">:</span>
-            <span class="l-Scalar-Plain">users</span><span class="p-Indicator">:</span>
-                <span class="l-Scalar-Plain">ryan</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">ryanpass</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_USER&#39;</span> <span class="p-Indicator">}</span>
-                <span class="l-Scalar-Plain">admin</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">kitten</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_ADMIN&#39;</span> <span class="p-Indicator">}</span>
+            <span class="l-Scalar-Plain">memory</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">users</span><span class="p-Indicator">:</span>
+                    <span class="l-Scalar-Plain">ryan</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">ryanpass</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_USER&#39;</span> <span class="p-Indicator">}</span>
+                    <span class="l-Scalar-Plain">admin</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">kitten</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_ADMIN&#39;</span> <span class="p-Indicator">}</span>
 
     <span class="l-Scalar-Plain">encoders</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">Symfony\Component\Security\Core\User\User</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">plaintext</span>
@@ -118,8 +119,10 @@ authentication (i.e. the old-school username/password box):</p>
         <span class="nt">&lt;/access-control&gt;</span>
 
         <span class="nt">&lt;provider</span> <span class="na">name=</span><span class="s">&quot;in_memory&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;ryan&quot;</span> <span class="na">password=</span><span class="s">&quot;ryanpass&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_USER&quot;</span> <span class="nt">/&gt;</span>
-            <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;admin&quot;</span> <span class="na">password=</span><span class="s">&quot;kitten&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_ADMIN&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;memory&gt;</span>
+                <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;ryan&quot;</span> <span class="na">password=</span><span class="s">&quot;ryanpass&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_USER&quot;</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;admin&quot;</span> <span class="na">password=</span><span class="s">&quot;kitten&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_ADMIN&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;/memory&gt;</span>
         <span class="nt">&lt;/provider&gt;</span>
 
         <span class="nt">&lt;encoder</span> <span class="na">class=</span><span class="s">&quot;Symfony\Component\Security\Core\User\User&quot;</span> <span class="na">algorithm=</span><span class="s">&quot;plaintext&quot;</span> <span class="nt">/&gt;</span>
@@ -144,9 +147,11 @@ authentication (i.e. the old-school username/password box):</p>
 <span class="x">    ),</span>
 <span class="x">    &#39;providers&#39; =&gt; array(</span>
 <span class="x">        &#39;in_memory&#39; =&gt; array(</span>
-<span class="x">            &#39;users&#39; =&gt; array(</span>
-<span class="x">                &#39;ryan&#39; =&gt; array(&#39;password&#39; =&gt; &#39;ryanpass&#39;, &#39;roles&#39; =&gt; &#39;ROLE_USER&#39;),</span>
-<span class="x">                &#39;admin&#39; =&gt; array(&#39;password&#39; =&gt; &#39;kitten&#39;, &#39;roles&#39; =&gt; &#39;ROLE_ADMIN&#39;),</span>
+<span class="x">            &#39;memory&#39; =&gt; array(</span>
+<span class="x">                &#39;users&#39; =&gt; array(</span>
+<span class="x">                    &#39;ryan&#39; =&gt; array(&#39;password&#39; =&gt; &#39;ryanpass&#39;, &#39;roles&#39; =&gt; &#39;ROLE_USER&#39;),</span>
+<span class="x">                    &#39;admin&#39; =&gt; array(&#39;password&#39; =&gt; &#39;kitten&#39;, &#39;roles&#39; =&gt; &#39;ROLE_ADMIN&#39;),</span>
+<span class="x">                ),</span>
 <span class="x">            ),</span>
 <span class="x">        ),</span>
 <span class="x">    ),</span>
@@ -196,7 +201,7 @@ firewall&#8217;s regular expression <tt class="docutils literal"><span class="pr
 firewall is activated does <em>not</em> mean, however, that the HTTP authentication
 username and password box is displayed for every URL. For example, any user
 can access <tt class="docutils literal"><span class="pre">/foo</span></tt> without being prompted to authenticate.</p>
-<img alt="../_images/security_anonymous_user_access1.png" class="align-center" src="../_images/security_anonymous_user_access1.png" />
+<img alt="../_images/security_anonymous_user_access.png" class="align-center" src="../_images/security_anonymous_user_access.png" />
 <p>This works first because the firewall allows <em>anonymous users</em> via the <tt class="docutils literal"><span class="pre">anonymous</span></tt>
 configuration parameter. In other words, the firewall doesn&#8217;t require the
 user to fully authenticate immediately. And because no special <tt class="docutils literal"><span class="pre">role</span></tt> is
@@ -213,7 +218,7 @@ that any URL matching the regular expression pattern <tt class="docutils literal
 or anything matching <tt class="docutils literal"><span class="pre">/admin/*</span></tt>) requires the <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt> role. Roles
 are the basis for most authorization: a user can access <tt class="docutils literal"><span class="pre">/admin/foo</span></tt> only
 if it has the <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt> role.</p>
-<img alt="../_images/security_anonymous_user_denied_authorization1.png" class="align-center" src="../_images/security_anonymous_user_denied_authorization1.png" />
+<img alt="../_images/security_anonymous_user_denied_authorization.png" class="align-center" src="../_images/security_anonymous_user_denied_authorization.png" />
 <p>Like before, when the user originally makes the request, the firewall doesn&#8217;t
 ask for any identification. However, as soon as the access control layer
 denies the user access (because the anonymous user doesn&#8217;t have the <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt>
@@ -225,7 +230,7 @@ the user will be sent an HTTP 401 response so that the user sees the username
 and password box.</p>
 <p>The user now has the opportunity to submit its credentials back to the application.
 If the credentials are valid, the original request can be re-tried.</p>
-<img alt="../_images/security_ryan_no_role_admin_access1.png" class="align-center" src="../_images/security_ryan_no_role_admin_access1.png" />
+<img alt="../_images/security_ryan_no_role_admin_access.png" class="align-center" src="../_images/security_ryan_no_role_admin_access.png" />
 <p>In this example, the user <tt class="docutils literal"><span class="pre">ryan</span></tt> successfully authenticates with the firewall.
 But since <tt class="docutils literal"><span class="pre">ryan</span></tt> doesn&#8217;t have the <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt> role, he&#8217;s still denied
 access to <tt class="docutils literal"><span class="pre">/admin/foo</span></tt>. Ultimately, this means that the user will see some
@@ -241,7 +246,7 @@ to customize the 403 error page.</p>
 <p>Finally, if the <tt class="docutils literal"><span class="pre">admin</span></tt> user requests <tt class="docutils literal"><span class="pre">/admin/foo</span></tt>, a similar process
 takes place, except now, after being authenticated, the access control layer
 will let the request pass through:</p>
-<img alt="../_images/security_admin_role_access1.png" class="align-center" src="../_images/security_admin_role_access1.png" />
+<img alt="../_images/security_admin_role_access.png" class="align-center" src="../_images/security_admin_role_access.png" />
 <p>The request flow when a user requests a protected resource is straightforward,
 but incredibly flexible. As you&#8217;ll see later, authentication can be handled
 in any number of ways, including via a form login, X.509 certificate, or by
@@ -286,7 +291,7 @@ via a traditional HTML login form.</p>
 <p>First, enable form login under your firewall:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
 <span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">firewalls</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">secured_area</span><span class="p-Indicator">:</span>
@@ -298,7 +303,7 @@ via a traditional HTML login form.</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
 <span class="nt">&lt;srv:container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/security&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
     <span class="na">xmlns:srv=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
@@ -314,7 +319,7 @@ via a traditional HTML login form.</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/security.php</span>
 <span class="x">$container-&gt;loadFromExtension(&#39;security&#39;, array(</span>
 <span class="x">    &#39;firewalls&#39; =&gt; array(</span>
 <span class="x">        &#39;secured_area&#39; =&gt; array(</span>
@@ -406,9 +411,11 @@ login form submission (i.e. <tt class="docutils literal"><span class="pre">/logi
 <p class="first admonition-title">Note</p>
 <p class="last">You will <em>not</em> need to implement a controller for the <tt class="docutils literal"><span class="pre">/login_check</span></tt>
 URL as the firewall will automatically catch and process any form submitted
-to this URL. It&#8217;s optional, but helpful, to create a route so that you
-can use it to generate the form submission URL in the login template below.</p>
+to this URL.</p>
 </div>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>As of Symfony 2.1, you <em>must</em> have routes configured for your <tt class="docutils literal"><span class="pre">login_path</span></tt>
+(e.g. <tt class="docutils literal"><span class="pre">/login</span></tt>) and <tt class="docutils literal"><span class="pre">check_path</span></tt> (e.g. <tt class="docutils literal"><span class="pre">/login_check</span></tt>) URLs.</p>
 <p>Notice that the name of the <tt class="docutils literal"><span class="pre">login</span></tt> route isn&#8217;t important. What&#8217;s important
 is that the URL of the route (<tt class="docutils literal"><span class="pre">/login</span></tt>) matches the <tt class="docutils literal"><span class="pre">login_path</span></tt> config
 value, as that&#8217;s where the security system will redirect users that need
@@ -673,7 +680,7 @@ the <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt> role.<
 <p>You can define as many URL patterns as you need - each is a regular expression.</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
 <span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
     <span class="c1"># ...</span>
     <span class="l-Scalar-Plain">access_control</span><span class="p-Indicator">:</span>
@@ -682,18 +689,16 @@ the <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt> role.<
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
 <span class="nt">&lt;config&gt;</span>
     <span class="c">&lt;!-- ... --&gt;</span>
-    <span class="nt">&lt;access-control&gt;</span>
-        <span class="nt">&lt;rule</span> <span class="na">path=</span><span class="s">&quot;^/admin/users&quot;</span> <span class="na">role=</span><span class="s">&quot;ROLE_SUPER_ADMIN&quot;</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;rule</span> <span class="na">path=</span><span class="s">&quot;^/admin&quot;</span> <span class="na">role=</span><span class="s">&quot;ROLE_ADMIN&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/access-control&gt;</span>
+    <span class="nt">&lt;rule</span> <span class="na">path=</span><span class="s">&quot;^/admin/users&quot;</span> <span class="na">role=</span><span class="s">&quot;ROLE_SUPER_ADMIN&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;rule</span> <span class="na">path=</span><span class="s">&quot;^/admin&quot;</span> <span class="na">role=</span><span class="s">&quot;ROLE_ADMIN&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/config&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/security.php</span>
 <span class="x">$container-&gt;loadFromExtension(&#39;security&#39;, array(</span>
 <span class="x">    // ...</span>
 <span class="x">    &#39;access_control&#39; =&gt; array(</span>
@@ -709,8 +714,9 @@ the <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt> role.<
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">Prepending the path with <tt class="docutils literal"><span class="pre">^</span></tt> ensures that only URLs <em>beginning</em> with
-the pattern are matched. For example, a path of simply <tt class="docutils literal"><span class="pre">/admin</span></tt> would
-match <tt class="docutils literal"><span class="pre">/admin/foo</span></tt> but also <tt class="docutils literal"><span class="pre">/foo/admin</span></tt>.</p>
+the pattern are matched. For example, a path of simply <tt class="docutils literal"><span class="pre">/admin</span></tt> (without
+the <tt class="docutils literal"><span class="pre">^</span></tt>) would correctly match <tt class="docutils literal"><span class="pre">/admin/foo</span></tt> but would also match URLs
+like <tt class="docutils literal"><span class="pre">/foo/admin</span></tt>.</p>
 </div>
 <p>For each incoming request, Symfony2 tries to find a matching access control
 rule (the first one wins). If the user isn&#8217;t authenticated yet, the authentication
@@ -723,15 +729,77 @@ more information.</p>
 <p>Since Symfony uses the first access control rule it matches, a URL like <tt class="docutils literal"><span class="pre">/admin/users/new</span></tt>
 will match the first rule and require only the <tt class="docutils literal"><span class="pre">ROLE_SUPER_ADMIN</span></tt> role.
 Any URL like <tt class="docutils literal"><span class="pre">/admin/blog</span></tt> will match the second rule and require <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt>.</p>
-<p>You can also force <tt class="docutils literal"><span class="pre">HTTP</span></tt> or <tt class="docutils literal"><span class="pre">HTTPS</span></tt> via an <tt class="docutils literal"><span class="pre">access_control</span></tt> entry.
-For more information, see <a class="reference internal" href="../cookbook/security/force_https.html"><em>How to force HTTPS or HTTP for Different URLs</em></a>.</p>
+</div>
+<div class="section" id="securing-by-ip">
+<span id="book-security-securing-ip"></span><h3>Securing by IP<a class="headerlink" href="#securing-by-ip" title="Permalink to this headline">¶</a></h3>
+<p>Certain situations may arise when you may need to restrict access to a given
+route based on IP. This is particularly relevant in the case of <a class="reference internal" href="http_cache.html#edge-side-includes"><em>Edge Side Includes</em></a>
+(ESI), for example, which utilize a route named &#8220;_internal&#8221;. When
+ESI is used, the _internal route is required by the gateway cache to enable
+different caching options for subsections within a given page. This route
+comes with the ^/_internal prefix by default in the standard edition (assuming
+you&#8217;ve uncommented those lines from the routing file).</p>
+<p>Here is an example of how you might secure this route from outside access:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
+<span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
+    <span class="c1"># ...</span>
+    <span class="l-Scalar-Plain">access_control</span><span class="p-Indicator">:</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/_internal</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="nv">IS_AUTHENTICATED_ANONYMOUSLY</span><span class="p-Indicator">,</span> <span class="nv">ip</span><span class="p-Indicator">:</span> <span class="nv">127.0.0.1</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;access-control&gt;</span>
+    <span class="nt">&lt;rule</span> <span class="na">path=</span><span class="s">&quot;^/_internal&quot;</span> <span class="na">role=</span><span class="s">&quot;IS_AUTHENTICATED_ANONYMOUSLY&quot;</span> <span class="na">ip=</span><span class="s">&quot;127.0.0.1&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/access-control&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;access_control&#39; =&gt; array(</span>
+<span class="x">    array(&#39;path&#39; =&gt; &#39;^/_internal&#39;, &#39;role&#39; =&gt; &#39;IS_AUTHENTICATED_ANONYMOUSLY&#39;, &#39;ip&#39; =&gt; &#39;127.0.0.1&#39;),</span>
+<span class="x">),</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="securing-by-channel">
+<span id="book-security-securing-channel"></span><h3>Securing by Channel<a class="headerlink" href="#securing-by-channel" title="Permalink to this headline">¶</a></h3>
+<p>Much like securing based on IP, requiring the use of SSL is as simple as
+adding a new access_control entry:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
+<span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
+    <span class="c1"># ...</span>
+    <span class="l-Scalar-Plain">access_control</span><span class="p-Indicator">:</span>
+        <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">path</span><span class="p-Indicator">:</span> <span class="nv">^/cart/checkout</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="nv">IS_AUTHENTICATED_ANONYMOUSLY</span><span class="p-Indicator">,</span> <span class="nv">requires_channel</span><span class="p-Indicator">:</span> <span class="nv">https</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;access-control&gt;</span>
+    <span class="nt">&lt;rule</span> <span class="na">path=</span><span class="s">&quot;^/cart/checkout&quot;</span> <span class="na">role=</span><span class="s">&quot;IS_AUTHENTICATED_ANONYMOUSLY&quot;</span> <span class="na">requires_channel=</span><span class="s">&quot;https&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/access-control&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&#39;access_control&#39; =&gt; array(</span>
+<span class="x">    array(&#39;path&#39; =&gt; &#39;^/cart/checkout&#39;, &#39;role&#39; =&gt; &#39;IS_AUTHENTICATED_ANONYMOUSLY&#39;, &#39;requires_channel&#39; =&gt; &#39;https&#39;),</span>
+<span class="x">),</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="securing-a-controller">
 <span id="book-security-securing-controller"></span><h3>Securing a Controller<a class="headerlink" href="#securing-a-controller" title="Permalink to this headline">¶</a></h3>
 <p>Protecting your application based on URL patterns is easy, but may not be
 fine-grained enough in certain cases. When necessary, you can easily force
 authorization from inside a controller:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Security\Core\Exception\AccessDeniedException</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Security\Core\Exception\AccessDeniedException;</span>
 <span class="x">// ...</span>
 
 <span class="x">public function helloAction($name)</span>
@@ -807,36 +875,41 @@ table.</p>
 In fact, you&#8217;ve seen this already in the example in this chapter.</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
 <span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
     <span class="c1"># ...</span>
     <span class="l-Scalar-Plain">providers</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">default_provider</span><span class="p-Indicator">:</span>
-            <span class="l-Scalar-Plain">users</span><span class="p-Indicator">:</span>
-                <span class="l-Scalar-Plain">ryan</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">ryanpass</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_USER&#39;</span> <span class="p-Indicator">}</span>
-                <span class="l-Scalar-Plain">admin</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">kitten</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_ADMIN&#39;</span> <span class="p-Indicator">}</span>
+            <span class="l-Scalar-Plain">memory</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">users</span><span class="p-Indicator">:</span>
+                    <span class="l-Scalar-Plain">ryan</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">ryanpass</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_USER&#39;</span> <span class="p-Indicator">}</span>
+                    <span class="l-Scalar-Plain">admin</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">kitten</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_ADMIN&#39;</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
 <span class="nt">&lt;config&gt;</span>
     <span class="c">&lt;!-- ... --&gt;</span>
     <span class="nt">&lt;provider</span> <span class="na">name=</span><span class="s">&quot;default_provider&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;ryan&quot;</span> <span class="na">password=</span><span class="s">&quot;ryanpass&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_USER&quot;</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;admin&quot;</span> <span class="na">password=</span><span class="s">&quot;kitten&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_ADMIN&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;memory&gt;</span>
+            <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;ryan&quot;</span> <span class="na">password=</span><span class="s">&quot;ryanpass&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_USER&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;admin&quot;</span> <span class="na">password=</span><span class="s">&quot;kitten&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_ADMIN&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/memory&gt;</span>
     <span class="nt">&lt;/provider&gt;</span>
 <span class="nt">&lt;/config&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/security.php</span>
 <span class="x">$container-&gt;loadFromExtension(&#39;security&#39;, array(</span>
 <span class="x">    // ...</span>
 <span class="x">    &#39;providers&#39; =&gt; array(</span>
 <span class="x">        &#39;default_provider&#39; =&gt; array(</span>
-<span class="x">            &#39;users&#39; =&gt; array(</span>
-<span class="x">                &#39;ryan&#39; =&gt; array(&#39;password&#39; =&gt; &#39;ryanpass&#39;, &#39;roles&#39; =&gt; &#39;ROLE_USER&#39;),</span>
-<span class="x">                &#39;admin&#39; =&gt; array(&#39;password&#39; =&gt; &#39;kitten&#39;, &#39;roles&#39; =&gt; &#39;ROLE_ADMIN&#39;),</span>
+<span class="x">            &#39;memory&#39; =&gt; array(</span>
+<span class="x">                &#39;users&#39; =&gt; array(</span>
+<span class="x">                    &#39;ryan&#39; =&gt; array(&#39;password&#39; =&gt; &#39;ryanpass&#39;, &#39;roles&#39; =&gt; &#39;ROLE_USER&#39;),</span>
+<span class="x">                    &#39;admin&#39; =&gt; array(&#39;password&#39; =&gt; &#39;kitten&#39;, &#39;roles&#39; =&gt; &#39;ROLE_ADMIN&#39;),</span>
+<span class="x">                ),</span>
 <span class="x">            ),</span>
 <span class="x">        ),</span>
 <span class="x">    ),</span>
@@ -898,6 +971,8 @@ be stored in the database.</p>
 custom user class is that it implements the <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Security\Core\User\UserInterface</span></tt>
 interface. This means that your concept of a &#8220;user&#8221; can be anything, as long
 as it implements this interface.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1.</span></p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The user object will be serialized and saved in the session during requests,
@@ -945,14 +1020,14 @@ field of that class.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This example is just meant to show you the basic idea behind the <tt class="docutils literal"><span class="pre">entity</span></tt>
-provider. For a full working example, see <a class="reference internal" href="../cookbook/security/entity_provider.html"><em>How to load Security Users from the Database (the entity Provider)</em></a>.</p>
+provider. For a full working example, see <a class="reference internal" href="../cookbook/security/entity_provider.html"><em>How to load Security Users from the Database (the Entity Provider)</em></a>.</p>
 </div>
 <p>For more information on creating your own custom provider (e.g. if you needed
 to load users via a web service), see <a class="reference internal" href="../cookbook/security/custom_provider.html"><em>How to create a custom User Provider</em></a>.</p>
 </div>
 </div>
 <div class="section" id="encoding-the-user-s-password">
-<h3>Encoding the User&#8217;s Password<a class="headerlink" href="#encoding-the-user-s-password" title="Permalink to this headline">¶</a></h3>
+<span id="book-security-encoding-user-password"></span><h3>Encoding the User&#8217;s Password<a class="headerlink" href="#encoding-the-user-s-password" title="Permalink to this headline">¶</a></h3>
 <p>So far, for simplicity, all the examples have stored the users&#8217; passwords
 in plain text (whether those users are stored in a configuration file or in
 a database somewhere). Of course, in a real application, you&#8217;ll want to encode
@@ -962,14 +1037,15 @@ to store your users in memory, but obscure their passwords via <tt class="docuti
 do the following:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
 <span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
     <span class="c1"># ...</span>
     <span class="l-Scalar-Plain">providers</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">in_memory</span><span class="p-Indicator">:</span>
-            <span class="l-Scalar-Plain">users</span><span class="p-Indicator">:</span>
-                <span class="l-Scalar-Plain">ryan</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">bb87a29949f3a1ee0559f8a57357487151281386</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_USER&#39;</span> <span class="p-Indicator">}</span>
-                <span class="l-Scalar-Plain">admin</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">74913f5cd5f61ec0bcfdb775414c2fb3d161b620</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_ADMIN&#39;</span> <span class="p-Indicator">}</span>
+            <span class="l-Scalar-Plain">memory</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">users</span><span class="p-Indicator">:</span>
+                    <span class="l-Scalar-Plain">ryan</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">bb87a29949f3a1ee0559f8a57357487151281386</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_USER&#39;</span> <span class="p-Indicator">}</span>
+                    <span class="l-Scalar-Plain">admin</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">74913f5cd5f61ec0bcfdb775414c2fb3d161b620</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="s">&#39;ROLE_ADMIN&#39;</span> <span class="p-Indicator">}</span>
 
     <span class="l-Scalar-Plain">encoders</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">Symfony\Component\Security\Core\User\User</span><span class="p-Indicator">:</span>
@@ -979,12 +1055,14 @@ do the following:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
 <span class="nt">&lt;config&gt;</span>
     <span class="c">&lt;!-- ... --&gt;</span>
     <span class="nt">&lt;provider</span> <span class="na">name=</span><span class="s">&quot;in_memory&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;ryan&quot;</span> <span class="na">password=</span><span class="s">&quot;bb87a29949f3a1ee0559f8a57357487151281386&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_USER&quot;</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;admin&quot;</span> <span class="na">password=</span><span class="s">&quot;74913f5cd5f61ec0bcfdb775414c2fb3d161b620&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_ADMIN&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;memory&gt;</span>
+            <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;ryan&quot;</span> <span class="na">password=</span><span class="s">&quot;bb87a29949f3a1ee0559f8a57357487151281386&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_USER&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;admin&quot;</span> <span class="na">password=</span><span class="s">&quot;74913f5cd5f61ec0bcfdb775414c2fb3d161b620&quot;</span> <span class="na">roles=</span><span class="s">&quot;ROLE_ADMIN&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/memory&gt;</span>
     <span class="nt">&lt;/provider&gt;</span>
 
     <span class="nt">&lt;encoder</span> <span class="na">class=</span><span class="s">&quot;Symfony\Component\Security\Core\User\User&quot;</span> <span class="na">algorithm=</span><span class="s">&quot;sha1&quot;</span> <span class="na">iterations=</span><span class="s">&quot;1&quot;</span> <span class="na">encode_as_base64=</span><span class="s">&quot;false&quot;</span> <span class="nt">/&gt;</span>
@@ -992,14 +1070,16 @@ do the following:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/security.php</span>
 <span class="x">$container-&gt;loadFromExtension(&#39;security&#39;, array(</span>
 <span class="x">    // ...</span>
 <span class="x">    &#39;providers&#39; =&gt; array(</span>
 <span class="x">        &#39;in_memory&#39; =&gt; array(</span>
-<span class="x">            &#39;users&#39; =&gt; array(</span>
-<span class="x">                &#39;ryan&#39; =&gt; array(&#39;password&#39; =&gt; &#39;bb87a29949f3a1ee0559f8a57357487151281386&#39;, &#39;roles&#39; =&gt; &#39;ROLE_USER&#39;),</span>
-<span class="x">                &#39;admin&#39; =&gt; array(&#39;password&#39; =&gt; &#39;74913f5cd5f61ec0bcfdb775414c2fb3d161b620&#39;, &#39;roles&#39; =&gt; &#39;ROLE_ADMIN&#39;),</span>
+<span class="x">            &#39;memory&#39; =&gt; array(</span>
+<span class="x">                &#39;users&#39; =&gt; array(</span>
+<span class="x">                    &#39;ryan&#39; =&gt; array(&#39;password&#39; =&gt; &#39;bb87a29949f3a1ee0559f8a57357487151281386&#39;, &#39;roles&#39; =&gt; &#39;ROLE_USER&#39;),</span>
+<span class="x">                    &#39;admin&#39; =&gt; array(&#39;password&#39; =&gt; &#39;74913f5cd5f61ec0bcfdb775414c2fb3d161b620&#39;, &#39;roles&#39; =&gt; &#39;ROLE_ADMIN&#39;),</span>
+<span class="x">                ),</span>
 <span class="x">            ),</span>
 <span class="x">        ),</span>
 <span class="x">    ),</span>
@@ -1027,7 +1107,7 @@ object is <tt class="docutils literal"><span class="pre">Acme\UserBundle\Entity\
 configure the encoder for that user:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
 <span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
     <span class="c1"># ...</span>
 
@@ -1036,7 +1116,7 @@ configure the encoder for that user:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
 <span class="nt">&lt;config&gt;</span>
     <span class="c">&lt;!-- ... --&gt;</span>
 
@@ -1045,7 +1125,7 @@ configure the encoder for that user:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/security.php</span>
 <span class="x">$container-&gt;loadFromExtension(&#39;security&#39;, array(</span>
 <span class="x">    // ...</span>
 
@@ -1088,12 +1168,30 @@ look like:</p>
 <span class="x">}</span>
 </pre></div>
 </div>
+<p>In a controller this can be shortcut to:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">public function indexAction()</span>
+<span class="x">{</span>
+<span class="x">    $user = $this-&gt;getUser();</span>
+<span class="x">}</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Anonymous users are technically authenticated, meaning that the <tt class="docutils literal"><span class="pre">isAuthenticated()</span></tt>
 method of an anonymous user object will return true. To check if your
 user is actually authenticated, check for the <tt class="docutils literal"><span class="pre">IS_AUTHENTICATED_FULLY</span></tt>
 role.</p>
+</div>
+<p>In a Twig Template this object can be accessed via the <tt class="docutils literal"><span class="pre">app.user</span></tt> key,
+which calls the <a href="#id1"><span class="problematic" id="id2">:method:`GlobalVariables::getUser()&lt;Symfony\\Bundle\\FrameworkBundle\\Templating\\GlobalVariables::getUser&gt;`</span></a>
+method:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;p&gt;</span>Username: <span class="cp">{{</span> <span class="nv">app.user.username</span> <span class="cp">}}</span><span class="nt">&lt;/p&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
 </div>
 </div>
 <div class="section" id="using-multiple-user-providers">
@@ -1109,7 +1207,8 @@ a new provider that chains the two together:</p>
 <span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">providers</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">chain_provider</span><span class="p-Indicator">:</span>
-            <span class="l-Scalar-Plain">providers</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">in_memory</span><span class="p-Indicator">,</span> <span class="nv">user_db</span><span class="p-Indicator">]</span>
+            <span class="l-Scalar-Plain">chain</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">providers</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">in_memory</span><span class="p-Indicator">,</span> <span class="nv">user_db</span><span class="p-Indicator">]</span>
         <span class="l-Scalar-Plain">in_memory</span><span class="p-Indicator">:</span>
             <span class="l-Scalar-Plain">users</span><span class="p-Indicator">:</span>
                 <span class="l-Scalar-Plain">foo</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">test</span> <span class="p-Indicator">}</span>
@@ -1118,11 +1217,13 @@ a new provider that chains the two together:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
 <span class="nt">&lt;config&gt;</span>
     <span class="nt">&lt;provider</span> <span class="na">name=</span><span class="s">&quot;chain_provider&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;provider&gt;</span>in_memory<span class="nt">&lt;/provider&gt;</span>
-        <span class="nt">&lt;provider&gt;</span>user_db<span class="nt">&lt;/provider&gt;</span>
+        <span class="nt">&lt;chain&gt;</span>
+            <span class="nt">&lt;provider&gt;</span>in_memory<span class="nt">&lt;/provider&gt;</span>
+            <span class="nt">&lt;provider&gt;</span>user_db<span class="nt">&lt;/provider&gt;</span>
+        <span class="nt">&lt;/chain&gt;</span>
     <span class="nt">&lt;/provider&gt;</span>
     <span class="nt">&lt;provider</span> <span class="na">name=</span><span class="s">&quot;in_memory&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;foo&quot;</span> <span class="na">password=</span><span class="s">&quot;test&quot;</span> <span class="nt">/&gt;</span>
@@ -1134,11 +1235,13 @@ a new provider that chains the two together:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/security.php</span>
 <span class="x">$container-&gt;loadFromExtension(&#39;security&#39;, array(</span>
 <span class="x">    &#39;providers&#39; =&gt; array(</span>
 <span class="x">        &#39;chain_provider&#39; =&gt; array(</span>
-<span class="x">            &#39;providers&#39; =&gt; array(&#39;in_memory&#39;, &#39;user_db&#39;),</span>
+<span class="x">            &#39;chain&#39; =&gt; array(</span>
+<span class="x">                &#39;providers&#39; =&gt; array(&#39;in_memory&#39;, &#39;user_db&#39;),</span>
+<span class="x">            ),</span>
 <span class="x">        ),</span>
 <span class="x">        &#39;in_memory&#39; =&gt; array(</span>
 <span class="x">            &#39;users&#39; =&gt; array(</span>
@@ -1169,28 +1272,35 @@ the two sources into a single provider:</p>
 <span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">providers</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">main_provider</span><span class="p-Indicator">:</span>
-            <span class="l-Scalar-Plain">users</span><span class="p-Indicator">:</span>
-                <span class="l-Scalar-Plain">foo</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">test</span> <span class="p-Indicator">}</span>
-            <span class="l-Scalar-Plain">entity</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">class</span><span class="p-Indicator">:</span> <span class="nv">Acme\UserBundle\Entity\User</span><span class="p-Indicator">,</span> <span class="nv">property</span><span class="p-Indicator">:</span> <span class="nv">username</span> <span class="p-Indicator">}</span>
+            <span class="l-Scalar-Plain">memory</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">users</span><span class="p-Indicator">:</span>
+                    <span class="l-Scalar-Plain">foo</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">test</span> <span class="p-Indicator">}</span>
+            <span class="l-Scalar-Plain">entity</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Acme\UserBundle\Entity\User,</span>
+                <span class="l-Scalar-Plain">property</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">username</span>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
 <span class="nt">&lt;config&gt;</span>
     <span class="nt">&lt;provider</span> <span class="na">name=</span><span class="s">=&quot;main_provider&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;foo&quot;</span> <span class="na">password=</span><span class="s">&quot;test&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;memory&gt;</span>
+            <span class="nt">&lt;user</span> <span class="na">name=</span><span class="s">&quot;foo&quot;</span> <span class="na">password=</span><span class="s">&quot;test&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/memory&gt;</span>
         <span class="nt">&lt;entity</span> <span class="na">class=</span><span class="s">&quot;Acme\UserBundle\Entity\User&quot;</span> <span class="na">property=</span><span class="s">&quot;username&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;/provider&gt;</span>
 <span class="nt">&lt;/config&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/security.php</span>
 <span class="x">$container-&gt;loadFromExtension(&#39;security&#39;, array(</span>
 <span class="x">    &#39;providers&#39; =&gt; array(</span>
 <span class="x">        &#39;main_provider&#39; =&gt; array(</span>
-<span class="x">            &#39;users&#39; =&gt; array(</span>
-<span class="x">                &#39;foo&#39; =&gt; array(&#39;password&#39; =&gt; &#39;test&#39;),</span>
+<span class="x">            &#39;memory&#39; =&gt; array(</span>
+<span class="x">                &#39;users&#39; =&gt; array(</span>
+<span class="x">                    &#39;foo&#39; =&gt; array(&#39;password&#39; =&gt; &#39;test&#39;),</span>
+<span class="x">                ),</span>
 <span class="x">            ),</span>
 <span class="x">            &#39;entity&#39; =&gt; array(&#39;class&#39; =&gt; &#39;Acme\UserBundle\Entity\User&#39;, &#39;property&#39; =&gt; &#39;username&#39;),</span>
 <span class="x">        ),</span>
@@ -1207,7 +1317,7 @@ to use a specific provider. Again, unless a provider is specified explicitly,
 the first provider is always used:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
 <span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">firewalls</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">secured_area</span><span class="p-Indicator">:</span>
@@ -1220,7 +1330,7 @@ the first provider is always used:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
 <span class="nt">&lt;config&gt;</span>
     <span class="nt">&lt;firewall</span> <span class="na">name=</span><span class="s">&quot;secured_area&quot;</span> <span class="na">pattern=</span><span class="s">&quot;^/&quot;</span> <span class="na">provider=</span><span class="s">&quot;user_db&quot;</span><span class="nt">&gt;</span>
         <span class="c">&lt;!-- ... --&gt;</span>
@@ -1231,7 +1341,7 @@ the first provider is always used:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/security.php</span>
 <span class="x">$container-&gt;loadFromExtension(&#39;security&#39;, array(</span>
 <span class="x">    &#39;firewalls&#39; =&gt; array(</span>
 <span class="x">        &#39;secured_area&#39; =&gt; array(</span>
@@ -1290,10 +1400,8 @@ rules by creating a role hierarchy:</p>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
 <span class="nt">&lt;config&gt;</span>
-    <span class="nt">&lt;role-hierarchy&gt;</span>
-        <span class="nt">&lt;role</span> <span class="na">id=</span><span class="s">&quot;ROLE_ADMIN&quot;</span><span class="nt">&gt;</span>ROLE_USER<span class="nt">&lt;/role&gt;</span>
-        <span class="nt">&lt;role</span> <span class="na">id=</span><span class="s">&quot;ROLE_SUPER_ADMIN&quot;</span><span class="nt">&gt;</span>ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH<span class="nt">&lt;/role&gt;</span>
-    <span class="nt">&lt;/role-hierarchy&gt;</span>
+    <span class="nt">&lt;role</span> <span class="na">id=</span><span class="s">&quot;ROLE_ADMIN&quot;</span><span class="nt">&gt;</span>ROLE_USER<span class="nt">&lt;/role&gt;</span>
+    <span class="nt">&lt;role</span> <span class="na">id=</span><span class="s">&quot;ROLE_SUPER_ADMIN&quot;</span><span class="nt">&gt;</span>ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH<span class="nt">&lt;/role&gt;</span>
 <span class="nt">&lt;/config&gt;</span>
 </pre></div>
 </div>
@@ -1322,7 +1430,7 @@ the firewall can handle this automatically for you when you activate the
 <tt class="docutils literal"><span class="pre">logout</span></tt> config parameter:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
 <span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">firewalls</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">secured_area</span><span class="p-Indicator">:</span>
@@ -1334,7 +1442,7 @@ the firewall can handle this automatically for you when you activate the
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
 <span class="nt">&lt;config&gt;</span>
     <span class="nt">&lt;firewall</span> <span class="na">name=</span><span class="s">&quot;secured_area&quot;</span> <span class="na">pattern=</span><span class="s">&quot;^/&quot;</span><span class="nt">&gt;</span>
         <span class="c">&lt;!-- ... --&gt;</span>
@@ -1345,7 +1453,7 @@ the firewall can handle this automatically for you when you activate the
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/security.php</span>
 <span class="x">$container-&gt;loadFromExtension(&#39;security&#39;, array(</span>
 <span class="x">    &#39;firewalls&#39; =&gt; array(</span>
 <span class="x">        &#39;secured_area&#39; =&gt; array(</span>
@@ -1459,7 +1567,7 @@ the <tt class="docutils literal"><span class="pre">isGranted</span></tt> method 
 <div class="highlight-php"><div class="highlight"><pre><span class="x">public function indexAction()</span>
 <span class="x">{</span>
 <span class="x">    // show different content to admin users</span>
-<span class="x">    if($this-&gt;get(&#39;security.context&#39;)-&gt;isGranted(&#39;ADMIN&#39;)) {</span>
+<span class="x">    if ($this-&gt;get(&#39;security.context&#39;)-&gt;isGranted(&#39;ROLE_ADMIN&#39;)) {</span>
 <span class="x">        // Load admin content here</span>
 <span class="x">    }</span>
 <span class="x">    // load other regular content here</span>
@@ -1653,6 +1761,8 @@ Find out more about this and other topics in the cookbook.</p>
 <li><a class="reference internal" href="#using-a-traditional-login-form">Using a Traditional Login Form</a></li>
 <li><a class="reference internal" href="#authorization">Authorization</a><ul>
 <li><a class="reference internal" href="#securing-specific-url-patterns">Securing Specific URL Patterns</a></li>
+<li><a class="reference internal" href="#securing-by-ip">Securing by IP</a></li>
+<li><a class="reference internal" href="#securing-by-channel">Securing by Channel</a></li>
 <li><a class="reference internal" href="#securing-a-controller">Securing a Controller</a></li>
 <li><a class="reference internal" href="#securing-other-services">Securing other Services</a></li>
 <li><a class="reference internal" href="#access-control-lists-acls-securing-individual-database-objects">Access Control Lists (ACLs): Securing Individual Database Objects</a></li>
@@ -1724,12 +1834,12 @@ Find out more about this and other topics in the cookbook.</p>
         <li class="right" >
           <a href="forms.html" title="Forms"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

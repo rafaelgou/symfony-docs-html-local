@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>HTTP Cache &mdash; Symfony2Docs v0 documentation</title>
+    <title>HTTP Cache &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Translations" href="translation.html" />
     <link rel="prev" title="Security" href="security.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="security.html" title="Security"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -112,7 +112,7 @@ of the request-response communication between the client and your application.</
 (See <a class="reference internal" href="#http-cache-introduction"><em>Introduction to HTTP Caching</em></a>). If the same resource is requested again,
 the cache sends the cached response to the client, ignoring your application
 entirely.</p>
-<p>This type of cache is knows as an HTTP gateway cache and many exist such
+<p>This type of cache is known as a HTTP gateway cache and many exist such
 as <a class="reference external" href="http://www.varnish-cache.org/">Varnish</a>, <a class="reference external" href="http://wiki.squid-cache.org/SquidFaq/ReverseProxy">Squid in reverse proxy mode</a>, and the Symfony2 reverse proxy.</p>
 <div class="section" id="types-of-caches">
 <span id="index-2"></span><h3>Types of Caches<a class="headerlink" href="#types-of-caches" title="Permalink to this headline">¶</a></h3>
@@ -154,7 +154,7 @@ to be cached right away. Installing it is just as easy. Each new Symfony2
 application comes with a pre-configured caching kernel (<tt class="docutils literal"><span class="pre">AppCache</span></tt>) that
 wraps the default one (<tt class="docutils literal"><span class="pre">AppKernel</span></tt>). The caching Kernel <em>is</em> the reverse
 proxy.</p>
-<p>To enabling caching, modify the code of a front controller to use the caching
+<p>To enable caching, modify the code of a front controller to use the caching
 kernel:</p>
 <div class="highlight-python"><pre>// web/app.php
 
@@ -374,7 +374,7 @@ be considered &#8220;fresh&#8221; by including a <tt class="docutils literal"><s
 header. Caches that understand expiration will not make the same request
 until the cached version reaches its expiration time and becomes &#8220;stale&#8221;.</li>
 <li>When pages are really dynamic (i.e. their representation changes often),
-the <a class="reference external" href="http://tools.ietf.org/html/rfc2616#section-13.3">validation model</a> model is often necessary. With this model, the
+the <a class="reference external" href="http://tools.ietf.org/html/rfc2616#section-13.3">validation model</a> is often necessary. With this model, the
 cache stores the response, but asks the server on each request whether
 or not the cached response is still valid. The application uses a unique
 response identifier (the <tt class="docutils literal"><span class="pre">Etag</span></tt> header) and/or a timestamp (the <tt class="docutils literal"><span class="pre">Last-Modified</span></tt>
@@ -427,10 +427,12 @@ $response-&gt;setExpires($date);</pre>
 <p class="last">The <tt class="docutils literal"><span class="pre">setExpires()</span></tt> method automatically converts the date to the GMT
 timezone as required by the specification.</p>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">Expires</span></tt> header suffers from two limitations. First, the clocks on the
-Web server and the cache (e.g. the browser) must be synchronized. Then, the
-specification states that &#8220;HTTP/1.1 servers should not send <tt class="docutils literal"><span class="pre">Expires</span></tt> dates
-more than one year in the future.&#8221;</p>
+<p>Note that in HTTP versions before 1.1 the origin server wasn&#8217;t required to
+send the <tt class="docutils literal"><span class="pre">Date</span></tt> header. Consequently the cache (e.g. the browser) might
+need to rely onto his local clock to evaluate the <tt class="docutils literal"><span class="pre">Expires</span></tt> header making
+the lifetime calculation vulnerable to clock skew. Another limitation
+of the <tt class="docutils literal"><span class="pre">Expires</span></tt> header is that the specification states that &#8220;HTTP/1.1
+servers should not send <tt class="docutils literal"><span class="pre">Expires</span></tt> dates more than one year in the future.&#8221;</p>
 </div>
 <div class="section" id="expiration-with-the-cache-control-header">
 <span id="index-9"></span><h3>Expiration with the <tt class="docutils literal"><span class="pre">Cache-Control</span></tt> Header<a class="headerlink" href="#expiration-with-the-cache-control-header" title="Permalink to this headline">¶</a></h3>
@@ -562,7 +564,7 @@ exposing a simple and efficient pattern:</p>
 {
     // Get the minimum information to compute
     // the ETag or the Last-Modified value
-    // (based on the Request, data are retrieved from
+    // (based on the Request, data is retrieved from
     // a database or a key-value store for instance)
     $article = // ...
 
@@ -633,7 +635,7 @@ which the response varies.</p>
 <p>You can of course use both validation and expiration within the same <tt class="docutils literal"><span class="pre">Response</span></tt>.
 As expiration wins over validation, you can easily benefit from the best of
 both worlds. In other words, by using both expiration and validation, you
-can instruct the cache to server the cached content, while checking back
+can instruct the cache to serve the cached content, while checking back
 at some interval (the expiration) to verify that the content is still valid.</p>
 </div>
 <div class="section" id="more-response-methods">
@@ -743,7 +745,7 @@ independent of the rest of the page.</p>
 </div>
 <p>In this example, we&#8217;ve given the full-page cache a lifetime of ten minutes.
 Next, let&#8217;s include the news ticker in the template by embedding an action.
-This is done via the <tt class="docutils literal"><span class="pre">render</span></tt> helper (See <cite>templating-embedding-controller</cite>
+This is done via the <tt class="docutils literal"><span class="pre">render</span></tt> helper (See <a class="reference internal" href="templating.html#templating-embedding-controller"><em>Embedding Controllers</em></a>
 for more details).</p>
 <p>As the embedded content comes from another page (or controller for that
 matter), Symfony2 uses the standard <tt class="docutils literal"><span class="pre">render</span></tt> helper to configure ESI tags:</p>
@@ -832,7 +834,9 @@ the <tt class="docutils literal"><span class="pre">_internal</span></tt> route:<
 <p class="first admonition-title">Tip</p>
 <p class="last">Since this route allows all actions to be accessed via a URL, you might
 want to protect it by using the Symfony2 firewall feature (by allowing
-access to your reverse proxy&#8217;s IP range).</p>
+access to your reverse proxy&#8217;s IP range). See the <a class="reference internal" href="security.html#book-security-securing-ip"><em>Securing by IP</em></a>
+section of the <a class="reference internal" href="security.html"><em>Security Chapter</em></a> for more information
+on how to do this.</p>
 </div>
 <p>One great advantage of this caching strategy is that you can make your
 application as dynamic as needed and at the same time, hit the application as
@@ -867,8 +871,9 @@ and need to invalidate a resource, it means that you set the expires date
 too far away in the future.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">It&#8217;s also because there is no invalidation mechanism that you can use any
-reverse proxy without changing anything in your application code.</p>
+<p class="last">Since invalidation is a topic specific to each type of reverse proxy,
+if you don&#8217;t worry about invalidation, you can switch between reverse
+proxies without changing anything in your application code.</p>
 </div>
 <p>Actually, all reverse proxies provide ways to purge cached data, but you
 should avoid them as much as possible. The most standard way is to purge the
@@ -885,7 +890,7 @@ class AppCache extends Cache
         }
 
         $response = new Response();
-        if (!$this-&gt;store-&gt;purge($request-&gt;getUri())) {
+        if (!$this-&gt;getStore()-&gt;purge($request-&gt;getUri())) {
             $response-&gt;setStatusCode(404, 'Not purged');
         } else {
             $response-&gt;setStatusCode(200, 'Purged');
@@ -913,7 +918,7 @@ Varnish.</p>
 <div class="section" id="learn-more-from-the-cookbook">
 <h2>Learn more from the Cookbook<a class="headerlink" href="#learn-more-from-the-cookbook" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><a class="reference internal" href="../cookbook/cache/varnish.html"><em>How to use Varnish to speedup my Website</em></a></li>
+<li><a class="reference internal" href="../cookbook/cache/varnish.html"><em>How to use Varnish to speed up my Website</em></a></li>
 </ul>
 </div>
 </div>
@@ -1004,12 +1009,12 @@ Varnish.</p>
         <li class="right" >
           <a href="security.html" title="Security"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

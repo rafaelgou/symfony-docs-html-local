@@ -40,9 +40,6 @@ div.body {
     color: #000000;
     padding: 0 20px 30px 20px;
 }
-div.bodywrapper {
-    margin: 0 230px 0 0;
-}
 
 div.footer {
     color: #ffffff;
@@ -68,26 +65,7 @@ div.related a {
 }
 
 div.sphinxsidebar {
-    top: 30px;
-    bottom: 0;
-    margin: 0;
-    position: fixed;
-    overflow: auto;
-    height: auto;
-    float: right;
-    right: 0;
 }
-/* this is nice, but it it leads to hidden headings when jumping
-   to an anchor */
-/*
-div.related {
-    position: fixed;
-}
-
-div.documentwrapper {
-    margin-top: 30px;
-}
-*/
 
 div.sphinxsidebar h3 {
     font-family: 'Trebuchet MS', sans-serif;

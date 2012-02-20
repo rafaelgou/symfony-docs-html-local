@@ -11,7 +11,7 @@ This constraint can also make sure that certain collection keys are present
 and that extra keys are not present.
 
 +----------------+--------------------------------------------------------------------------+
-| Applies to     | :ref:`property<validation-property-target>`                              |
+| Applies to     | :ref:`property or method<validation-property-target>`                    |
 +----------------+--------------------------------------------------------------------------+
 | Options        | - `fields`_                                                              |
 |                | - `allowExtraFields`_                                                    |
@@ -132,7 +132,7 @@ blank but is no longer than 100 characters in length, you would do the following
             {
                 $metadata->addPropertyConstraint('profileData', new Collection(array(
                     'fields' => array(
-                        'personal_email' => arraynew Email(),
+                        'personal_email' => new Email(),
                         'lastName' => array(new NotBlank(), new MaxLength(100)),
                     ),
                     'allowMissingFields' => true,

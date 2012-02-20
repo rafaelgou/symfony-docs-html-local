@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Symfony2 and HTTP Fundamentals &mdash; Symfony2Docs v0 documentation</title>
+    <title>Symfony2 and HTTP Fundamentals &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Symfony2 versus Flat PHP" href="from_flat_php_to_symfony2.html" />
     <link rel="prev" title="Book" href="index.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="index.html" title="Book"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -71,7 +71,7 @@ preferred programming language, this chapter is a <strong>must-read</strong> for
 two machines to communicate with each other. That&#8217;s it! For example, when
 checking for the latest <a class="reference external" href="http://xkcd.com/">xkcd</a> comic, the following (approximate) conversation
 takes place:</p>
-<img alt="../_images/http-xkcd1.png" class="align-center" src="../_images/http-xkcd1.png" />
+<img alt="../_images/http-xkcd.png" class="align-center" src="../_images/http-xkcd.png" />
 <p>And while the actual language used is a bit more formal, it&#8217;s still dead-simple.
 HTTP is the term used to describe this simple text-based language. And no
 matter how you develop on the web, the goal of your server is <em>always</em> to
@@ -87,7 +87,7 @@ special format known as HTTP. The client sends that request to a server,
 and then waits for the response.</p>
 <p>Take a look at the first part of the interaction (the request) between a
 browser and the xkcd web server:</p>
-<img alt="../_images/http-xkcd-request1.png" class="align-center" src="../_images/http-xkcd-request1.png" />
+<img alt="../_images/http-xkcd-request.png" class="align-center" src="../_images/http-xkcd-request.png" />
 <p>In HTTP-speak, this HTTP request would actually look something like this:</p>
 <div class="highlight-text"><div class="highlight"><pre>GET / HTTP/1.1
 Host: xkcd.com
@@ -148,7 +148,7 @@ client needs (via the URI) and what the client wants to do with that resource
 (via the method). For example, in the case of a GET request, the server
 prepares the resource and returns it in an HTTP response. Consider the response
 from the xkcd web server:</p>
-<img alt="../_images/http-xkcd1.png" class="align-center" src="../_images/http-xkcd1.png" />
+<img alt="../_images/http-xkcd.png" class="align-center" src="../_images/http-xkcd.png" />
 <p>Translated into HTTP, the response sent back to the browser will look something
 like this:</p>
 <div class="highlight-text"><div class="highlight"><pre>HTTP/1.1 200 OK
@@ -172,8 +172,10 @@ on Wikipedia&#8217;s <a class="reference external" href="http://en.wikipedia.org
 <p>Like the request, an HTTP response contains additional pieces of information
 known as HTTP headers. For example, one important HTTP response header is
 <tt class="docutils literal"><span class="pre">Content-Type</span></tt>. The body of the same resource could be returned in multiple
-different formats including HTML, XML, or JSON to name a few. The <tt class="docutils literal"><span class="pre">Content-Type</span></tt>
-header tells the client which format is being returned.</p>
+different formats like HTML, XML, or JSON and the <tt class="docutils literal"><span class="pre">Content-Type</span></tt> header uses
+Internet Media Types like <tt class="docutils literal"><span class="pre">text/html</span></tt> to tell the client which format is
+being returned. A list of common media types can be found on Wikipedia&#8217;s
+<a class="reference external" href="http://en.wikipedia.org/wiki/Internet_media_type#List_of_common_media_types">List of common media types</a> article.</p>
 <p>Many other headers exist, some of which are very powerful. For example, certain
 headers can be used to create a powerful caching system.</p>
 </div>
@@ -243,10 +245,20 @@ $request-&gt;getPathInfo();
 
 // retrieve GET and POST variables respectively
 $request-&gt;query-&gt;get('foo');
-$request-&gt;request-&gt;get('bar');
+$request-&gt;request-&gt;get('bar', 'default value if bar does not exist');
+
+// retrieve SERVER variables
+$request-&gt;server-&gt;get('HTTP_HOST');
 
 // retrieves an instance of UploadedFile identified by foo
 $request-&gt;files-&gt;get('foo');
+
+// retrieve a COOKIE value
+$request-&gt;cookies-&gt;get('PHPSESSID');
+
+// retrieve an HTTP request header, with normalized, lowercase keys
+$request-&gt;headers-&gt;get('host');
+$request-&gt;headers-&gt;get('content_type');
 
 $request-&gt;getMethod();          // GET, POST, PUT, DELETE, HEAD
 $request-&gt;getLanguages();       // an array of languages the client accepts</pre>
@@ -255,6 +267,25 @@ $request-&gt;getLanguages();       // an array of languages the client accepts</
 you&#8217;ll never need to worry about. For example, the <tt class="docutils literal"><span class="pre">isSecure()</span></tt> method
 checks the <em>three</em> different values in PHP that can indicate whether or not
 the user is connecting via a secured connection (i.e. <tt class="docutils literal"><span class="pre">https</span></tt>).</p>
+<div class="sidebar">
+<p class="first sidebar-title">ParameterBags and Request attributes</p>
+<p>As seen above, the <tt class="docutils literal"><span class="pre">$_GET</span></tt> and <tt class="docutils literal"><span class="pre">$_POST</span></tt> variables are accessible via
+the public <tt class="docutils literal"><span class="pre">query</span></tt> and <tt class="docutils literal"><span class="pre">request</span></tt> properties respectively. Each of
+these objects is a <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\HttpFoundation\ParameterBag</span></tt>
+object, which has methods like
+<a href="#id1"><span class="problematic" id="id2">:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::get`</span></a>,
+<a href="#id3"><span class="problematic" id="id4">:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::has`</span></a>,
+<a href="#id5"><span class="problematic" id="id6">:method:`Symfony\\Component\\HttpFoundation\\ParameterBag::all`</span></a> and more.
+In fact, every public property used in the previous example is some instance
+of the ParameterBag.</p>
+<p class="last">The Request class also has a public <tt class="docutils literal"><span class="pre">attributes</span></tt> property, which holds
+special data related to how the application works internally. For the
+Symfony2 framework, the <tt class="docutils literal"><span class="pre">attributes</span></tt> holds the values returned by the
+matched route, like <tt class="docutils literal"><span class="pre">_controller</span></tt>, <tt class="docutils literal"><span class="pre">id</span></tt> (if you have an <tt class="docutils literal"><span class="pre">{id}</span></tt>
+wildcard), and even the name of the matched route (<tt class="docutils literal"><span class="pre">_route</span></tt>). The
+<tt class="docutils literal"><span class="pre">attributes</span></tt> property exists entirely to be a place where you can
+prepare and store context-specific information about the request.</p>
+</div>
 <p>Symfony also provides a <tt class="docutils literal"><span class="pre">Response</span></tt> class: a simple PHP representation of
 an HTTP response message. This allows your application to use an object-oriented
 interface to construct the response that needs to be returned to the client:</p>
@@ -346,7 +377,7 @@ on that value. This can get ugly quickly:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">// index.php</span>
 
 <span class="x">$request = Request::createFromGlobals();</span>
-<span class="x">$path = $request-&gt;getPathInfo(); // the URL being requested</span>
+<span class="x">$path = $request-&gt;getPathInfo(); // the URI path being requested</span>
 
 <span class="x">if (in_array($path, array(&#39;&#39;, &#39;/&#39;)) {</span>
 <span class="x">    $response = new Response(&#39;Welcome to the homepage.&#39;);</span>
@@ -397,9 +428,9 @@ by adding an entry for <tt class="docutils literal"><span class="pre">/contact</
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This example uses <a class="reference internal" href="../reference/YAML.html"><em>YAML</em></a> to define the routing configuration.
-Routing configuration can also be written in other formats such as XML
-or PHP.</p>
+<p class="last">This example uses <a class="reference internal" href="../components/yaml.html"><em>YAML</em></a> to define the routing
+configuration. Routing configuration can also be written in other formats
+such as XML or PHP.</p>
 </div>
 <p>When someone visits the <tt class="docutils literal"><span class="pre">/contact</span></tt> page, this route is matched, and the
 specified controller is executed. As you&#8217;ll learn in the <a class="reference internal" href="routing.html"><em>routing chapter</em></a>,
@@ -559,12 +590,12 @@ sensible defaults. For more advanced users, the sky is the limit.</p>
         <li class="right" >
           <a href="index.html" title="Book"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

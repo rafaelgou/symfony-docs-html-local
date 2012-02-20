@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installing and Configuring Symfony &mdash; Symfony2Docs v0 documentation</title>
+    <title>Installing and Configuring Symfony &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Creating Pages in Symfony2" href="page_creation.html" />
     <link rel="prev" title="Symfony2 versus Flat PHP" href="from_flat_php_to_symfony2.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="from_flat_php_to_symfony2.html" title="Symfony2 versus Flat PHP"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -119,7 +119,9 @@ by running the following command from the command line:</p>
 </pre></div>
 </div>
 <p>This command downloads all of the necessary vendor libraries - including
-Symfony itself - into the <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory.</p>
+Symfony itself - into the <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory. For more information on
+how third-party vendor libraries are managed inside Symfony2, see
+&#8220;<em class="xref std std-ref">cookbook-managing-vendor-libraries</em>&#8221;.</p>
 </div>
 <div class="section" id="configuration-and-setup">
 <h3>Configuration and Setup<a class="headerlink" href="#configuration-and-setup" title="Permalink to this headline">¶</a></h3>
@@ -140,7 +142,7 @@ must be writable both by the web server and the command line user. On
 a UNIX system, if your web server user is different from your command
 line user, you can run the following commands just once in your project
 to ensure that permissions will be setup properly. Change <tt class="docutils literal"><span class="pre">www-data</span></tt>
-to the web server user and <tt class="docutils literal"><span class="pre">yourname</span></tt> to your command line user:</p>
+to your web server user:</p>
 <p><strong>1. Using ACL on a system that supports chmod +a</strong></p>
 <p>Many systems allow you to use the <tt class="docutils literal"><span class="pre">chmod</span> <span class="pre">+a</span></tt> command. Try this first,
 and if you get an error - try the next method:</p>
@@ -148,7 +150,7 @@ and if you get an error - try the next method:</p>
 rm -rf app/logs/*
 
 sudo chmod +a <span class="s2">&quot;www-data allow delete,write,append,file_inherit,directory_inherit&quot;</span> app/cache app/logs
-sudo chmod +a <span class="s2">&quot;yourname allow delete,write,append,file_inherit,directory_inherit&quot;</span> app/cache app/logs
+sudo chmod +a <span class="s2">&quot;`whoami` allow delete,write,append,file_inherit,directory_inherit&quot;</span> app/cache app/logs
 </pre></div>
 </div>
 <p><strong>2. Using Acl on a system that does not support chmod +a</strong></p>
@@ -156,8 +158,8 @@ sudo chmod +a <span class="s2">&quot;yourname allow delete,write,append,file_inh
 called <tt class="docutils literal"><span class="pre">setfacl</span></tt>. You may need to <a class="reference external" href="https://help.ubuntu.com/community/FilePermissions#ACLs">enable ACL support</a> on your partition
 and install setfacl before using it (as is the case with Ubuntu), like
 so:</p>
-<div class="highlight-bash"><div class="highlight"><pre>sudo setfacl -R -m u:www-data:rwx -m u:yourname:rwx app/cache app/logs
-sudo setfacl -dR -m u:www-data:rwx -m u:yourname:rwx app/cache app/logs
+<div class="highlight-bash"><div class="highlight"><pre>sudo setfacl -R -m u:www-data:rwx -m u:<span class="sb">`</span>whoami<span class="sb">`</span>:rwx app/cache app/logs
+sudo setfacl -dR -m u:www-data:rwx -m u:<span class="sb">`</span>whoami<span class="sb">`</span>:rwx app/cache app/logs
 </pre></div>
 </div>
 <p><strong>3. Without using ACL</strong></p>
@@ -285,12 +287,12 @@ download all the necessary vendor libraries.</p>
         <li class="right" >
           <a href="from_flat_php_to_symfony2.html" title="Symfony2 versus Flat PHP"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Date &mdash; Symfony2Docs v0 documentation</title>
+    <title>Date &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
     <link rel="next" title="DateTime" href="DateTime.html" />
-    <link rel="prev" title="Collection" href="Collection.html" /> 
+    <link rel="prev" title="Min" href="Min.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,9 +38,9 @@
           <a href="DateTime.html" title="DateTime"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Collection.html" title="Collection"
+          <a href="Min.html" title="Min"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -63,7 +63,7 @@ valid YYYY-MM-DD format.</p>
 </colgroup>
 <tbody valign="top">
 <tr><td>Applies to</td>
-<td><a class="reference internal" href="../../book/validation.html#validation-property-target"><em>property</em></a></td>
+<td><a class="reference internal" href="../../book/validation.html#validation-property-target"><em>property or method</em></a></td>
 </tr>
 <tr><td>Options</td>
 <td><ul class="first last simple">
@@ -83,9 +83,11 @@ valid YYYY-MM-DD format.</p>
 <h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">birthday</span><span class="p-Indicator">:</span>
-        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/BlogBundle/Resources/config/validation.yml</span>
+<span class="l-Scalar-Plain">Acme\BlogBundle\Entity\Author</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">birthday</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Date</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
 </pre></div>
 </div>
 </li>
@@ -133,8 +135,8 @@ class Author
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="Collection.html"
-                        title="previous chapter">Collection</a></p>
+  <p class="topless"><a href="Min.html"
+                        title="previous chapter">Min</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="DateTime.html"
                         title="next chapter">DateTime</a></p>
@@ -170,15 +172,15 @@ class Author
           <a href="DateTime.html" title="DateTime"
              >next</a> |</li>
         <li class="right" >
-          <a href="Collection.html" title="Collection"
+          <a href="Min.html" title="Min"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Symfony2 versus Flat PHP &mdash; Symfony2Docs v0 documentation</title>
+    <title>Symfony2 versus Flat PHP &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Installing and Configuring Symfony" href="installation.html" />
     <link rel="prev" title="Symfony2 and HTTP Fundamentals" href="http_fundamentals.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="http_fundamentals.html" title="Symfony2 and HTTP Fundamentals"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -442,7 +442,7 @@ files in the application and to configure the autoloader:</p>
 
 <span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Symfony\Component\ClassLoader\UniversalClassLoader</span><span class="p">();</span>
 <span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">registerNamespaces</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;Symfony&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/vendor/symfony/src&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Symfony&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../vendor/symfony/src&#39;</span><span class="p">,</span>
 <span class="p">));</span>
 
 <span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">();</span>
@@ -549,7 +549,7 @@ them for you. Here&#8217;s the same sample application, now built in Symfony2:</
             <span class="o">-&gt;</span><span class="na">createQuery</span><span class="p">(</span><span class="s1">&#39;SELECT p FROM AcmeBlogBundle:Post p&#39;</span><span class="p">)</span>
             <span class="o">-&gt;</span><span class="na">execute</span><span class="p">();</span>
 
-        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeBlogBundle:Post:list.html.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span> <span class="o">=&gt;</span> <span class="nv">$posts</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeBlogBundle:Blog:list.html.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span> <span class="o">=&gt;</span> <span class="nv">$posts</span><span class="p">));</span>
     <span class="p">}</span>
 
     <span class="k">public</span> <span class="k">function</span> <span class="nf">showAction</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
@@ -564,7 +564,7 @@ them for you. Here&#8217;s the same sample application, now built in Symfony2:</
             <span class="k">throw</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createNotFoundException</span><span class="p">();</span>
         <span class="p">}</span>
 
-        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeBlogBundle:Post:show.html.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="nv">$post</span><span class="p">));</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeBlogBundle:Blog:show.html.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="nv">$post</span><span class="p">));</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
@@ -610,14 +610,15 @@ create based on the list template.</p>
 <p>When Symfony2&#8217;s engine (called the <tt class="docutils literal"><span class="pre">Kernel</span></tt>) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
 A routing configuration map provides this information in a readable format:</p>
-<div class="highlight-python"><pre># app/config/routing.yml
-blog_list:
-    pattern:  /blog
-    defaults: { _controller: AcmeBlogBundle:Blog:list }
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/routing.yml</span>
+<span class="l-Scalar-Plain">blog_list</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/blog</span>
+    <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">list</span> <span class="p-Indicator">}</span>
 
-blog_show:
-    pattern:  /blog/show/{id}
-    defaults: { _controller: AcmeBlogBundle:Blog:show }</pre>
+<span class="l-Scalar-Plain">blog_show</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/blog/show/{id}</span>
+    <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">show</span> <span class="p-Indicator">}</span>
+</pre></div>
 </div>
 <p>Now that Symfony2 is handling all the mundane tasks, the front controller
 is dead simple. And since it does so little, you&#8217;ll never have to touch
@@ -666,13 +667,13 @@ all about <a class="reference internal" href="http_cache.html"><em>caching</em><
 </ul>
 <p>And perhaps best of all, by using Symfony2, you now have access to a whole
 set of <strong>high-quality open source tools developed by the Symfony2 community</strong>!
-For more information, check out <a class="reference external" href="http://symfony2bundles.org">Symfony2Bundles.org</a></p>
+A good selection of Symfony2 community tools can be found on <a class="reference external" href="http://knpbundles.com/">KnpBundles.com</a>.</p>
 </div>
 </div>
 <div class="section" id="better-templates">
 <h2>Better templates<a class="headerlink" href="#better-templates" title="Permalink to this headline">¶</a></h2>
 <p>If you choose to use it, Symfony2 comes standard with a templating engine
-called <a class="reference external" href="http://www.twig-project.org">Twig</a> that makes templates faster to write and easier to read.
+called <a class="reference external" href="http://twig.sensiolabs.org">Twig</a> that makes templates faster to write and easier to read.
 It means that the sample application could contain even less code! Take,
 for example, the list template written in Twig:</p>
 <div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/BlogBundle/Resources/views/Blog/list.html.twig #}</span>
@@ -789,12 +790,12 @@ Twig. For more information, see the <a class="reference internal" href="templati
         <li class="right" >
           <a href="http_fundamentals.html" title="Symfony2 and HTTP Fundamentals"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

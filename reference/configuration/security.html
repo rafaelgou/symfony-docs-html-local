@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Security Configuration Reference &mdash; Symfony2Docs v0 documentation</title>
+    <title>Security Configuration Reference &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +22,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Reference Documents" href="../index.html" />
-    <link rel="next" title="SwiftmailerBundle Configuration" href="swiftmailer.html" />
+    <link rel="next" title="SwiftmailerBundle Configuration (“swiftmailer”)" href="swiftmailer.html" />
     <link rel="prev" title="Configuration Reference" href="doctrine.html" /> 
   </head>
   <body>
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="swiftmailer.html" title="SwiftmailerBundle Configuration"
+          <a href="swiftmailer.html" title="SwiftmailerBundle Configuration (“swiftmailer”)"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="doctrine.html" title="Configuration Reference"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Reference Documents</a> &raquo;</li> 
       </ul>
     </div>  
@@ -65,6 +65,9 @@ security:
     access_denied_url: /foo/error403
 
     always_authenticate_before_granting: false
+
+    # whether or not to call eraseCredentials on the token
+    erase_credentials: true
 
     # strategy can be: none, migrate, invalidate
     session_fixation_strategy: migrate
@@ -101,12 +104,12 @@ security:
             id: my.custom.encoder.service.id
 
     providers:
-        memory:
-            name: memory
-            users:
-                foo: { password: foo, roles: ROLE_USER }
-                bar: { password: bar, roles: [ROLE_USER, ROLE_ADMIN] }
-        entity:
+        memory_provider_name:
+            memory:
+                users:
+                    foo: { password: foo, roles: ROLE_USER }
+                    bar: { password: bar, roles: [ROLE_USER, ROLE_ADMIN] }
+        entity_provider_name:
             entity: { class: SecurityBundle:User, property: username }
 
     factories:
@@ -119,15 +122,15 @@ security:
             access_denied_url: /foo/error403
             access_denied_handler: some.service.id
             entry_point: some.service.id
-            provider: name
+            provider: some_provider_key_from_above
             context: name
             stateless: false
             x509:
-                provider: name
+                provider: some_provider_key_from_above
             http_basic:
-                provider: name
+                provider: some_provider_key_from_above
             http_digest:
-                provider: name
+                provider: some_provider_key_from_above
             form_login:
                 check_path: /login_check
                 login_path: /login
@@ -143,7 +146,7 @@ security:
                 username_parameter: _username
                 password_parameter: _password
                 csrf_parameter: _csrf_token
-                csrf_page_id: form_login
+                intention: authenticate
                 csrf_provider: my.csrf_provider.id
                 post_only: true
                 remember_me: false
@@ -226,7 +229,7 @@ system will look for a POST parameter with this name.</p>
 </li>
 <li><p class="first"><tt class="docutils literal"><span class="pre">post_only</span></tt> (type: <tt class="docutils literal"><span class="pre">Boolean</span></tt>, default: <tt class="docutils literal"><span class="pre">true</span></tt>)
 By default, you must submit your login form to the <tt class="docutils literal"><span class="pre">check_path</span></tt> URL
-as a POST request. By setting this option to <tt class="docutils literal"><span class="pre">true</span></tt>, you can send a
+as a POST request. By setting this option to <tt class="docutils literal"><span class="pre">false</span></tt>, you can send a
 GET request to the <tt class="docutils literal"><span class="pre">check_path</span></tt> URL.</p>
 </li>
 </ul>
@@ -267,7 +270,7 @@ GET request to the <tt class="docutils literal"><span class="pre">check_path</sp
                         title="previous chapter">Configuration Reference</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="swiftmailer.html"
-                        title="next chapter">SwiftmailerBundle Configuration</a></p>
+                        title="next chapter">SwiftmailerBundle Configuration (&#8220;swiftmailer&#8221;)</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/reference/configuration/security.txt"
@@ -297,17 +300,17 @@ GET request to the <tt class="docutils literal"><span class="pre">check_path</sp
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="swiftmailer.html" title="SwiftmailerBundle Configuration"
+          <a href="swiftmailer.html" title="SwiftmailerBundle Configuration (“swiftmailer”)"
              >next</a> |</li>
         <li class="right" >
           <a href="doctrine.html" title="Configuration Reference"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Create and store a Symfony2 Project in git &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to Create and store a Symfony2 Project in git &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +22,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to customize Error Pages" href="../controller/error_pages.html" />
+    <link rel="next" title="How to Create and store a Symfony2 Project in Subversion" href="new_project_svn.html" />
     <link rel="prev" title="Cookbook" href="../index.html" /> 
   </head>
   <body>
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../controller/error_pages.html" title="How to customize Error Pages"
+          <a href="new_project_svn.html" title="How to Create and store a Symfony2 Project in Subversion"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../index.html" title="Cookbook"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -80,16 +80,16 @@ matching these patterns will be ignored by git:</p>
 /app/cache/*
 /app/logs/*
 /vendor/
-/app/config/parameters.ini
+/app/config/parameters.yml
 </pre></div>
 </div>
 </div></blockquote>
 </li>
-<li><p class="first">Copy <tt class="docutils literal"><span class="pre">app/config/parameters.ini</span></tt> to <tt class="docutils literal"><span class="pre">app/config/parameters.ini.dist</span></tt>.
-The <tt class="docutils literal"><span class="pre">parameters.ini</span></tt> file is ignored by git (see above) so that machine-specific
-settings like database passwords aren&#8217;t committed. By creating the <tt class="docutils literal"><span class="pre">parameters.ini.dist</span></tt>
+<li><p class="first">Copy <tt class="docutils literal"><span class="pre">app/config/parameters.yml</span></tt> to <tt class="docutils literal"><span class="pre">app/config/parameters.yml.dist</span></tt>.
+The <tt class="docutils literal"><span class="pre">parameters.yml</span></tt> file is ignored by git (see above) so that machine-specific
+settings like database passwords aren&#8217;t committed. By creating the <tt class="docutils literal"><span class="pre">parameters.yml.dist</span></tt>
 file, new developers can quickly clone the project, copy this file to
-<tt class="docutils literal"><span class="pre">parameters.ini</span></tt>, customize it, and start developing.</p>
+<tt class="docutils literal"><span class="pre">parameters.yml</span></tt>, customize it, and start developing.</p>
 </li>
 <li><p class="first">Initialize your git repository:</p>
 <blockquote>
@@ -130,38 +130,6 @@ to learn more about how to configure and develop inside your application.</p>
 <p class="last">The Symfony2 Standard Edition comes with some example functionality. To
 remove the sample code, follow the instructions on the <a class="reference external" href="https://github.com/symfony/symfony-standard/blob/master/README.md">Standard Edition Readme</a>.</p>
 </div>
-</div>
-<div class="section" id="managing-vendor-libraries">
-<h2>Managing Vendor Libraries<a class="headerlink" href="#managing-vendor-libraries" title="Permalink to this headline">¶</a></h2>
-<p>Every Symfony project uses a large group of third-party &#8220;vendor&#8221; libraries.</p>
-<p>By default, these libraries are downloaded by running the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">bin/vendors</span> <span class="pre">install</span></tt>
-script. This script reads from the <tt class="docutils literal"><span class="pre">deps</span></tt> file, and downloads the given
-libraries into the <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory. It also reads <tt class="docutils literal"><span class="pre">deps.lock</span></tt> file,
-pinning each library listed there to the exact git commit hash.</p>
-<p>In this setup, the vendors libraries aren&#8217;t part of your git repository,
-not even as submodules. Instead, we rely on the <tt class="docutils literal"><span class="pre">deps</span></tt> and <tt class="docutils literal"><span class="pre">deps.lock</span></tt>
-files and the <tt class="docutils literal"><span class="pre">bin/vendors</span></tt> script to manage everything. Those files are
-part of your repository, so the necessary versions of each third-party library
-are version-controlled in git, and you can use the vendors script to bring
-your project up to date.</p>
-<p>Whenever a developer clones a project, he/she should run the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">bin/vendors</span> <span class="pre">install</span></tt>
-script to ensure that all of the needed vendor libraries are downloaded.</p>
-<div class="sidebar">
-<p class="first sidebar-title">Upgrading Symfony</p>
-<p>Since Symfony is just a group of third-party libraries and third-party
-libraries are entirely controlled through <tt class="docutils literal"><span class="pre">deps</span></tt> and <tt class="docutils literal"><span class="pre">deps.lock</span></tt>,
-upgrading Symfony means simply upgrading each of these files to match
-their state in the latest Symfony Standard Edition.</p>
-<p class="last">Of course, if you&#8217;ve added new entries to <tt class="docutils literal"><span class="pre">deps</span></tt> or <tt class="docutils literal"><span class="pre">deps.lock</span></tt>, be sure
-to replace only the original parts (i.e. be sure not to also delete any of
-your custom entries).</p>
-</div>
-<div class="admonition caution">
-<p class="first admonition-title">Caution</p>
-<p class="last">There is also a <tt class="docutils literal"><span class="pre">php</span> <span class="pre">bin/vendors</span> <span class="pre">upgrade</span></tt> command, but this has nothing
-to do with upgrading your project and you will likely never need to use
-it.</p>
-</div>
 <div class="section" id="vendors-and-submodules">
 <h3>Vendors and Submodules<a class="headerlink" href="#vendors-and-submodules" title="Permalink to this headline">¶</a></h3>
 <p>Instead of using the <tt class="docutils literal"><span class="pre">deps</span></tt>, <tt class="docutils literal"><span class="pre">bin/vendors</span></tt> system for managing your vendor
@@ -182,7 +150,7 @@ Public repositories are free, however you will need to pay a monthly fee
 to host private repositories.</p>
 <p>Alternatively, you can store your git repository on any server by creating
 a <a class="reference external" href="http://progit.org/book/ch4-4.html">barebones repository</a> and then pushing to it. One library that helps
-manage this is <a class="reference external" href="https://github.com/res0nat0r/gitosis">Gitosis</a>.</p>
+manage this is <a class="reference external" href="https://github.com/sitaramc/gitolite">Gitolite</a>.</p>
 </div>
 </div>
 
@@ -195,8 +163,7 @@ manage this is <a class="reference external" href="https://github.com/res0nat0r/
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">How to Create and store a Symfony2 Project in git</a><ul>
-<li><a class="reference internal" href="#initial-project-setup">Initial Project Setup</a></li>
-<li><a class="reference internal" href="#managing-vendor-libraries">Managing Vendor Libraries</a><ul>
+<li><a class="reference internal" href="#initial-project-setup">Initial Project Setup</a><ul>
 <li><a class="reference internal" href="#vendors-and-submodules">Vendors and Submodules</a></li>
 </ul>
 </li>
@@ -209,8 +176,8 @@ manage this is <a class="reference external" href="https://github.com/res0nat0r/
   <p class="topless"><a href="../index.html"
                         title="previous chapter">Cookbook</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../controller/error_pages.html"
-                        title="next chapter">How to customize Error Pages</a></p>
+  <p class="topless"><a href="new_project_svn.html"
+                        title="next chapter">How to Create and store a Symfony2 Project in Subversion</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/workflow/new_project_git.txt"
@@ -240,17 +207,17 @@ manage this is <a class="reference external" href="https://github.com/res0nat0r/
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../controller/error_pages.html" title="How to customize Error Pages"
+          <a href="new_project_svn.html" title="How to Create and store a Symfony2 Project in Subversion"
              >next</a> |</li>
         <li class="right" >
           <a href="../index.html" title="Cookbook"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

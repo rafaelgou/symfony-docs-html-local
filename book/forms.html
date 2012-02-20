@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Forms &mdash; Symfony2Docs v0 documentation</title>
+    <title>Forms &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Security" href="security.html" />
     <link rel="prev" title="Validation" href="validation.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="validation.html" title="Validation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -147,7 +147,7 @@ class DefaultController extends Controller
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">This examples shows you how to build your form directly in the controller.
+<p class="last">This example shows you how to build your form directly in the controller.
 Later, in the &#8220;<a class="reference internal" href="#book-form-creating-form-classes"><em>Creating Form Classes</em></a>&#8221; section, you&#8217;ll learn
 how to build your form in a standalone class, which is recommended as
 your form becomes reusable.</p>
@@ -193,7 +193,7 @@ helper functions:</p>
 </li>
 </ul>
 </div>
-<img alt="../_images/form-simple1.png" class="align-center" src="../_images/form-simple1.png" />
+<img alt="../_images/form-simple.png" class="align-center" src="../_images/form-simple.png" />
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This example assumes that you&#8217;ve created a route called <tt class="docutils literal"><span class="pre">task_new</span></tt>
@@ -405,6 +405,40 @@ method:</p>
 <p>In both of these cases, <em>only</em> the <tt class="docutils literal"><span class="pre">registration</span></tt> validation group will
 be used to validate the underlying object.</p>
 </div>
+<div class="section" id="groups-based-on-submitted-data">
+<h3>Groups based on Submitted Data<a class="headerlink" href="#groups-based-on-submitted-data" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The ability to specify a callback or Closure in <tt class="docutils literal"><span class="pre">validation_groups</span></tt>
+is new to version 2.1</p>
+<p>If you need some advanced logic to determine the validation groups (e.g.
+based on submitted data), you can set the <tt class="docutils literal"><span class="pre">validation_groups</span></tt> option
+to an array callback, or a <tt class="docutils literal"><span class="pre">Closure</span></tt>:</p>
+<div class="highlight-python"><pre>public function getDefaultOptions(array $options)
+{
+    return array(
+        'validation_groups' =&gt; array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+    );
+}</pre>
+</div>
+<p>This will call the static method <tt class="docutils literal"><span class="pre">determineValidationGroups()</span></tt> on the
+<tt class="docutils literal"><span class="pre">Client</span></tt> class after the form is bound, but before validation is executed.
+The Form object is passed as an argument to that method (see next example).
+You can also define whole logic inline by using a Closure:</p>
+<div class="highlight-python"><pre>public function getDefaultOptions(array $options)
+{
+    return array(
+        'validation_groups' =&gt; function(FormInterface $form) {
+            $data = $form-&gt;getData();
+            if (Entity\Client::TYPE_PERSON == $data-&gt;getType()) {
+                return array('person')
+            } else {
+                return array('company');
+            }
+        },
+    );
+}</pre>
+</div>
+</div>
 </div>
 <div class="section" id="built-in-field-types">
 <span id="book-forms-type-reference"></span><span id="index-7"></span><h2>Built-in Field Types<a class="headerlink" href="#built-in-field-types" title="Permalink to this headline">¶</a></h2>
@@ -485,7 +519,7 @@ configured to be rendered as a single text box (where the user would enter
 the date as a string in the box):</p>
 <div class="highlight-python"><pre>-&gt;add('dueDate', 'date', array('widget' =&gt; 'single_text'))</pre>
 </div>
-<img alt="../_images/form-simple21.png" class="align-center" src="../_images/form-simple21.png" />
+<img alt="../_images/form-simple2.png" class="align-center" src="../_images/form-simple2.png" />
 <p>Each field type has a number of different options that can be passed to it.
 Many of these are specific to the field type and details can be found in
 the documentation for each type.</p>
@@ -503,6 +537,18 @@ or web service, for example), it will be accepted as a valid value unless
 you use Symfony&#8217;s <tt class="docutils literal"><span class="pre">NotBlank</span></tt> or <tt class="docutils literal"><span class="pre">NotNull</span></tt> validation constraint.</p>
 <p class="last">In other words, the <tt class="docutils literal"><span class="pre">required</span></tt> option is &#8220;nice&#8221;, but true server-side
 validation should <em>always</em> be used.</p>
+</div>
+<div class="sidebar">
+<p class="first sidebar-title">The <tt class="docutils literal"><span class="pre">label</span></tt> option</p>
+<p>The label for the form field can be set using the <tt class="docutils literal"><span class="pre">label</span></tt> option,
+which can be applied to any field:</p>
+<div class="highlight-python"><pre>-&gt;add('dueDate', 'date', array(
+    'widget' =&gt; 'single_text',
+    'label'  =&gt; 'Due Date',
+))</pre>
+</div>
+<p class="last">The label for a field can also be set in the template rendering the
+form, see below.</p>
 </div>
 </div>
 </div>
@@ -537,7 +583,15 @@ group(s) being used).</p>
 <div class="section" id="field-type-options-guessing">
 <span id="index-10"></span><h3>Field Type Options Guessing<a class="headerlink" href="#field-type-options-guessing" title="Permalink to this headline">¶</a></h3>
 <p>In addition to guessing the &#8220;type&#8221; for a field, Symfony can also try to guess
-the correct values of a number of field options:</p>
+the correct values of a number of field options.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">When these options are set, the field will be rendered with special HTML
+attributes that provide for HTML5 client-side validation. However, it
+doesn&#8217;t generate the equivalent server-side constraints (e.g. <tt class="docutils literal"><span class="pre">Assert\MaxLength</span></tt>).
+And though you&#8217;ll need to manually add your server-side validation, these
+field type options can then be guessed from that information.</p>
+</div>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">required</span></tt>: The <tt class="docutils literal"><span class="pre">required</span></tt> option can be guessed based off of the validation
 rules (i.e. is the field <tt class="docutils literal"><span class="pre">NotBlank</span></tt> or <tt class="docutils literal"><span class="pre">NotNull</span></tt>) or the Doctrine metadata
@@ -617,6 +671,22 @@ advantage of the automatic <a class="reference internal" href="#forms-csrf"><em>
 the label, errors and HTML form widget of each field inside a <tt class="docutils literal"><span class="pre">div</span></tt> tag
 by default. In the <a class="reference internal" href="#form-theming"><em>Form Theming</em></a> section, you&#8217;ll learn how the <tt class="docutils literal"><span class="pre">form_row</span></tt>
 output can be customized on many different levels.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>You can access the current data of your form via <tt class="docutils literal"><span class="pre">form.vars.value</span></tt>:</p>
+<div class="last configuration-block">
+<ul class="simple">
+<li><em>Twig</em><div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">form.vars.value.task</span> <span class="cp">}}</span><span class="x"></span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getTask</span><span class="p">()</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
 <div class="section" id="rendering-each-field-by-hand">
 <span id="index-12"></span><h3>Rendering each Field by Hand<a class="headerlink" href="#rendering-each-field-by-hand" title="Permalink to this headline">¶</a></h3>
 <p>The <tt class="docutils literal"><span class="pre">form_row</span></tt> helper is great because you can very quickly render each
@@ -754,14 +824,14 @@ form &#8220;type&#8221;). It can be used to quickly build a form object in the c
 <p>Placing the form logic into its own class means that the form can be easily
 reused elsewhere in your project. This is the best way to create forms, but
 the choice is ultimately up to you.</p>
-<div class="sidebar">
+<div class="sidebar" id="book-forms-data-class">
 <p class="first sidebar-title">Setting the <tt class="docutils literal"><span class="pre">data_class</span></tt></p>
 <p>Every form needs to know the name of the class that holds the underlying
 data (e.g. <tt class="docutils literal"><span class="pre">Acme\TaskBundle\Entity\Task</span></tt>). Usually, this is just guessed
 based off of the object passed to the second argument to <tt class="docutils literal"><span class="pre">createForm</span></tt>
 (i.e. <tt class="docutils literal"><span class="pre">$task</span></tt>). Later, when you begin embedding forms, this will no
 longer be sufficient. So, while not always necessary, it&#8217;s generally a
-good idea to explicitly specify the <tt class="docutils literal"><span class="pre">data_class</span></tt> option by add the
+good idea to explicitly specify the <tt class="docutils literal"><span class="pre">data_class</span></tt> option by adding the
 following to your form type class:</p>
 <div class="last highlight-python"><pre>public function getDefaultOptions(array $options)
 {
@@ -770,6 +840,25 @@ following to your form type class:</p>
     );
 }</pre>
 </div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<blockquote>
+<div><p>When mapping forms to objects, all fields are mapped. Any fields on the
+form that do not exist on the mapped object will cause an exception to
+be thrown.</p>
+<p>In cases where you need extra fields in the form (for example: a &#8220;do you
+agree with these terms&#8221; checkbox) that will not be mapped to the underlying
+object, you need to set the property_path option to <tt class="docutils literal"><span class="pre">false</span></tt>:</p>
+<p>public function buildForm(FormBuilder $builder, array $options)
+{</p>
+<blockquote>
+<div>$builder-&gt;add(&#8216;task&#8217;);
+$builder-&gt;add(&#8216;dueDate&#8217;, null, array(&#8216;property_path&#8217; =&gt; false));</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p class="last">Additionally, if there are any fields on the form that aren&#8217;t included in
+the submitted data, those fields will be explicitly set to <tt class="docutils literal"><span class="pre">null</span></tt>.</p>
 </div>
 </div>
 <div class="section" id="forms-and-doctrine">
@@ -926,9 +1015,11 @@ and can be persisted to the database or used however you need.</p>
 </div>
 <div class="section" id="embedding-a-collection-of-forms">
 <h3>Embedding a Collection of Forms<a class="headerlink" href="#embedding-a-collection-of-forms" title="Permalink to this headline">¶</a></h3>
-<p>You can also embed a collection of forms into one form. This is done by
-using the <tt class="docutils literal"><span class="pre">collection</span></tt> field type. For more information, see the
-<a class="reference internal" href="../reference/forms/types/collection.html"><em>collection field type reference</em></a>.</p>
+<p>You can also embed a collection of forms into one form (imagine a <tt class="docutils literal"><span class="pre">Category</span></tt>
+form with many <tt class="docutils literal"><span class="pre">Product</span></tt> sub-forms). This is done by using the <tt class="docutils literal"><span class="pre">collection</span></tt>
+field type.</p>
+<p>For more information see the &#8220;<a class="reference internal" href="../cookbook/form/form_collections.html"><em>How to Embed a Collection of Forms</em></a>&#8221; cookbook
+entry and  the <a class="reference internal" href="../reference/forms/types/collection.html"><em>collection</em></a> field type reference.</p>
 </div>
 </div>
 <div class="section" id="form-theming">
@@ -998,8 +1089,8 @@ renders the form:</p>
 </ul>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">form_theme</span></tt> tag (in Twig) &#8220;imports&#8221; the fragments defined in the given
-template and uses them when rendering the form. <cite>In other words, when the
-``form_row`</cite> function is called later in this template, it will use the <tt class="docutils literal"><span class="pre">field_row</span></tt>
+template and uses them when rendering the form. In other words, when the
+<tt class="docutils literal"><span class="pre">form_row</span></tt> function is called later in this template, it will use the <tt class="docutils literal"><span class="pre">field_row</span></tt>
 block from your custom theme (instead of the default <tt class="docutils literal"><span class="pre">field_row</span></tt> block
 that ships with Symfony).</p>
 <p>To customize any portion of a form, you just need to override the appropriate
@@ -1008,7 +1099,7 @@ the next section.</p>
 <p>For a more extensive discussion, see <a class="reference internal" href="../cookbook/form/form_customization.html"><em>How to customize Form Rendering</em></a>.</p>
 <div class="section" id="form-fragment-naming">
 <span id="form-template-blocks"></span><span id="index-17"></span><h3>Form Fragment Naming<a class="headerlink" href="#form-fragment-naming" title="Permalink to this headline">¶</a></h3>
-<p>In Symfony, every part a form that is rendered - HTML form elements, errors,
+<p>In Symfony, every part of a form that is rendered - HTML form elements, errors,
 labels, etc - is defined in a base theme, which is a collection of blocks
 in Twig and a collection of template files in PHP.</p>
 <p>In Twig, every block needed is defined in a single template file (<a class="reference external" href="https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig">form_div_layout.html.twig</a>)
@@ -1244,12 +1335,123 @@ that all un-rendered fields are output.</p>
 </div>
 <p>To disable CSRF protection, set the <tt class="docutils literal"><span class="pre">csrf_protection</span></tt> option to false.
 Customizations can also be made globally in your project. For more information,
-see the <em class="xref std std-ref">form configuration reference</em>
+see the <a class="reference internal" href="../reference/configuration/framework.html#reference-framework-form"><em>form configuration reference</em></a>
 section.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The <tt class="docutils literal"><span class="pre">intention</span></tt> option is optional but greatly enhances the security of
 the generated token by making it different for each form.</p>
+</div>
+</div>
+<div class="section" id="using-a-form-without-a-class">
+<h2>Using a Form without a Class<a class="headerlink" href="#using-a-form-without-a-class" title="Permalink to this headline">¶</a></h2>
+<p>In most cases, a form is tied to an object, and the fields of the form get
+and store their data on the properties of that object. This is exactly what
+you&#8217;ve seen so far in this chapter with the <cite>Task</cite> class.</p>
+<p>But sometimes, you may just want to use a form without a class, and get back
+an array of the submitted data. This is actually really easy:</p>
+<div class="highlight-python"><pre>// make sure you've imported the Request namespace above the class
+use Symfony\Component\HttpFoundation\Request
+// ...
+
+public function contactAction(Request $request)
+{
+    $defaultData = array('message' =&gt; 'Type your message here');
+    $form = $this-&gt;createFormBuilder($defaultData)
+        -&gt;add('name', 'text')
+        -&gt;add('email', 'email')
+        -&gt;add('message', 'textarea')
+        -&gt;getForm();
+
+        if ($request-&gt;getMethod() == 'POST') {
+            $form-&gt;bindRequest($request);
+
+            // data is an array with "name", "email", and "message" keys
+            $data = $form-&gt;getData();
+        }
+
+    // ... render the form
+}</pre>
+</div>
+<p>By default, a form actually assumes that you want to work with arrays of
+data, instead of an object. There are exactly two ways that you can change
+this behavior and tie the form to an object instead:</p>
+<ol class="arabic simple">
+<li>Pass an object when creating the form (as the first argument to <tt class="docutils literal"><span class="pre">createFormBuilder</span></tt>
+or the second argument to <tt class="docutils literal"><span class="pre">createForm</span></tt>);</li>
+<li>Declare the <tt class="docutils literal"><span class="pre">data_class</span></tt> option on your form.</li>
+</ol>
+<p>If you <em>don&#8217;t</em> do either of these, then the form will return the data as
+an array. In this example, since <tt class="docutils literal"><span class="pre">$defaultData</span></tt> is not an object (and
+no <tt class="docutils literal"><span class="pre">data_class</span></tt> option is set), <tt class="docutils literal"><span class="pre">$form-&gt;getData()</span></tt> ultimately returns
+an array.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>You can also access POST values (in this case &#8220;name&#8221;) directly through
+the request object, like so:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">$this-&gt;get(&#39;request&#39;)-&gt;request-&gt;get(&#39;name&#39;);</span>
+</pre></div>
+</div>
+<p class="last">Be advised, however, that in most cases using the getData() method is
+a better choice, since it returns the data (usually an object) after
+it&#8217;s been transformed by the form framework.</p>
+</div>
+<div class="section" id="adding-validation">
+<h3>Adding Validation<a class="headerlink" href="#adding-validation" title="Permalink to this headline">¶</a></h3>
+<p>The only missing piece is validation. Usually, when you call <tt class="docutils literal"><span class="pre">$form-&gt;isValid()</span></tt>,
+the object is validated by reading the constraints that you applied to that
+class. But without a class, how can you add constraints to the data of your
+form?</p>
+<p>The answer is to setup the constraints yourself, and pass them into your
+form. The overall approach is covered a bit more in the <a class="reference internal" href="validation.html#book-validation-raw-values"><em>validation chapter</em></a>,
+but here&#8217;s a short example:</p>
+<div class="highlight-python"><pre>// import the namespaces above your controller class
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\MinLength;
+use Symfony\Component\Validator\Constraints\Collection;
+
+$collectionConstraint = new Collection(array(
+    'name' =&gt; new MinLength(5),
+    'email' =&gt; new Email(array('message' =&gt; 'Invalid email address')),
+));
+
+// create a form, no default values, pass in the constraint option
+$form = $this-&gt;createFormBuilder(null, array(
+    'validation_constraint' =&gt; $collectionConstraint,
+))-&gt;add('email', 'email')
+    // ...
+;</pre>
+</div>
+<p>Now, when you call <cite>$form-&gt;isValid()</cite>, the constraints setup here are run
+against your form&#8217;s data. If you&#8217;re using a form class, override the <tt class="docutils literal"><span class="pre">getDefaultOptions</span></tt>
+method to specify the option:</p>
+<div class="highlight-python"><pre>namespace Acme\TaskBundle\Form\Type;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\MinLength;
+use Symfony\Component\Validator\Constraints\Collection;
+
+class ContactType extends AbstractType
+{
+    // ...
+
+    public function getDefaultOptions(array $options)
+    {
+        $collectionConstraint = new Collection(array(
+            'name' =&gt; new MinLength(5),
+            'email' =&gt; new Email(array('message' =&gt; 'Invalid email address')),
+        ));
+
+        return array('validation_constraint' =&gt; $collectionConstraint);
+    }
+}</pre>
+</div>
+<p>Now, you have the flexibility to create forms - with validation - that return
+an array of data, instead of an object. In most cases, it&#8217;s better - and
+certainly more robust - to bind your form to an object. But for simple forms,
+this is a great approach.</p>
 </div>
 </div>
 <div class="section" id="final-thoughts">
@@ -1274,6 +1476,8 @@ includes examples of how to use each field type and its options.</p>
 <li><a class="reference internal" href="../reference/forms/types/file.html"><em>File Field Reference</em></a></li>
 <li><a class="reference internal" href="../cookbook/form/create_custom_field_type.html"><em>Creating Custom Field Types</em></a></li>
 <li><a class="reference internal" href="../cookbook/form/form_customization.html"><em>How to customize Form Rendering</em></a></li>
+<li><a class="reference internal" href="../cookbook/form/dynamic_form_generation.html"><em>How to Dynamically Generate Forms Using Form Events</em></a></li>
+<li><a class="reference internal" href="../cookbook/form/data_transformers.html"><em>Using Data Transformers</em></a></li>
 </ul>
 </div>
 </div>
@@ -1295,6 +1499,7 @@ includes examples of how to use each field type and its options.</p>
 </li>
 <li><a class="reference internal" href="#form-validation">Form Validation</a><ul>
 <li><a class="reference internal" href="#validation-groups">Validation Groups</a></li>
+<li><a class="reference internal" href="#groups-based-on-submitted-data">Groups based on Submitted Data</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#built-in-field-types">Built-in Field Types</a><ul>
@@ -1335,6 +1540,10 @@ includes examples of how to use each field type and its options.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#csrf-protection">CSRF Protection</a></li>
+<li><a class="reference internal" href="#using-a-form-without-a-class">Using a Form without a Class</a><ul>
+<li><a class="reference internal" href="#adding-validation">Adding Validation</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#final-thoughts">Final Thoughts</a></li>
 <li><a class="reference internal" href="#learn-more-from-the-cookbook">Learn more from the Cookbook</a></li>
 </ul>
@@ -1381,12 +1590,12 @@ includes examples of how to use each field type and its options.</p>
         <li class="right" >
           <a href="validation.html" title="Validation"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

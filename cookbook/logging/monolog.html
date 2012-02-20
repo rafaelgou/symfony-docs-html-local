@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use Monolog to write Logs &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to use Monolog to write Logs &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to extend a Class without using Inheritance" href="../event_dispatcher/class_extension.html" />
-    <link rel="prev" title="How to optimize your development Environment for debugging" href="../debugging.html" /> 
+    <link rel="next" title="How to Configure Monolog to Email Errors" href="monolog_email.html" />
+    <link rel="prev" title="How to use PHP instead of Twig for Templates" href="../templating/PHP.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../event_dispatcher/class_extension.html" title="How to extend a Class without using Inheritance"
+          <a href="monolog_email.html" title="How to Configure Monolog to Email Errors"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../debugging.html" title="How to optimize your development Environment for debugging"
+          <a href="../templating/PHP.html" title="How to use PHP instead of Twig for Templates"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -97,7 +97,7 @@ allows you to log the messages in several ways easily.</p>
             <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/var/log/symfony.log</span>
             <span class="l-Scalar-Plain">level</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">error</span>
         <span class="l-Scalar-Plain">main</span><span class="p-Indicator">:</span>
-            <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">fingerscrossed</span>
+            <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">fingers_crossed</span>
             <span class="l-Scalar-Plain">action_level</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">warning</span>
             <span class="l-Scalar-Plain">handler</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">file</span>
         <span class="l-Scalar-Plain">file</span><span class="p-Indicator">:</span>
@@ -121,7 +121,7 @@ allows you to log the messages in several ways easily.</p>
         <span class="nt">/&gt;</span>
         <span class="nt">&lt;monolog:handler</span>
             <span class="na">name=</span><span class="s">&quot;main&quot;</span>
-            <span class="na">type=</span><span class="s">&quot;fingerscrossed&quot;</span>
+            <span class="na">type=</span><span class="s">&quot;fingers_crossed&quot;</span>
             <span class="na">action-level=</span><span class="s">&quot;warning&quot;</span>
             <span class="na">handler=</span><span class="s">&quot;file&quot;</span>
         <span class="nt">/&gt;</span>
@@ -142,7 +142,7 @@ in the order where they are defined.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">The handler named &#8220;file&#8221; will not be included in the stack itself as
-it is used as a nested handler of the fingerscrossed handler.</p>
+it is used as a nested handler of the <tt class="docutils literal"><span class="pre">fingers_crossed</span></tt> handler.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -299,11 +299,11 @@ handler level instead of globally.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../debugging.html"
-                        title="previous chapter">How to optimize your development Environment for debugging</a></p>
+  <p class="topless"><a href="../templating/PHP.html"
+                        title="previous chapter">How to use PHP instead of Twig for Templates</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../event_dispatcher/class_extension.html"
-                        title="next chapter">How to extend a Class without using Inheritance</a></p>
+  <p class="topless"><a href="monolog_email.html"
+                        title="next chapter">How to Configure Monolog to Email Errors</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/logging/monolog.txt"
@@ -333,17 +333,17 @@ handler level instead of globally.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../event_dispatcher/class_extension.html" title="How to extend a Class without using Inheritance"
+          <a href="monolog_email.html" title="How to Configure Monolog to Email Errors"
              >next</a> |</li>
         <li class="right" >
-          <a href="../debugging.html" title="How to optimize your development Environment for debugging"
+          <a href="../templating/PHP.html" title="How to use PHP instead of Twig for Templates"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

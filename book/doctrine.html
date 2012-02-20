@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Databases and Doctrine (“The Model”) &mdash; Symfony2Docs v0 documentation</title>
+    <title>Databases and Doctrine (“The Model”) &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Testing" href="testing.html" />
     <link rel="prev" title="Creating and using Templates" href="templating.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="templating.html" title="Creating and using Templates"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -66,8 +66,8 @@ objects to a relational database (such as <em>MySQL</em>, <em>PostgreSQL</em> or
 If you prefer to use raw database queries, this is easy, and explained
 in the &#8220;<a class="reference internal" href="../cookbook/doctrine/dbal.html"><em>How to use Doctrine&#8217;s DBAL Layer</em></a>&#8221; cookbook entry.</p>
 <p class="last">You can also persist data to <a class="reference external" href="http://www.mongodb.org/">MongoDB</a> using Doctrine ODM library. For
-more information, read the &#8220;<a class="reference internal" href="../cookbook/doctrine/mongodb.html"><em>How to use MongoDB</em></a>&#8221; cookbook
-entry.</p>
+more information, read the &#8220;<tt class="xref doc docutils literal"><span class="pre">/bundles/DoctrineMongoDBBundle/index</span></tt>&#8221;
+documentation.</p>
 </div>
 <div class="section" id="a-simple-example-a-product">
 <h2>A Simple Example: A Product<a class="headerlink" href="#a-simple-example-a-product" title="Permalink to this headline">¶</a></h2>
@@ -86,19 +86,19 @@ an <tt class="docutils literal"><span class="pre">AcmeStoreBundle</span></tt> vi
 <h3>Configuring the Database<a class="headerlink" href="#configuring-the-database" title="Permalink to this headline">¶</a></h3>
 <p>Before you really begin, you&#8217;ll need to configure your database connection
 information. By convention, this information is usually configured in an
-<tt class="docutils literal"><span class="pre">app/config/parameters.ini</span></tt> file:</p>
-<div class="highlight-ini"><div class="highlight"><pre><span class="c">;app/config/parameters.ini</span>
-<span class="k">[parameters]</span>
-    <span class="na">database_driver</span>   <span class="o">=</span> <span class="s">pdo_mysql</span>
-<span class="s">    database_host     = localhost</span>
-<span class="s">    database_name     = test_project</span>
-<span class="s">    database_user     = root</span>
-<span class="s">    database_password = password</span>
+<tt class="docutils literal"><span class="pre">app/config/parameters.yml</span></tt> file:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/parameters.yml</span>
+<span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">database_driver</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">pdo_mysql</span>
+    <span class="l-Scalar-Plain">database_host</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">localhost</span>
+    <span class="l-Scalar-Plain">database_name</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">test_project</span>
+    <span class="l-Scalar-Plain">database_user</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">root</span>
+    <span class="l-Scalar-Plain">database_password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">password</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>Defining the configuration via <tt class="docutils literal"><span class="pre">parameters.ini</span></tt> is just a convention.
+<p>Defining the configuration via <tt class="docutils literal"><span class="pre">parameters.yml</span></tt> is just a convention.
 The parameters defined in that file are referenced by the main configuration
 file when setting up Doctrine:</p>
 <div class="highlight-yaml"><pre>doctrine:
@@ -110,7 +110,7 @@ file when setting up Doctrine:</p>
         password: %database_password%</pre>
 </div>
 <p class="last">By separating the database information into a separate file, you can
-easily keep different version of the file on each server. You can also
+easily keep different versions of the file on each server. You can also
 easily store database configuration (or any sensitive information) outside
 of your project, like inside your Apache configuration, for example. For
 more information, see <a class="reference internal" href="../cookbook/configuration/external_parameters.html"><em>How to Set External Parameters in the Service Container</em></a>.</p>
@@ -155,11 +155,11 @@ this entity class for you:</p>
 <div class="section" id="add-mapping-information">
 <span id="book-doctrine-adding-mapping"></span><span id="index-1"></span><h3>Add Mapping Information<a class="headerlink" href="#add-mapping-information" title="Permalink to this headline">¶</a></h3>
 <p>Doctrine allows you to work with databases in a much more interesting way
-than just fetching rows of column-based table into an array. Instead, Doctrine
+than just fetching rows of a column-based table into an array. Instead, Doctrine
 allows you to persist entire <em>objects</em> to the database and fetch entire objects
 out of the database. This works by mapping a PHP class to a database table,
 and the properties of that PHP class to columns on the table:</p>
-<img alt="../_images/doctrine_image_11.png" class="align-center" src="../_images/doctrine_image_11.png" />
+<img alt="../_images/doctrine_image_1.png" class="align-center" src="../_images/doctrine_image_1.png" />
 <p>For Doctrine to be able to do this, you just have to create &#8220;metadata&#8221;, or
 configuration that tells Doctrine exactly how the <tt class="docutils literal"><span class="pre">Product</span></tt> class and its
 properties should be <em>mapped</em> to the database. This metadata can be specified
@@ -302,12 +302,32 @@ a regular PHP class, you need to create getter and setter methods (e.g. <tt clas
 for the <tt class="docutils literal"><span class="pre">Product</span></tt> class. This is a safe command - you can run it over and
 over again: it only generates getters and setters that don&#8217;t exist (i.e. it
 doesn&#8217;t replace your existing methods).</p>
-<div class="admonition caution">
-<p class="first admonition-title">Caution</p>
-<p class="last">The <tt class="docutils literal"><span class="pre">doctrine:generate:entities</span></tt> command saves a backup of the original
+<div class="sidebar">
+<p class="first sidebar-title">More about <tt class="docutils literal"><span class="pre">doctrine:generate:entities</span></tt></p>
+<p>With the <tt class="docutils literal"><span class="pre">doctrine:generate:entities</span></tt> command you can:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">generate getters and setters,</p>
+</li>
+<li><dl class="first docutils">
+<dt>generate repository classes configured with the</dt>
+<dd><p class="first last"><tt class="docutils literal"><span class="pre">&#64;ORM\Entity(repositoryClass=&quot;...&quot;)</span></tt> annotation,</p>
+</dd>
+</dl>
+</li>
+<li><p class="first">generate the appropriate constructor for 1:n and n:m relations.</p>
+</li>
+</ul>
+</div></blockquote>
+<p>The <tt class="docutils literal"><span class="pre">doctrine:generate:entities</span></tt> command saves a backup of the original
 <tt class="docutils literal"><span class="pre">Product.php</span></tt> named <tt class="docutils literal"><span class="pre">Product.php~</span></tt>. In some cases, the presence of
 this file can cause a &#8220;Cannot redeclare class&#8221; error. It can be safely
 removed.</p>
+<p class="last">Note that you don&#8217;t <em>need</em> to use this command. Doctrine doesn&#8217;t rely
+on code generation. Like with normal PHP classes, you just need to make
+sure that your protected/private properties have getter and setter methods.
+Since this is a common thing to do when using Doctrine, this command
+was created.</p>
 </div>
 <p>You can also generate all known entities (i.e. any PHP class with Doctrine
 mapping information) of a bundle or an entire namespace:</p>
@@ -341,9 +361,9 @@ your entities) with how it <em>actually</em> looks, and generates the SQL statem
 needed to <em>update</em> the database to where it should be. In other words, if you add
 a new property with mapping metadata to <tt class="docutils literal"><span class="pre">Product</span></tt> and run this task
 again, it will generate the &#8220;alter table&#8221; statement needed to add that
-new column to the existing <tt class="docutils literal"><span class="pre">products</span></tt> table.</p>
+new column to the existing <tt class="docutils literal"><span class="pre">product</span></tt> table.</p>
 <p class="last">An even better way to take advantage of this functionality is via
-<a class="reference internal" href="../cookbook/doctrine/migrations.html"><em>migrations</em></a>, which allow you to
+<tt class="xref doc docutils literal"><span class="pre">migrations</span></tt>, which allow you to
 generate these SQL statements and store them in migration classes that
 can be run systematically on your production server in order to track
 and migrate your database schema safely and reliably.</p>
@@ -397,7 +417,7 @@ of the bundle:</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you&#8217;re following along with this example, you&#8217;ll need to create a
-route that points to this action to see it in work.</p>
+route that points to this action to see it work.</p>
 </div>
 <p>Let&#8217;s walk through this example:</p>
 <ul class="simple">
@@ -431,7 +451,7 @@ an <tt class="docutils literal"><span class="pre">UPDATE</span></tt> query if th
 <p class="first admonition-title">Tip</p>
 <p class="last">Doctrine provides a library that allows you to programmatically load testing
 data into your project (i.e. &#8220;fixture data&#8221;). For information, see
-<a class="reference internal" href="../cookbook/doctrine/doctrine_fixtures.html"><em>How to create Fixtures in Symfony2</em></a>.</p>
+<tt class="xref doc docutils literal"><span class="pre">/bundles/DoctrineFixturesBundle/index</span></tt>.</p>
 </div>
 </div>
 <div class="section" id="fetching-objects-from-the-database">
@@ -500,7 +520,7 @@ $product = $repository-&gt;findBy(
 <p class="first admonition-title">Tip</p>
 <p>When you render any page, you can see how many queries were made in the
 bottom right corner of the web debug toolbar.</p>
-<a class="reference internal image-reference" href="../_images/doctrine_web_debug_toolbar1.png"><img alt="../_images/doctrine_web_debug_toolbar1.png" class="align-center" src="../_images/doctrine_web_debug_toolbar1.png" style="width: 175.0px; height: 176.0px;" /></a>
+<a class="reference internal image-reference" href="../_images/doctrine_web_debug_toolbar.png"><img alt="../_images/doctrine_web_debug_toolbar.png" class="align-center" src="../_images/doctrine_web_debug_toolbar.png" style="width: 175.0px; height: 176.0px;" /></a>
 <p class="last">If you click the icon, the profiler will open, showing you the exact
 queries that were made.</p>
 </div>
@@ -563,7 +583,7 @@ instead of querying for rows on a table (e.g. <tt class="docutils literal"><span
 or using Doctrine&#8217;s Query Builder.</p>
 <div class="section" id="querying-for-objects-with-dql">
 <h3>Querying for Objects with DQL<a class="headerlink" href="#querying-for-objects-with-dql" title="Permalink to this headline">¶</a></h3>
-<p>Imaging that you want to query for products, but only return products that
+<p>Imagine that you want to query for products, but only return products that
 cost more than <tt class="docutils literal"><span class="pre">19.99</span></tt>, ordered from cheapest to most expensive. From inside
 a controller, do the following:</p>
 <div class="highlight-python"><pre>$em = $this-&gt;getDoctrine()-&gt;getEntityManager();
@@ -753,7 +773,9 @@ a <tt class="docutils literal"><span class="pre">name</span></tt> field and the 
 <h3>Relationship Mapping Metadata<a class="headerlink" href="#relationship-mapping-metadata" title="Permalink to this headline">¶</a></h3>
 <p>To relate the <tt class="docutils literal"><span class="pre">Category</span></tt> and <tt class="docutils literal"><span class="pre">Product</span></tt> entities, start by creating a
 <tt class="docutils literal"><span class="pre">products</span></tt> property on the <tt class="docutils literal"><span class="pre">Category</span></tt> class:</p>
-<div class="highlight-python"><pre>// src/Acme/StoreBundle/Entity/Category.php
+<div class="configuration-block">
+<ul class="simple">
+<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/StoreBundle/Entity/Category.php
 // ...
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -772,6 +794,21 @@ class Category
     }
 }</pre>
 </div>
+</li>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/StoreBundle/Resources/config/doctrine/Category.orm.yml</span>
+<span class="l-Scalar-Plain">Acme\StoreBundle\Entity\Category</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">entity</span>
+    <span class="c1"># ...</span>
+    <span class="l-Scalar-Plain">oneToMany</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">products</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">targetEntity</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Product</span>
+            <span class="l-Scalar-Plain">mappedBy</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">category</span>
+    <span class="c1"># don&#39;t forget to init the collection in entity __construct() method</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 <p>First, since a <tt class="docutils literal"><span class="pre">Category</span></tt> object will relate to many <tt class="docutils literal"><span class="pre">Product</span></tt> objects,
 a <tt class="docutils literal"><span class="pre">products</span></tt> array property is added to hold those <tt class="docutils literal"><span class="pre">Product</span></tt> objects.
 Again, this isn&#8217;t done because Doctrine needs it, but instead because it
@@ -785,9 +822,18 @@ This object looks and acts almost <em>exactly</em> like an array, but has some
 added flexibility. If this makes you uncomfortable, don&#8217;t worry. Just
 imagine that it&#8217;s an <tt class="docutils literal"><span class="pre">array</span></tt> and you&#8217;ll be in good shape.</p>
 </div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">The targetEntity value in the decorator used above can reference any entity
+with a valid namespace, not just entities defined in the same class. To
+relate to an entity defined in a different class or bundle, enter a full
+namespace as the targetEntity.</p>
+</div>
 <p>Next, since each <tt class="docutils literal"><span class="pre">Product</span></tt> class can relate to exactly one <tt class="docutils literal"><span class="pre">Category</span></tt>
 object, you&#8217;ll want to add a <tt class="docutils literal"><span class="pre">$category</span></tt> property to the <tt class="docutils literal"><span class="pre">Product</span></tt> class:</p>
-<div class="highlight-python"><pre>// src/Acme/StoreBundle/Entity/Product.php
+<div class="configuration-block">
+<ul class="simple">
+<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/StoreBundle/Entity/Product.php
 // ...
 
 class Product
@@ -800,6 +846,23 @@ class Product
      */
     protected $category;
 }</pre>
+</div>
+</li>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.yml</span>
+<span class="l-Scalar-Plain">Acme\StoreBundle\Entity\Product</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">entity</span>
+    <span class="c1"># ...</span>
+    <span class="l-Scalar-Plain">manyToOne</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">category</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">targetEntity</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Category</span>
+            <span class="l-Scalar-Plain">inversedBy</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">products</span>
+            <span class="l-Scalar-Plain">joinColumn</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">category_id</span>
+                <span class="l-Scalar-Plain">referencedColumnName</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">id</span>
+</pre></div>
+</div>
+</li>
+</ul>
 </div>
 <p>Finally, now that you&#8217;ve added a new property to both the <tt class="docutils literal"><span class="pre">Category</span></tt> and
 <tt class="docutils literal"><span class="pre">Product</span></tt> classes, tell Doctrine to generate the missing getter and setter
@@ -820,7 +883,7 @@ field that lives on the <tt class="docutils literal"><span class="pre">product</
 object will be stored on the <tt class="docutils literal"><span class="pre">$category</span></tt> property, but behind the scenes,
 Doctrine will persist this relationship by storing the category&#8217;s id value
 on a <tt class="docutils literal"><span class="pre">category_id</span></tt> column of the <tt class="docutils literal"><span class="pre">product</span></tt> table.</p>
-<img alt="../_images/doctrine_image_21.png" class="align-center" src="../_images/doctrine_image_21.png" />
+<img alt="../_images/doctrine_image_2.png" class="align-center" src="../_images/doctrine_image_2.png" />
 <p>The metadata above the <tt class="docutils literal"><span class="pre">$products</span></tt> property of the <tt class="docutils literal"><span class="pre">Category</span></tt> object
 is less important, and simply tells Doctrine to look at the <tt class="docutils literal"><span class="pre">Product.category</span></tt>
 property to figure out how the relationship is mapped.</p>
@@ -833,7 +896,7 @@ table, and <tt class="docutils literal"><span class="pre">product.category_id</s
 <p class="first admonition-title">Note</p>
 <p class="last">This task should only be really used during development. For a more robust
 method of systematically updating your production database, read about
-<a class="reference internal" href="../cookbook/doctrine/migrations.html"><em>Doctrine migrations</em></a>.</p>
+<tt class="xref doc docutils literal"><span class="pre">Doctrine</span> <span class="pre">migrations</span></tt>.</p>
 </div>
 </div>
 <div class="section" id="saving-related-entities">
@@ -896,7 +959,7 @@ did before. First, fetch a <tt class="docutils literal"><span class="pre">$produ
 Doctrine silently makes a second query to find the <tt class="docutils literal"><span class="pre">Category</span></tt> that&#8217;s related
 to this <tt class="docutils literal"><span class="pre">Product</span></tt>. It prepares the <tt class="docutils literal"><span class="pre">$category</span></tt> object and returns it to
 you.</p>
-<img alt="../_images/doctrine_image_31.png" class="align-center" src="../_images/doctrine_image_31.png" />
+<img alt="../_images/doctrine_image_3.png" class="align-center" src="../_images/doctrine_image_3.png" />
 <p>What&#8217;s important is the fact that you have easy access to the product&#8217;s related
 category, but the category data isn&#8217;t actually retrieved until you ask for
 the category (i.e. it&#8217;s &#8220;lazily loaded&#8221;).</p>
@@ -1145,8 +1208,10 @@ using. The following types are supported in Doctrine:</p>
 <h3>Field Options<a class="headerlink" href="#field-options" title="Permalink to this headline">¶</a></h3>
 <p>Each field can have a set of options applied to it. The available options
 include <tt class="docutils literal"><span class="pre">type</span></tt> (defaults to <tt class="docutils literal"><span class="pre">string</span></tt>), <tt class="docutils literal"><span class="pre">name</span></tt>, <tt class="docutils literal"><span class="pre">length</span></tt>, <tt class="docutils literal"><span class="pre">unique</span></tt>
-and <tt class="docutils literal"><span class="pre">nullable</span></tt>. Take a few annotations examples:</p>
-<div class="highlight-php-annotations"><pre>/**
+and <tt class="docutils literal"><span class="pre">nullable</span></tt>. Take a few examples:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>Annotations</em><div class="highlight-php-annotations"><pre>/**
  * A string field with length 255 that cannot be null
  * (reflecting the default values for the "type", "length" and *nullable* options)
  *
@@ -1161,6 +1226,26 @@ protected $name;
  * @ORM\Column(name="email_address", unique="true", length="150")
  */
 protected $email;</pre>
+</div>
+</li>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+    <span class="c1"># A string field length 255 that cannot be null</span>
+    <span class="c1"># (reflecting the default values for the &quot;length&quot; and *nullable* options)</span>
+    <span class="c1"># type attribute is necessary in yaml definitions</span>
+    <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">string</span>
+
+    <span class="c1"># A string field of length 150 that persists to an &quot;email_address&quot; column</span>
+    <span class="c1"># and has a unique index.</span>
+    <span class="l-Scalar-Plain">email</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">string</span>
+        <span class="l-Scalar-Plain">column</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">email_address</span>
+        <span class="l-Scalar-Plain">length</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">150</span>
+        <span class="l-Scalar-Plain">unique</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</li>
+</ul>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1206,9 +1291,10 @@ DQL or SQL queries directly from the command line.</p>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">To be able to load data fixtures to your database, you will need to have the
-<tt class="docutils literal"><span class="pre">DoctrineFixturesBundle</span></tt> bundle installed. To learn how to do it,
-read the &#8220;<a class="reference internal" href="../cookbook/doctrine/doctrine_fixtures.html"><em>How to create Fixtures in Symfony2</em></a>&#8221; entry of the Cookbook.</p>
+<p class="last">To be able to load data fixtures to your database, you will need to have
+the <tt class="docutils literal"><span class="pre">DoctrineFixturesBundle</span></tt> bundle installed. To learn how to do it,
+read the &#8220;<tt class="xref doc docutils literal"><span class="pre">/bundles/DoctrineFixturesBundle/index</span></tt>&#8221; entry of the
+documentation.</p>
 </div>
 </div>
 <div class="section" id="summary">
@@ -1225,9 +1311,7 @@ lifecycle.</p>
 <p>For more information about Doctrine, see the <em>Doctrine</em> section of the
 <a class="reference internal" href="../cookbook/index.html"><em>cookbook</em></a>, which includes the following articles:</p>
 <ul class="simple">
-<li><a class="reference internal" href="../cookbook/doctrine/doctrine_fixtures.html"><em>How to create Fixtures in Symfony2</em></a></li>
-<li><a class="reference internal" href="../cookbook/doctrine/migrations.html"><em>How to use Doctrine Migrations</em></a></li>
-<li><a class="reference internal" href="../cookbook/doctrine/mongodb.html"><em>How to use MongoDB</em></a></li>
+<li><tt class="xref doc docutils literal"><span class="pre">/bundles/DoctrineFixturesBundle/index</span></tt></li>
 <li><a class="reference internal" href="../cookbook/doctrine/common_extensions.html"><em>Doctrine Extensions: Timestampable: Sluggable, Translatable, etc.</em></a></li>
 </ul>
 </div>
@@ -1321,12 +1405,12 @@ lifecycle.</p>
         <li class="right" >
           <a href="templating.html" title="Creating and using Templates"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

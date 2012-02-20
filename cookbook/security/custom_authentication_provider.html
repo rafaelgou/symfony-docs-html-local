@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to create a custom Authentication Provider &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to create a custom Authentication Provider &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +22,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to use Varnish to speedup my Website" href="../cache/varnish.html" />
+    <link rel="next" title="How to change the Default Target Path Behavior" href="target_path.html" />
     <link rel="prev" title="How to create a custom User Provider" href="custom_provider.html" /> 
   </head>
   <body>
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../cache/varnish.html" title="How to use Varnish to speedup my Website"
+          <a href="target_path.html" title="How to change the Default Target Path Behavior"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="custom_provider.html" title="How to create a custom User Provider"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -155,30 +155,29 @@ set an authenticated token in the security context if successful.</p>
 <span class="x">    {</span>
 <span class="x">        $request = $event-&gt;getRequest();</span>
 
-<span class="x">        if (!$request-&gt;headers-&gt;has(&#39;x-wsse&#39;)) {</span>
-<span class="x">            return;</span>
-<span class="x">        }</span>
+<span class="x">        if ($request-&gt;headers-&gt;has(&#39;x-wsse&#39;)) {</span>
 
-<span class="x">        $wsseRegex = &#39;/UsernameToken Username=&quot;([^&quot;]+)&quot;, PasswordDigest=&quot;([^&quot;]+)&quot;, Nonce=&quot;([^&quot;]+)&quot;, Created=&quot;([^&quot;]+)&quot;/&#39;;</span>
+<span class="x">            $wsseRegex = &#39;/UsernameToken Username=&quot;([^&quot;]+)&quot;, PasswordDigest=&quot;([^&quot;]+)&quot;, Nonce=&quot;([^&quot;]+)&quot;, Created=&quot;([^&quot;]+)&quot;/&#39;;</span>
 
-<span class="x">        if (preg_match($wsseRegex, $request-&gt;headers-&gt;get(&#39;x-wsse&#39;), $matches)) {</span>
-<span class="x">            $token = new WsseUserToken();</span>
-<span class="x">            $token-&gt;setUser($matches[1]);</span>
+<span class="x">            if (preg_match($wsseRegex, $request-&gt;headers-&gt;get(&#39;x-wsse&#39;), $matches)) {</span>
+<span class="x">                $token = new WsseUserToken();</span>
+<span class="x">                $token-&gt;setUser($matches[1]);</span>
 
-<span class="x">            $token-&gt;digest   = $matches[2];</span>
-<span class="x">            $token-&gt;nonce    = $matches[3];</span>
-<span class="x">            $token-&gt;created  = $matches[4];</span>
+<span class="x">                $token-&gt;digest   = $matches[2];</span>
+<span class="x">                $token-&gt;nonce    = $matches[3];</span>
+<span class="x">                $token-&gt;created  = $matches[4];</span>
 
-<span class="x">            try {</span>
-<span class="x">                $returnValue = $this-&gt;authenticationManager-&gt;authenticate($token);</span>
+<span class="x">                try {</span>
+<span class="x">                    $returnValue = $this-&gt;authenticationManager-&gt;authenticate($token);</span>
 
-<span class="x">                if ($returnValue instanceof TokenInterface) {</span>
-<span class="x">                    return $this-&gt;securityContext-&gt;setToken($returnValue);</span>
-<span class="x">                } else if ($returnValue instanceof Response) {</span>
-<span class="x">                    return $event-&gt;setResponse($returnValue);</span>
+<span class="x">                    if ($returnValue instanceof TokenInterface) {</span>
+<span class="x">                        return $this-&gt;securityContext-&gt;setToken($returnValue);</span>
+<span class="x">                    } else if ($returnValue instanceof Response) {</span>
+<span class="x">                        return $event-&gt;setResponse($returnValue);</span>
+<span class="x">                    }</span>
+<span class="x">                } catch (AuthenticationException $e) {</span>
+<span class="x">                    // you might log something here</span>
 <span class="x">                }</span>
-<span class="x">            } catch (AuthenticationException $e) {</span>
-<span class="x">                // you might log something here</span>
 <span class="x">            }</span>
 <span class="x">        }</span>
 
@@ -255,7 +254,7 @@ the <tt class="docutils literal"><span class="pre">PasswordDigest</span></tt> he
 <span class="x">        }</span>
 
 <span class="x">        // Validate nonce is unique within 5 minutes</span>
-<span class="x">        if (file_exists($this-&gt;cacheDir.&#39;/&#39;.$nonce) &amp;&amp; file_get_contents($this-&gt;cacheDir.&#39;/&#39;.$nonce) + 300 &gt;= time()) {</span>
+<span class="x">        if (file_exists($this-&gt;cacheDir.&#39;/&#39;.$nonce) &amp;&amp; file_get_contents($this-&gt;cacheDir.&#39;/&#39;.$nonce) + 300 &lt; time()) {</span>
 <span class="x">            throw new NonceExpiredException(&#39;Previously used nonce detected&#39;);</span>
 <span class="x">        }</span>
 <span class="x">        file_put_contents($this-&gt;cacheDir.&#39;/&#39;.$nonce, time());</span>
@@ -385,19 +384,24 @@ services:
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/DemoBundle/Resources/config/services.xml --&gt;</span>
-<span class="nt">&lt;services&gt;</span>
-    <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;wsse.security.authentication.provider&quot;</span>
-      <span class="na">class=</span><span class="s">&quot;Acme\DemoBundle\Security\Authentication\Provider\WsseProvider&quot;</span> <span class="na">public=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;argument</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- User Provider --&gt;</span>
-        <span class="nt">&lt;argument&gt;</span>%kernel.cache_dir%/security/nonces<span class="nt">&lt;/argument&gt;</span>
-    <span class="nt">&lt;/service&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;wsse.security.authentication.listener&quot;</span>
-      <span class="na">class=</span><span class="s">&quot;Acme\DemoBundle\Security\Firewall\WsseListener&quot;</span> <span class="na">public=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;argument</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;security.context&quot;</span><span class="nt">/&gt;</span>
-        <span class="nt">&lt;argument</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;security.authentication.manager&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/service&gt;</span>
-<span class="nt">&lt;/services&gt;</span>
+   <span class="nt">&lt;services&gt;</span>
+       <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;wsse.security.authentication.provider&quot;</span>
+         <span class="na">class=</span><span class="s">&quot;Acme\DemoBundle\Security\Authentication\Provider\WsseProvider&quot;</span> <span class="na">public=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;argument</span> <span class="nt">/&gt;</span> <span class="c">&lt;!-- User Provider --&gt;</span>
+           <span class="nt">&lt;argument&gt;</span>%kernel.cache_dir%/security/nonces<span class="nt">&lt;/argument&gt;</span>
+       <span class="nt">&lt;/service&gt;</span>
+
+       <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;wsse.security.authentication.listener&quot;</span>
+         <span class="na">class=</span><span class="s">&quot;Acme\DemoBundle\Security\Firewall\WsseListener&quot;</span> <span class="na">public=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+           <span class="nt">&lt;argument</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;security.context&quot;</span><span class="nt">/&gt;</span>
+           <span class="nt">&lt;argument</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;security.authentication.manager&quot;</span> <span class="nt">/&gt;</span>
+       <span class="nt">&lt;/service&gt;</span>
+   <span class="nt">&lt;/services&gt;</span>
+<span class="nt">&lt;/container&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -424,10 +428,20 @@ services:
 </div>
 <p>Now that your services are defined, tell your security context about your
 factory. Factories must be included in an individual configuration file,
-at the time of this writing. You need to create a file with your factory
-service in it, and then use the <tt class="docutils literal"><span class="pre">factories</span></tt> key in your configuration
-to import it.</p>
-<div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/DemoBundle/Resources/config/security_factories.xml --&gt;</span>
+at the time of this writing. So, start first by creating the file with the
+factory service, tagged as <tt class="docutils literal"><span class="pre">security.listener.factory</span></tt>:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/DemoBundle/Resources/config/security_factories.yml</span>
+<span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">security.authentication.factory.wsse</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">security.listener.factory</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/DemoBundle/Resources/config/security_factories.xml --&gt;</span>
 <span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
     <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd&quot;</span><span class="nt">&gt;</span>
@@ -441,34 +455,30 @@ to import it.</p>
 <span class="nt">&lt;/container&gt;</span>
 </pre></div>
 </div>
-<div class="configuration-block">
-<ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
-<span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">factories</span><span class="p-Indicator">:</span>
-    <span class="p-Indicator">-</span> <span class="s">&quot;%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml&quot;</span>
-</pre></div>
-</div>
-</li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
-<span class="nt">&lt;config&gt;</span>
-    <span class="nt">&lt;factories&gt;</span>
-      &quot;%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml
-    <span class="nt">&lt;/factories&gt;</span>
-<span class="nt">&lt;/config&gt;</span>
-</pre></div>
-</div>
-</li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/security.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;security&#39;, array(</span>
-<span class="x">    &#39;factories&#39; =&gt; array(</span>
-<span class="x">      &quot;%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml&quot;</span>
-<span class="x">    ),</span>
-<span class="x">));</span>
-</pre></div>
-</div>
 </li>
 </ul>
+</div>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>Before 2.1, the factory below was added via <tt class="docutils literal"><span class="pre">security.yml</span></tt> instead.</p>
+<p>As a final step, add the factory to the security extension in your bundle class.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/DemoBundle/AcmeDemoBundle.php</span>
+<span class="x">namespace Acme\DemoBundle;</span>
+
+<span class="x">use Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory;</span>
+<span class="x">use Symfony\Component\HttpKernel\Bundle\Bundle;</span>
+<span class="x">use Symfony\Component\DependencyInjection\ContainerBuilder;</span>
+
+<span class="x">class AcmeDemoBundle extends Bundle</span>
+<span class="x">{</span>
+<span class="x">    public function build(ContainerBuilder $container)</span>
+<span class="x">    {</span>
+<span class="x">        parent::build($container);</span>
+
+<span class="x">        $extension = $container-&gt;getExtension(&#39;security&#39;);</span>
+<span class="x">        $extension-&gt;addSecurityListenerFactory(new WsseFactory());</span>
+<span class="x">    }</span>
+<span class="x">}</span>
+</pre></div>
 </div>
 <p>You are finished! You can now define parts of your app as under WSSE protection.</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
@@ -581,8 +591,8 @@ in the factory and consumed or passed to the other classes in the container.</p>
   <p class="topless"><a href="custom_provider.html"
                         title="previous chapter">How to create a custom User Provider</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../cache/varnish.html"
-                        title="next chapter">How to use Varnish to speedup my Website</a></p>
+  <p class="topless"><a href="target_path.html"
+                        title="next chapter">How to change the Default Target Path Behavior</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/security/custom_authentication_provider.txt"
@@ -612,17 +622,17 @@ in the factory and consumed or passed to the other classes in the container.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../cache/varnish.html" title="How to use Varnish to speedup my Website"
+          <a href="target_path.html" title="How to change the Default Target Path Behavior"
              >next</a> |</li>
         <li class="right" >
           <a href="custom_provider.html" title="How to create a custom User Provider"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

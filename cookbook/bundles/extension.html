@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to expose a Semantic Configuration for a Bundle &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to expose a Semantic Configuration for a Bundle &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to send an Email" href="../email.html" />
-    <link rel="prev" title="How to use Bundle Inheritance to Override parts of a Bundle" href="inheritance.html" /> 
+    <link rel="next" title="How to send an Email" href="../email/email.html" />
+    <link rel="prev" title="How to Override any Part of a Bundle" href="override.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../email.html" title="How to send an Email"
+          <a href="../email/email.html" title="How to send an Email"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="inheritance.html" title="How to use Bundle Inheritance to Override parts of a Bundle"
+          <a href="override.html" title="How to Override any Part of a Bundle"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -138,10 +138,10 @@ be maintained.</p>
 <p>If you do choose to expose a semantic configuration for your bundle, you&#8217;ll
 first need to create a new &#8220;Extension&#8221; class, which will handle the process.
 This class should live in the <tt class="docutils literal"><span class="pre">DependencyInjection</span></tt> directory of your bundle
-and its name should be constructed by replacing the <tt class="docutils literal"><span class="pre">Bundle</span></tt> postfix of the
+and its name should be constructed by replacing the <tt class="docutils literal"><span class="pre">Bundle</span></tt> suffix of the
 Bundle class name with <tt class="docutils literal"><span class="pre">Extension</span></tt>. For example, the Extension class of
 <tt class="docutils literal"><span class="pre">AcmeHelloBundle</span></tt> would be called <tt class="docutils literal"><span class="pre">AcmeHelloExtension</span></tt>:</p>
-<div class="highlight-python"><pre>// Acme/HelloBundle/DependencyInjection/HelloExtension.php
+<div class="highlight-python"><pre>// Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -217,7 +217,7 @@ you want.</p>
 <div class="section" id="parsing-the-configs-array">
 <h2>Parsing the <tt class="docutils literal"><span class="pre">$configs</span></tt> Array<a class="headerlink" href="#parsing-the-configs-array" title="Permalink to this headline">¶</a></h2>
 <p>Whenever a user includes the <tt class="docutils literal"><span class="pre">acme_hello</span></tt> namespace in a configuration file,
-the configuration under it it is added to an array of configurations and
+the configuration under it is added to an array of configurations and
 passed to the <tt class="docutils literal"><span class="pre">load()</span></tt> method of your extension (Symfony2 automatically
 converts XML and YAML to an array).</p>
 <p>Take the following configuration:</p>
@@ -345,7 +345,7 @@ option is passed and set to true:</p>
 <h3>Configuring Services and Setting Parameters<a class="headerlink" href="#configuring-services-and-setting-parameters" title="Permalink to this headline">¶</a></h3>
 <p>Once you&#8217;ve loaded some service configuration, you may need to modify the
 configuration based on some of the input values. For example, suppose you
-have a service who&#8217;s first argument is some string &#8220;type&#8221; that it will use
+have a service whose first argument is some string &#8220;type&#8221; that it will use
 internally. You&#8217;d like this to be easily configured by the bundle user, so
 in your service configuration file (e.g. <tt class="docutils literal"><span class="pre">services.xml</span></tt>), you define this
 service and use a blank parameter - <tt class="docutils literal"><span class="pre">acme_hello.my_service_type</span></tt> - as
@@ -499,8 +499,8 @@ public function load(array $configs, ContainerBuilder $container)
 }</pre>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">processConfiguration()</span></tt> method uses the configuration tree you&#8217;ve defined
-in the <tt class="docutils literal"><span class="pre">Configuration</span></tt> class and uses it to validate, normalize and merge
-all of the configuration arrays together.</p>
+in the <tt class="docutils literal"><span class="pre">Configuration</span></tt> class to validate, normalize and merge all of the
+configuration arrays together.</p>
 <p>The <tt class="docutils literal"><span class="pre">Configuration</span></tt> class can be much more complicated than shown here,
 supporting array nodes, &#8220;prototype&#8221; nodes, advanced validation, XML-specific
 normalization and advanced merging. The best way to see this in action is
@@ -520,7 +520,7 @@ the <a class="reference external" href="https://github.com/symfony/symfony/blob/
 automatically by Symfony2. If not, override the Bundle
 <a href="#id1"><span class="problematic" id="id2">:method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build`</span></a> method in
 your bundle:</p>
-<div class="highlight-python"><pre>use Acme\HelloBundle\DependencyInjection\ExtensionHello;
+<div class="highlight-python"><pre>use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
 
 class AcmeHelloBundle extends Bundle
 {
@@ -529,7 +529,7 @@ class AcmeHelloBundle extends Bundle
         parent::build($container);
 
         // register extensions that do not follow the conventions manually
-        $container-&gt;registerExtension(new ExtensionHello());
+        $container-&gt;registerExtension(new UnconventionalExtensionClass());
     }
 }</pre>
 </div>
@@ -568,10 +568,10 @@ standards set out above, so nothing happens automatically.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="inheritance.html"
-                        title="previous chapter">How to use Bundle Inheritance to Override parts of a Bundle</a></p>
+  <p class="topless"><a href="override.html"
+                        title="previous chapter">How to Override any Part of a Bundle</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../email.html"
+  <p class="topless"><a href="../email/email.html"
                         title="next chapter">How to send an Email</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
@@ -602,17 +602,17 @@ standards set out above, so nothing happens automatically.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../email.html" title="How to send an Email"
+          <a href="../email/email.html" title="How to send an Email"
              >next</a> |</li>
         <li class="right" >
-          <a href="inheritance.html" title="How to use Bundle Inheritance to Override parts of a Bundle"
+          <a href="override.html" title="How to Override any Part of a Bundle"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

@@ -113,7 +113,7 @@ from inside a controller::
 
 .. tip::
 
-   This examples shows you how to build your form directly in the controller.
+   This example shows you how to build your form directly in the controller.
    Later, in the ":ref:`book-form-creating-form-classes`" section, you'll learn
    how to build your form in a standalone class, which is recommended as
    your form becomes reusable.
@@ -403,6 +403,43 @@ method::
 In both of these cases, *only* the ``registration`` validation group will
 be used to validate the underlying object.
 
+Groups based on Submitted Data
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. versionadded:: 2.1
+   The ability to specify a callback or Closure in ``validation_groups``
+   is new to version 2.1
+
+If you need some advanced logic to determine the validation groups (e.g.
+based on submitted data), you can set the ``validation_groups`` option
+to an array callback, or a ``Closure``::
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+        );
+    }
+
+This will call the static method ``determineValidationGroups()`` on the
+``Client`` class after the form is bound, but before validation is executed.
+The Form object is passed as an argument to that method (see next example).
+You can also define whole logic inline by using a Closure::
+
+    public function getDefaultOptions(array $options)
+    {
+        return array(
+            'validation_groups' => function(FormInterface $form) {
+                $data = $form->getData();
+                if (Entity\Client::TYPE_PERSON == $data->getType()) {
+                    return array('person')
+                } else {
+                    return array('company');
+                }
+            },
+        );
+    }
+
 .. index::
    single: Forms; Built-in Field Types
 
@@ -457,6 +494,19 @@ the documentation for each type.
     In other words, the ``required`` option is "nice", but true server-side
     validation should *always* be used.
 
+.. sidebar:: The ``label`` option
+
+    The label for the form field can be set using the ``label`` option,
+    which can be applied to any field::
+
+        ->add('dueDate', 'date', array(
+            'widget' => 'single_text',
+            'label'  => 'Due Date',
+        ))
+
+    The label for a field can also be set in the template rendering the
+    form, see below.
+
 .. index::
    single: Forms; Field type guessing
 
@@ -500,7 +550,15 @@ Field Type Options Guessing
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to guessing the "type" for a field, Symfony can also try to guess
-the correct values of a number of field options:
+the correct values of a number of field options.
+
+.. tip::
+
+    When these options are set, the field will be rendered with special HTML
+    attributes that provide for HTML5 client-side validation. However, it
+    doesn't generate the equivalent server-side constraints (e.g. ``Assert\MaxLength``).
+    And though you'll need to manually add your server-side validation, these
+    field type options can then be guessed from that information.
 
 * ``required``: The ``required`` option can be guessed based off of the validation
   rules (i.e. is the field ``NotBlank`` or ``NotNull``) or the Doctrine metadata
@@ -589,6 +647,20 @@ The majority of the work is done by the ``form_row`` helper, which renders
 the label, errors and HTML form widget of each field inside a ``div`` tag
 by default. In the :ref:`form-theming` section, you'll learn how the ``form_row``
 output can be customized on many different levels.
+
+.. tip::
+
+    You can access the current data of your form via ``form.vars.value``:
+    
+    .. configuration-block::
+
+        .. code-block:: jinja
+        
+            {{ form.vars.value.task }}
+
+        .. code-block:: html+php
+
+            <?php echo $view['form']->get('value')->getTask() ?>
 
 .. index::
    single: Forms; Rendering each field by hand
@@ -738,6 +810,8 @@ Placing the form logic into its own class means that the form can be easily
 reused elsewhere in your project. This is the best way to create forms, but
 the choice is ultimately up to you.
 
+.. _book-forms-data-class:
+
 .. sidebar:: Setting the ``data_class``
 
     Every form needs to know the name of the class that holds the underlying
@@ -745,7 +819,7 @@ the choice is ultimately up to you.
     based off of the object passed to the second argument to ``createForm``
     (i.e. ``$task``). Later, when you begin embedding forms, this will no
     longer be sufficient. So, while not always necessary, it's generally a
-    good idea to explicitly specify the ``data_class`` option by add the
+    good idea to explicitly specify the ``data_class`` option by adding the
     following to your form type class::
 
         public function getDefaultOptions(array $options)
@@ -754,6 +828,25 @@ the choice is ultimately up to you.
                 'data_class' => 'Acme\TaskBundle\Entity\Task',
             );
         }
+
+.. tip::
+	
+	When mapping forms to objects, all fields are mapped. Any fields on the 
+	form that do not exist on the mapped object will cause an exception to
+	be thrown.
+	
+	In cases where you need extra fields in the form (for example: a "do you
+	agree with these terms" checkbox) that will not be mapped to the underlying
+	object, you need to set the property_path option to ``false``::
+	
+        public function buildForm(FormBuilder $builder, array $options)
+        {
+            $builder->add('task');
+            $builder->add('dueDate', null, array('property_path' => false));
+        }
+
+    Additionally, if there are any fields on the form that aren't included in
+    the submitted data, those fields will be explicitly set to ``null``.
 
 .. index::
    pair: Forms; Doctrine
@@ -928,9 +1021,12 @@ and can be persisted to the database or used however you need.
 Embedding a Collection of Forms
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You can also embed a collection of forms into one form. This is done by
-using the ``collection`` field type. For more information, see the
-:doc:`collection field type reference</reference/forms/types/collection>`.
+You can also embed a collection of forms into one form (imagine a ``Category``
+form with many ``Product`` sub-forms). This is done by using the ``collection``
+field type.
+
+For more information see the ":doc:`/cookbook/form/form_collections`" cookbook
+entry and  the :doc:`collection</reference/forms/types/collection>` field type reference.
 
 .. index::
    single: Forms; Theming
@@ -1010,7 +1106,7 @@ renders the form:
         <form ...>
 
 The ``form_theme`` tag (in Twig) "imports" the fragments defined in the given
-template and uses them when rendering the form. `In other words, when the
+template and uses them when rendering the form. In other words, when the
 ``form_row`` function is called later in this template, it will use the ``field_row``
 block from your custom theme (instead of the default ``field_row`` block
 that ships with Symfony).
@@ -1029,7 +1125,7 @@ For a more extensive discussion, see :doc:`/cookbook/form/form_customization`.
 Form Fragment Naming
 ~~~~~~~~~~~~~~~~~~~~
 
-In Symfony, every part a form that is rendered - HTML form elements, errors,
+In Symfony, every part of a form that is rendered - HTML form elements, errors,
 labels, etc - is defined in a base theme, which is a collection of blocks
 in Twig and a collection of template files in PHP.
 
@@ -1279,13 +1375,137 @@ The CSRF token can be customized on a form-by-form basis. For example::
 
 To disable CSRF protection, set the ``csrf_protection`` option to false.
 Customizations can also be made globally in your project. For more information,
-see the :ref:`form configuration reference </reference-frameworkbundle-forms>`
+see the :ref:`form configuration reference <reference-framework-form>`
 section.
 
 .. note::
 
     The ``intention`` option is optional but greatly enhances the security of
     the generated token by making it different for each form.
+
+.. index:
+   single: Forms; With no class
+
+Using a Form without a Class
+----------------------------
+
+In most cases, a form is tied to an object, and the fields of the form get
+and store their data on the properties of that object. This is exactly what
+you've seen so far in this chapter with the `Task` class.
+
+But sometimes, you may just want to use a form without a class, and get back
+an array of the submitted data. This is actually really easy::
+
+    // make sure you've imported the Request namespace above the class
+    use Symfony\Component\HttpFoundation\Request
+    // ...
+
+    public function contactAction(Request $request)
+    {
+        $defaultData = array('message' => 'Type your message here');
+        $form = $this->createFormBuilder($defaultData)
+            ->add('name', 'text')
+            ->add('email', 'email')
+            ->add('message', 'textarea')
+            ->getForm();
+        
+            if ($request->getMethod() == 'POST') {
+                $form->bindRequest($request);
+
+                // data is an array with "name", "email", and "message" keys
+                $data = $form->getData();
+            }
+        
+        // ... render the form
+    }
+
+By default, a form actually assumes that you want to work with arrays of
+data, instead of an object. There are exactly two ways that you can change
+this behavior and tie the form to an object instead:
+
+1. Pass an object when creating the form (as the first argument to ``createFormBuilder``
+   or the second argument to ``createForm``);
+
+2. Declare the ``data_class`` option on your form.
+
+If you *don't* do either of these, then the form will return the data as
+an array. In this example, since ``$defaultData`` is not an object (and
+no ``data_class`` option is set), ``$form->getData()`` ultimately returns
+an array.
+
+.. tip::
+
+    You can also access POST values (in this case "name") directly through 
+    the request object, like so:
+
+    .. code-block:: php
+
+        $this->get('request')->request->get('name');
+
+    Be advised, however, that in most cases using the getData() method is 
+    a better choice, since it returns the data (usually an object) after
+    it's been transformed by the form framework.
+
+Adding Validation
+~~~~~~~~~~~~~~~~~
+
+The only missing piece is validation. Usually, when you call ``$form->isValid()``,
+the object is validated by reading the constraints that you applied to that
+class. But without a class, how can you add constraints to the data of your
+form?
+
+The answer is to setup the constraints yourself, and pass them into your
+form. The overall approach is covered a bit more in the :ref:`validation chapter<book-validation-raw-values>`,
+but here's a short example::
+
+    // import the namespaces above your controller class
+    use Symfony\Component\Validator\Constraints\Email;
+    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\Collection;
+
+    $collectionConstraint = new Collection(array(
+        'name' => new MinLength(5),
+        'email' => new Email(array('message' => 'Invalid email address')),
+    ));
+
+    // create a form, no default values, pass in the constraint option
+    $form = $this->createFormBuilder(null, array(
+        'validation_constraint' => $collectionConstraint,
+    ))->add('email', 'email')
+        // ...
+    ;
+
+Now, when you call `$form->isValid()`, the constraints setup here are run
+against your form's data. If you're using a form class, override the ``getDefaultOptions``
+method to specify the option::
+
+    namespace Acme\TaskBundle\Form\Type;
+
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Validator\Constraints\Email;
+    use Symfony\Component\Validator\Constraints\MinLength;
+    use Symfony\Component\Validator\Constraints\Collection;
+
+    class ContactType extends AbstractType
+    {
+        // ...
+
+        public function getDefaultOptions(array $options)
+        {
+            $collectionConstraint = new Collection(array(
+                'name' => new MinLength(5),
+                'email' => new Email(array('message' => 'Invalid email address')),
+            ));
+        
+            return array('validation_constraint' => $collectionConstraint);
+        }
+    }
+
+Now, you have the flexibility to create forms - with validation - that return
+an array of data, instead of an object. In most cases, it's better - and
+certainly more robust - to bind your form to an object. But for simple forms,
+this is a great approach. 
 
 Final Thoughts
 --------------
@@ -1312,6 +1532,8 @@ Learn more from the Cookbook
 * :doc:`File Field Reference </reference/forms/types/file>`
 * :doc:`Creating Custom Field Types </cookbook/form/create_custom_field_type>`
 * :doc:`/cookbook/form/form_customization`
+* :doc:`/cookbook/form/dynamic_form_generation`
+* :doc:`/cookbook/form/data_transformers`
 
 .. _`Symfony2 Form Component`: https://github.com/symfony/Form
 .. _`DateTime`: http://php.net/manual/en/class.datetime.php

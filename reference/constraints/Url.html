@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Url &mdash; Symfony2Docs v0 documentation</title>
+    <title>Url &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
-    <link rel="next" title="Valid" href="Valid.html" />
-    <link rel="prev" title="Time" href="Time.html" /> 
+    <link rel="next" title="Regex" href="Regex.html" />
+    <link rel="prev" title="MaxLength" href="MaxLength.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Valid.html" title="Valid"
+          <a href="Regex.html" title="Regex"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Time.html" title="Time"
+          <a href="MaxLength.html" title="MaxLength"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -54,18 +54,73 @@
   <div class="section" id="url">
 <h1>Url<a class="headerlink" href="#url" title="Permalink to this headline">¶</a></h1>
 <p>Validates that a value is a valid URL string.</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">website</span><span class="p-Indicator">:</span>
-        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Applies to</td>
+<td><a class="reference internal" href="../../book/validation.html#validation-property-target"><em>property or method</em></a></td>
+</tr>
+<tr><td>Options</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="#message">message</a></li>
+<li><a class="reference internal" href="#protocols">protocols</a></li>
+</ul>
+</td>
+</tr>
+<tr><td>Class</td>
+<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\Url</span></tt></td>
+</tr>
+<tr><td>Validator</td>
+<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\UrlValidator</span></tt></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/BlogBundle/Resources/config/validation.yml</span>
+<span class="l-Scalar-Plain">Acme\BlogBundle\Entity\Author</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">bioUrl</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Url</span><span class="p-Indicator">:</span>
 </pre></div>
+</div>
+</li>
+<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/BlogBundle/Entity/Author.php
+namespace Acme\BlogBundle\Entity;
+
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\Url()
+     */
+     protected $bioUrl;
+}</pre>
+</div>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="options">
 <h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">protocols</span></tt>: A list of allowed protocols. Default: &#8220;http&#8221;, &#8220;https&#8221;, &#8220;ftp&#8221;
-and &#8220;ftps&#8221;.</li>
-<li><tt class="docutils literal"><span class="pre">message</span></tt>: The error message if validation fails</li>
-</ul>
+<div class="section" id="message">
+<h3>message<a class="headerlink" href="#message" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">This</span> <span class="pre">value</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">a</span> <span class="pre">valid</span> <span class="pre">URL</span></tt></p>
+<p>This message is shown if the URL is invalid.</p>
+</div>
+<div class="section" id="protocols">
+<h3>protocols<a class="headerlink" href="#protocols" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">array</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">array('http',</span> <span class="pre">'https')</span></tt></p>
+<p>The protocols that will be considered to be valid. For example, if you also
+needed <tt class="docutils literal"><span class="pre">ftp://</span></tt> type URLs to be valid, you&#8217;d redefine the <tt class="docutils literal"><span class="pre">protocols</span></tt>
+array, listing <tt class="docutils literal"><span class="pre">http</span></tt>, <tt class="docutils literal"><span class="pre">https</span></tt>, and also <tt class="docutils literal"><span class="pre">ftp</span></tt>.</p>
+</div>
 </div>
 </div>
 
@@ -78,17 +133,22 @@ and &#8220;ftps&#8221;.</li>
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Url</a><ul>
-<li><a class="reference internal" href="#options">Options</a></li>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li><a class="reference internal" href="#options">Options</a><ul>
+<li><a class="reference internal" href="#message">message</a></li>
+<li><a class="reference internal" href="#protocols">protocols</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="Time.html"
-                        title="previous chapter">Time</a></p>
+  <p class="topless"><a href="MaxLength.html"
+                        title="previous chapter">MaxLength</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Valid.html"
-                        title="next chapter">Valid</a></p>
+  <p class="topless"><a href="Regex.html"
+                        title="next chapter">Regex</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/reference/constraints/Url.txt"
@@ -118,18 +178,18 @@ and &#8220;ftps&#8221;.</li>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Valid.html" title="Valid"
+          <a href="Regex.html" title="Regex"
              >next</a> |</li>
         <li class="right" >
-          <a href="Time.html" title="Time"
+          <a href="MaxLength.html" title="MaxLength"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

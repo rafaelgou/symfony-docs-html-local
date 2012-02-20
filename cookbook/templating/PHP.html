@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use PHP instead of Twig for Templates &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to use PHP instead of Twig for Templates &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to autoload Classes" href="../tools/autoloader.html" />
-    <link rel="prev" title="How to use Varnish to speedup my Website" href="../cache/varnish.html" /> 
+    <link rel="next" title="How to use Monolog to write Logs" href="../logging/monolog.html" />
+    <link rel="prev" title="Injecting variables into all templates (i.e. Global Variables)" href="global_variables.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../tools/autoloader.html" title="How to autoload Classes"
+          <a href="../logging/monolog.html" title="How to use Monolog to write Logs"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../cache/varnish.html" title="How to use Varnish to speedup my Website"
+          <a href="global_variables.html" title="Injecting variables into all templates (i.e. Global Variables)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -97,7 +97,7 @@ below renders the <tt class="docutils literal"><span class="pre">index.html.php<
 
 public function indexAction($name)
 {
-    return $this-&gt;render('HelloBundle:Hello:index.html.php', array('name' =&gt; $name));
+    return $this-&gt;render('AcmeHelloBundle:Hello:index.html.php', array('name' =&gt; $name));
 }</pre>
 </div>
 </div>
@@ -114,7 +114,7 @@ the <tt class="docutils literal"><span class="pre">extend()</span></tt> call:</p
 Hello <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$name</span> <span class="cp">?&gt;</span>!
 </pre></div>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">HelloBundle::layout.html.php</span></tt> notation sounds familiar, doesn&#8217;t it? It
+<p>The <tt class="docutils literal"><span class="pre">AcmeHelloBundle::layout.html.php</span></tt> notation sounds familiar, doesn&#8217;t it? It
 is the same notation used to reference a template. The <tt class="docutils literal"><span class="pre">::</span></tt> part simply
 means that the controller element is empty, so the corresponding file is
 directly stored under <tt class="docutils literal"><span class="pre">views/</span></tt>.</p>
@@ -166,7 +166,7 @@ Hello <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="
 </pre></div>
 </div>
 <p>The base layout already has the code to output the title in the header:</p>
-<div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- app/Resources/views/layout.html.php --&gt;</span>
+<div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- app/Resources/views/base.html.php --&gt;</span>
 <span class="nt">&lt;head&gt;</span>
     <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;title&gt;</span><span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;Hello Application&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="nt">&lt;/title&gt;</span>
@@ -196,7 +196,7 @@ Hello <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="
 <div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php --&gt;</span>
 <span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;AcmeHelloBundle::layout.html.php&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
-<span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeHello:Hello:hello.html.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">))</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeHelloBundle:Hello:hello.html.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">))</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">render()</span></tt> method evaluates and returns the content of another template
@@ -210,10 +210,10 @@ some variable not available in the main template.</p>
 <p>If you create a <tt class="docutils literal"><span class="pre">fancy</span></tt> action, and want to include it into the
 <tt class="docutils literal"><span class="pre">index.html.php</span></tt> template, simply use the following code:</p>
 <div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/HelloBundle/Resources/views/Hello/index.html.php --&gt;</span>
-<span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;actions&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;HelloBundle:Hello:fancy&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;green&#39;</span><span class="p">))</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;actions&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeHelloBundle:Hello:fancy&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">,</span> <span class="s1">&#39;color&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;green&#39;</span><span class="p">))</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
-<p>Here, the <tt class="docutils literal"><span class="pre">HelloBundle:Hello:fancy</span></tt> string refers to the <tt class="docutils literal"><span class="pre">fancy</span></tt> action of the
+<p>Here, the <tt class="docutils literal"><span class="pre">AcmeHelloBundle:Hello:fancy</span></tt> string refers to the <tt class="docutils literal"><span class="pre">fancy</span></tt> action of the
 <tt class="docutils literal"><span class="pre">Hello</span></tt> controller:</p>
 <div class="highlight-python"><pre>// src/Acme/HelloBundle/Controller/HelloController.php
 
@@ -224,7 +224,7 @@ class HelloController extends Controller
         // create some object, based on the $color variable
         $object = ...;
 
-        return $this-&gt;render('HelloBundle:Hello:fancy.html.php', array('name' =&gt; $name, 'object' =&gt; $object));
+        return $this-&gt;render('AcmeHelloBundle:Hello:fancy.html.php', array('name' =&gt; $name, 'object' =&gt; $object));
     }
 
     // ...
@@ -315,11 +315,11 @@ instance, to output something in a JavaScript script, use the <tt class="docutil
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../cache/varnish.html"
-                        title="previous chapter">How to use Varnish to speedup my Website</a></p>
+  <p class="topless"><a href="global_variables.html"
+                        title="previous chapter">Injecting variables into all templates (i.e. Global Variables)</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../tools/autoloader.html"
-                        title="next chapter">How to autoload Classes</a></p>
+  <p class="topless"><a href="../logging/monolog.html"
+                        title="next chapter">How to use Monolog to write Logs</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/templating/PHP.txt"
@@ -349,17 +349,17 @@ instance, to output something in a JavaScript script, use the <tt class="docutil
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../tools/autoloader.html" title="How to autoload Classes"
+          <a href="../logging/monolog.html" title="How to use Monolog to write Logs"
              >next</a> |</li>
         <li class="right" >
-          <a href="../cache/varnish.html" title="How to use Varnish to speedup my Website"
+          <a href="global_variables.html" title="Injecting variables into all templates (i.e. Global Variables)"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

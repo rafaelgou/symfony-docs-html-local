@@ -11,6 +11,12 @@ This process works by specifying one or more *callback* methods, each of
 which will be called during the validation process. Each of those methods
 can do anything, including creating and assigning validation errors.
 
+.. note::
+
+    A callback method itself doesn't *fail* or return any value. Instead,
+    as you'll see in the example, a callback method has the ability to directly
+    add validator "violations".
+
 +----------------+------------------------------------------------------------------------+
 | Applies to     | :ref:`class<validation-class-target>`                                  |
 +----------------+------------------------------------------------------------------------+
@@ -33,6 +39,17 @@ Setup
             constraints:
                 - Callback:
                     methods:   [isAuthorValid]
+
+    .. code-block:: xml
+
+        <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
+        <class name="Acme\BlogBundle\Entity\Author">
+            <constraint name="Callback">
+                <option name="methods">
+                    <value>isAuthorValid</value>
+                </option>
+            </constraint>
+        </class>
 
     .. code-block:: php-annotations
 
@@ -68,8 +85,8 @@ those errors should be attributed::
         
             // check if the name is actually a fake name
             if (in_array($this->getFirstName(), $fakeNames)) {
-                $property_path = $context->getPropertyPath() . '.firstName';
-                $context->setPropertyPath($property_path);
+                $propertyPath = $context->getPropertyPath() . '.firstName';
+                $context->setPropertyPath($propertyPath);
                 $context->addViolation('This name sounds totally fake!', array(), null);
             }
         }

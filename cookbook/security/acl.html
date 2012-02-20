@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Access Control Lists (ACLs) &mdash; Symfony2Docs v0 documentation</title>
+    <title>Access Control Lists (ACLs) &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
     <link rel="next" title="Advanced ACL Concepts" href="acl_advanced.html" />
     <link rel="prev" title="How to implement your own Voter to blacklist IP Addresses" href="voters.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="voters.html" title="How to implement your own Voter to blacklist IP Addresses"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -123,7 +123,13 @@ Fortunately, we have a task for this. Simply run the following command:</p>
 it.</p>
 <div class="section" id="creating-an-acl-and-adding-an-ace">
 <h3>Creating an ACL, and adding an ACE<a class="headerlink" href="#creating-an-acl-and-adding-an-ace" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">// BlogController.php</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Security\Core\Exception\AccessDeniedException;</span>
+<span class="x">use Symfony\Component\Security\Acl\Domain\ObjectIdentity;</span>
+<span class="x">use Symfony\Component\Security\Acl\Domain\UserSecurityIdentity;</span>
+<span class="x">use Symfony\Component\Security\Acl\Permission\MaskBuilder;</span>
+<span class="x">// ...</span>
+
+<span class="x">// BlogController.php</span>
 <span class="x">public function addCommentAction(Post $post)</span>
 <span class="x">{</span>
 <span class="x">    $comment = new Comment();</span>
@@ -289,12 +295,12 @@ added above:</p>
         <li class="right" >
           <a href="voters.html" title="How to implement your own Voter to blacklist IP Addresses"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

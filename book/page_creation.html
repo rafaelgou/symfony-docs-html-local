@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Creating Pages in Symfony2 &mdash; Symfony2Docs v0 documentation</title>
+    <title>Creating Pages in Symfony2 &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Controller" href="controller.html" />
     <link rel="prev" title="Installing and Configuring Symfony" href="installation.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="installation.html" title="Installing and Configuring Symfony"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -265,6 +265,19 @@ application should greet you:</p>
 <div class="highlight-text"><div class="highlight"><pre>http://localhost/app_dev.php/hello/Ryan
 </pre></div>
 </div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>You can also view your app in the &#8220;prod&#8221; <a class="reference internal" href="#environments-summary"><em>environment</em></a>
+by visiting:</p>
+<div class="highlight-text"><div class="highlight"><pre>http://localhost/app.php/hello/Ryan
+</pre></div>
+</div>
+<p>If you get an error, it&#8217;s likely because you need to clear your cache
+by running:</p>
+<div class="last highlight-bash"><div class="highlight"><pre>php app/console cache:clear --env<span class="o">=</span>prod --no-debug
+</pre></div>
+</div>
+</div>
 <p>An optional, but common, third step in the process is to create a template.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -323,7 +336,7 @@ of the given, rendered template. Like any other controller, you will ultimately
 return that <tt class="docutils literal"><span class="pre">Response</span></tt> object.</p>
 <p>Notice that there are two different examples for rendering the template.
 By default, Symfony2 supports two different templating languages: classic
-PHP templates and the succinct but powerful <a class="reference external" href="http://www.twig-project.org">Twig</a> templates. Don&#8217;t be
+PHP templates and the succinct but powerful <a class="reference external" href="http://twig.sensiolabs.org">Twig</a> templates. Don&#8217;t be
 alarmed - you&#8217;re free to choose either or even both in the same project.</p>
 <p>The controller renders the <tt class="docutils literal"><span class="pre">AcmeHelloBundle:Hello:index.html.twig</span></tt> template,
 which uses the following naming convention:</p>
@@ -520,7 +533,7 @@ Path:
 <p class="last">Typically, the only time you&#8217;ll need to worry about the <tt class="docutils literal"><span class="pre">app/autoload.php</span></tt>
 file is when you&#8217;re including a new third-party library in the <tt class="docutils literal"><span class="pre">vendor/</span></tt>
 directory. For more information on autoloading, see
-<a class="reference internal" href="../cookbook/tools/autoloader.html"><em>How to autoload Classes</em></a>.</p>
+<a class="reference internal" href="../components/class_loader.html"><em>How to autoload Classes</em></a>.</p>
 </div>
 </div>
 <div class="section" id="the-source-src-directory">
@@ -688,20 +701,14 @@ format you prefer:</p>
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><pre># app/config/config.yml
 imports:
-    - { resource: parameters.ini }
+    - { resource: parameters.yml }
     - { resource: security.yml }
 
 framework:
     secret:          %secret%
     charset:         UTF-8
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
-    form:            true
-    csrf_protection: true
-    validation:      { enable_annotations: true }
-    templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
-    session:
-        default_locale: %locale%
-        auto_start:     true
+    # ...
 
 # Twig Configuration
 twig:
@@ -713,19 +720,13 @@ twig:
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
 <span class="nt">&lt;imports&gt;</span>
-    <span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&quot;parameters.ini&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&quot;parameters.yml&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&quot;security.yml&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/imports&gt;</span>
 
 <span class="nt">&lt;framework:config</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span> <span class="na">secret=</span><span class="s">&quot;%secret%&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;framework:router</span> <span class="na">resource=</span><span class="s">&quot;%kernel.root_dir%/config/routing.xml&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;framework:form</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;framework:csrf-protection</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;framework:validation</span> <span class="na">annotations=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;framework:templating</span> <span class="na">assets-version=</span><span class="s">&quot;SomeVersionScheme&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;framework:engine</span> <span class="na">id=</span><span class="s">&quot;twig&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/framework:templating&gt;</span>
-    <span class="nt">&lt;framework:session</span> <span class="na">default-locale=</span><span class="s">&quot;%locale%&quot;</span> <span class="na">auto-start=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+    <span class="c">&lt;!-- ... --&gt;</span>
 <span class="nt">&lt;/framework:config&gt;</span>
 
 <span class="c">&lt;!-- Twig Configuration --&gt;</span>
@@ -735,23 +736,14 @@ twig:
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$this-&gt;import(&#39;parameters.ini&#39;);</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$this-&gt;import(&#39;parameters.yml&#39;);</span>
 <span class="x">$this-&gt;import(&#39;security.yml&#39;);</span>
 
 <span class="x">$container-&gt;loadFromExtension(&#39;framework&#39;, array(</span>
 <span class="x">    &#39;secret&#39;          =&gt; &#39;%secret%&#39;,</span>
 <span class="x">    &#39;charset&#39;         =&gt; &#39;UTF-8&#39;,</span>
 <span class="x">    &#39;router&#39;          =&gt; array(&#39;resource&#39; =&gt; &#39;%kernel.root_dir%/config/routing.php&#39;),</span>
-<span class="x">    &#39;form&#39;            =&gt; array(),</span>
-<span class="x">    &#39;csrf-protection&#39; =&gt; array(),</span>
-<span class="x">    &#39;validation&#39;      =&gt; array(&#39;annotations&#39; =&gt; true),</span>
-<span class="x">    &#39;templating&#39;      =&gt; array(</span>
-<span class="x">        &#39;engines&#39; =&gt; array(&#39;twig&#39;),</span>
-<span class="x">        #&#39;assets_version&#39; =&gt; &quot;SomeVersionScheme&quot;,</span>
-<span class="x">    ),</span>
-<span class="x">    &#39;session&#39; =&gt; array(</span>
-<span class="x">        &#39;default_locale&#39; =&gt; &quot;%locale%&quot;,</span>
-<span class="x">        &#39;auto_start&#39;     =&gt; true,</span>
+<span class="x">    // ...</span>
 <span class="x">    ),</span>
 <span class="x">));</span>
 
@@ -814,6 +806,12 @@ call the <tt class="docutils literal"><span class="pre">prod</span></tt> front c
 <div class="highlight-text"><div class="highlight"><pre>http://localhost/app.php/hello/Ryan
 </pre></div>
 </div>
+<p>Since the <tt class="docutils literal"><span class="pre">prod</span></tt> environment is optimized for speed; the configuration,
+routing and Twig templates are compiled into flat PHP classes and cached.
+When viewing changes in the <tt class="docutils literal"><span class="pre">prod</span></tt> environment, you&#8217;ll need to clear these
+cached files and allow them to rebuild:</p>
+<div class="highlight-python"><pre>php app/console cache:clear --env=prod --no-debug</pre>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>If you open the <tt class="docutils literal"><span class="pre">web/app.php</span></tt> file, you&#8217;ll find that it&#8217;s configured explicitly
@@ -822,12 +820,6 @@ to use the <tt class="docutils literal"><span class="pre">prod</span></tt> envir
 </div>
 <p class="last">You can create a new front controller for a new environment by copying
 this file and changing <tt class="docutils literal"><span class="pre">prod</span></tt> to some other value.</p>
-</div>
-<p>Since the <tt class="docutils literal"><span class="pre">prod</span></tt> environment is optimized for speed; the configuration,
-routing and Twig templates are compiled into flat PHP classes and cached.
-When viewing changes in the <tt class="docutils literal"><span class="pre">prod</span></tt> environment, you&#8217;ll need to clear these
-cached files and allow them to rebuild:</p>
-<div class="highlight-python"><pre>php app/console cache:clear --env=prod</pre>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1006,12 +998,12 @@ to rapidly develop applications.</p>
         <li class="right" >
           <a href="installation.html" title="Installing and Configuring Symfony"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

@@ -97,8 +97,7 @@ your server or locally in your projects.
 .. note::
 
     If you want to learn more about the flexibility of the Symfony2
-    autoloader, read the ":doc:`/cookbook/tools/autoloader`" recipe in the
-    cookbook.
+    autoloader, read the ":doc:`/components/class_loader`" chapter.
 
 Understanding the Bundle System
 -------------------------------
@@ -163,10 +162,12 @@ PHP. Have a look at the default configuration:
 
     # app/config/config.yml
     imports:
-        - { resource: parameters.ini }
+        - { resource: parameters.yml }
         - { resource: security.yml }
 
     framework:
+        #esi:             ~
+        #translator:      { fallback: %locale% }
         secret:          %secret%
         charset:         UTF-8
         router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -174,8 +175,8 @@ PHP. Have a look at the default configuration:
         csrf_protection: true
         validation:      { enable_annotations: true }
         templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
+        default_locale:  %locale%
         session:
-            default_locale: %locale%
             auto_start:     true
 
     # Twig Configuration
@@ -187,6 +188,8 @@ PHP. Have a look at the default configuration:
     assetic:
         debug:          %kernel.debug%
         use_controller: false
+        bundles:        [ ]
+        # java: /usr/bin/java
         filters:
             cssrewrite: ~
             # closure:
@@ -199,6 +202,7 @@ PHP. Have a look at the default configuration:
         dbal:
             driver:   %database_driver%
             host:     %database_host%
+            port:     %database_port%
             dbname:   %database_name%
             user:     %database_user%
             password: %database_password%
@@ -295,10 +299,12 @@ Extending Bundles
 .................
 
 If you follow these conventions, then you can use :doc:`bundle inheritance</cookbook/bundles/inheritance>`
-to "override" files, controllers or templates. For example, if a new bundle
-called ``AcmeNewBundle`` extended the ``AcmeDemoBundle``, then Symfony would
-try to load the ``AcmeDemoBundle:Welcome:index`` controller from ``AcmeNewBundle``
-first, and then look inside ``AcmeDemoBundle`` second.
+to "override" files, controllers or templates. For example, you can create
+a bundle - ``AcmeNewBundle`` - and specify that its parent is ``AcmeDemoBundle``.
+When Symfony loads the ``AcmeDemoBundle:Welcome:index`` controller, it will
+first look for the ``WelcomeController`` class in ``AcmeNewBundle`` and then
+look inside ``AcmeDemoBundle``. This means that one bundle can override almost
+any part of another bundle!
 
 Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.
@@ -361,5 +367,5 @@ need to learn a lot to become a Symfony2 master. Ready to dig into these
 topics now? Look no further - go to the official :doc:`/book/index` and pick
 any topic you want.
 
-.. _standards:               http://groups.google.com/group/php-standards/web/psr-0-final-proposal
+.. _standards:               https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
 .. _convention:              http://pear.php.net/

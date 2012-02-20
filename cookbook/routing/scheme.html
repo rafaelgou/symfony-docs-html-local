@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to force routes to always use HTTPS &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to force routes to always use HTTPS or HTTP &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
     <link rel="next" title="How to allow a “/” character in a route parameter" href="slash_in_parameter.html" />
     <link rel="prev" title="How to define Controllers as Services" href="../controller/service.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="../controller/service.html" title="How to define Controllers as Services"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -50,11 +50,11 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="how-to-force-routes-to-always-use-https">
-<span id="index-0"></span><h1>How to force routes to always use HTTPS<a class="headerlink" href="#how-to-force-routes-to-always-use-https" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="how-to-force-routes-to-always-use-https-or-http">
+<span id="index-0"></span><h1>How to force routes to always use HTTPS or HTTP<a class="headerlink" href="#how-to-force-routes-to-always-use-https-or-http" title="Permalink to this headline">¶</a></h1>
 <p>Sometimes, you want to secure some routes and be sure that they are always
 accessed via the HTTPS protocol. The Routing component allows you to enforce
-the HTTP scheme via the <tt class="docutils literal"><span class="pre">_scheme</span></tt> requirement:</p>
+the URI scheme via the <tt class="docutils literal"><span class="pre">_scheme</span></tt> requirement:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">secure</span><span class="p-Indicator">:</span>
@@ -114,7 +114,7 @@ same URL, but with the HTTPS scheme.</p>
 URL to always use <tt class="docutils literal"><span class="pre">http</span></tt>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The Security component provides another way to enforce the HTTP scheme via
+<p class="last">The Security component provides another way to enforce HTTP or HTTPs via
 the <tt class="docutils literal"><span class="pre">requires_channel</span></tt> setting. This alternative method is better suited
 to secure an &#8220;area&#8221; of your website (all URLs under <tt class="docutils literal"><span class="pre">/admin</span></tt>) or when
 you want to secure URLs defined in a third party bundle.</p>
@@ -167,12 +167,12 @@ you want to secure URLs defined in a third party bundle.</p>
         <li class="right" >
           <a href="../controller/service.html" title="How to define Controllers as Services"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

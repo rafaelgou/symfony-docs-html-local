@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>File &mdash; Symfony2Docs v0 documentation</title>
+    <title>File &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
-    <link rel="next" title="Max" href="Max.html" />
-    <link rel="prev" title="Email" href="Email.html" /> 
+    <link rel="next" title="Image" href="Image.html" />
+    <link rel="prev" title="Country" href="Country.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Max.html" title="Max"
+          <a href="Image.html" title="Image"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="Email.html" title="Email"
+          <a href="Country.html" title="Country"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -53,82 +53,143 @@
             
   <div class="section" id="file">
 <h1>File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h1>
-<p>Validates that a value is the path to an existing file.</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">filename</span><span class="p-Indicator">:</span>
-        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">File</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
-</pre></div>
-</div>
-<div class="section" id="options">
-<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<p>Validates that a value is a valid &#8220;file&#8221;, which can be one of the following:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">maxSize</span></tt>: The maximum allowed file size. Can be provided in bytes, kilobytes
-(with the suffix &#8220;k&#8221;) or megabytes (with the suffix &#8220;M&#8221;)</li>
-<li><tt class="docutils literal"><span class="pre">mimeTypes</span></tt>: One or more allowed mime types</li>
-<li><tt class="docutils literal"><span class="pre">notFoundMessage</span></tt>: The error message if the file was not found</li>
-<li><tt class="docutils literal"><span class="pre">notReadableMessage</span></tt>: The error message if the file could not be read</li>
-<li><tt class="docutils literal"><span class="pre">maxSizeMessage</span></tt>: The error message if <tt class="docutils literal"><span class="pre">maxSize</span></tt> validation fails</li>
-<li><tt class="docutils literal"><span class="pre">mimeTypesMessage</span></tt>: The error message if <tt class="docutils literal"><span class="pre">mimeTypes</span></tt> validation fails</li>
+<li>A string (or object with a <tt class="docutils literal"><span class="pre">__toString()</span></tt> method) path to an existing file;</li>
+<li>A valid <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\HttpFoundation\File\File</span></tt> object
+(including objects of class <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\HttpFoundation\File\UploadedFile</span></tt>).</li>
 </ul>
+<p>This constraint is commonly used in forms with the <a class="reference internal" href="../forms/types/file.html"><em>file</em></a>
+form type.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If the file you&#8217;re validating is an image, try the <a class="reference internal" href="Image.html"><em>Image</em></a>
+constraint.</p>
 </div>
-<div class="section" id="example-validating-the-file-size-and-mime-type">
-<h2>Example: Validating the file size and mime type<a class="headerlink" href="#example-validating-the-file-size-and-mime-type" title="Permalink to this headline">¶</a></h2>
-<p>In this example we use the <tt class="docutils literal"><span class="pre">File</span></tt> constraint to verify that the file does
-not exceed a maximum size of 128 kilobytes and is a PDF document.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Applies to</td>
+<td><a class="reference internal" href="../../book/validation.html#validation-property-target"><em>property or method</em></a></td>
+</tr>
+<tr><td>Options</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="#maxsize">maxSize</a></li>
+<li><a class="reference internal" href="#mimetypes">mimeTypes</a></li>
+<li><a class="reference internal" href="#maxsizemessage">maxSizeMessage</a></li>
+<li><a class="reference internal" href="#mimetypesmessage">mimeTypesMessage</a></li>
+<li><a class="reference internal" href="#notfoundmessage">notFoundMessage</a></li>
+<li><a class="reference internal" href="#notreadablemessage">notReadableMessage</a></li>
+<li><a class="reference internal" href="#uploadinisizeerrormessage">uploadIniSizeErrorMessage</a></li>
+<li><a class="reference internal" href="#uploadformsizeerrormessage">uploadFormSizeErrorMessage</a></li>
+<li><a class="reference internal" href="#uploaderrormessage">uploadErrorMessage</a></li>
+</ul>
+</td>
+</tr>
+<tr><td>Class</td>
+<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\File</span></tt></td>
+</tr>
+<tr><td>Validator</td>
+<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\FileValidator</span></tt></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>This constraint is most commonly used on a property that will be rendered
+in a form as a <a class="reference internal" href="../forms/types/file.html"><em>file</em></a> form type. For example,
+suppose you&#8217;re creating an author form where you can upload a &#8220;bio&#8221; PDF for
+the author. In your form, the <tt class="docutils literal"><span class="pre">bioFile</span></tt> property would be a <tt class="docutils literal"><span class="pre">file</span></tt> type.
+The <tt class="docutils literal"><span class="pre">Author</span></tt> class might look as follows:</p>
+<div class="highlight-python"><pre>// src/Acme/BlogBundle/Entity/Author.php
+namespace Acme\BlogBundle\Entity;
+
+use Symfony\Component\HttpFoundation\File\File;
+
+class Author
+{
+    protected $bioFile;
+
+    public function setBioFile(File $file = null)
+    {
+        $this-&gt;bioFile = $file;
+    }
+
+    public function getBioFile()
+    {
+        return $this-&gt;bioFile;
+    }
+}</pre>
+</div>
+<p>To guarantee that the <tt class="docutils literal"><span class="pre">bioFile</span></tt> <tt class="docutils literal"><span class="pre">File</span></tt> object is valid, and that it is
+below a certain file size and a valid PDF, add the following:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">filename</span><span class="p-Indicator">:</span>
-        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">File</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">maxSize</span><span class="p-Indicator">:</span> <span class="nv">128k</span><span class="p-Indicator">,</span> <span class="nv">mimeTypes</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">application/pdf</span><span class="p-Indicator">,</span> <span class="nv">application/x-pdf</span><span class="p-Indicator">]</span> <span class="p-Indicator">}</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/BlogBundle/Resources/config/validation.yml</span>
+<span class="l-Scalar-Plain">Acme\BlogBundle\Entity\Author</span>
+    <span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">bioFile</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">File</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">maxSize</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1024k</span>
+                <span class="l-Scalar-Plain">mimeTypes</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">application/pdf</span><span class="p-Indicator">,</span> <span class="nv">application/x-pdf</span><span class="p-Indicator">]</span>
+                <span class="l-Scalar-Plain">mimeTypesMessage</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Please upload a valid PDF</span>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/HelloBundle/Resources/config/validation.xml --&gt;</span>
-<span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\HelloBundle\Author&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;filename&quot;</span><span class="nt">&gt;</span>
+<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/BlogBundle/Entity/Author.php
+use Symfony\Component\Validator\Constraints as Assert;
+
+class Author
+{
+    /**
+     * @Assert\File(
+     *     maxSize = "1024k",
+     *     mimeTypes = {"application/pdf", "application/x-pdf"},
+     *     mimeTypesMessage = "Please upload a valid PDF"
+     * )
+     */
+    protected $bioFile;
+}</pre>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/config/validation.xml --&gt;</span>
+<span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;bioFile&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;File&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;maxSize&quot;</span><span class="nt">&gt;</span>128k<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;maxSize&quot;</span><span class="nt">&gt;</span>1024k<span class="nt">&lt;/option&gt;</span>
             <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;mimeTypes&quot;</span><span class="nt">&gt;</span>
                 <span class="nt">&lt;value&gt;</span>application/pdf<span class="nt">&lt;/value&gt;</span>
                 <span class="nt">&lt;value&gt;</span>application/x-pdf<span class="nt">&lt;/value&gt;</span>
             <span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;mimeTypesMessage&quot;</span><span class="nt">&gt;</span>Please upload a valid PDF<span class="nt">&lt;/option&gt;</span>
         <span class="nt">&lt;/constraint&gt;</span>
     <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;/class&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/HelloBundle/Author.php
-use Symfony\Component\Validator\Constraints as Assert;
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/BlogBundle/Entity/Author.php</span>
+<span class="x">// ...</span>
 
-class Author
-{
-    /**
-     * @Assert\File(maxSize = "128k", mimeTypes = {
-     *   "application/pdf",
-     *   "application/x-pdf"
-     * })
-     */
-    private $filename;
-}</pre>
-</div>
-</li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/Author.php</span>
 <span class="x">use Symfony\Component\Validator\Mapping\ClassMetadata;</span>
 <span class="x">use Symfony\Component\Validator\Constraints\File;</span>
 
 <span class="x">class Author</span>
 <span class="x">{</span>
-<span class="x">    private $filename;</span>
+<span class="x">    // ...</span>
 
 <span class="x">    public static function loadValidatorMetadata(ClassMetadata $metadata)</span>
 <span class="x">    {</span>
-<span class="x">        $metadata-&gt;addPropertyConstraint(&#39;filename&#39;, new File(array(</span>
-<span class="x">            &#39;maxSize&#39; =&gt; &#39;128k&#39;,</span>
+<span class="x">        $metadata-&gt;addPropertyConstraint(&#39;bioFile&#39;, new File(array(</span>
+<span class="x">            &#39;maxSize&#39; =&gt; &#39;1024k&#39;,</span>
 <span class="x">            &#39;mimeTypes&#39; =&gt; array(</span>
 <span class="x">                &#39;application/pdf&#39;,</span>
 <span class="x">                &#39;application/x-pdf&#39;,</span>
 <span class="x">            ),</span>
+<span class="x">            &#39;mimeTypesMessage&#39; =&gt; &#39;Please upload a valid PDF&#39;,</span>
 <span class="x">        )));</span>
 <span class="x">    }</span>
 <span class="x">}</span>
@@ -137,11 +198,75 @@ class Author
 </li>
 </ul>
 </div>
-<p>When you validate the object with a file that doesn&#8217;t satisfy one of these
-constraints, a proper error message is returned by the validator:</p>
-<div class="highlight-text"><div class="highlight"><pre>Acme\HelloBundle\Author.filename:
-    The file is too large (150 kB). Allowed maximum size is 128 kB
-</pre></div>
+<p>The <tt class="docutils literal"><span class="pre">bioFile</span></tt> property is validated to guarantee that it is a real file.
+Its size and mime type are also validated because the appropriate options
+have been specified.</p>
+</div>
+<div class="section" id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="maxsize">
+<h3>maxSize<a class="headerlink" href="#maxsize" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">mixed</span></tt></p>
+<p>If set, the size of the underlying file must be below this file size in order
+to be valid. The size of the file can be given in one of the following formats:</p>
+<ul class="simple">
+<li><strong>bytes</strong>: To specify the <tt class="docutils literal"><span class="pre">maxSize</span></tt> in bytes, pass a value that is entirely
+numeric (e.g. <tt class="docutils literal"><span class="pre">4096</span></tt>);</li>
+<li><strong>kilobytes</strong>: To specify the <tt class="docutils literal"><span class="pre">maxSize</span></tt> in kilobytes, pass a number and
+suffix it with a lowercase &#8220;k&#8221; (e.g. <tt class="docutils literal"><span class="pre">200k</span></tt>);</li>
+<li><strong>megabytes</strong>: To specify the <tt class="docutils literal"><span class="pre">maxSize</span></tt> in megabytes, pass a number and
+suffix it with a capital &#8220;M&#8221; (e.g. <tt class="docutils literal"><span class="pre">4M</span></tt>).</li>
+</ul>
+</div>
+<div class="section" id="mimetypes">
+<h3>mimeTypes<a class="headerlink" href="#mimetypes" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">array</span></tt> or <tt class="docutils literal"><span class="pre">string</span></tt></p>
+<p>If set, the validator will check that the mime type of the underlying file
+is equal to the given mime type (if a string) or exists in the collection
+of given mime types (if an array).</p>
+</div>
+<div class="section" id="maxsizemessage">
+<h3>maxSizeMessage<a class="headerlink" href="#maxsizemessage" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">The</span> <span class="pre">file</span> <span class="pre">is</span> <span class="pre">too</span> <span class="pre">large</span> <span class="pre">({{</span> <span class="pre">size</span> <span class="pre">}}).</span> <span class="pre">Allowed</span> <span class="pre">maximum</span> <span class="pre">size</span> <span class="pre">is</span> <span class="pre">{{</span> <span class="pre">limit</span> <span class="pre">}}</span></tt></p>
+<p>The message displayed if the file is larger than the <a class="reference internal" href="#maxsize">maxSize</a> option.</p>
+</div>
+<div class="section" id="mimetypesmessage">
+<h3>mimeTypesMessage<a class="headerlink" href="#mimetypesmessage" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">The</span> <span class="pre">mime</span> <span class="pre">type</span> <span class="pre">of</span> <span class="pre">the</span> <span class="pre">file</span> <span class="pre">is</span> <span class="pre">invalid</span> <span class="pre">({{</span> <span class="pre">type</span> <span class="pre">}}).</span> <span class="pre">Allowed</span> <span class="pre">mime</span> <span class="pre">types</span> <span class="pre">are</span> <span class="pre">{{</span> <span class="pre">types</span> <span class="pre">}}</span></tt></p>
+<p>The message displayed if the mime type of the file is not a valid mime type
+per the <a class="reference internal" href="#mimetypes">mimeTypes</a> option.</p>
+</div>
+<div class="section" id="notfoundmessage">
+<h3>notFoundMessage<a class="headerlink" href="#notfoundmessage" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">The</span> <span class="pre">file</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">found</span></tt></p>
+<p>The message displayed if no file can be found at the given path. This error
+is only likely if the underlying value is a string path, as a <tt class="docutils literal"><span class="pre">File</span></tt> object
+cannot be constructed with an invalid file path.</p>
+</div>
+<div class="section" id="notreadablemessage">
+<h3>notReadableMessage<a class="headerlink" href="#notreadablemessage" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">The</span> <span class="pre">file</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">readable</span></tt></p>
+<p>The message displayed if the file exists, but the PHP <tt class="docutils literal"><span class="pre">is_readable</span></tt> function
+fails when passed the path to the file.</p>
+</div>
+<div class="section" id="uploadinisizeerrormessage">
+<h3>uploadIniSizeErrorMessage<a class="headerlink" href="#uploadinisizeerrormessage" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">The</span> <span class="pre">file</span> <span class="pre">is</span> <span class="pre">too</span> <span class="pre">large.</span> <span class="pre">Allowed</span> <span class="pre">maximum</span> <span class="pre">size</span> <span class="pre">is</span> <span class="pre">{{</span> <span class="pre">limit</span> <span class="pre">}}</span></tt></p>
+<p>The message that is displayed if the uploaded file is larger than the <tt class="docutils literal"><span class="pre">upload_max_filesize</span></tt>
+PHP.ini setting.</p>
+</div>
+<div class="section" id="uploadformsizeerrormessage">
+<h3>uploadFormSizeErrorMessage<a class="headerlink" href="#uploadformsizeerrormessage" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">The</span> <span class="pre">file</span> <span class="pre">is</span> <span class="pre">too</span> <span class="pre">large</span></tt></p>
+<p>The message that is displayed if the uploaded file is larger than allowed
+by the HTML file input field.</p>
+</div>
+<div class="section" id="uploaderrormessage">
+<h3>uploadErrorMessage<a class="headerlink" href="#uploaderrormessage" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">The</span> <span class="pre">file</span> <span class="pre">could</span> <span class="pre">not</span> <span class="pre">be</span> <span class="pre">uploaded</span></tt></p>
+<p>The message that is displayed if the uploaded file could not be uploaded
+for some unknown reason, such as the file upload failed or it couldn&#8217;t be written
+to disk.</p>
 </div>
 </div>
 </div>
@@ -155,18 +280,29 @@ constraints, a proper error message is returned by the validator:</p>
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">File</a><ul>
-<li><a class="reference internal" href="#options">Options</a></li>
-<li><a class="reference internal" href="#example-validating-the-file-size-and-mime-type">Example: Validating the file size and mime type</a></li>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li><a class="reference internal" href="#options">Options</a><ul>
+<li><a class="reference internal" href="#maxsize">maxSize</a></li>
+<li><a class="reference internal" href="#mimetypes">mimeTypes</a></li>
+<li><a class="reference internal" href="#maxsizemessage">maxSizeMessage</a></li>
+<li><a class="reference internal" href="#mimetypesmessage">mimeTypesMessage</a></li>
+<li><a class="reference internal" href="#notfoundmessage">notFoundMessage</a></li>
+<li><a class="reference internal" href="#notreadablemessage">notReadableMessage</a></li>
+<li><a class="reference internal" href="#uploadinisizeerrormessage">uploadIniSizeErrorMessage</a></li>
+<li><a class="reference internal" href="#uploadformsizeerrormessage">uploadFormSizeErrorMessage</a></li>
+<li><a class="reference internal" href="#uploaderrormessage">uploadErrorMessage</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="Email.html"
-                        title="previous chapter">Email</a></p>
+  <p class="topless"><a href="Country.html"
+                        title="previous chapter">Country</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Max.html"
-                        title="next chapter">Max</a></p>
+  <p class="topless"><a href="Image.html"
+                        title="next chapter">Image</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/reference/constraints/File.txt"
@@ -196,18 +332,18 @@ constraints, a proper error message is returned by the validator:</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Max.html" title="Max"
+          <a href="Image.html" title="Image"
              >next</a> |</li>
         <li class="right" >
-          <a href="Email.html" title="Email"
+          <a href="Country.html" title="Country"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

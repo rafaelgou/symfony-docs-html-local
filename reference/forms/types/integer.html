@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>integer Field Type &mdash; Symfony2Docs v0 documentation</title>
+    <title>integer Field Type &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../../index.html" />
     <link rel="up" title="Form Types Reference" href="../types.html" />
     <link rel="next" title="language Field Type" href="language.html" />
     <link rel="prev" title="hidden Field Type" href="hidden.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="hidden.html" title="hidden Field Type"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" accesskey="U">Form Types Reference</a> &raquo;</li> 
       </ul>
@@ -115,8 +115,7 @@ to round towards positive infinity.</li>
 <div class="section" id="grouping">
 <h3>grouping<a class="headerlink" href="#grouping" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">integer</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
-<p>The value set as the <tt class="docutils literal"><span class="pre">NumberFormatter::GROUPING_USED</span></tt> attribute when using
-the PHP <tt class="docutils literal"><span class="pre">NumberFormatter</span></tt> class.</p>
+<p>This value is used internally as the <tt class="docutils literal"><span class="pre">NumberFormatter::GROUPING_USED</span></tt> value when using PHP&#8217;s <tt class="docutils literal"><span class="pre">NumberFormatter</span></tt> class. Its documentation is non-existent, but it appears that if you set this to <tt class="docutils literal"><span class="pre">true</span></tt>, numbers will be grouped with a comma or period (depending on your locale): <tt class="docutils literal"><span class="pre">12345.123</span></tt> would display as <tt class="docutils literal"><span class="pre">12,345.123</span></tt>.</p>
 </div>
 </div>
 <div class="section" id="inherited-options">
@@ -125,7 +124,7 @@ the PHP <tt class="docutils literal"><span class="pre">NumberFormatter</span></t
 <div class="section" id="required">
 <h3>required<a class="headerlink" href="#required" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">true</span></tt></p>
-<p>If true, an <a class="reference external" href="http://diveintohtml5.org/forms.html">HTML5 required attribute</a> will be rendered. The corresponding
+<p>If true, an <a class="reference external" href="http://diveintohtml5.info/forms.html">HTML5 required attribute</a> will be rendered. The corresponding
 <tt class="docutils literal"><span class="pre">label</span></tt> will also render with a <tt class="docutils literal"><span class="pre">required</span></tt> class.</p>
 <p>This is superficial and independent from validation. At best, if you let Symfony
 guess your field type, then the value of this option will be guessed from
@@ -136,7 +135,7 @@ your validation information.</p>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: The label is &#8220;guessed&#8221; from the field name</p>
 <p>Sets the label that will be used when rendering the field. The label can
 also be directly set inside the template:</p>
-<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">render_label</span><span class="o">(</span><span class="nv">form.name</span><span class="o">,</span> <span class="s1">&#39;Your name&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">form_label</span><span class="o">(</span><span class="nv">form.name</span><span class="o">,</span> <span class="s1">&#39;Your name&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
 </pre></div>
 </div>
 </div>
@@ -221,13 +220,13 @@ that field will be attached to the main form, not to the specific field.</p>
         <li class="right" >
           <a href="hidden.html" title="hidden Field Type"
              >previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" >Form Types Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

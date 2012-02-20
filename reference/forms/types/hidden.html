@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>hidden Field Type &mdash; Symfony2Docs v0 documentation</title>
+    <title>hidden Field Type &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../../index.html" />
     <link rel="up" title="Form Types Reference" href="../types.html" />
     <link rel="next" title="integer Field Type" href="integer.html" />
     <link rel="prev" title="form Field Type" href="form.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="form.html" title="form Field Type"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" accesskey="U">Form Types Reference</a> &raquo;</li> 
       </ul>
@@ -63,14 +63,49 @@
 <tr><td>Rendered as</td>
 <td><tt class="docutils literal"><span class="pre">input</span></tt> <tt class="docutils literal"><span class="pre">hidden</span></tt> field</td>
 </tr>
+<tr><td>Inherited
+options</td>
+<td><ul class="first last simple">
+<li><tt class="docutils literal"><span class="pre">data</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">property_path</span></tt></li>
+</ul>
+</td>
+</tr>
 <tr><td>Parent type</td>
-<td><tt class="docutils literal"><span class="pre">field</span></tt></td>
+<td><a class="reference internal" href="field.html"><em>field</em></a></td>
 </tr>
 <tr><td>Class</td>
 <td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Form\Extension\Core\Type\HiddenType</span></tt></td>
 </tr>
 </tbody>
 </table>
+<div class="section" id="inherited-options">
+<h2>Inherited Options<a class="headerlink" href="#inherited-options" title="Permalink to this headline">¶</a></h2>
+<p>These options inherit from the <a class="reference internal" href="field.html"><em>field</em></a> type:</p>
+<div class="section" id="data">
+<h3>data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: mixed <strong>default</strong>: Defaults to field of the underlying object (if there is one)</p>
+<p>When you create a form, each field initially displays the value of the
+corresponding property of the form&#8217;s domain object (if an object is bound
+to the form). If you want to override the initial value for the form or just
+an individual field, you can set it in the data option:</p>
+<div class="highlight-python"><pre>$builder-&gt;add('token', 'hidden', array(
+    'data' =&gt; 'abcdef',
+));</pre>
+</div>
+</div>
+<div class="section" id="property-path">
+<h3>property_path<a class="headerlink" href="#property-path" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">any</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">the</span> <span class="pre">field's</span> <span class="pre">value</span></tt></p>
+<p>Fields display a property value of the form&#8217;s domain object by default. When
+the form is submitted, the submitted value is written back into the object.</p>
+<p>If you want to override the property that a field reads from and writes to,
+you can set the <tt class="docutils literal"><span class="pre">property_path</span></tt> option. Its default value is the field&#8217;s
+name.</p>
+<p>If you wish the field to be ignored when reading or writing to the object
+you can set the <tt class="docutils literal"><span class="pre">property_path</span></tt> option to <tt class="docutils literal"><span class="pre">false</span></tt></p>
+</div>
+</div>
 </div>
 
 
@@ -79,6 +114,18 @@
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">hidden Field Type</a><ul>
+<li><a class="reference internal" href="#inherited-options">Inherited Options</a><ul>
+<li><a class="reference internal" href="#data">data</a></li>
+<li><a class="reference internal" href="#property-path">property_path</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="form.html"
                         title="previous chapter">form Field Type</a></p>
@@ -119,13 +166,13 @@
         <li class="right" >
           <a href="form.html" title="form Field Type"
              >previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" >Form Types Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Controller &mdash; Symfony2Docs v0 documentation</title>
+    <title>Controller &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Routing" href="routing.html" />
     <link rel="prev" title="Creating Pages in Symfony2" href="page_creation.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="page_creation.html" title="Creating Pages in Symfony2"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -94,7 +94,7 @@ The framework takes care of the repetitive tasks and ultimately executes a
 controller, which houses your custom application code:</p>
 <ol class="arabic simple">
 <li>Each request is handled by a single front controller file (e.g. <tt class="docutils literal"><span class="pre">app.php</span></tt>
-or <tt class="docutils literal"><span class="pre">app_dev.php</span></tt>) that&#8217;s bootstraps the application;</li>
+or <tt class="docutils literal"><span class="pre">app_dev.php</span></tt>) that bootstraps the application;</li>
 <li>The <tt class="docutils literal"><span class="pre">Router</span></tt> reads information from the request (e.g. the URI), finds
 a route that matches that information, and reads the <tt class="docutils literal"><span class="pre">_controller</span></tt> parameter
 from the route;</li>
@@ -341,7 +341,7 @@ useful, this is equally available as a controller argument.</p>
 </div>
 </div>
 <div class="section" id="the-request-as-a-controller-argument">
-<h3>The <tt class="docutils literal"><span class="pre">Request</span></tt> as a Controller Argument<a class="headerlink" href="#the-request-as-a-controller-argument" title="Permalink to this headline">¶</a></h3>
+<span id="book-controller-request-argument"></span><h3>The <tt class="docutils literal"><span class="pre">Request</span></tt> as a Controller Argument<a class="headerlink" href="#the-request-as-a-controller-argument" title="Permalink to this headline">¶</a></h3>
 <p>For convenience, you can also have Symfony pass you the <tt class="docutils literal"><span class="pre">Request</span></tt> object
 as an argument to your controller. This is especially convenient when you&#8217;re
 working with forms, for example:</p>
@@ -517,8 +517,6 @@ $content = $templating-&gt;render('AcmeHelloBundle:Hello:index.html.twig', array
 via the <tt class="docutils literal"><span class="pre">get()</span></tt> method. Here are several common services you might need:</p>
 <div class="highlight-python"><pre>$request = $this-&gt;getRequest();
 
-$response = $this-&gt;get('response');
-
 $templating = $this-&gt;get('templating');
 
 $router = $this-&gt;get('router');
@@ -577,8 +575,8 @@ $session-&gt;set('foo', 'bar');
 // in another controller for another request
 $foo = $session-&gt;get('foo');
 
-// set the user locale
-$session-&gt;setLocale('fr');</pre>
+// use a default value of the key doesn't exist
+$filters = $session-&gt;set('filters', array());</pre>
 </div>
 <p>These attributes will remain on the user for the remainder of that user&#8217;s
 session.</p>
@@ -774,12 +772,12 @@ more.</p>
         <li class="right" >
           <a href="page_creation.html" title="Creating Pages in Symfony2"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Translations &mdash; Symfony2Docs v0 documentation</title>
+    <title>Translations &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Service Container" href="service_container.html" />
     <link rel="prev" title="HTTP Cache" href="http_cache.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="http_cache.html" title="HTTP Cache"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -52,11 +52,12 @@
             
   <div class="section" id="translations">
 <span id="index-0"></span><h1>Translations<a class="headerlink" href="#translations" title="Permalink to this headline">¶</a></h1>
-<p>The term &#8220;internationalization&#8221; refers to the process of abstracting strings
-and other locale-specific pieces out of your application and into a layer
-where they can be translated and converted based on the user&#8217;s locale (i.e.
-language and country). For text, this means wrapping each with a function
-capable of translating the text (or &#8220;message&#8221;) into the language of the user:</p>
+<p>The term &#8220;internationalization&#8221; (often abbreviated <a class="reference external" href="http://en.wikipedia.org/wiki/Internationalization_and_localization">i18n</a>) refers to the process
+of abstracting strings and other locale-specific pieces out of your application
+and into a layer where they can be translated and converted based on the user&#8217;s
+locale (i.e. language and country). For text, this means wrapping each with a
+function capable of translating the text (or &#8220;message&#8221;) into the language of
+the user:</p>
 <div class="highlight-python"><pre>// text will *always* print out in English
 echo 'Hello World';
 
@@ -76,16 +77,11 @@ locales and then how to create translations for multiple locales. Overall,
 the process has several common steps:</p>
 <ol class="arabic simple">
 <li>Enable and configure Symfony&#8217;s <tt class="docutils literal"><span class="pre">Translation</span></tt> component;</li>
-</ol>
-<ol class="arabic simple">
 <li>Abstract strings (i.e. &#8220;messages&#8221;) by wrapping them in calls to the <tt class="docutils literal"><span class="pre">Translator</span></tt>;</li>
-</ol>
-<ol class="arabic simple">
 <li>Create translation resources for each supported locale that translate
 each message in the application;</li>
-</ol>
-<ol class="arabic simple">
-<li>Determine, set and manage the user&#8217;s locale in the session.</li>
+<li>Determine, set and manage the user&#8217;s locale for the request and optionally
+on the user&#8217;s entire session.</li>
 </ol>
 <div class="section" id="configuration">
 <span id="index-1"></span><h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
@@ -125,7 +121,8 @@ to find the translation for the language (<tt class="docutils literal"><span cla
 <tt class="docutils literal"><span class="pre">fr_FR</span></tt> for instance). If this also fails, it looks for a translation
 using the fallback locale.</p>
 </div>
-<p>The locale used in translations is the one stored in the user session.</p>
+<p>The locale used in translations is the one stored on the request. This is
+typically set via a <tt class="docutils literal"><span class="pre">_locale</span></tt> attribute on your routes (see <a class="reference internal" href="#book-translation-locale-url"><em>The Locale and the URL</em></a>).</p>
 </div>
 <div class="section" id="basic-translation">
 <span id="index-2"></span><h2>Basic Translation<a class="headerlink" href="#basic-translation" title="Permalink to this headline">¶</a></h2>
@@ -185,7 +182,8 @@ the message will be translated into <tt class="docutils literal"><span class="pr
 <h3>The Translation Process<a class="headerlink" href="#the-translation-process" title="Permalink to this headline">¶</a></h3>
 <p>To actually translate the message, Symfony2 uses a simple process:</p>
 <ul class="simple">
-<li>The <tt class="docutils literal"><span class="pre">locale</span></tt> of the current user, which is stored in the session, is determined;</li>
+<li>The <tt class="docutils literal"><span class="pre">locale</span></tt> of the current user, which is stored on the request (or
+stored as <tt class="docutils literal"><span class="pre">_locale</span></tt> on the session), is determined;</li>
 <li>A catalog of translated messages is loaded from translation resources defined
 for the <tt class="docutils literal"><span class="pre">locale</span></tt> (e.g. <tt class="docutils literal"><span class="pre">fr_FR</span></tt>). Messages from the fallback locale are
 also loaded and added to the catalog if they don&#8217;t already exist. The end
@@ -266,8 +264,6 @@ convention to follow.</p>
 <ol class="arabic simple">
 <li>Abstract the message that needs to be translated by processing it through
 the <tt class="docutils literal"><span class="pre">Translator</span></tt>.</li>
-</ol>
-<ol class="arabic simple">
 <li>Create a translation for the message in each locale that you choose to
 support.</li>
 </ol>
@@ -335,10 +331,12 @@ below to learn how to register custom loaders.</p>
 </div>
 <div class="section" id="creating-translations">
 <span id="index-6"></span><h3>Creating Translations<a class="headerlink" href="#creating-translations" title="Permalink to this headline">¶</a></h3>
-<p>Each file consists of a series of id-translation pairs for the given domain and
-locale. The id is the identifier for the individual translation, and can
-be the message in the main locale (e.g. &#8220;Symfony is great&#8221;) of your application
-or a unique identifier (e.g. &#8220;symfony2.great&#8221; - see the sidebar below):</p>
+<p>The act of creating translation files is an important part of &#8220;localization&#8221;
+(often abbreviated <a class="reference external" href="http://en.wikipedia.org/wiki/Internationalization_and_localization">L10n</a>). Translation files consist of a series of
+id-translation pairs for the given domain and locale. The id is the identifier
+for the individual translation, and can be the message in the main locale (e.g.
+&#8220;Symfony is great&#8221;) of your application or a unique identifier (e.g.
+&#8220;symfony2.great&#8221; - see the sidebar below):</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/DemoBundle/Resources/translations/messages.fr.xliff --&gt;</span>
@@ -485,48 +483,60 @@ locale.</p>
 </div>
 <div class="section" id="handling-the-user-s-locale">
 <span id="index-8"></span><h2>Handling the User&#8217;s Locale<a class="headerlink" href="#handling-the-user-s-locale" title="Permalink to this headline">¶</a></h2>
-<p>The locale of the current user is stored in the session and is accessible
-via the <tt class="docutils literal"><span class="pre">session</span></tt> service:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">$locale = $this-&gt;get(&#39;session&#39;)-&gt;getLocale();</span>
+<p>The locale of the current user is stored in the request and is accessible
+via the <tt class="docutils literal"><span class="pre">request</span></tt> object:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">// access the reqest object in a standard controller</span>
+<span class="x">$request = $this-&gt;getRequest();</span>
 
-<span class="x">$this-&gt;get(&#39;session&#39;)-&gt;setLocale(&#39;en_US&#39;);</span>
+<span class="x">$locale = $request-&gt;getLocale();</span>
+
+<span class="x">$request-&gt;setLocale(&#39;en_US&#39;);</span>
 </pre></div>
 </div>
+<p id="index-9">It is also possible to store the locale in the session instead of on a per
+request basis. If you do this, each subsequent request will have this locale.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">$this-&gt;get(&#39;session&#39;)-&gt;set(&#39;_locale&#39;, &#39;en_US&#39;);</span>
+</pre></div>
+</div>
+<p>See the <em class="xref std std-ref">.. _book-translation-locale-url:</em> section below about setting
+the locale via routing.</p>
 <div class="section" id="fallback-and-default-locale">
-<span id="index-9"></span><h3>Fallback and Default Locale<a class="headerlink" href="#fallback-and-default-locale" title="Permalink to this headline">¶</a></h3>
+<h3>Fallback and Default Locale<a class="headerlink" href="#fallback-and-default-locale" title="Permalink to this headline">¶</a></h3>
 <p>If the locale hasn&#8217;t been set explicitly in the session, the <tt class="docutils literal"><span class="pre">fallback_locale</span></tt>
 configuration parameter will be used by the <tt class="docutils literal"><span class="pre">Translator</span></tt>. The parameter
 defaults to <tt class="docutils literal"><span class="pre">en</span></tt> (see <a class="reference internal" href="#configuration">Configuration</a>).</p>
-<p>Alternatively, you can guarantee that a locale is set on the user&#8217;s session
-by defining a <tt class="docutils literal"><span class="pre">default_locale</span></tt> for the session service:</p>
+<p>Alternatively, you can guarantee that a locale is set on each user&#8217;s request
+by defining a <tt class="docutils literal"><span class="pre">default_locale</span></tt> for the framework:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">session</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">default_locale</span><span class="p-Indicator">:</span> <span class="nv">en</span> <span class="p-Indicator">}</span>
+    <span class="l-Scalar-Plain">default_locale</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">en</span>
 </pre></div>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
 <span class="nt">&lt;framework:config&gt;</span>
-    <span class="nt">&lt;framework:session</span> <span class="na">default-locale=</span><span class="s">&quot;en&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;framework:default-locale&gt;</span>en<span class="nt">&lt;/framework:default-locale&gt;</span>
 <span class="nt">&lt;/framework:config&gt;</span>
 </pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
 <span class="x">$container-&gt;loadFromExtension(&#39;framework&#39;, array(</span>
-<span class="x">    &#39;session&#39; =&gt; array(&#39;default_locale&#39; =&gt; &#39;en&#39;),</span>
+<span class="x">    &#39;default_locale&#39; =&gt; &#39;en&#39;,</span>
 <span class="x">));</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1.</span></p>
 </div>
 <div class="section" id="the-locale-and-the-url">
-<h3>The Locale and the URL<a class="headerlink" href="#the-locale-and-the-url" title="Permalink to this headline">¶</a></h3>
-<p>Since the locale of the user is stored in the session, it may be tempting
+<span id="book-translation-locale-url"></span><h3>The Locale and the URL<a class="headerlink" href="#the-locale-and-the-url" title="Permalink to this headline">¶</a></h3>
+<p>Since you can store the locale of the user is in the session, it may be tempting
 to use the same URL to display a resource in many different languages based
 on the user&#8217;s locale. For example, <tt class="docutils literal"><span class="pre">http://www.example.com/contact</span></tt> could
 show content in English for one user and French for another user. Unfortunately,
@@ -639,7 +649,7 @@ to choose which string to use based on a given number. Sometimes, you&#8217;ll
 need more control or want a different translation for specific cases (for
 <tt class="docutils literal"><span class="pre">0</span></tt>, or when the count is negative, for example). For such cases, you can
 use explicit math intervals:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;{0} There is no apples|{1} There is one apple|]1,19] There are </span><span class="si">%c</span><span class="s">ount% apples|[20,Inf] There are many apples&#39;</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;{0} There are no apples|{1} There is one apple|]1,19] There are </span><span class="si">%c</span><span class="s">ount% apples|[20,Inf] There are many apples&#39;</span>
 </pre></div>
 </div>
 <p>The intervals follow the <a class="reference external" href="http://en.wikipedia.org/wiki/Interval_%28mathematics%29#The_ISO_notation">ISO 31-11</a> notation. The above string specifies
@@ -648,7 +658,7 @@ and higher.</p>
 <p>You can also mix explicit math rules and standard rules. In this case, if
 the count is not matched by a specific interval, the standard rules take
 effect after removing the explicit rules:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;{0} There is no apples|[20,Inf] There are many apples|There is one apple|a_few: There are </span><span class="si">%c</span><span class="s">ount% apples&#39;</span>
+<div class="highlight-python"><div class="highlight"><pre><span class="s">&#39;{0} There are no apples|[20,Inf] There are many apples|There is one apple|a_few: There are </span><span class="si">%c</span><span class="s">ount% apples&#39;</span>
 </pre></div>
 </div>
 <p>For example, for <tt class="docutils literal"><span class="pre">1</span></tt> apple, the standard rule <tt class="docutils literal"><span class="pre">There</span> <span class="pre">is</span> <span class="pre">one</span> <span class="pre">apple</span></tt> will
@@ -678,7 +688,7 @@ help with message translation of <em>static blocks of text</em>:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">trans</span> <span class="cp">%}</span><span class="x">Hello %name%</span><span class="cp">{%</span> <span class="k">endtrans</span> <span class="cp">%}</span><span class="x"></span>
 
 <span class="cp">{%</span> <span class="k">transchoice</span> <span class="nv">count</span> <span class="cp">%}</span><span class="x"></span>
-<span class="x">    {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples</span>
+<span class="x">    {0} There are no apples|{1} There is one apple|]1,Inf] There are %count% apples</span>
 <span class="cp">{%</span> <span class="k">endtranschoice</span> <span class="cp">%}</span><span class="x"></span>
 </pre></div>
 </div>
@@ -693,6 +703,8 @@ doubling it: <tt class="docutils literal"><span class="pre">{%</span> <span clas
 <p>You can also specify the message domain and pass some additional variables:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">trans</span> <span class="k">with</span> <span class="o">{</span><span class="s1">&#39;%name%&#39;</span><span class="o">:</span> <span class="s1">&#39;Fabien&#39;</span><span class="o">}</span> <span class="nv">from</span> <span class="s2">&quot;app&quot;</span> <span class="cp">%}</span><span class="x">Hello %name%</span><span class="cp">{%</span> <span class="k">endtrans</span> <span class="cp">%}</span><span class="x"></span>
 
+<span class="cp">{%</span> <span class="k">trans</span> <span class="k">with</span> <span class="o">{</span><span class="s1">&#39;%name%&#39;</span><span class="o">:</span> <span class="s1">&#39;Fabien&#39;</span><span class="o">}</span> <span class="nv">from</span> <span class="s2">&quot;app&quot;</span> <span class="nv">into</span> <span class="s2">&quot;fr&quot;</span> <span class="cp">%}</span><span class="x">Hello %name%</span><span class="cp">{%</span> <span class="k">endtrans</span> <span class="cp">%}</span><span class="x"></span>
+
 <span class="cp">{%</span> <span class="k">transchoice</span> <span class="nv">count</span> <span class="k">with</span> <span class="o">{</span><span class="s1">&#39;%name%&#39;</span><span class="o">:</span> <span class="s1">&#39;Fabien&#39;</span><span class="o">}</span> <span class="nv">from</span> <span class="s2">&quot;app&quot;</span> <span class="cp">%}</span><span class="x"></span>
 <span class="x">    {0} There is no apples|{1} There is one apple|]1,Inf] There are %count% apples</span>
 <span class="cp">{%</span> <span class="k">endtranschoice</span> <span class="cp">%}</span><span class="x"></span>
@@ -700,13 +712,13 @@ doubling it: <tt class="docutils literal"><span class="pre">{%</span> <span clas
 </div>
 <p>The <tt class="docutils literal"><span class="pre">trans</span></tt> and <tt class="docutils literal"><span class="pre">transchoice</span></tt> filters can be used to translate <em>variable
 texts</em> and complex expressions:</p>
-<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">message</span> <span class="o">|</span> <span class="nf">trans</span> <span class="cp">}}</span><span class="x"></span>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">message</span><span class="o">|</span><span class="nf">trans</span> <span class="cp">}}</span><span class="x"></span>
 
-<span class="cp">{{</span> <span class="nv">message</span> <span class="o">|</span> <span class="nf">transchoice</span><span class="o">(</span><span class="m">5</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">message</span><span class="o">|</span><span class="nf">transchoice</span><span class="o">(</span><span class="m">5</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
 
-<span class="cp">{{</span> <span class="nv">message</span> <span class="o">|</span> <span class="nf">trans</span><span class="o">({</span><span class="s1">&#39;%name%&#39;</span><span class="o">:</span> <span class="s1">&#39;Fabien&#39;</span><span class="o">},</span> <span class="s2">&quot;app&quot;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">message</span><span class="o">|</span><span class="nf">trans</span><span class="o">({</span><span class="s1">&#39;%name%&#39;</span><span class="o">:</span> <span class="s1">&#39;Fabien&#39;</span><span class="o">},</span> <span class="s2">&quot;app&quot;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
 
-<span class="cp">{{</span> <span class="nv">message</span> <span class="o">|</span> <span class="nf">transchoice</span><span class="o">(</span><span class="m">5</span><span class="o">,</span> <span class="o">{</span><span class="s1">&#39;%name%&#39;</span><span class="o">:</span> <span class="s1">&#39;Fabien&#39;</span><span class="o">},</span> <span class="s1">&#39;app&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">message</span><span class="o">|</span><span class="nf">transchoice</span><span class="o">(</span><span class="m">5</span><span class="o">,</span> <span class="o">{</span><span class="s1">&#39;%name%&#39;</span><span class="o">:</span> <span class="s1">&#39;Fabien&#39;</span><span class="o">},</span> <span class="s1">&#39;app&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -724,10 +736,10 @@ apply the raw filter after the translation filter:</p>
 <span class="cp">{%</span> <span class="k">set</span> <span class="nv">message</span> <span class="o">=</span> <span class="s1">&#39;&lt;h3&gt;foo&lt;/h3&gt;&#39;</span> <span class="cp">%}</span><span class="x"></span>
 
 <span class="c">{# a variable translated via a filter is escaped by default #}</span><span class="x"></span>
-<span class="cp">{{</span> <span class="nv">message</span> <span class="o">|</span> <span class="nf">trans</span> <span class="o">|</span> <span class="nf">raw</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">message</span><span class="o">|</span><span class="nf">trans</span><span class="o">|</span><span class="nf">raw</span> <span class="cp">}}</span><span class="x"></span>
 
 <span class="c">{# but static strings are never escaped #}</span><span class="x"></span>
-<span class="cp">{{</span> <span class="s1">&#39;&lt;h3&gt;foo&lt;/h3&gt;&#39;</span> <span class="o">|</span> <span class="nf">trans</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="s1">&#39;&lt;h3&gt;foo&lt;/h3&gt;&#39;</span><span class="o">|</span><span class="nf">trans</span> <span class="cp">}}</span><span class="x"></span>
 </pre></div>
 </div>
 </div>
@@ -749,7 +761,7 @@ apply the raw filter after the translation filter:</p>
 </div>
 <div class="section" id="forcing-the-translator-locale">
 <h2>Forcing the Translator Locale<a class="headerlink" href="#forcing-the-translator-locale" title="Permalink to this headline">¶</a></h2>
-<p>When translating a message, Symfony2 uses the locale from the user&#8217;s session
+<p>When translating a message, Symfony2 uses the locale from the current request
 or the <tt class="docutils literal"><span class="pre">fallback</span></tt> locale if necessary. You can also manually specify the
 locale to use for translation:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">$this-&gt;get(&#39;translator&#39;)-&gt;trans(</span>
@@ -760,7 +772,7 @@ locale to use for translation:</p>
 <span class="x">);</span>
 
 <span class="x">$this-&gt;get(&#39;translator&#39;)-&gt;trans(</span>
-<span class="x">    &#39;{0} There is no apples|{1} There is one apple|]1,Inf[ There are %count% apples&#39;,</span>
+<span class="x">    &#39;{0} There are no apples|{1} There is one apple|]1,Inf[ There are %count% apples&#39;,</span>
 <span class="x">    10,</span>
 <span class="x">    array(&#39;%count%&#39; =&gt; 10),</span>
 <span class="x">    &#39;messages&#39;,</span>
@@ -787,7 +799,8 @@ steps:</p>
 <li>Translate each message into multiple locales by creating translation message
 files. Symfony2 discovers and processes each file because its name follows
 a specific convention;</li>
-<li>Manage the user&#8217;s locale, which is stored in the session.</li>
+<li>Manage the user&#8217;s locale, which is stored on the request, but can also
+be set once the user&#8217;s session.</li>
 </ul>
 </div>
 </div>
@@ -874,12 +887,12 @@ a specific convention;</li>
         <li class="right" >
           <a href="http_cache.html" title="HTTP Cache"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

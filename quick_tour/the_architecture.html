@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Architecture &mdash; Symfony2Docs v0 documentation</title>
+    <title>The Architecture &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Quick Tour" href="index.html" />
     <link rel="next" title="Book" href="../book/index.html" />
     <link rel="prev" title="The Controller" href="the_controller.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="the_controller.html" title="The Controller"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Quick Tour</a> &raquo;</li> 
       </ul>
     </div>  
@@ -128,7 +128,7 @@ $loader-&gt;registerNamespaceFallbacks(array(
 $loader-&gt;register();</pre>
 </div>
 <p>The <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\ClassLoader\UniversalClassLoader</span></tt> is used to
-autoload files that respect either the technical interoperability <a class="reference external" href="http://groups.google.com/group/php-standards/web/psr-0-final-proposal">standards</a>
+autoload files that respect either the technical interoperability <a class="reference external" href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">standards</a>
 for PHP 5.3 namespaces or the PEAR naming <a class="reference external" href="http://pear.php.net/">convention</a> for classes. As you
 can see here, all dependencies are stored under the <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory, but
 this is just a convention. You can store them wherever you want, globally on
@@ -136,8 +136,7 @@ your server or locally in your projects.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you want to learn more about the flexibility of the Symfony2
-autoloader, read the &#8220;<a class="reference internal" href="../cookbook/tools/autoloader.html"><em>How to autoload Classes</em></a>&#8221; recipe in the
-cookbook.</p>
+autoloader, read the &#8220;<a class="reference internal" href="../components/class_loader.html"><em>The ClassLoader Component</em></a>&#8221; chapter.</p>
 </div>
 </div>
 </div>
@@ -195,10 +194,12 @@ They are all part of the core framework.</p>
 PHP. Have a look at the default configuration:</p>
 <div class="highlight-yaml"><pre># app/config/config.yml
 imports:
-    - { resource: parameters.ini }
+    - { resource: parameters.yml }
     - { resource: security.yml }
 
 framework:
+    #esi:             ~
+    #translator:      { fallback: %locale% }
     secret:          %secret%
     charset:         UTF-8
     router:          { resource: "%kernel.root_dir%/config/routing.yml" }
@@ -206,8 +207,8 @@ framework:
     csrf_protection: true
     validation:      { enable_annotations: true }
     templating:      { engines: ['twig'] } #assets_version: SomeVersionScheme
+    default_locale:  %locale%
     session:
-        default_locale: %locale%
         auto_start:     true
 
 # Twig Configuration
@@ -219,6 +220,8 @@ twig:
 assetic:
     debug:          %kernel.debug%
     use_controller: false
+    bundles:        [ ]
+    # java: /usr/bin/java
     filters:
         cssrewrite: ~
         # closure:
@@ -231,6 +234,7 @@ doctrine:
     dbal:
         driver:   %database_driver%
         host:     %database_host%
+        port:     %database_port%
         dbname:   %database_name%
         user:     %database_user%
         password: %database_password%
@@ -318,10 +322,12 @@ instance.</p>
 <div class="section" id="extending-bundles">
 <h4>Extending Bundles<a class="headerlink" href="#extending-bundles" title="Permalink to this headline">¶</a></h4>
 <p>If you follow these conventions, then you can use <a class="reference internal" href="../cookbook/bundles/inheritance.html"><em>bundle inheritance</em></a>
-to &#8220;override&#8221; files, controllers or templates. For example, if a new bundle
-called <tt class="docutils literal"><span class="pre">AcmeNewBundle</span></tt> extended the <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt>, then Symfony would
-try to load the <tt class="docutils literal"><span class="pre">AcmeDemoBundle:Welcome:index</span></tt> controller from <tt class="docutils literal"><span class="pre">AcmeNewBundle</span></tt>
-first, and then look inside <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt> second.</p>
+to &#8220;override&#8221; files, controllers or templates. For example, you can create
+a bundle - <tt class="docutils literal"><span class="pre">AcmeNewBundle</span></tt> - and specify that its parent is <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt>.
+When Symfony loads the <tt class="docutils literal"><span class="pre">AcmeDemoBundle:Welcome:index</span></tt> controller, it will
+first look for the <tt class="docutils literal"><span class="pre">WelcomeController</span></tt> class in <tt class="docutils literal"><span class="pre">AcmeNewBundle</span></tt> and then
+look inside <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt>. This means that one bundle can override almost
+any part of another bundle!</p>
 <p>Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.</p>
 </div>
@@ -449,12 +455,12 @@ any topic you want.</p>
         <li class="right" >
           <a href="the_controller.html" title="The Controller"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Quick Tour</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

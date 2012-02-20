@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Bundle Structure and Best Practices &mdash; Symfony2Docs v0 documentation</title>
+    <title>Bundle Structure and Best Practices &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
     <link rel="next" title="How to use Bundle Inheritance to Override parts of a Bundle" href="inheritance.html" />
     <link rel="prev" title="How to use PdoSessionStorage to store Sessions in the Database" href="../configuration/pdo_session_storage.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="../configuration/pdo_session_storage.html" title="How to use PdoSessionStorage to store Sessions in the Database"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -58,7 +58,7 @@ flexible, you should follow some best practices if you want to distribute them.<
 <div class="section" id="bundle-name">
 <span id="bundles-naming-conventions"></span><span id="index-1"></span><h2>Bundle Name<a class="headerlink" href="#bundle-name" title="Permalink to this headline">¶</a></h2>
 <p>A bundle is also a PHP namespace. The namespace must follow the technical
-interoperability <a class="reference external" href="http://groups.google.com/group/php-standards/web/psr-0-final-proposal">standards</a> for PHP 5.3 namespaces and class names: it
+interoperability <a class="reference external" href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">standards</a> for PHP 5.3 namespaces and class names: it
 starts with a vendor segment, followed by zero or more category segments, and
 it ends with the namespace short name, which must end with a <tt class="docutils literal"><span class="pre">Bundle</span></tt>
 suffix.</p>
@@ -109,6 +109,11 @@ for instance).</p>
 and always add a <tt class="docutils literal"><span class="pre">Bundle</span></tt> subnamespace; for example:
 <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Bundle\FrameworkBundle\FrameworkBundle</span></tt>.</p>
 </div>
+<p>Each bundle has an alias, which is the lower-cased short version of the bundle
+name using underscores (<tt class="docutils literal"><span class="pre">acme_hello</span></tt> for <tt class="docutils literal"><span class="pre">AcmeHelloBundle</span></tt>, or
+<tt class="docutils literal"><span class="pre">acme_social_blog</span></tt> for <tt class="docutils literal"><span class="pre">Acme\Social\BlogBundle</span></tt> for instance). This alias
+is used to enforce uniqueness within a bundle (see below for some usage
+examples).</p>
 </div>
 <div class="section" id="directory-structure">
 <h2>Directory Structure<a class="headerlink" href="#directory-structure" title="Permalink to this headline">¶</a></h2>
@@ -152,8 +157,8 @@ files are going to be part of the repository.</p>
 <p>The following classes and files have specific emplacements:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="48%" />
-<col width="52%" />
+<col width="51%" />
+<col width="49%" />
 </colgroup>
 <thead valign="bottom">
 <tr><th class="head">Type</th>
@@ -161,8 +166,23 @@ files are going to be part of the repository.</p>
 </tr>
 </thead>
 <tbody valign="top">
+<tr><td>Commands</td>
+<td><tt class="docutils literal"><span class="pre">Command/</span></tt></td>
+</tr>
 <tr><td>Controllers</td>
 <td><tt class="docutils literal"><span class="pre">Controller/</span></tt></td>
+</tr>
+<tr><td>Service Container Extensions</td>
+<td><tt class="docutils literal"><span class="pre">DependencyInjection/</span></tt></td>
+</tr>
+<tr><td>Event Listeners</td>
+<td><tt class="docutils literal"><span class="pre">EventListener/</span></tt></td>
+</tr>
+<tr><td>Configuration</td>
+<td><tt class="docutils literal"><span class="pre">Resources/config/</span></tt></td>
+</tr>
+<tr><td>Web Resources</td>
+<td><tt class="docutils literal"><span class="pre">Resources/public/</span></tt></td>
 </tr>
 <tr><td>Translation files</td>
 <td><tt class="docutils literal"><span class="pre">Resources/translations/</span></tt></td>
@@ -172,15 +192,6 @@ files are going to be part of the repository.</p>
 </tr>
 <tr><td>Unit and Functional Tests</td>
 <td><tt class="docutils literal"><span class="pre">Tests/</span></tt></td>
-</tr>
-<tr><td>Web Resources</td>
-<td><tt class="docutils literal"><span class="pre">Resources/public/</span></tt></td>
-</tr>
-<tr><td>Configuration</td>
-<td><tt class="docutils literal"><span class="pre">Resources/config/</span></tt></td>
-</tr>
-<tr><td>Commands</td>
-<td><tt class="docutils literal"><span class="pre">Command/</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -226,7 +237,8 @@ existence of a <tt class="docutils literal"><span class="pre">phpunit.xml.dist</
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <p>All classes and functions must come with full PHPDoc.</p>
 <p>Extensive documentation should also be provided in the <a class="reference internal" href="../../contributing/documentation/format.html"><em>reStructuredText</em></a> format, under the <tt class="docutils literal"><span class="pre">Resources/doc/</span></tt>
-directory; the <tt class="docutils literal"><span class="pre">Resources/doc/index.rst</span></tt> file is the only mandatory file.</p>
+directory; the <tt class="docutils literal"><span class="pre">Resources/doc/index.rst</span></tt> file is the only mandatory file and
+must be the entry point for the documentation.</p>
 </div>
 <div class="section" id="controllers">
 <h2>Controllers<a class="headerlink" href="#controllers" title="Permalink to this headline">¶</a></h2>
@@ -243,6 +255,12 @@ instead.</p>
 <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Bundle\FrameworkBundle\Controller\Controller</span></tt> methods,
 you will see that they are only nice shortcuts to ease the learning curve.</p>
 </div>
+</div>
+<div class="section" id="routing">
+<h2>Routing<a class="headerlink" href="#routing" title="Permalink to this headline">¶</a></h2>
+<p>If the bundle provides routes, they must be prefixed with the bundle alias.
+For an AcmeBlogBundle for instance, all routes must be prefixed with
+<tt class="docutils literal"><span class="pre">acme_blog_</span></tt>.</p>
 </div>
 <div class="section" id="templates">
 <h2>Templates<a class="headerlink" href="#templates" title="Permalink to this headline">¶</a></h2>
@@ -261,12 +279,10 @@ format; the domain should be named after the bundle name (<tt class="docutils li
 using the Symfony2 built-in mechanisms.</p>
 <p>For simple configuration settings, rely on the default <tt class="docutils literal"><span class="pre">parameters</span></tt> entry of
 the Symfony2 configuration. Symfony2 parameters are simple key/value pairs; a
-value being any valid PHP value. Each parameter name should start with a
-lower-cased short version of the bundle name using underscores (<tt class="docutils literal"><span class="pre">acme_hello</span></tt>
-for <tt class="docutils literal"><span class="pre">AcmeHelloBundle</span></tt>, or <tt class="docutils literal"><span class="pre">acme_social_blog</span></tt> for <tt class="docutils literal"><span class="pre">Acme\Social\BlogBundle</span></tt>
-for instance), though this is just a best-practice suggestion. The rest of
-the parameter name will use a period (<tt class="docutils literal"><span class="pre">.</span></tt>) to separate different parts
-(e.g. <tt class="docutils literal"><span class="pre">acme_hello.email.from</span></tt>).</p>
+value being any valid PHP value. Each parameter name should start with the
+bundle alias, though this is just a best-practice suggestion. The rest of the
+parameter name will use a period (<tt class="docutils literal"><span class="pre">.</span></tt>) to separate different parts (e.g.
+<tt class="docutils literal"><span class="pre">acme_hello.email.from</span></tt>).</p>
 <p>The end user can provide values in any configuration file:</p>
 <div class="configuration-block">
 <ul class="simple">
@@ -300,6 +316,11 @@ the parameter name will use a period (<tt class="docutils literal"><span class="
 </div>
 <p>Even if this mechanism is simple enough, you are highly encouraged to use the
 semantic configuration described in the cookbook.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you are defining services, they should also be prefixed with the bundle
+alias.</p>
+</div>
 </div>
 <div class="section" id="learn-more-from-the-cookbook">
 <h2>Learn more from the Cookbook<a class="headerlink" href="#learn-more-from-the-cookbook" title="Permalink to this headline">¶</a></h2>
@@ -325,6 +346,7 @@ semantic configuration described in the cookbook.</p>
 <li><a class="reference internal" href="#tests">Tests</a></li>
 <li><a class="reference internal" href="#documentation">Documentation</a></li>
 <li><a class="reference internal" href="#controllers">Controllers</a></li>
+<li><a class="reference internal" href="#routing">Routing</a></li>
 <li><a class="reference internal" href="#templates">Templates</a></li>
 <li><a class="reference internal" href="#translation-files">Translation Files</a></li>
 <li><a class="reference internal" href="#configuration">Configuration</a></li>
@@ -373,12 +395,12 @@ semantic configuration described in the cookbook.</p>
         <li class="right" >
           <a href="../configuration/pdo_session_storage.html" title="How to use PdoSessionStorage to store Sessions in the Database"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

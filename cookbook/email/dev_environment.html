@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Work with Emails During Development &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to Work with Emails During Development &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
     <link rel="next" title="How to Spool Email" href="spool.html" />
-    <link rel="prev" title="How to use Gmail to send Emails" href="../gmail.html" /> 
+    <link rel="prev" title="How to use Gmail to send Emails" href="gmail.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,9 +38,9 @@
           <a href="spool.html" title="How to Spool Email"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../gmail.html" title="How to use Gmail to send Emails"
+          <a href="gmail.html" title="How to use Gmail to send Emails"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -52,19 +52,19 @@
             
   <div class="section" id="how-to-work-with-emails-during-development">
 <h1>How to Work with Emails During Development<a class="headerlink" href="#how-to-work-with-emails-during-development" title="Permalink to this headline">¶</a></h1>
-<p>When you are creating an application which sends emails, you will often
-not want to actually send the emails to the specified recipient while
+<p>When developing an application which sends email, you will often
+not want to actually send the email to the specified recipient during
 development. If you are using the <tt class="docutils literal"><span class="pre">SwiftmailerBundle</span></tt> with Symfony2, you
 can easily achieve this through configuration settings without having to
 make any changes to your application&#8217;s code at all. There are two main
-choices when it comes to handling emails during development: (a) disabling the
-sending of emails altogether or (b) sending all the emails to a specified
+choices when it comes to handling email during development: (a) disabling the
+sending of email altogether or (b) sending all email to a specific
 address.</p>
 <div class="section" id="disabling-sending">
 <h2>Disabling Sending<a class="headerlink" href="#disabling-sending" title="Permalink to this headline">¶</a></h2>
-<p>You can disable sending emails by setting the <tt class="docutils literal"><span class="pre">disable_delivery</span></tt> option
+<p>You can disable sending email by setting the <tt class="docutils literal"><span class="pre">disable_delivery</span></tt> option
 to <tt class="docutils literal"><span class="pre">true</span></tt>. This is the default in the <tt class="docutils literal"><span class="pre">test</span></tt> environment in the Standard
-distribution. If you do this in the <tt class="docutils literal"><span class="pre">test</span></tt> specific config then emails
+distribution. If you do this in the <tt class="docutils literal"><span class="pre">test</span></tt> specific config then email
 will not be sent when you run tests, but will continue to be sent in the
 <tt class="docutils literal"><span class="pre">prod</span></tt> and <tt class="docutils literal"><span class="pre">dev</span></tt> environments:</p>
 <div class="configuration-block">
@@ -97,11 +97,11 @@ will not be sent when you run tests, but will continue to be sent in the
 </ul>
 </div>
 <p>If you&#8217;d also like to disable deliver in the <tt class="docutils literal"><span class="pre">dev</span></tt> environment, simply
-add this configuration to the <tt class="docutils literal"><span class="pre">config_dev.yml</span></tt> file.</p>
+add this same configuration to the <tt class="docutils literal"><span class="pre">config_dev.yml</span></tt> file.</p>
 </div>
 <div class="section" id="sending-to-a-specified-address">
 <h2>Sending to a Specified Address<a class="headerlink" href="#sending-to-a-specified-address" title="Permalink to this headline">¶</a></h2>
-<p>You can also choose to have all emails sent to a specific address, instead
+<p>You can also choose to have all email sent to a specific address, instead
 of the address actually specified when sending the message. This can be done
 via the <tt class="docutils literal"><span class="pre">delivery_address</span></tt> option:</p>
 <div class="configuration-block">
@@ -149,9 +149,8 @@ via the <tt class="docutils literal"><span class="pre">delivery_address</span></
 </pre></div>
 </div>
 <p>In the <tt class="docutils literal"><span class="pre">dev</span></tt> environment, the email will instead be sent to <tt class="docutils literal"><span class="pre">dev&#64;example.com</span></tt>.
-Swiftmailer will add an extra header to the email, <tt class="docutils literal"><span class="pre">X-Swift-To</span></tt> containing
-the replaced address, so you will still be able to see who it would have been
-sent to.</p>
+Swiftmailer will add an extra header to the email, <tt class="docutils literal"><span class="pre">X-Swift-To</span></tt>, containing
+the replaced address, so you can still see who it would have been sent to.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">In addition to the <tt class="docutils literal"><span class="pre">to</span></tt> addresses, this will also stop the email being
@@ -163,13 +162,51 @@ addresses respectively.</p>
 </div>
 <div class="section" id="viewing-from-the-web-debug-toolbar">
 <h2>Viewing from the Web Debug Toolbar<a class="headerlink" href="#viewing-from-the-web-debug-toolbar" title="Permalink to this headline">¶</a></h2>
-<p>You can view any emails sent by a page when you are in the <tt class="docutils literal"><span class="pre">dev</span></tt> environment
-using the Web Debug Toolbar. The email icon in the toolbar will show how
-many emails were sent. If you click it, a report showing the details of the
-emails will open.</p>
-<p>If you&#8217;re sending an email and then redirecting immediately after, you&#8217;ll
-need to set the <tt class="docutils literal"><span class="pre">intercept_redirects</span></tt> option to <tt class="docutils literal"><span class="pre">true</span></tt> in the <tt class="docutils literal"><span class="pre">config_dev.yml</span></tt>
-file so that you can see the email in the web debug toolbar before being redirected.</p>
+<p>You can view any email sent during a single response when you are in the
+<tt class="docutils literal"><span class="pre">dev</span></tt> environment using the Web Debug Toolbar. The email icon in the toolbar
+will show how many emails were sent. If you click it, a report will open
+showing the details of the sent emails.</p>
+<p>If you&#8217;re sending an email and then immediately redirecting to another page,
+the web debug toolbar will not display an email icon or a report on the next
+page.</p>
+<p>Instead, you can set the <tt class="docutils literal"><span class="pre">intercept_redirects</span></tt> option to <tt class="docutils literal"><span class="pre">true</span></tt> in the
+<tt class="docutils literal"><span class="pre">config_dev.yml</span></tt> file, which will cause the redirect to stop and allow
+you to open the report with details of the sent emails.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Alternatively, you can open the profiler after the redirect and search
+by the submit URL used on previous request (e.g. <tt class="docutils literal"><span class="pre">/contact/handle</span></tt>).
+The profiler&#8217;s search feature allows you to load the profiler information
+for any past requests.</p>
+</div>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config_dev.yml</span>
+<span class="l-Scalar-Plain">web_profiler</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">intercept_redirects</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config_dev.xml --&gt;</span>
+
+<span class="c">&lt;!-- xmlns:webprofiler=&quot;http://symfony.com/schema/dic/webprofiler&quot; --&gt;</span>
+<span class="c">&lt;!-- xsi:schemaLocation=&quot;http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd&quot;&gt; --&gt;</span>
+
+<span class="nt">&lt;webprofiler:config</span>
+    <span class="na">intercept-redirects=</span><span class="s">&quot;true&quot;</span>
+<span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config_dev.php</span>
+<span class="x">$container-&gt;loadFromExtension(&#39;web_profiler&#39;, array(</span>
+<span class="x">    &#39;intercept_redirects&#39; =&gt; &#39;true&#39;,</span>
+<span class="x">));</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -190,7 +227,7 @@ file so that you can see the email in the web debug toolbar before being redirec
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../gmail.html"
+  <p class="topless"><a href="gmail.html"
                         title="previous chapter">How to use Gmail to send Emails</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="spool.html"
@@ -227,14 +264,14 @@ file so that you can see the email in the web debug toolbar before being redirec
           <a href="spool.html" title="How to Spool Email"
              >next</a> |</li>
         <li class="right" >
-          <a href="../gmail.html" title="How to use Gmail to send Emails"
+          <a href="gmail.html" title="How to use Gmail to send Emails"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

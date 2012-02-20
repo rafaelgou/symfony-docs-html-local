@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Set External Parameters in the Service Container &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to Set External Parameters in the Service Container &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
     <link rel="next" title="How to Use a Factory to Create Services" href="../service_container/factories.html" />
     <link rel="prev" title="How to Master and Create new Environments" href="environments.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="environments.html" title="How to Master and Create new Environments"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -72,7 +72,7 @@ the following <tt class="docutils literal"><span class="pre">VirtualHost</span><
     <span class="nb">SetEnv</span>          SYMFONY__DATABASE__USER <span class="k">user</span>
     <span class="nb">SetEnv</span>          SYMFONY__DATABASE__PASSWORD secret
 
-    <span class="nt">&lt;Directory</span> <span class="s">&quot;/path/to/my_symfony_2_app/web&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;Directory</span> <span class="s">&quot;/path/to/symfony_2_app/web&quot;</span><span class="nt">&gt;</span>
         <span class="nb">AllowOverride</span> <span class="k">All</span>
         <span class="nb">Allow</span> from <span class="k">All</span>
     <span class="nt">&lt;/Directory&gt;</span>
@@ -81,9 +81,16 @@ the following <tt class="docutils literal"><span class="pre">VirtualHost</span><
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The example above is for an Apache configuration, using the <a class="reference external" href="http://httpd.apache.org/docs/current/env.html">SetEnv</a>
+<p>The example above is for an Apache configuration, using the <a class="reference external" href="http://httpd.apache.org/docs/current/env.html">SetEnv</a>
 directive.  However, this will work for any web server which supports
 the setting of environment variables.</p>
+<p>Also, in order for your console to work (which does not use Apache),
+you must export these as shell variables. On a Unix system, you can run
+the following:</p>
+<div class="last highlight-bash"><div class="highlight"><pre><span class="nb">export </span><span class="nv">SYMFONY__DATABASE__USER</span><span class="o">=</span>user
+<span class="nb">export </span><span class="nv">SYMFONY__DATABASE__PASSWORD</span><span class="o">=</span>secret
+</pre></div>
+</div>
 </div>
 <p>Now that you have declared an environment variable, it will be present
 in the PHP <tt class="docutils literal"><span class="pre">$_SERVER</span></tt> global variable. Symfony then automatically sets all
@@ -106,7 +113,7 @@ container.</p>
 <span class="nt">&lt;doctrine:config&gt;</span>
     <span class="nt">&lt;doctrine:dbal</span>
         <span class="na">driver=</span><span class="s">&quot;pdo_mysql&quot;</span>
-        <span class="na">dbname=</span><span class="s">&quot;symfony2_projet&quot;</span>
+        <span class="na">dbname=</span><span class="s">&quot;symfony2_project&quot;</span>
         <span class="na">user=</span><span class="s">&quot;%database.user%&quot;</span>
         <span class="na">password=</span><span class="s">&quot;%database.password%&quot;</span>
     <span class="nt">/&gt;</span>
@@ -195,7 +202,7 @@ format. The example below includes a Drupal database&#8217;s configuration in
 the symfony service container.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/parameters.php</span>
 
-<span class="x">include_once(&#39;/path/to/drupal/sites/all/default/settings.php&#39;);</span>
+<span class="x">include_once(&#39;/path/to/drupal/sites/default/settings.php&#39;);</span>
 <span class="x">$container-&gt;setParameter(&#39;drupal.database.url&#39;, $db_url);</span>
 </pre></div>
 </div>
@@ -258,12 +265,12 @@ the symfony service container.</p>
         <li class="right" >
           <a href="environments.html" title="How to Master and Create new Environments"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

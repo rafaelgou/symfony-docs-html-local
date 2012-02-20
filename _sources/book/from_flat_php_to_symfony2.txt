@@ -438,7 +438,7 @@ files in the application and to configure the autoloader:
 
     $loader = new Symfony\Component\ClassLoader\UniversalClassLoader();
     $loader->registerNamespaces(array(
-        'Symfony' => __DIR__.'/vendor/symfony/src',
+        'Symfony' => __DIR__.'/../vendor/symfony/src',
     ));
 
     $loader->register();
@@ -555,7 +555,7 @@ them for you. Here's the same sample application, now built in Symfony2:
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
-            return $this->render('AcmeBlogBundle:Post:list.html.php', array('posts' => $posts));
+            return $this->render('AcmeBlogBundle:Blog:list.html.php', array('posts' => $posts));
         }
 
         public function showAction($id)
@@ -570,7 +570,7 @@ them for you. Here's the same sample application, now built in Symfony2:
                 throw $this->createNotFoundException();
             }
 
-            return $this->render('AcmeBlogBundle:Post:show.html.php', array('post' => $post));
+            return $this->render('AcmeBlogBundle:Blog:show.html.php', array('post' => $post));
         }
     }
 
@@ -618,7 +618,9 @@ The layout is nearly identical:
 
 When Symfony2's engine (called the ``Kernel``) boots up, it needs a map so
 that it knows which controllers to execute based on the request information.
-A routing configuration map provides this information in a readable format::
+A routing configuration map provides this information in a readable format:
+
+.. code-block:: yaml
 
     # app/config/routing.yml
     blog_list:
@@ -684,7 +686,7 @@ migrating the blog from flat PHP to Symfony2 has improved life:
 
 And perhaps best of all, by using Symfony2, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony2 community**!
-For more information, check out `Symfony2Bundles.org`_
+A good selection of Symfony2 community tools can be found on `KnpBundles.com`_.
 
 Better templates
 ----------------
@@ -743,7 +745,7 @@ Learn more from the Cookbook
 .. _`download symfony`: http://symfony.com/download
 .. _`Routing`: https://github.com/symfony/Routing
 .. _`Templating`: https://github.com/symfony/Templating
-.. _`Symfony2Bundles.org`: http://symfony2bundles.org
-.. _`Twig`: http://www.twig-project.org
+.. _`KnpBundles.com`: http://knpbundles.com/
+.. _`Twig`: http://twig.sensiolabs.org
 .. _`Varnish`: http://www.varnish-cache.org
 .. _`PHPUnit`: http://www.phpunit.de

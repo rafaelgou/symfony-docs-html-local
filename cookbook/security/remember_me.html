@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to add “Remember Me” Login Functionality &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to add “Remember Me” Login Functionality &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
     <link rel="next" title="How to implement your own Voter to blacklist IP Addresses" href="voters.html" />
-    <link rel="prev" title="How to use the Profiler in a Functional Test" href="../testing/profiling.html" /> 
+    <link rel="prev" title="How to test Doctrine Repositories" href="../testing/doctrine.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,9 +38,9 @@
           <a href="voters.html" title="How to implement your own Voter to blacklist IP Addresses"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../testing/profiling.html" title="How to use the Profiler in a Functional Test"
+          <a href="../testing/doctrine.html" title="How to test Doctrine Repositories"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -90,7 +90,7 @@ are shown here:</p>
 <span class="x">$container-&gt;loadFromExtension(&#39;security&#39;, array(</span>
 <span class="x">    &#39;firewalls&#39; =&gt; array(</span>
 <span class="x">        &#39;main&#39; =&gt; array(&#39;remember_me&#39; =&gt; array(</span>
-<span class="x">            &#39;key&#39;                     =&gt; &#39;/login_check&#39;,</span>
+<span class="x">            &#39;key&#39;                     =&gt; &#39;aSecretKey&#39;,</span>
 <span class="x">            &#39;lifetime&#39;                =&gt; 3600,</span>
 <span class="x">            &#39;path&#39;                    =&gt; &#39;/&#39;,</span>
 <span class="x">            &#39;domain&#39;                  =&gt; &#39;&#39;, // Defaults to the current domain from $_SERVER</span>
@@ -260,8 +260,8 @@ see <a class="reference internal" href="securing_services.html"><em>How to secur
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../testing/profiling.html"
-                        title="previous chapter">How to use the Profiler in a Functional Test</a></p>
+  <p class="topless"><a href="../testing/doctrine.html"
+                        title="previous chapter">How to test Doctrine Repositories</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="voters.html"
                         title="next chapter">How to implement your own Voter to blacklist IP Addresses</a></p>
@@ -297,14 +297,14 @@ see <a class="reference internal" href="securing_services.html"><em>How to secur
           <a href="voters.html" title="How to implement your own Voter to blacklist IP Addresses"
              >next</a> |</li>
         <li class="right" >
-          <a href="../testing/profiling.html" title="How to use the Profiler in a Functional Test"
+          <a href="../testing/doctrine.html" title="How to test Doctrine Repositories"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

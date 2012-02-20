@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>True &mdash; Symfony2Docs v0 documentation</title>
+    <title>True &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +22,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
-    <link rel="next" title="Type" href="Type.html" />
-    <link rel="prev" title="False" href="False.html" /> 
+    <link rel="next" title="False" href="False.html" />
+    <link rel="prev" title="Null" href="Null.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="Type.html" title="Type"
+          <a href="False.html" title="False"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="False.html" title="False"
+          <a href="Null.html" title="Null"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -53,23 +53,42 @@
             
   <div class="section" id="true">
 <h1>True<a class="headerlink" href="#true" title="Permalink to this headline">¶</a></h1>
-<p>Validates that a value is <tt class="docutils literal"><span class="pre">true</span></tt>.</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">termsAccepted</span><span class="p-Indicator">:</span>
-        <span class="p-Indicator">-</span> <span class="s">&quot;True&quot;</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
-</pre></div>
-</div>
-<div class="section" id="options">
-<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
-<ul class="simple">
-<li><tt class="docutils literal"><span class="pre">message</span></tt>: The error message if validation fails</li>
+<p>Validates that a value is <tt class="docutils literal"><span class="pre">true</span></tt>. Specifically, this checks to see if
+the value is exactly <tt class="docutils literal"><span class="pre">true</span></tt>, exactly the integer <tt class="docutils literal"><span class="pre">1</span></tt>, or exactly the
+string &#8220;<tt class="docutils literal"><span class="pre">1</span></tt>&#8221;.</p>
+<p>Also see <a class="reference internal" href="False.html"><em>False</em></a>.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<tbody valign="top">
+<tr><td>Applies to</td>
+<td><a class="reference internal" href="../../book/validation.html#validation-property-target"><em>property or method</em></a></td>
+</tr>
+<tr><td>Options</td>
+<td><ul class="first last simple">
+<li><a class="reference internal" href="#message">message</a></li>
 </ul>
-</div>
-<div class="section" id="example">
-<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
-<p>This constraint is very useful to execute custom validation logic. You can
-put the logic in a method which returns either <tt class="docutils literal"><span class="pre">true</span></tt> or <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">// Acme/HelloBundle/Author.php</span>
+</td>
+</tr>
+<tr><td>Class</td>
+<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\True</span></tt></td>
+</tr>
+<tr><td>Validator</td>
+<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\TrueValidator</span></tt></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>This constraint can be applied to properties (e.g. a <tt class="docutils literal"><span class="pre">termsAccepted</span></tt> property
+on a registration model) or to a &#8220;getter&#8221; method. It&#8217;s most powerful in the
+latter case, where you can assert that a method returns a true value. For
+example, suppose you have the following method:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/BlogBundle/Entity/Author.php</span>
+<span class="x">namespace Acme\BlogBundle\Entity;</span>
+
 <span class="x">class Author</span>
 <span class="x">{</span>
 <span class="x">    protected $token;</span>
@@ -84,26 +103,15 @@ put the logic in a method which returns either <tt class="docutils literal"><spa
 <p>Then you can constrain this method with <tt class="xref docutils literal"><span class="pre">True</span></tt>.</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/HelloBundle/Resources/config/validation.yml</span>
-<span class="l-Scalar-Plain">Acme\HelloBundle\Author</span><span class="p-Indicator">:</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/BlogBundle/Resources/config/validation.yml</span>
+<span class="l-Scalar-Plain">Acme\BlogBundle\Entity\Author</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">getters</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">tokenValid</span><span class="p-Indicator">:</span>
             <span class="p-Indicator">-</span> <span class="s">&quot;True&quot;</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">message</span><span class="p-Indicator">:</span> <span class="s">&quot;The</span><span class="nv"> </span><span class="s">token</span><span class="nv"> </span><span class="s">is</span><span class="nv"> </span><span class="s">invalid&quot;</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/HelloBundle/Resources/config/validation.xml --&gt;</span>
-<span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\HelloBundle\Author&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;getter</span> <span class="na">name=</span><span class="s">&quot;tokenValid&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;True&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;message&quot;</span><span class="nt">&gt;</span>The token is invalid<span class="nt">&lt;/option&gt;</span>
-        <span class="nt">&lt;/constraint&gt;</span>
-    <span class="nt">&lt;/getter&gt;</span>
-<span class="nt">&lt;/class&gt;</span>
-</pre></div>
-</div>
-</li>
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/HelloBundle/Author.php
+<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/BlogBundle/Entity/Author.php
 use Symfony\Component\Validator\Constraints as Assert;
 
 class Author
@@ -120,7 +128,25 @@ class Author
 }</pre>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/Author.php</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="c">&lt;!-- src/Acme/Blogbundle/Resources/config/validation.xml --&gt;</span>
+
+<span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;getter</span> <span class="na">property=</span><span class="s">&quot;tokenValid&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;True&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;message&quot;</span><span class="nt">&gt;</span>The token is invalid...<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;/constraint&gt;</span>
+        <span class="nt">&lt;/getter&gt;</span>
+    <span class="nt">&lt;/class&gt;</span>
+<span class="nt">&lt;/constraint-mapping&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/BlogBundle/Entity/Author.php</span>
 <span class="x">use Symfony\Component\Validator\Mapping\ClassMetadata;</span>
 <span class="x">use Symfony\Component\Validator\Constraints\True;</span>
 
@@ -145,11 +171,14 @@ class Author
 </li>
 </ul>
 </div>
-<p>If the validation of this method fails, you will see a message similar to
-this:</p>
-<div class="highlight-text"><div class="highlight"><pre>Acme\HelloBundle\Author.tokenValid:
-    This value should not be null
-</pre></div>
+<p>If the <tt class="docutils literal"><span class="pre">isTokenValid()</span></tt> returns false, the validation will fail.</p>
+</div>
+<div class="section" id="options">
+<h2>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="message">
+<h3>message<a class="headerlink" href="#message" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">This</span> <span class="pre">value</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">true</span></tt></p>
+<p>This message is shown if the underlying data is not true.</p>
 </div>
 </div>
 </div>
@@ -163,18 +192,21 @@ this:</p>
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">True</a><ul>
-<li><a class="reference internal" href="#options">Options</a></li>
-<li><a class="reference internal" href="#example">Example</a></li>
+<li><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li><a class="reference internal" href="#options">Options</a><ul>
+<li><a class="reference internal" href="#message">message</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="False.html"
-                        title="previous chapter">False</a></p>
+  <p class="topless"><a href="Null.html"
+                        title="previous chapter">Null</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="Type.html"
-                        title="next chapter">Type</a></p>
+  <p class="topless"><a href="False.html"
+                        title="next chapter">False</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/reference/constraints/True.txt"
@@ -204,18 +236,18 @@ this:</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="Type.html" title="Type"
+          <a href="False.html" title="False"
              >next</a> |</li>
         <li class="right" >
-          <a href="False.html" title="False"
+          <a href="Null.html" title="Null"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

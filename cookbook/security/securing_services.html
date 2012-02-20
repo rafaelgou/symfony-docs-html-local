@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to secure any Service or Method in your Application &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to secure any Service or Method in your Application &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +22,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to load Security Users from the Database (the entity Provider)" href="entity_provider.html" />
+    <link rel="next" title="How to load Security Users from the Database (the Entity Provider)" href="entity_provider.html" />
     <link rel="prev" title="How to customize your Form Login" href="form_login.html" /> 
   </head>
   <body>
@@ -35,12 +35,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="entity_provider.html" title="How to load Security Users from the Database (the entity Provider)"
+          <a href="entity_provider.html" title="How to load Security Users from the Database (the Entity Provider)"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="form_login.html" title="How to customize your Form Login"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -55,7 +55,7 @@
 <p>In the security chapter, you can see how to <a class="reference internal" href="../../book/security.html#book-security-securing-controller"><em>secure a controller</em></a>
 by requesting the <tt class="docutils literal"><span class="pre">security.context</span></tt> service from the Service Container
 and checking the current user&#8217;s role:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Security\Core\Exception\AccessDeniedException
+<div class="highlight-python"><pre>use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 // ...
 
 public function helloAction($name)
@@ -154,7 +154,7 @@ services:
 <tt class="docutils literal"><span class="pre">sendNewsletter()</span></tt> method is called:</p>
 <div class="highlight-python"><pre>namespace Acme\HelloBundle\Newsletter;
 
-use Symfony\Component\Security\Core\Exception\AccessDeniedException
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\SecurityContextInterface;
 // ...
 
@@ -322,7 +322,7 @@ load may be very slow depending on how many services you have defined.</p>
                         title="previous chapter">How to customize your Form Login</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="entity_provider.html"
-                        title="next chapter">How to load Security Users from the Database (the entity Provider)</a></p>
+                        title="next chapter">How to load Security Users from the Database (the Entity Provider)</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/security/securing_services.txt"
@@ -352,17 +352,17 @@ load may be very slow depending on how many services you have defined.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="entity_provider.html" title="How to load Security Users from the Database (the entity Provider)"
+          <a href="entity_provider.html" title="How to load Security Users from the Database (the Entity Provider)"
              >next</a> |</li>
         <li class="right" >
           <a href="form_login.html" title="How to customize your Form Login"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

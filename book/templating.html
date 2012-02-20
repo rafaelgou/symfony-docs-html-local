@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Creating and using Templates &mdash; Symfony2Docs v0 documentation</title>
+    <title>Creating and using Templates &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Databases and Doctrine (“The Model”)" href="doctrine.html" />
     <link rel="prev" title="Routing" href="routing.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="routing.html" title="Routing"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -66,27 +66,28 @@ code.</p>
 <p>A template is simply a text file that can generate any text-based format
 (HTML, XML, CSV, LaTeX ...). The most familiar type of template is a <em>PHP</em>
 template - a text file parsed by PHP that contains a mix of text and PHP code:</p>
-<div class="highlight-python"><pre>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-    &lt;head&gt;
-        &lt;title&gt;Welcome to Symfony!&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;h1&gt;&lt;?php echo $page_title ?&gt;&lt;/h1&gt;
+<div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;title&gt;</span>Welcome to Symfony!<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;h1&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$page_title</span> <span class="cp">?&gt;</span><span class="nt">&lt;/h1&gt;</span>
 
-        &lt;ul id="navigation"&gt;
-            &lt;?php foreach ($navigation as $item): ?&gt;
-                &lt;li&gt;
-                    &lt;a href="&lt;?php echo $item-&gt;getHref() ?&gt;"&gt;
-                        &lt;?php echo $item-&gt;getCaption() ?&gt;
-                    &lt;/a&gt;
-                &lt;/li&gt;
-            &lt;?php endforeach; ?&gt;
-        &lt;/ul&gt;
-    &lt;/body&gt;
-&lt;/html&gt;</pre>
+        <span class="nt">&lt;ul</span> <span class="na">id=</span><span class="s">&quot;navigation&quot;</span><span class="nt">&gt;</span>
+            <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$navigation</span> <span class="k">as</span> <span class="nv">$item</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+                <span class="nt">&lt;li&gt;</span>
+                    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">getHref</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+                        <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$item</span><span class="o">-&gt;</span><span class="na">getCaption</span><span class="p">()</span> <span class="cp">?&gt;</span>
+                    <span class="nt">&lt;/a&gt;</span>
+                <span class="nt">&lt;/li&gt;</span>
+            <span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
 </div>
-<p id="index-2">But Symfony2 packages an even more powerful templating language called <a class="reference external" href="http://www.twig-project.org">Twig</a>.
+<p id="index-2">But Symfony2 packages an even more powerful templating language called <a class="reference external" href="http://twig.sensiolabs.org">Twig</a>.
 Twig allows you to write concise, readable templates that are more friendly
 to web designers and, in several ways, more powerful than PHP templates:</p>
 <div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
@@ -122,24 +123,24 @@ This syntax can be used across multiple lines like the PHP-equivalent
 <p>Twig also contains <strong>filters</strong>, which modify content before being rendered.
 The following makes the <tt class="docutils literal"><span class="pre">title</span></tt> variable all uppercase before rendering
 it:</p>
-<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">title</span> <span class="o">|</span> <span class="nf">upper</span> <span class="cp">}}</span><span class="x"></span>
+<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">title</span><span class="o">|</span><span class="nf">upper</span> <span class="cp">}}</span><span class="x"></span>
 </pre></div>
 </div>
-<p>Twig comes with a long list of <a class="reference external" href="http://www.twig-project.org/doc/templates.html#list-of-control-structures">tags</a> and <a class="reference external" href="http://www.twig-project.org/doc/templates.html#list-of-built-in-filters">filters</a> that are available
-by default. You can even <a class="reference external" href="http://www.twig-project.org/doc/advanced.html">add your own extensions</a> to Twig as needed.</p>
+<p>Twig comes with a long list of <a class="reference external" href="http://twig.sensiolabs.org/doc/tags/index.html">tags</a> and <a class="reference external" href="http://twig.sensiolabs.org/doc/filters/index.html">filters</a> that are available
+by default. You can even <a class="reference external" href="http://twig.sensiolabs.org/doc/extensions.html">add your own extensions</a> to Twig as needed.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">Registering a Twig extension is as easy as creating a new service and tagging
-it with <tt class="docutils literal"><span class="pre">twig.extension</span></tt> <a class="reference internal" href="service_container.html#book-service-container-tags"><em>tag</em></a>.</p>
+it with <tt class="docutils literal"><span class="pre">twig.extension</span></tt> <a class="reference internal" href="../reference/dic_tags.html#reference-dic-tags-twig-extension"><em>tag</em></a>.</p>
 </div>
 <p>As you&#8217;ll see throughout the documentation, Twig also supports functions
 and new functions can be easily added. For example, the following uses a
 standard <tt class="docutils literal"><span class="pre">for</span></tt> tag and the <tt class="docutils literal"><span class="pre">cycle</span></tt> function to print ten div tags, with
 alternating <tt class="docutils literal"><span class="pre">odd</span></tt>, <tt class="docutils literal"><span class="pre">even</span></tt> classes:</p>
 <div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">for</span> <span class="nv">i</span> <span class="k">in</span> <span class="m">0.</span><span class="nv">.10</span> <span class="cp">%}</span>
-  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">cycle</span><span class="o">([</span><span class="s1">&#39;odd&#39;</span><span class="o">,</span> <span class="s1">&#39;even&#39;</span><span class="o">],</span> <span class="nv">i</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
-    <span class="c">&lt;!-- some HTML here --&gt;</span>
-  <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">cycle</span><span class="o">([</span><span class="s1">&#39;odd&#39;</span><span class="o">,</span> <span class="s1">&#39;even&#39;</span><span class="o">],</span> <span class="nv">i</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+      <span class="c">&lt;!-- some HTML here --&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
 <span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
 </pre></div>
 </div>
@@ -223,30 +224,30 @@ that overrides certain methods of its parent class&#8221;).</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&lt;!-- app/Resources/views/base.html.php --&gt;</span>
-<span class="x">&lt;!DOCTYPE html&gt;</span>
-<span class="x">&lt;html&gt;</span>
-<span class="x">    &lt;head&gt;</span>
-<span class="x">        &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;</span>
-<span class="x">        &lt;title&gt;</span><span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;Test Application&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x">&lt;/title&gt;</span>
-<span class="x">    &lt;/head&gt;</span>
-<span class="x">    &lt;body&gt;</span>
-<span class="x">        &lt;div id=&quot;sidebar&quot;&gt;</span>
-<span class="x">            </span><span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">&#39;sidebar&#39;</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">                </span><span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">(</span><span class="s1">&#39;sidebar&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">            </span><span class="cp">&lt;?php</span> <span class="k">else</span><span class="o">:</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">                &lt;ul&gt;</span>
-<span class="x">                    &lt;li&gt;&lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;</span>
-<span class="x">                    &lt;li&gt;&lt;a href=&quot;/blog&quot;&gt;Blog&lt;/a&gt;&lt;/li&gt;</span>
-<span class="x">                &lt;/ul&gt;</span>
-<span class="x">            </span><span class="cp">&lt;?php</span> <span class="k">endif</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">        &lt;/div&gt;</span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- app/Resources/views/base.html.php --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;</span><span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;Test Application&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>
+            <span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">&#39;sidebar&#39;</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+                <span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">(</span><span class="s1">&#39;sidebar&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+            <span class="cp">&lt;?php</span> <span class="k">else</span><span class="o">:</span> <span class="cp">?&gt;</span>
+                <span class="nt">&lt;ul&gt;</span>
+                    <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+                    <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/blog&quot;</span><span class="nt">&gt;</span>Blog<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+                <span class="nt">&lt;/ul&gt;</span>
+            <span class="cp">&lt;?php</span> <span class="k">endif</span><span class="p">;</span> <span class="cp">?&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
 
-<span class="x">        &lt;div id=&quot;content&quot;&gt;</span>
-<span class="x">            </span><span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">        &lt;/div&gt;</span>
-<span class="x">    &lt;/body&gt;</span>
-<span class="x">&lt;/html&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+            <span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -280,17 +281,17 @@ simply retain the default values used in this template.</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&lt;!-- src/Acme/BlogBundle/Resources/views/Blog/index.html.php --&gt;</span>
-<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;::base.html.php&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x"></span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/views/Blog/index.html.php --&gt;</span>
+<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;::base.html.php&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
-<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;My cool blog posts&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x"></span>
+<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;My cool blog posts&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
-<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">    </span><span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$blog_entries</span> <span class="k">as</span> <span class="nv">$entry</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">        &lt;h2&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="na">getTitle</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="x">&lt;/h2&gt;</span>
-<span class="x">        &lt;p&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="x">&lt;/p&gt;</span>
-<span class="x">    </span><span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="x"></span>
+<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$blog_entries</span> <span class="k">as</span> <span class="nv">$entry</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+        <span class="nt">&lt;h2&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="na">getTitle</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="nt">&lt;/h2&gt;</span>
+        <span class="nt">&lt;p&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$entry</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="nt">&lt;/p&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -309,29 +310,30 @@ the layout and defines several blocks. The child template is then rendered,
 at which point the <tt class="docutils literal"><span class="pre">title</span></tt> and <tt class="docutils literal"><span class="pre">body</span></tt> blocks of the parent are replaced
 by those from the child. Depending on the value of <tt class="docutils literal"><span class="pre">blog_entries</span></tt>, the
 output might look like this:</p>
-<div class="highlight-python"><pre>&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-    &lt;head&gt;
-        &lt;meta http-equiv="Content-Type" content="text/html; charset=utf-8" /&gt;
-        &lt;title&gt;My cool blog posts&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;div id="sidebar"&gt;
-            &lt;ul&gt;
-                &lt;li&gt;&lt;a href="/"&gt;Home&lt;/a&gt;&lt;/li&gt;
-                &lt;li&gt;&lt;a href="/blog"&gt;Blog&lt;/a&gt;&lt;/li&gt;
-            &lt;/ul&gt;
-        &lt;/div&gt;
+<div class="highlight-html"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+    <span class="nt">&lt;head&gt;</span>
+        <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;title&gt;</span>My cool blog posts<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;ul&gt;</span>
+                <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+                <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/blog&quot;</span><span class="nt">&gt;</span>Blog<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+            <span class="nt">&lt;/ul&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
 
-        &lt;div id="content"&gt;
-            &lt;h2&gt;My first post&lt;/h2&gt;
-            &lt;p&gt;The body of the first post.&lt;/p&gt;
+        <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;content&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;h2&gt;</span>My first post<span class="nt">&lt;/h2&gt;</span>
+            <span class="nt">&lt;p&gt;</span>The body of the first post.<span class="nt">&lt;/p&gt;</span>
 
-            &lt;h2&gt;Another post&lt;/h2&gt;
-            &lt;p&gt;The body of the second post.&lt;/p&gt;
-        &lt;/div&gt;
-    &lt;/body&gt;
-&lt;/html&gt;</pre>
+            <span class="nt">&lt;h2&gt;</span>Another post<span class="nt">&lt;/h2&gt;</span>
+            <span class="nt">&lt;p&gt;</span>The body of the second post.<span class="nt">&lt;/p&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
 </div>
 <p>Notice that since the child template didn&#8217;t define a <tt class="docutils literal"><span class="pre">sidebar</span></tt> block, the
 value from the parent template is used instead. Content within a <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">block</span> <span class="pre">%}</span></tt>
@@ -440,7 +442,7 @@ of these two <em>engines</em> should be used. The first part of the extension,
 generate. Unlike the engine, which determines how Symfony2 parses the template,
 this is simply an organizational tactic used in case the same resource needs
 to be rendered as HTML (<tt class="docutils literal"><span class="pre">index.html.twig</span></tt>), XML (<tt class="docutils literal"><span class="pre">index.xml.twig</span></tt>),
-or any other format. For more information, read the <a class="reference internal" href="#template-formats"><em>Template Formats</em></a>
+or any other format. For more information, read the <a class="reference internal" href="#template-formats"><em>Debugging</em></a>
 section.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -477,22 +479,22 @@ template. First, create the template that you&#8217;ll need to reuse.</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/ArticleBundle/Resources/views/Article/articleDetails.html.twig #}</span>
-<span class="nt">&lt;h1&gt;</span><span class="cp">{{</span> <span class="nv">article.title</span> <span class="cp">}}</span><span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;h2&gt;</span><span class="cp">{{</span> <span class="nv">article.title</span> <span class="cp">}}</span><span class="nt">&lt;/h2&gt;</span>
 <span class="nt">&lt;h3</span> <span class="na">class=</span><span class="s">&quot;byline&quot;</span><span class="nt">&gt;</span>by <span class="cp">{{</span> <span class="nv">article.authorName</span> <span class="cp">}}</span><span class="nt">&lt;/h3&gt;</span>
 
 <span class="nt">&lt;p&gt;</span>
-  <span class="cp">{{</span> <span class="nv">article.body</span> <span class="cp">}}</span>
+    <span class="cp">{{</span> <span class="nv">article.body</span> <span class="cp">}}</span>
 <span class="nt">&lt;/p&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&lt;!-- src/Acme/ArticleBundle/Resources/views/Article/articleDetails.html.php --&gt;</span>
-<span class="x">&lt;h2&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getTitle</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="x">&lt;/h2&gt;</span>
-<span class="x">&lt;h3 class=&quot;byline&quot;&gt;by </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getAuthorName</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="x">&lt;/h3&gt;</span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/ArticleBundle/Resources/views/Article/articleDetails.html.php --&gt;</span>
+<span class="nt">&lt;h2&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getTitle</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="nt">&lt;/h2&gt;</span>
+<span class="nt">&lt;h3</span> <span class="na">class=</span><span class="s">&quot;byline&quot;</span><span class="nt">&gt;</span>by <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getAuthorName</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="nt">&lt;/h3&gt;</span>
 
-<span class="x">&lt;p&gt;</span>
-<span class="x">  </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">&lt;/p&gt;</span>
+<span class="nt">&lt;p&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">()</span> <span class="cp">?&gt;</span>
+<span class="nt">&lt;/p&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -514,16 +516,16 @@ template. First, create the template that you&#8217;ll need to reuse.</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&lt;!-- src/Acme/ArticleBundle/Resources/Article/list.html.php --&gt;</span>
-<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;AcmeArticleBundle::layout.html.php&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x"></span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/ArticleBundle/Resources/Article/list.html.php --&gt;</span>
+<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">extend</span><span class="p">(</span><span class="s1">&#39;AcmeArticleBundle::layout.html.php&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
 
-<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">    &lt;h1&gt;Recent Articles&lt;/h1&gt;</span>
+<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">start</span><span class="p">(</span><span class="s1">&#39;body&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+    <span class="nt">&lt;h1&gt;</span>Recent Articles<span class="nt">&lt;/h1&gt;</span>
 
-<span class="x">    </span><span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$articles</span> <span class="k">as</span> <span class="nv">$article</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">        </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeArticleBundle:Article:articleDetails.html.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;article&#39;</span> <span class="o">=&gt;</span> <span class="nv">$article</span><span class="p">))</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">    </span><span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="x"></span>
+    <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$articles</span> <span class="k">as</span> <span class="nv">$article</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+        <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeArticleBundle:Article:articleDetails.html.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;article&#39;</span> <span class="o">=&gt;</span> <span class="nv">$article</span><span class="p">))</span> <span class="cp">?&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
+<span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">stop</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -568,19 +570,19 @@ articles:</p>
 <ul class="simple">
 <li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}</span>
 <span class="cp">{%</span> <span class="k">for</span> <span class="nv">article</span> <span class="k">in</span> <span class="nv">articles</span> <span class="cp">%}</span>
-  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/article/</span><span class="cp">{{</span> <span class="nv">article.slug</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
-      <span class="cp">{{</span> <span class="nv">article.title</span> <span class="cp">}}</span>
-  <span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/article/</span><span class="cp">{{</span> <span class="nv">article.slug</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+        <span class="cp">{{</span> <span class="nv">article.title</span> <span class="cp">}}</span>
+    <span class="nt">&lt;/a&gt;</span>
 <span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&lt;!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php --&gt;</span>
-<span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$articles</span> <span class="nx">in</span> <span class="nv">$article</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">    &lt;a href=&quot;/article/</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getSlug</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="x">&quot;&gt;</span>
-<span class="x">        </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getTitle</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">    &lt;/a&gt;</span>
-<span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php --&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$articles</span> <span class="k">as</span> <span class="nv">$article</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/article/</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getSlug</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+        <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getTitle</span><span class="p">()</span> <span class="cp">?&gt;</span>
+    <span class="nt">&lt;/a&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -605,12 +607,12 @@ syntax for controllers (i.e. <strong>bundle</strong>:<strong>controller</strong>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&lt;!-- app/Resources/views/base.html.php --&gt;</span>
-<span class="x">...</span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- app/Resources/views/base.html.php --&gt;</span>
+...
 
-<span class="x">&lt;div id=&quot;sidebar&quot;&gt;</span>
-<span class="x">    </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;actions&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeArticleBundle:Article:recentArticles&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;max&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">))</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">&lt;/div&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>
+    <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;actions&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeArticleBundle:Article:recentArticles&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;max&#39;</span> <span class="o">=&gt;</span> <span class="mi">3</span><span class="p">))</span> <span class="cp">?&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -662,7 +664,7 @@ configuration:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&lt;a href=&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;_welcome&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x">&quot;&gt;Home&lt;/a&gt;</span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;_welcome&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -703,19 +705,19 @@ correctly:</p>
 <ul class="simple">
 <li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}</span>
 <span class="cp">{%</span> <span class="k">for</span> <span class="nv">article</span> <span class="k">in</span> <span class="nv">articles</span> <span class="cp">%}</span>
-  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">path</span><span class="o">(</span><span class="s1">&#39;article_show&#39;</span><span class="o">,</span> <span class="o">{</span> <span class="s1">&#39;slug&#39;</span><span class="o">:</span> <span class="nv">article.slug</span> <span class="o">})</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
-      <span class="cp">{{</span> <span class="nv">article.title</span> <span class="cp">}}</span>
-  <span class="nt">&lt;/a&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">path</span><span class="o">(</span><span class="s1">&#39;article_show&#39;</span><span class="o">,</span> <span class="o">{</span> <span class="s1">&#39;slug&#39;</span><span class="o">:</span> <span class="nv">article.slug</span> <span class="o">})</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+        <span class="cp">{{</span> <span class="nv">article.title</span> <span class="cp">}}</span>
+    <span class="nt">&lt;/a&gt;</span>
 <span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&lt;!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php --&gt;</span>
-<span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$articles</span> <span class="nx">in</span> <span class="nv">$article</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">    &lt;a href=&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;article_show&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;slug&#39;</span> <span class="o">=&gt;</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getSlug</span><span class="p">())</span> <span class="cp">?&gt;</span><span class="x">&quot;&gt;</span>
-<span class="x">        </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getTitle</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="x"></span>
-<span class="x">    &lt;/a&gt;</span>
-<span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/ArticleBundle/Resources/views/Article/recentList.html.php --&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$articles</span> <span class="nx">in</span> <span class="nv">$article</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;article_show&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;slug&#39;</span> <span class="o">=&gt;</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getSlug</span><span class="p">())</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+        <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getTitle</span><span class="p">()</span> <span class="cp">?&gt;</span>
+    <span class="nt">&lt;/a&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -729,7 +731,7 @@ correctly:</p>
 </div>
 <p>The same can be done in PHP templates by passing a third argument to
 the <tt class="docutils literal"><span class="pre">generate()</span></tt> method:</p>
-<div class="last highlight-php"><div class="highlight"><pre><span class="x">&lt;a href=&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;_welcome&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(),</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x">&quot;&gt;Home&lt;/a&gt;</span>
+<div class="last highlight-html+php"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;_welcome&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(),</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;</span>
 </pre></div>
 </div>
 </div>
@@ -747,9 +749,9 @@ but Symfony2 provides a more dynamic option via the <tt class="docutils literal"
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&lt;img src=&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getUrl</span><span class="p">(</span><span class="s1">&#39;images/logo.png&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x">&quot; alt=&quot;Symfony!&quot; /&gt;</span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getUrl</span><span class="p">(</span><span class="s1">&#39;images/logo.png&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Symfony!&quot;</span> <span class="nt">/&gt;</span>
 
-<span class="x">&lt;link href=&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getUrl</span><span class="p">(</span><span class="s1">&#39;css/blog.css&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x">&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot; /&gt;</span>
+<span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getUrl</span><span class="p">(</span><span class="s1">&#39;css/blog.css&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="nt">/&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -762,6 +764,11 @@ lives in a subdirectory (e.g. <a class="reference external" href="http://example
 should render with the subdirectory (e.g. <tt class="docutils literal"><span class="pre">/my_app/images/logo.png</span></tt>). The
 <tt class="docutils literal"><span class="pre">asset</span></tt> function takes care of this by determining how your application is
 being used and generating the correct paths accordingly.</p>
+<p>Additionally, if you use the <tt class="docutils literal"><span class="pre">asset</span></tt> function, Symfony can automatically
+append a query string to your asset, in order to guarantee that updated static
+assets won&#8217;t be cached when deployed. For example, <tt class="docutils literal"><span class="pre">/images/logo.png</span></tt> might
+look like <tt class="docutils literal"><span class="pre">/images/logo.png?v2</span></tt>. For more information, see the <a class="reference internal" href="../reference/configuration/framework.html#ref-framework-assets-version"><em>assets_version</em></a>
+configuration option.</p>
 </div>
 </div>
 <div class="section" id="including-stylesheets-and-javascripts-in-twig">
@@ -773,9 +780,9 @@ advantage of Symfony&#8217;s template inheritance.</p>
 <p class="first admonition-title">Tip</p>
 <p class="last">This section will teach you the philosophy behind including stylesheet
 and Javascript assets in Symfony. Symfony also packages another library,
-called assetic, which follows this philosophy but allows you to do much
+called Assetic, which follows this philosophy but allows you to do much
 more interesting things with those assets. For more information on
-using assetic see <a class="reference internal" href="../cookbook/assetic/asset_management.html"><em>How to Use Assetic for Asset Management</em></a>.</p>
+using Assetic see <a class="reference internal" href="../cookbook/assetic/asset_management.html"><em>How to Use Assetic for Asset Management</em></a>.</p>
 </div>
 <p>Start by adding two blocks to your base template that will hold your assets:
 one called <tt class="docutils literal"><span class="pre">stylesheets</span></tt> inside the <tt class="docutils literal"><span class="pre">head</span></tt> tag and another called <tt class="docutils literal"><span class="pre">javascripts</span></tt>
@@ -805,7 +812,7 @@ Javascript from a child template? For example, suppose you have a contact
 page and you need to include a <tt class="docutils literal"><span class="pre">contact.css</span></tt> stylesheet <em>just</em> on that
 page. From inside that contact page&#8217;s template, do the following:</p>
 <div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/DemoBundle/Resources/views/Contact/contact.html.twig #}</span>
-<span class="c">{# extends &#39;::base.html.twig&#39; #}</span>
+<span class="cp">{%</span> <span class="k">extends</span> <span class="s1">&#39;::base.html.twig&#39;</span> <span class="cp">%}</span>
 
 <span class="cp">{%</span> <span class="k">block</span> <span class="nv">stylesheets</span> <span class="cp">%}</span>
     <span class="cp">{{</span> <span class="nv">parent</span><span class="o">()</span> <span class="cp">}}</span>
@@ -821,8 +828,56 @@ put your new stylesheet tag inside of that block. Of course, since you want
 to add to the parent block&#8217;s content (and not actually <em>replace</em> it), you
 should use the <tt class="docutils literal"><span class="pre">parent()</span></tt> Twig function to include everything from the <tt class="docutils literal"><span class="pre">stylesheets</span></tt>
 block of the base template.</p>
+<p>You can also include assets located in your bundles&#8217; <tt class="docutils literal"><span class="pre">Resources/public</span></tt> folder.
+You will need to run the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">app/console</span> <span class="pre">assets:install</span> <span class="pre">target</span> <span class="pre">[--symlink]</span></tt>
+command, which moves (or symlinks) files into the correct location. (target
+is by default &#8220;web&#8221;).</p>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset</span><span class="o">(</span><span class="s1">&#39;bundles/acmedemo/css/contact.css&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
 <p>The end result is a page that includes both the <tt class="docutils literal"><span class="pre">main.css</span></tt> and <tt class="docutils literal"><span class="pre">contact.css</span></tt>
 stylesheets.</p>
+</div>
+<div class="section" id="global-template-variables">
+<h2>Global Template Variables<a class="headerlink" href="#global-template-variables" title="Permalink to this headline">¶</a></h2>
+<p>During each request, Symfony2 will set a global template variable <tt class="docutils literal"><span class="pre">app</span></tt>
+in both Twig and PHP template engines by default.  The <tt class="docutils literal"><span class="pre">app</span></tt> variable
+is a <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Bundle\FrameworkBundle\Templating\GlobalVariables</span></tt>
+instance which will give you access to some application specific variables
+automatically:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">app.security</span></tt> - The security context.</li>
+<li><tt class="docutils literal"><span class="pre">app.user</span></tt> - The current user object.</li>
+<li><tt class="docutils literal"><span class="pre">app.request</span></tt> - The request object.</li>
+<li><tt class="docutils literal"><span class="pre">app.session</span></tt> - The session object.</li>
+<li><tt class="docutils literal"><span class="pre">app.environment</span></tt> - The current environment (dev, prod, etc).</li>
+<li><tt class="docutils literal"><span class="pre">app.debug</span></tt> - True if in debug mode. False otherwise.</li>
+</ul>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;p&gt;</span>Username: <span class="cp">{{</span> <span class="nv">app.user.username</span> <span class="cp">}}</span><span class="nt">&lt;/p&gt;</span>
+<span class="cp">{%</span> <span class="k">if</span> <span class="nv">app.debug</span> <span class="cp">%}</span>
+    <span class="nt">&lt;p&gt;</span>Request method: <span class="cp">{{</span> <span class="nv">app.request.method</span> <span class="cp">}}</span><span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Application Environment: <span class="cp">{{</span> <span class="nv">app.environment</span> <span class="cp">}}</span><span class="nt">&lt;/p&gt;</span>
+<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="nt">&lt;p&gt;</span>Username: <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">getUser</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getUsername</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="nt">&lt;/p&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$app</span><span class="o">-&gt;</span><span class="na">getDebug</span><span class="p">())</span><span class="o">:</span> <span class="cp">?&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Request method: <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">getRequest</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="nt">&lt;/p&gt;</span>
+    <span class="nt">&lt;p&gt;</span>Application Environment: <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$app</span><span class="o">-&gt;</span><span class="na">getEnvironment</span><span class="p">()</span> <span class="cp">?&gt;</span><span class="nt">&lt;/p&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">endif</span><span class="p">;</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">You can add your own global template variables. See the cookbook example
+on <a class="reference internal" href="../cookbook/templating/global_variables.html"><em>Global Variables</em></a>.</p>
+</div>
 </div>
 <div class="section" id="configuring-and-using-the-templating-service">
 <span id="index-12"></span><h2>Configuring and using the <tt class="docutils literal"><span class="pre">templating</span></tt> Service<a class="headerlink" href="#configuring-and-using-the-templating-service" title="Permalink to this headline">¶</a></h2>
@@ -882,7 +937,7 @@ third-party bundles).</p>
 <div class="section" id="overriding-bundle-templates">
 <span id="index-13"></span><span id="id1"></span><h2>Overriding Bundle Templates<a class="headerlink" href="#overriding-bundle-templates" title="Permalink to this headline">¶</a></h2>
 <p>The Symfony2 community prides itself on creating and maintaining high quality
-bundles (see <a class="reference external" href="http://symfony2bundles.org">Symfony2Bundles.org</a>) for a large number of different features.
+bundles (see <a class="reference external" href="http://knpbundles.com">KnpBundles.com</a>) for a large number of different features.
 Once you use a third-party bundle, you&#8217;ll likely need to override and customize
 one or more of its templates.</p>
 <p>Suppose you&#8217;ve included the imaginary open-source <tt class="docutils literal"><span class="pre">AcmeBlogBundle</span></tt> in your
@@ -1001,7 +1056,7 @@ this classic example:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">Hello </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$name</span> <span class="cp">?&gt;</span><span class="x"></span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre>Hello <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$name</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -1036,9 +1091,9 @@ is being escaped for HTML output.</p>
 a variable that is trusted and contains markup that should not be escaped.
 Suppose that administrative users are able to write articles that contain
 HTML code. By default, Twig will escape the article body. To render it normally,
-add the <tt class="docutils literal"><span class="pre">raw</span></tt> filter: <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">article.body</span> <span class="pre">|</span> <span class="pre">raw</span> <span class="pre">}}</span></tt>.</p>
+add the <tt class="docutils literal"><span class="pre">raw</span></tt> filter: <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">article.body|raw</span> <span class="pre">}}</span></tt>.</p>
 <p>You can also disable output escaping inside a <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">block</span> <span class="pre">%}</span></tt> area or
-for an entire template. For more information, see <a class="reference external" href="http://www.twig-project.org">Output Escaping</a> in
+for an entire template. For more information, see <a class="reference external" href="http://twig.sensiolabs.org/doc/api.html#escaper-extension">Output Escaping</a> in
 the Twig documentation.</p>
 </div>
 <div class="section" id="output-escaping-in-php">
@@ -1057,8 +1112,64 @@ in a JavaScript string, use the <tt class="docutils literal"><span class="pre">j
 </div>
 </div>
 </div>
-<div class="section" id="template-formats">
-<span id="index-17"></span><span id="id2"></span><h2>Template Formats<a class="headerlink" href="#template-formats" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="debugging">
+<span id="template-formats"></span><span id="index-17"></span><h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.0.9: </span>This feature is available as of Twig <tt class="docutils literal"><span class="pre">1.5.x</span></tt>, which was first shipped
+with Symfony 2.0.9.</p>
+<p>When using PHP, you can use <tt class="docutils literal"><span class="pre">var_dump()</span></tt> if you need to quickly find the
+value of a variable passed. This is useful, for example, inside your controller.
+The same can be achieved when using Twig by using the debug extension. This
+needs to be enabled in the config:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">acme_hello.twig.extension.debug</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span>        <span class="l-Scalar-Plain">Twig_Extension_Debug</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+             <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="s">&#39;twig.extension&#39;</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<span class="nt">&lt;services&gt;</span>
+    <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;acme_hello.twig.extension.debug&quot;</span> <span class="na">class=</span><span class="s">&quot;Twig_Extension_Debug&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;twig.extension&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/service&gt;</span>
+<span class="nt">&lt;/services&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
+<span class="x">use Symfony\Component\DependencyInjection\Definition;</span>
+
+<span class="x">$definition = new Definition(&#39;Twig_Extension_Debug&#39;);</span>
+<span class="x">$definition-&gt;addTag(&#39;twig.extension&#39;);</span>
+<span class="x">$container-&gt;setDefinition(&#39;acme_hello.twig.extension.debug&#39;, $definition);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>Template parameters can then be dumped using the <tt class="docutils literal"><span class="pre">dump</span></tt> function:</p>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}</span>
+
+<span class="cp">{{</span> <span class="nv">dump</span><span class="o">(</span><span class="nv">articles</span><span class="o">)</span> <span class="cp">}}</span>
+
+<span class="cp">{%</span> <span class="k">for</span> <span class="nv">article</span> <span class="k">in</span> <span class="nv">articles</span> <span class="cp">%}</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;/article/</span><span class="cp">{{</span> <span class="nv">article.slug</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+        <span class="cp">{{</span> <span class="nv">article.title</span> <span class="cp">}}</span>
+    <span class="nt">&lt;/a&gt;</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+<p>The variables will only be dumped if Twig&#8217;s <tt class="docutils literal"><span class="pre">debug</span></tt> setting (in <tt class="docutils literal"><span class="pre">config.yml</span></tt>)
+is <tt class="docutils literal"><span class="pre">true</span></tt>. By default this means that the variables will be dumped in the
+<tt class="docutils literal"><span class="pre">dev</span></tt> environment but not the <tt class="docutils literal"><span class="pre">prod</span></tt> environment.</p>
+</div>
+<div class="section" id="id2">
+<h2>Template Formats<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>Templates are a generic way to render content in <em>any</em> format. And while in
 most cases you&#8217;ll use templates to render HTML content, a template can just
 as easily generate JavaScript, CSS, XML or any other format you can dream of.</p>
@@ -1165,6 +1276,7 @@ and in Symfony2, that&#8217;s absolutely fine.</p>
 </ul>
 </li>
 <li><a class="reference internal" href="#including-stylesheets-and-javascripts-in-twig">Including Stylesheets and Javascripts in Twig</a></li>
+<li><a class="reference internal" href="#global-template-variables">Global Template Variables</a></li>
 <li><a class="reference internal" href="#configuring-and-using-the-templating-service">Configuring and using the <tt class="docutils literal"><span class="pre">templating</span></tt> Service</a></li>
 <li><a class="reference internal" href="#overriding-bundle-templates">Overriding Bundle Templates</a><ul>
 <li><a class="reference internal" href="#overriding-core-templates">Overriding Core Templates</a></li>
@@ -1176,7 +1288,8 @@ and in Symfony2, that&#8217;s absolutely fine.</p>
 <li><a class="reference internal" href="#output-escaping-in-php">Output Escaping in PHP</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#template-formats">Template Formats</a></li>
+<li><a class="reference internal" href="#debugging">Debugging</a></li>
+<li><a class="reference internal" href="#id2">Template Formats</a></li>
 <li><a class="reference internal" href="#final-thoughts">Final Thoughts</a></li>
 <li><a class="reference internal" href="#learn-more-from-the-cookbook">Learn more from the Cookbook</a></li>
 </ul>
@@ -1223,12 +1336,12 @@ and in Symfony2, that&#8217;s absolutely fine.</p>
         <li class="right" >
           <a href="routing.html" title="Routing"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

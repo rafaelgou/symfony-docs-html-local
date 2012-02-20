@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to customize your Form Login &mdash; Symfony2Docs v0 documentation</title>
+    <title>How to customize your Form Login &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Cookbook" href="../index.html" />
     <link rel="next" title="How to secure any Service or Method in your Application" href="securing_services.html" />
     <link rel="prev" title="How to force HTTPS or HTTP for Different URLs" href="force_https.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="force_https.html" title="How to force HTTPS or HTTP for Different URLs"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -160,6 +160,14 @@ in the session. If no URL is present in the session (perhaps the user went
 directly to the login page), then the user is redirected to the default page,
 which is  <tt class="docutils literal"><span class="pre">/</span></tt> (i.e. the homepage) by default. You can change this behavior
 in several ways.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As mentioned, by default the user is redirected back to the page he originally
+requested. Sometimes, this can cause problems, like if a background AJAX
+request &#8220;appears&#8221; to be the last visited URL, causing the user to be
+redirected there. For information on controlling this behavior, see
+<a class="reference internal" href="target_path.html"><em>How to change the Default Target Path Behavior</em></a>.</p>
+</div>
 <div class="section" id="changing-the-default-page">
 <h3>Changing the Default Page<a class="headerlink" href="#changing-the-default-page" title="Permalink to this headline">¶</a></h3>
 <p>First, the default page can be set (i.e. the page the user is redirected to
@@ -250,7 +258,7 @@ of what URL they had requested previously by setting the
 <div class="section" id="using-the-referring-url">
 <h3>Using the Referring URL<a class="headerlink" href="#using-the-referring-url" title="Permalink to this headline">¶</a></h3>
 <p>In case no previous URL was stored in the session, you may wish to try using
-the <tt class="docutils literal"><span class="pre">HTTP_REFERER</span></tt> instead, as this will often be the same. You can  do
+the <tt class="docutils literal"><span class="pre">HTTP_REFERER</span></tt> instead, as this will often be the same. You can do
 this by setting <tt class="docutils literal"><span class="pre">use_referer</span></tt> to true (it defaults to false):</p>
 <div class="configuration-block">
 <ul class="simple">
@@ -289,6 +297,9 @@ this by setting <tt class="docutils literal"><span class="pre">use_referer</span
 </li>
 </ul>
 </div>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>As of 2.1, if the referer is equal to the <tt class="docutils literal"><span class="pre">login_path</span></tt> option, the
+user will be redirected to the <tt class="docutils literal"><span class="pre">default_target_path</span></tt>.</p>
 </div>
 <div class="section" id="control-the-redirect-url-from-inside-the-form">
 <h3>Control the Redirect URL from inside the Form<a class="headerlink" href="#control-the-redirect-url-from-inside-the-form" title="Permalink to this headline">¶</a></h3>
@@ -487,12 +498,12 @@ following config:</p>
         <li class="right" >
           <a href="force_https.html" title="How to force HTTPS or HTTP for Different URLs"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

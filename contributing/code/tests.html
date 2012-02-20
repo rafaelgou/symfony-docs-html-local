@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Running Symfony2 Tests &mdash; Symfony2Docs v0 documentation</title>
+    <title>Running Symfony2 Tests &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
     <link rel="up" title="Contributing Code" href="index.html" />
     <link rel="next" title="Coding Standards" href="standards.html" />
     <link rel="prev" title="Reporting a Security Issue" href="security.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="security.html" title="Reporting a Security Issue"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Contributing Code</a> &raquo;</li> 
       </ul>
@@ -57,7 +57,7 @@
 Symfony2 test suite to check that you have not broken anything.</p>
 <div class="section" id="phpunit">
 <h2>PHPUnit<a class="headerlink" href="#phpunit" title="Permalink to this headline">¶</a></h2>
-<p>To run the Symfony2 test suite, <a class="reference external" href="http://www.phpunit.de/manual/current/en/installation.html">install</a> PHPUnit 3.5.0 or later first:</p>
+<p>To run the Symfony2 test suite, <a class="reference external" href="http://www.phpunit.de/manual/current/en/installation.html">install</a> PHPUnit 3.6.4 or later first:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>pear channel-discover pear.phpunit.de
 <span class="nv">$ </span>pear channel-discover components.ez.no
 <span class="nv">$ </span>pear channel-discover pear.symfony-project.com
@@ -71,15 +71,15 @@ Symfony2 test suite to check that you have not broken anything.</p>
 dependencies, Symfony2 needs to be able to autoload them. By default, they are
 autoloaded from <cite>vendor/</cite> under the main root directory (see
 <cite>autoload.php.dist</cite>).</p>
-<p>The test suite need the following third-party libraries:</p>
+<p>The test suite needs the following third-party libraries:</p>
 <ul class="simple">
 <li>Doctrine</li>
-<li>Doctrine Migrations</li>
 <li>Swiftmailer</li>
 <li>Twig</li>
+<li>Monolog</li>
 </ul>
 <p>To install them all, run the <cite>vendors</cite> script:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php vendors install
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php vendors.php install
 </pre></div>
 </div>
 <div class="admonition note">
@@ -88,7 +88,7 @@ autoloaded from <cite>vendor/</cite> under the main root directory (see
 </div>
 <p>After installation, you can update the vendors to their latest version with
 the follow command:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php vendors update
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php vendors.php update
 </pre></div>
 </div>
 </div>
@@ -182,13 +182,13 @@ dependencies installed.</p>
         <li class="right" >
           <a href="security.html" title="Reporting a Security Issue"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" >Contributing Code</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>

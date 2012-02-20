@@ -7,13 +7,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Service Container &mdash; Symfony2Docs v0 documentation</title>
+    <title>Service Container &mdash; Symfony2Docs v1 documentation</title>
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0',
+        VERSION:     '1',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +22,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v0 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
     <link rel="up" title="Book" href="index.html" />
     <link rel="next" title="Performance" href="performance.html" />
     <link rel="prev" title="Translations" href="translation.html" /> 
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="translation.html" title="Translations"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -260,6 +260,64 @@ allows the service to be easily customized in your application.</li>
 third-party bundles will <em>always</em> use parameters as they make the service
 stored in the container more configurable. For the services in your application,
 however, you may not need the flexibility of parameters.</p>
+<div class="section" id="array-parameters">
+<h3>Array Parameters<a class="headerlink" href="#array-parameters" title="Permalink to this headline">¶</a></h3>
+<p>Parameters do not need to be flat strings, they can also be arrays. For the XML
+format, you need to use the type=&#8221;collection&#8221; attribute for all parameters that are
+arrays.</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">my_mailer.gateways</span><span class="p-Indicator">:</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">mail1</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">mail2</span>
+        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">mail3</span>
+    <span class="l-Scalar-Plain">my_multilang.language_fallback</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">en</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">en</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">fr</span>
+        <span class="l-Scalar-Plain">fr</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">fr</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">en</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<span class="nt">&lt;parameters&gt;</span>
+    <span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;my_mailer.gateways&quot;</span> <span class="na">type=</span><span class="s">&quot;collection&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;parameter&gt;</span>mail1<span class="nt">&lt;/parameter&gt;</span>
+        <span class="nt">&lt;parameter&gt;</span>mail2<span class="nt">&lt;/parameter&gt;</span>
+        <span class="nt">&lt;parameter&gt;</span>mail3<span class="nt">&lt;/parameter&gt;</span>
+    <span class="nt">&lt;/parameter&gt;</span>
+    <span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;my_multilang.language_fallback&quot;</span> <span class="na">type=</span><span class="s">&quot;collection&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;en&quot;</span> <span class="na">type=</span><span class="s">&quot;collection&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;parameter&gt;</span>en<span class="nt">&lt;/parameter&gt;</span>
+            <span class="nt">&lt;parameter&gt;</span>fr<span class="nt">&lt;/parameter&gt;</span>
+        <span class="nt">&lt;/parameter&gt;</span>
+        <span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;fr&quot;</span> <span class="na">type=</span><span class="s">&quot;collection&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;parameter&gt;</span>fr<span class="nt">&lt;/parameter&gt;</span>
+            <span class="nt">&lt;parameter&gt;</span>en<span class="nt">&lt;/parameter&gt;</span>
+        <span class="nt">&lt;/parameter&gt;</span>
+    <span class="nt">&lt;/parameter&gt;</span>
+<span class="nt">&lt;/parameters&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
+<span class="x">use Symfony\Component\DependencyInjection\Definition;</span>
+
+<span class="x">$container-&gt;setParameter(&#39;my_mailer.gateways&#39;, array(&#39;mail1&#39;, &#39;mail2&#39;, &#39;mail3&#39;));</span>
+<span class="x">$container-&gt;setParameter(&#39;my_multilang.language_fallback&#39;,</span>
+<span class="x">                         array(&#39;en&#39; =&gt; array(&#39;en&#39;, &#39;fr&#39;),</span>
+<span class="x">                               &#39;fr&#39; =&gt; array(&#39;fr&#39;, &#39;en&#39;),</span>
+<span class="x">                        ));</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="section" id="importing-other-container-configuration-resources">
 <h2>Importing other Container Configuration Resources<a class="headerlink" href="#importing-other-container-configuration-resources" title="Permalink to this headline">¶</a></h2>
@@ -341,8 +399,7 @@ configuration.</p>
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><pre># app/config/config.yml
 imports:
-    hello_bundle:
-        resource: @AcmeHelloBundle/Resources/config/services.yml</pre>
+    - { resource: @AcmeHelloBundle/Resources/config/services.yml }</pre>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
@@ -711,7 +768,7 @@ allow for an optional dependency:</p>
 <h2>Core Symfony and Third-Party Bundle Services<a class="headerlink" href="#core-symfony-and-third-party-bundle-services" title="Permalink to this headline">¶</a></h2>
 <p>Since Symfony2 and all third-party bundles configure and retrieve their services
 via the container, you can easily access them or even use them in your own
-services. To keep things simple, Symfony2 by defaults does not require that
+services. To keep things simple, Symfony2 by default does not require that
 controllers be defined as services. Furthermore Symfony2 injects the entire
 service container into your controller. For example, to handle the storage of
 information on a user&#8217;s session, Symfony2 provides a <tt class="docutils literal"><span class="pre">session</span></tt> service,
@@ -993,7 +1050,10 @@ additional arguments (beyond just the <tt class="docutils literal"><span class="
 <li><a class="reference internal" href="#what-is-a-service">What is a Service?</a></li>
 <li><a class="reference internal" href="#what-is-a-service-container">What is a Service Container?</a></li>
 <li><a class="reference internal" href="#creating-configuring-services-in-the-container">Creating/Configuring Services in the Container</a></li>
-<li><a class="reference internal" href="#service-parameters">Service Parameters</a></li>
+<li><a class="reference internal" href="#service-parameters">Service Parameters</a><ul>
+<li><a class="reference internal" href="#array-parameters">Array Parameters</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#importing-other-container-configuration-resources">Importing other Container Configuration Resources</a><ul>
 <li><a class="reference internal" href="#importing-configuration-with-imports">Importing Configuration with <tt class="docutils literal"><span class="pre">imports</span></tt></a></li>
 <li><a class="reference internal" href="#importing-configuration-via-container-extensions">Importing Configuration via Container Extensions</a></li>
@@ -1057,12 +1117,12 @@ additional arguments (beyond just the <tt class="docutils literal"><span class="
         <li class="right" >
           <a href="translation.html" title="Translations"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v0 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
           <li><a href="index.html" >Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2011, Rafael Goulart.
+        &copy; Copyright 2012, Symfony Team.
       Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
     </div>
   </body>
