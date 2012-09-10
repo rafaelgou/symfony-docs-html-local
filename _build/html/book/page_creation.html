@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Creating Pages in Symfony2 &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Creating Pages in Symfony2 &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Controller" href="controller.html" />
     <link rel="prev" title="Installing and Configuring Symfony" href="installation.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="installation.html" title="Installing and Configuring Symfony"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -712,20 +712,13 @@ format you prefer:</p>
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">imports</span><span class="p-Indicator">:</span>
-    <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="nv">parameters.ini</span> <span class="p-Indicator">}</span>
+    <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="nv">parameters.yml</span> <span class="p-Indicator">}</span>
     <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="nv">security.yml</span> <span class="p-Indicator">}</span>
 
 <span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">secret</span><span class="p-Indicator">:</span>          <span class="s">&quot;%secret%&quot;</span>
-    <span class="l-Scalar-Plain">charset</span><span class="p-Indicator">:</span>         <span class="l-Scalar-Plain">UTF-8</span>
     <span class="l-Scalar-Plain">router</span><span class="p-Indicator">:</span>          <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;%kernel.root_dir%/config/routing.yml&quot;</span> <span class="p-Indicator">}</span>
-    <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span>            <span class="l-Scalar-Plain">true</span>
-    <span class="l-Scalar-Plain">csrf_protection</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
-    <span class="l-Scalar-Plain">validation</span><span class="p-Indicator">:</span>      <span class="p-Indicator">{</span> <span class="nv">enable_annotations</span><span class="p-Indicator">:</span> <span class="nv">true</span> <span class="p-Indicator">}</span>
-    <span class="l-Scalar-Plain">templating</span><span class="p-Indicator">:</span>      <span class="p-Indicator">{</span> <span class="nv">engines</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&#39;twig&#39;</span><span class="p-Indicator">]</span> <span class="p-Indicator">}</span> <span class="c1">#assets_version: SomeVersionScheme</span>
-    <span class="l-Scalar-Plain">session</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">default_locale</span><span class="p-Indicator">:</span> <span class="s">&quot;%locale%&quot;</span>
-        <span class="l-Scalar-Plain">auto_start</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">true</span>
+    <span class="c1"># ...</span>
 
 <span class="c1"># Twig Configuration</span>
 <span class="l-Scalar-Plain">twig</span><span class="p-Indicator">:</span>
@@ -738,19 +731,13 @@ format you prefer:</p>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
 <span class="nt">&lt;imports&gt;</span>
-    <span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&quot;parameters.ini&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&quot;parameters.yml&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&quot;security.yml&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/imports&gt;</span>
 
-<span class="nt">&lt;framework:config</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span> <span class="na">secret=</span><span class="s">&quot;%secret%&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;framework:config</span> <span class="na">secret=</span><span class="s">&quot;%secret%&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;framework:router</span> <span class="na">resource=</span><span class="s">&quot;%kernel.root_dir%/config/routing.xml&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;framework:form</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;framework:csrf-protection</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;framework:validation</span> <span class="na">annotations=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;framework:templating</span> <span class="na">assets-version=</span><span class="s">&quot;SomeVersionScheme&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;framework:engine</span> <span class="na">id=</span><span class="s">&quot;twig&quot;</span> <span class="nt">/&gt;</span>
-    <span class="nt">&lt;/framework:templating&gt;</span>
-    <span class="nt">&lt;framework:session</span> <span class="na">default-locale=</span><span class="s">&quot;%locale%&quot;</span> <span class="na">auto-start=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
+    <span class="c">&lt;!-- ... --&gt;</span>
 <span class="nt">&lt;/framework:config&gt;</span>
 
 <span class="c">&lt;!-- Twig Configuration --&gt;</span>
@@ -760,23 +747,13 @@ format you prefer:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">import</span><span class="p">(</span><span class="s1">&#39;parameters.ini&#39;</span><span class="p">);</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">import</span><span class="p">(</span><span class="s1">&#39;parameters.yml&#39;</span><span class="p">);</span>
 <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">import</span><span class="p">(</span><span class="s1">&#39;security.yml&#39;</span><span class="p">);</span>
 
 <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
     <span class="s1">&#39;secret&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;%secret%&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;charset&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span>
     <span class="s1">&#39;router&#39;</span>          <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;resource&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;%kernel.root_dir%/config/routing.php&#39;</span><span class="p">),</span>
-    <span class="s1">&#39;form&#39;</span>            <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(),</span>
-    <span class="s1">&#39;csrf-protection&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(),</span>
-    <span class="s1">&#39;validation&#39;</span>      <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;annotations&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">),</span>
-    <span class="s1">&#39;templating&#39;</span>      <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
-        <span class="s1">&#39;engines&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;twig&#39;</span><span class="p">),</span>
-        <span class="c1">#&#39;assets_version&#39; =&gt; &quot;SomeVersionScheme&quot;,</span>
-    <span class="p">),</span>
-    <span class="s1">&#39;session&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
-        <span class="s1">&#39;default_locale&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;%locale%&quot;</span><span class="p">,</span>
-        <span class="s1">&#39;auto_start&#39;</span>     <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="c1">// ...</span>
     <span class="p">),</span>
 <span class="p">));</span>
 
@@ -815,6 +792,27 @@ disadvantages. The choice of which to use is up to you:</p>
 <li><em>XML</em>: More powerful than YAML at times and supports IDE autocompletion;</li>
 <li><em>PHP</em>: Very powerful but less readable than standard configuration formats.</li>
 </ul>
+</div>
+<div class="section" id="default-configuration-dump">
+<h3>Default Configuration Dump<a class="headerlink" href="#default-configuration-dump" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The <tt class="docutils literal"><span class="pre">config:dump-reference</span></tt> command was added in Symfony 2.1</p>
+<p>You can dump the default configuration for a bundle in yaml to the console using
+the <tt class="docutils literal"><span class="pre">config:dump-reference</span></tt> command.  Here is an example of dumping the default
+FrameworkBundle configuration:</p>
+<div class="highlight-text"><div class="highlight"><pre>app/console config:dump-reference FrameworkBundle
+</pre></div>
+</div>
+<p>The extension alias (configuration key) can also be used:</p>
+<div class="highlight-text"><div class="highlight"><pre>app/console config:dump-reference framework
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">See the cookbook article: <a class="reference internal" href="../cookbook/bundles/extension.html"><em>How to expose a Semantic Configuration for
+a Bundle</em></a> for information on adding
+configuration for your own bundle.</p>
+</div>
 </div>
 </div>
 <div class="section" id="environments">
@@ -983,7 +981,10 @@ to rapidly develop applications.</p>
 <li><a class="reference internal" href="#bundle-directory-structure">Bundle Directory Structure</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#application-configuration">Application Configuration</a></li>
+<li><a class="reference internal" href="#application-configuration">Application Configuration</a><ul>
+<li><a class="reference internal" href="#default-configuration-dump">Default Configuration Dump</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#environments">Environments</a><ul>
 <li><a class="reference internal" href="#environment-configuration">Environment Configuration</a></li>
 </ul>
@@ -1033,7 +1034,7 @@ to rapidly develop applications.</p>
         <li class="right" >
           <a href="installation.html" title="Installing and Configuring Symfony"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

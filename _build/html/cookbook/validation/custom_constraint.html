@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to create a Custom Validation Constraint &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to create a Custom Validation Constraint &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Validation" href="index.html" />
     <link rel="next" title="Configuration" href="../configuration/index.html" />
     <link rel="prev" title="Validation" href="index.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="index.html" title="Validation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Validation</a> &raquo;</li> 
       </ul>
@@ -99,7 +99,7 @@ public function validatedBy()
 <p>In other words, if you create a custom <tt class="docutils literal"><span class="pre">Constraint</span></tt> (e.g. <tt class="docutils literal"><span class="pre">MyConstraint</span></tt>),
 Symfony2 will automatically look for another class, <tt class="docutils literal"><span class="pre">MyConstraintValidator</span></tt>
 when actually performing the validation.</p>
-<p>The validator class is also simple, and only has one required method: <tt class="docutils literal"><span class="pre">isValid</span></tt>:</p>
+<p>The validator class is also simple, and only has one required method: <tt class="docutils literal"><span class="pre">validate</span></tt>:</p>
 <div class="highlight-python"><pre>// src/Acme/DemoBundle/Validator/Constraints/ContainsAlphanumericValidator.php
 namespace Acme\DemoBundle\Validator\Constraints;
 
@@ -108,23 +108,27 @@ use Symfony\Component\Validator\ConstraintValidator;
 
 class ContainsAlphanumericValidator extends ConstraintValidator
 {
-    public function isValid($value, Constraint $constraint)
+    public function validate($value, Constraint $constraint)
     {
         if (!preg_match('/^[a-zA-Za0-9]+$/', $value, $matches)) {
-            $this-&gt;setMessage($constraint-&gt;message, array('%string%' =&gt; $value));
-
-            return false;
+            $this-&gt;context-&gt;addViolation($constraint-&gt;message, array('%string%' =&gt; $value));
         }
-
-        return true;
     }
 }</pre>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Don&#8217;t forget to call <tt class="docutils literal"><span class="pre">setMessage</span></tt> to construct an error message when the
-value is invalid.</p>
+<p class="last">The <tt class="docutils literal"><span class="pre">validate</span></tt> method does not return a value; instead, it adds violations
+to the validator&#8217;s <tt class="docutils literal"><span class="pre">context</span></tt> property with an <tt class="docutils literal"><span class="pre">addViolation</span></tt> method
+call if there are validation failures. Therefore, a value could be considered
+as being valid if it causes no violations to be added to the context.
+The first parameter of the <tt class="docutils literal"><span class="pre">addViolation</span></tt> call is the error message to
+use for that violation.</p>
 </div>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The <tt class="docutils literal"><span class="pre">isValid</span></tt> method was renamed to <tt class="docutils literal"><span class="pre">validate</span></tt> in Symfony 2.1. The
+<tt class="docutils literal"><span class="pre">setMessage</span></tt> method was also deprecated, in favor of calling <tt class="docutils literal"><span class="pre">addViolation</span></tt>
+on the context.</p>
 </div>
 <div class="section" id="using-the-new-validator">
 <h2>Using the new Validator<a class="headerlink" href="#using-the-new-validator" title="Permalink to this headline">¶</a></h2>
@@ -252,21 +256,14 @@ providing a target:</p>
     return self::CLASS_CONSTRAINT;
 }</pre>
 </div>
-<p>With this, the validator <tt class="docutils literal"><span class="pre">isValid()</span></tt> method gets an object as its first argument:</p>
+<p>With this, the validator <tt class="docutils literal"><span class="pre">validate()</span></tt> method gets an object as its first argument:</p>
 <div class="highlight-python"><pre>class ProtocolClassValidator extends ConstraintValidator
 {
-    public function isValid($protocol, Constraint $constraint)
+    public function validate($protocol, Constraint $constraint)
     {
         if ($protocol-&gt;getFoo() != $protocol-&gt;getBar()) {
-
-            $propertyPath = $this-&gt;context-&gt;getPropertyPath() . 'foo';
-            $this-&gt;context-&gt;setPropertyPath($propertyPath);
-            $this-&gt;context-&gt;addViolation($constraint-&gt;getMessage(), array(), null);
-
-            return false;
+            $this-&gt;context-&gt;addViolationAtSubPath('foo', $constraint-&gt;message, array(), null);
         }
-
-        return true;
     }
 }</pre>
 </div>
@@ -364,7 +361,7 @@ not to the property:</p>
         <li class="right" >
           <a href="index.html" title="Validation"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Validation</a> &raquo;</li> 
       </ul>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>collection Field Type &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>collection Field Type &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../../index.html" />
     <link rel="up" title="Form Types Reference" href="../types.html" />
     <link rel="next" title="country Field Type" href="country.html" />
     <link rel="prev" title="choice Field Type" href="choice.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="choice.html" title="choice Field Type"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" accesskey="U">Form Types Reference</a> &raquo;</li> 
       </ul>
@@ -186,10 +186,10 @@ and - via JavaScript - render another field with the name <tt class="docutils li
 you to render a &#8220;template&#8221; field, which you can then use in your JavaScript
 to help you dynamically create these new fields. A rendered prototype field
 will look like this:</p>
-<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;email&quot;</span> <span class="na">id=</span><span class="s">&quot;form_emails_$$name$$&quot;</span> <span class="na">name=</span><span class="s">&quot;form[emails][$$name$$]&quot;</span> <span class="na">value=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;email&quot;</span> <span class="na">id=</span><span class="s">&quot;form_emails___name__&quot;</span> <span class="na">name=</span><span class="s">&quot;form[emails][__name__]&quot;</span> <span class="na">value=</span><span class="s">&quot;&quot;</span> <span class="nt">/&gt;</span>
 </pre></div>
 </div>
-<p>By replacing <tt class="docutils literal"><span class="pre">$$name$$</span></tt> with some unique value (e.g. <tt class="docutils literal"><span class="pre">2</span></tt>),
+<p>By replacing <tt class="docutils literal"><span class="pre">__name__</span></tt> with some unique value (e.g. <tt class="docutils literal"><span class="pre">2</span></tt>),
 you can build and insert new HTML fields into your form.</p>
 <p>Using jQuery, a simple example might look like this. If you&#8217;re rendering
 your collection fields all at once (e.g. <tt class="docutils literal"><span class="pre">form_row(form.emails)</span></tt>), then
@@ -226,10 +226,10 @@ you need is the JavaScript:</p>
 
             <span class="c1">// grab the prototype template</span>
             <span class="kd">var</span> <span class="nx">newWidget</span> <span class="o">=</span> <span class="nx">emailList</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;data-prototype&#39;</span><span class="p">);</span>
-            <span class="c1">// replace the &quot;$$name$$&quot; used in the id and name of the prototype</span>
+            <span class="c1">// replace the &quot;__name__&quot; used in the id and name of the prototype</span>
             <span class="c1">// with a number that&#39;s unique to our emails</span>
             <span class="c1">// end name attribute looks like name=&quot;contact[emails][2]&quot;</span>
-            <span class="nx">newWidget</span> <span class="o">=</span> <span class="nx">newWidget</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\$\$name\$\$/g</span><span class="p">,</span> <span class="nx">emailCount</span><span class="p">);</span>
+            <span class="nx">newWidget</span> <span class="o">=</span> <span class="nx">newWidget</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/__name__/g</span><span class="p">,</span> <span class="nx">emailCount</span><span class="p">);</span>
             <span class="nx">emailCount</span><span class="o">++</span><span class="p">;</span>
 
             <span class="c1">// create a new list element and add it to our list</span>
@@ -332,8 +332,8 @@ None of this is handled automatically. For more information, see
 if <a class="reference internal" href="#allow-add">allow_add</a> is also <tt class="docutils literal"><span class="pre">true</span></tt>), a special &#8220;prototype&#8221; attribute will be
 available so that you can render a &#8220;template&#8221; example on your page of what
 a new element should look like. The <tt class="docutils literal"><span class="pre">name</span></tt> attribute given to this element
-is <tt class="docutils literal"><span class="pre">$$name$$</span></tt>. This allows you to add a &#8220;add another&#8221; button via JavaScript
-which reads the prototype, replaces <tt class="docutils literal"><span class="pre">$$name$$</span></tt> with some unique name or
+is <tt class="docutils literal"><span class="pre">__name__</span></tt>. This allows you to add a &#8220;add another&#8221; button via JavaScript
+which reads the prototype, replaces <tt class="docutils literal"><span class="pre">__name__</span></tt> with some unique name or
 number, and render it inside your form. When submitted, it will be added
 to your underlying array due to the <a class="reference internal" href="#allow-add">allow_add</a> option.</p>
 <p>The prototype field can be rendered via the <tt class="docutils literal"><span class="pre">prototype</span></tt> variable in the
@@ -344,7 +344,7 @@ collection field:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">row</span><span class="p">(</span><span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;emails&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;prototype&#39;</span><span class="p">))</span> <span class="cp">?&gt;</span><span class="x"></span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">row</span><span class="p">(</span><span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;emails&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;prototype&#39;</span><span class="p">))</span> <span class="cp">?&gt;</span><span class="x"></span>
 </pre></div>
 </div>
 </li>
@@ -400,7 +400,7 @@ $builder
     )</pre>
 </div>
 <p>If <tt class="docutils literal"><span class="pre">by_reference</span></tt> is true, the following takes place behind the scenes
-when you call <tt class="docutils literal"><span class="pre">bindRequest</span></tt> on the form:</p>
+when you call <tt class="docutils literal"><span class="pre">bind</span></tt> on the form:</p>
 <div class="highlight-python"><pre>$article-&gt;setTitle('...');
 $article-&gt;getAuthor()-&gt;setName('...');
 $article-&gt;getAuthor()-&gt;setEmail('...');</pre>
@@ -494,7 +494,7 @@ need the setter (e.g. <tt class="docutils literal"><span class="pre">setAuthors<
         <li class="right" >
           <a href="choice.html" title="choice Field Type"
              >previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" >Form Types Reference</a> &raquo;</li> 
       </ul>

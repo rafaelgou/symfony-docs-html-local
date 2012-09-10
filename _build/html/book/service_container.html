@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Service Container &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Service Container &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Performance" href="performance.html" />
     <link rel="prev" title="Translations" href="translation.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="translation.html" title="Translations"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -467,7 +467,6 @@ invokes the service container extension inside the <tt class="docutils literal">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">secret</span><span class="p-Indicator">:</span>          <span class="l-Scalar-Plain">xxxxxxxxxx</span>
-    <span class="l-Scalar-Plain">charset</span><span class="p-Indicator">:</span>         <span class="l-Scalar-Plain">UTF-8</span>
     <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span>            <span class="l-Scalar-Plain">true</span>
     <span class="l-Scalar-Plain">csrf_protection</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
     <span class="l-Scalar-Plain">router</span><span class="p-Indicator">:</span>        <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;%kernel.root_dir%/config/routing.yml&quot;</span> <span class="p-Indicator">}</span>
@@ -476,7 +475,7 @@ invokes the service container extension inside the <tt class="docutils literal">
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
-<span class="nt">&lt;framework:config</span> <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span> <span class="na">secret=</span><span class="s">&quot;xxxxxxxxxx&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;framework:config</span> <span class="na">secret=</span><span class="s">&quot;xxxxxxxxxx&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;framework:form</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;framework:csrf-protection</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;framework:router</span> <span class="na">resource=</span><span class="s">&quot;%kernel.root_dir%/config/routing.xml&quot;</span> <span class="nt">/&gt;</span>
@@ -488,7 +487,6 @@ invokes the service container extension inside the <tt class="docutils literal">
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
 <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
     <span class="s1">&#39;secret&#39;</span>          <span class="o">=&gt;</span> <span class="s1">&#39;xxxxxxxxxx&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;charset&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span>
     <span class="s1">&#39;form&#39;</span>            <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(),</span>
     <span class="s1">&#39;csrf-protection&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(),</span>
     <span class="s1">&#39;router&#39;</span>          <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;resource&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;%kernel.root_dir%/config/routing.php&#39;</span><span class="p">),</span>
@@ -511,7 +509,7 @@ over.</p>
 extension of the <tt class="docutils literal"><span class="pre">FrameworkBundle</span></tt>. Each extension allows you to easily
 customize the bundle, without worrying about how the internal services are
 defined.</p>
-<p>In this case, the extension allows you to customize the <tt class="docutils literal"><span class="pre">charset</span></tt>, <tt class="docutils literal"><span class="pre">error_handler</span></tt>,
+<p>In this case, the extension allows you to customize the <tt class="docutils literal"><span class="pre">error_handler</span></tt>,
 <tt class="docutils literal"><span class="pre">csrf_protection</span></tt>, <tt class="docutils literal"><span class="pre">router</span></tt> configuration and much more. Internally,
 the <tt class="docutils literal"><span class="pre">FrameworkBundle</span></tt> uses the options specified here to define and configure
 the services specific to it. The bundle takes care of creating all the necessary
@@ -993,7 +991,7 @@ out <a class="reference internal" href="../reference/dic_tags.html"><em>The Depe
         <li class="right" >
           <a href="translation.html" title="Translations"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

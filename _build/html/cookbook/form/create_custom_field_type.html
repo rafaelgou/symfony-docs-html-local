@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Create a Custom Form Field Type &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to Create a Custom Form Field Type &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Form" href="index.html" />
     <link rel="next" title="How to use the Virtual Form Field Option" href="use_virtuals_forms.html" />
     <link rel="prev" title="How to Embed a Collection of Forms" href="form_collections.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="form_collections.html" title="How to Embed a Collection of Forms"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Form</a> &raquo;</li> 
       </ul>
@@ -73,21 +73,21 @@ for form fields, which is <tt class="docutils literal"><span class="pre">&lt;Bun
 namespace Acme\DemoBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class GenderType extends AbstractType
 {
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver-&gt;setDefaults(array(
             'choices' =&gt; array(
                 'm' =&gt; 'Male',
                 'f' =&gt; 'Female',
             )
-        );
+        ));
     }
 
-    public function getParent(array $options)
+    public function getParent()
     {
         return 'choice';
     }
@@ -117,17 +117,17 @@ need when rendering your field in a template. For example, in <a class="referenc
 a <tt class="docutils literal"><span class="pre">multiple</span></tt> variable is set and used in the template to set (or not
 set) the <tt class="docutils literal"><span class="pre">multiple</span></tt> attribute on the <tt class="docutils literal"><span class="pre">select</span></tt> field. See <a class="reference internal" href="#creating-a-template-for-the-field">Creating a Template for the Field</a>
 for more details.</li>
-<li><tt class="docutils literal"><span class="pre">getDefaultOptions()</span></tt> - This defines options for your form type that
+<li><tt class="docutils literal"><span class="pre">setDefaultOptions()</span></tt> - This defines options for your form type that
 can be used in <tt class="docutils literal"><span class="pre">buildForm()</span></tt> and <tt class="docutils literal"><span class="pre">buildView()</span></tt>. There are a lot of
-options common to all fields (see <a class="reference external" href="https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Form/Extension/Core/Type/FieldType.php">FieldType</a>), but you can create any
-others that you need here.</li>
+options common to all fields (see <a class="reference internal" href="../../reference/forms/types/form.html"><em>form Field Type</em></a>),
+but you can create any others that you need here.</li>
 </ul>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">If you&#8217;re creating a field that consists of many fields, then be sure
 to set your &#8220;parent&#8221; type as <tt class="docutils literal"><span class="pre">form</span></tt> or something that extends <tt class="docutils literal"><span class="pre">form</span></tt>.
 Also, if you need to modify the &#8220;view&#8221; of any of your child types from
-your parent type, use the <tt class="docutils literal"><span class="pre">buildViewBottomUp()</span></tt> method.</p>
+your parent type, use the <tt class="docutils literal"><span class="pre">finishView()</span></tt> method.</p>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">getName()</span></tt> method returns an identifier which should be unique in
 your application. This is used in various places, such as when customizing
@@ -190,11 +190,11 @@ new instance of the type in one of your forms:</p>
 namespace Acme\DemoBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class AuthorType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder-&gt;add('gender_code', new GenderType(), array(
             'empty_value' =&gt; 'Choose a gender',
@@ -271,6 +271,9 @@ of this in a moment when we use the custom field type. But first, add a <tt clas
 argument to <tt class="docutils literal"><span class="pre">GenderType</span></tt>, which receives the gender configuration:</p>
 <div class="highlight-python"><pre>// src/Acme/DemoBundle/Form/Type/GenderType.php
 namespace Acme\DemoBundle\Form\Type;
+
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 // ...
 
 class GenderType extends AbstractType
@@ -282,11 +285,11 @@ class GenderType extends AbstractType
         $this-&gt;genderChoices = $genderChoices;
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver-&gt;setDefaults(array(
             'choices' =&gt; $this-&gt;genderChoices,
-        );
+        ));
     }
 
     // ...
@@ -297,11 +300,14 @@ registered as a service. And because we used the <tt class="docutils literal"><s
 configuration, using the field is now much easier:</p>
 <div class="highlight-python"><pre>// src/Acme/DemoBundle/Form/Type/AuthorType.php
 namespace Acme\DemoBundle\Form\Type;
+
+use Symfony\Component\Form\FormBuilderInterface;
+
 // ...
 
 class AuthorType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder-&gt;add('gender_code', 'gender', array(
             'empty_value' =&gt; 'Choose a gender',
@@ -371,7 +377,7 @@ it by the alias used in our service configuration, <tt class="docutils literal">
         <li class="right" >
           <a href="form_collections.html" title="How to Embed a Collection of Forms"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Form</a> &raquo;</li> 
       </ul>

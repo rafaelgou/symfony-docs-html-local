@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Finder Component &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>The Finder Component &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +25,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Components" href="index.html" />
     <link rel="next" title="HTTP Foundation" href="http_foundation/index.html" />
-    <link rel="prev" title="The Event Dispatcher Component" href="event_dispatcher/introduction.html" /> 
+    <link rel="prev" title="The Filesystem Component" href="filesystem.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,9 +41,9 @@
           <a href="http_foundation/index.html" title="HTTP Foundation"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="event_dispatcher/introduction.html" title="The Event Dispatcher Component"
+          <a href="filesystem.html" title="The Filesystem Component"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Components</a> &raquo;</li> 
       </ul>
     </div>  
@@ -191,6 +191,22 @@ $finder-&gt;sort($sort);</pre>
 <div class="highlight-python"><pre>$finder-&gt;files()-&gt;notName('*.rb');</pre>
 </div>
 </div>
+<div class="section" id="file-contents">
+<h3>File Contents<a class="headerlink" href="#file-contents" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>Methods <tt class="docutils literal"><span class="pre">contains()</span></tt> and <tt class="docutils literal"><span class="pre">notContains()</span></tt> have been
+introduced in version 2.1.</p>
+<p>Restrict files by contents with the
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Finder/Finder.html#method_contains" title="Symfony\Component\Finder\Finder::contains()"><span class="pre">contains()</span></a></tt> method:</p>
+<div class="highlight-python"><pre>$finder-&gt;files()-&gt;contains('lorem ipsum');</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">contains()</span></tt> method accepts strings or regexes:</p>
+<div class="highlight-python"><pre>$finder-&gt;files()-&gt;contains('/lorem\s+ipsum$/i');</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">notContains()</span></tt> method excludes files containing given pattern:</p>
+<div class="highlight-python"><pre>$finder-&gt;files()-&gt;notContains('dolor sit amet');</pre>
+</div>
+</div>
 <div class="section" id="file-size">
 <h3>File Size<a class="headerlink" href="#file-size" title="Permalink to this headline">¶</a></h3>
 <p>Restrict files by size with the
@@ -200,8 +216,10 @@ $finder-&gt;sort($sort);</pre>
 <p>Restrict by a size range by chaining calls:</p>
 <div class="highlight-python"><pre>$finder-&gt;files()-&gt;size('&gt;= 1K')-&gt;size('&lt;= 2K');</pre>
 </div>
-<p>The comparison operator can be any of the following: <tt class="docutils literal"><span class="pre">&gt;</span></tt>, <tt class="docutils literal"><span class="pre">&gt;=</span></tt>, <tt class="docutils literal"><span class="pre">&lt;</span></tt>, &#8216;&lt;=&#8217;,
-&#8216;==&#8217;.</p>
+<p>The comparison operator can be any of the following: <tt class="docutils literal"><span class="pre">&gt;</span></tt>, <tt class="docutils literal"><span class="pre">&gt;=</span></tt>, <tt class="docutils literal"><span class="pre">&lt;</span></tt>, <tt class="docutils literal"><span class="pre">&lt;=</span></tt>,
+<tt class="docutils literal"><span class="pre">==</span></tt>, <tt class="docutils literal"><span class="pre">!=</span></tt>.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The operator <tt class="docutils literal"><span class="pre">!=</span></tt> was added in version 2.1.</p>
 <p>The target value may use magnitudes of kilobytes (<tt class="docutils literal"><span class="pre">k</span></tt>, <tt class="docutils literal"><span class="pre">ki</span></tt>), megabytes
 (<tt class="docutils literal"><span class="pre">m</span></tt>, <tt class="docutils literal"><span class="pre">mi</span></tt>), or gigabytes (<tt class="docutils literal"><span class="pre">g</span></tt>, <tt class="docutils literal"><span class="pre">gi</span></tt>). Those suffixed with an <tt class="docutils literal"><span class="pre">i</span></tt> use
 the appropriate <tt class="docutils literal"><span class="pre">2**n</span></tt> version in accordance with the <a class="reference external" href="http://physics.nist.gov/cuu/Units/binary.html">IEC standard</a>.</p>
@@ -243,6 +261,23 @@ it is called with the file as a <tt class="docutils literal"><a class="reference
 instance. The file is excluded from the result set if the Closure returns
 <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
 </div>
+<div class="section" id="reading-contents-of-returned-files">
+<h3>Reading contents of returned files<a class="headerlink" href="#reading-contents-of-returned-files" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>Method <tt class="docutils literal"><span class="pre">getContents()</span></tt> have been introduced in version 2.1.</p>
+<p>The contents of returned files can be read with
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Finder/SplFileInfo.html#method_getContents" title="Symfony\Component\Finder\SplFileInfo::getContents()"><span class="pre">getContents()</span></a></tt>:</p>
+<div class="highlight-python"><pre>use Symfony\Component\Finder\Finder;
+
+$finder = new Finder();
+$finder-&gt;files()-&gt;in(__DIR__);
+
+foreach ($finder as $file) {
+    $contents = $file-&gt;getContents();
+    ...
+}</pre>
+</div>
+</div>
 </div>
 </div>
 
@@ -262,10 +297,12 @@ instance. The file is excluded from the result set if the Closure returns
 <li><a class="reference internal" href="#files-or-directories">Files or Directories</a></li>
 <li><a class="reference internal" href="#sorting">Sorting</a></li>
 <li><a class="reference internal" href="#file-name">File Name</a></li>
+<li><a class="reference internal" href="#file-contents">File Contents</a></li>
 <li><a class="reference internal" href="#file-size">File Size</a></li>
 <li><a class="reference internal" href="#file-date">File Date</a></li>
 <li><a class="reference internal" href="#directory-depth">Directory Depth</a></li>
 <li><a class="reference internal" href="#custom-filtering">Custom Filtering</a></li>
+<li><a class="reference internal" href="#reading-contents-of-returned-files">Reading contents of returned files</a></li>
 </ul>
 </li>
 </ul>
@@ -273,8 +310,8 @@ instance. The file is excluded from the result set if the Closure returns
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="event_dispatcher/introduction.html"
-                        title="previous chapter">The Event Dispatcher Component</a></p>
+  <p class="topless"><a href="filesystem.html"
+                        title="previous chapter">The Filesystem Component</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="http_foundation/index.html"
                         title="next chapter">HTTP Foundation</a></p>
@@ -310,9 +347,9 @@ instance. The file is excluded from the result set if the Closure returns
           <a href="http_foundation/index.html" title="HTTP Foundation"
              >next</a> |</li>
         <li class="right" >
-          <a href="event_dispatcher/introduction.html" title="The Event Dispatcher Component"
+          <a href="filesystem.html" title="The Filesystem Component"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Components</a> &raquo;</li> 
       </ul>
     </div>

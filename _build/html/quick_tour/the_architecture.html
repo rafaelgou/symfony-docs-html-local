@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Architecture &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>The Architecture &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Quick Tour" href="index.html" />
     <link rel="next" title="The Book" href="../book/index.html" />
     <link rel="prev" title="The Controller" href="the_controller.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="the_controller.html" title="The Controller"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Quick Tour</a> &raquo;</li> 
       </ul>
     </div>  
@@ -108,19 +108,19 @@ use Symfony\Component\ClassLoader\UniversalClassLoader;
 
 $loader = new UniversalClassLoader();
 $loader-&gt;registerNamespaces(array(
-    'Symfony'          =&gt; array(__DIR__.'/../vendor/symfony/src', __DIR__.'/../vendor/bundles'),
+    'Symfony'          =&gt; array(__DIR__.'/../vendor/symfony/symfony/src', __DIR__.'/../vendor/bundles'),
     'Sensio'           =&gt; __DIR__.'/../vendor/bundles',
-    'JMS'              =&gt; __DIR__.'/../vendor/bundles',
-    'Doctrine\\Common' =&gt; __DIR__.'/../vendor/doctrine-common/lib',
-    'Doctrine\\DBAL'   =&gt; __DIR__.'/../vendor/doctrine-dbal/lib',
-    'Doctrine'         =&gt; __DIR__.'/../vendor/doctrine/lib',
-    'Monolog'          =&gt; __DIR__.'/../vendor/monolog/src',
-    'Assetic'          =&gt; __DIR__.'/../vendor/assetic/src',
-    'Metadata'         =&gt; __DIR__.'/../vendor/metadata/src',
+    'JMS'              =&gt; __DIR__.'/../vendor/jms/',
+    'Doctrine\\Common' =&gt; __DIR__.'/../vendor/doctrine/common/lib',
+    'Doctrine\\DBAL'   =&gt; __DIR__.'/../vendor/doctrine/dbal/lib',
+    'Doctrine'         =&gt; __DIR__.'/../vendor/doctrine/orm/lib',
+    'Monolog'          =&gt; __DIR__.'/../vendor/monolog/monolog/src',
+    'Assetic'          =&gt; __DIR__.'/../vendor/kriswallsmith/assetic/src',
+    'Metadata'         =&gt; __DIR__.'/../vendor/jms/metadata/src',
 ));
 $loader-&gt;registerPrefixes(array(
-    'Twig_Extensions_' =&gt; __DIR__.'/../vendor/twig-extensions/lib',
-    'Twig_'            =&gt; __DIR__.'/../vendor/twig/lib',
+    'Twig_Extensions_' =&gt; __DIR__.'/../vendor/twig/extensions/lib',
+    'Twig_'            =&gt; __DIR__.'/../vendor/twig/twig/lib',
 ));
 
 // ...
@@ -197,19 +197,20 @@ They are all part of the core framework.</p>
 PHP. Have a look at the default configuration:</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">imports</span><span class="p-Indicator">:</span>
-    <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="nv">parameters.ini</span> <span class="p-Indicator">}</span>
+    <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="nv">parameters.yml</span> <span class="p-Indicator">}</span>
     <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="nv">security.yml</span> <span class="p-Indicator">}</span>
 
 <span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
+    <span class="c1">#esi:             ~</span>
+    <span class="c1">#translator:      { fallback: &quot;%locale%&quot; }</span>
     <span class="l-Scalar-Plain">secret</span><span class="p-Indicator">:</span>          <span class="s">&quot;%secret%&quot;</span>
-    <span class="l-Scalar-Plain">charset</span><span class="p-Indicator">:</span>         <span class="l-Scalar-Plain">UTF-8</span>
     <span class="l-Scalar-Plain">router</span><span class="p-Indicator">:</span>          <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;%kernel.root_dir%/config/routing.yml&quot;</span> <span class="p-Indicator">}</span>
     <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span>            <span class="l-Scalar-Plain">true</span>
     <span class="l-Scalar-Plain">csrf_protection</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
     <span class="l-Scalar-Plain">validation</span><span class="p-Indicator">:</span>      <span class="p-Indicator">{</span> <span class="nv">enable_annotations</span><span class="p-Indicator">:</span> <span class="nv">true</span> <span class="p-Indicator">}</span>
     <span class="l-Scalar-Plain">templating</span><span class="p-Indicator">:</span>      <span class="p-Indicator">{</span> <span class="nv">engines</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&#39;twig&#39;</span><span class="p-Indicator">]</span> <span class="p-Indicator">}</span> <span class="c1">#assets_version: SomeVersionScheme</span>
+    <span class="l-Scalar-Plain">default_locale</span><span class="p-Indicator">:</span>  <span class="s">&quot;%locale%&quot;</span>
     <span class="l-Scalar-Plain">session</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">default_locale</span><span class="p-Indicator">:</span> <span class="s">&quot;%locale%&quot;</span>
         <span class="l-Scalar-Plain">auto_start</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">true</span>
 
 <span class="c1"># Twig Configuration</span>
@@ -221,6 +222,8 @@ PHP. Have a look at the default configuration:</p>
 <span class="l-Scalar-Plain">assetic</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">debug</span><span class="p-Indicator">:</span>          <span class="s">&quot;%kernel.debug%&quot;</span>
     <span class="l-Scalar-Plain">use_controller</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+    <span class="l-Scalar-Plain">bundles</span><span class="p-Indicator">:</span>        <span class="p-Indicator">[</span> <span class="p-Indicator">]</span>
+    <span class="c1"># java: /usr/bin/java</span>
     <span class="l-Scalar-Plain">filters</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">cssrewrite</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
         <span class="c1"># closure:</span>
@@ -233,6 +236,7 @@ PHP. Have a look at the default configuration:</p>
     <span class="l-Scalar-Plain">dbal</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span>   <span class="s">&quot;%database_driver%&quot;</span>
         <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span>     <span class="s">&quot;%database_host%&quot;</span>
+        <span class="l-Scalar-Plain">port</span><span class="p-Indicator">:</span>     <span class="s">&quot;%database_port%&quot;</span>
         <span class="l-Scalar-Plain">dbname</span><span class="p-Indicator">:</span>   <span class="s">&quot;%database_name%&quot;</span>
         <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span>     <span class="s">&quot;%database_user%&quot;</span>
         <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="s">&quot;%database_password%&quot;</span>
@@ -455,7 +459,7 @@ any topic you want.</p>
         <li class="right" >
           <a href="the_controller.html" title="The Controller"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Quick Tour</a> &raquo;</li> 
       </ul>
     </div>

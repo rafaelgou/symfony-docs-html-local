@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use Data Transformers &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to use Data Transformers &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Form" href="index.html" />
     <link rel="next" title="How to Dynamically Generate Forms Using Form Events" href="dynamic_form_generation.html" />
     <link rel="prev" title="How to customize Form Rendering" href="form_customization.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="form_customization.html" title="How to customize Form Rendering"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Form</a> &raquo;</li> 
       </ul>
@@ -149,13 +149,14 @@ can instantiate it rather than throwing the <tt class="docutils literal"><span c
 issue field in some form.</p>
 <blockquote>
 <div><p>You can also use transformers without creating a new custom form type
-by calling <tt class="docutils literal"><span class="pre">prependNormTransformer</span></tt> (or <tt class="docutils literal"><span class="pre">appendClientTransformer</span></tt> - see
-<a class="reference internal" href="#norm-and-client-transformers">Norm and Client Transformers</a>) on any field builder:</p>
-<div class="highlight-python"><pre>use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
+by calling <tt class="docutils literal"><span class="pre">addModelTransformer</span></tt> (or <tt class="docutils literal"><span class="pre">addViewTransformer</span></tt> - see
+<a class="reference internal" href="#model-and-view-transformers">Model and View Transformers</a>) on any field builder:</p>
+<div class="highlight-python"><pre>use Symfony\Component\Form\FormBuilderInterface;
+use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
 
 class TaskType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         // ...
 
@@ -166,7 +167,7 @@ class TaskType extends AbstractType
         // add a normal text field, but add our transformer to it
         $builder-&gt;add(
             $builder-&gt;create('issue', 'text')
-                -&gt;prependNormTransformer($transformer)
+                -&gt;addModelTransformer($transformer)
         );
     }
 
@@ -195,50 +196,54 @@ would be applied to the entire form, instead of just this field:</p>
 <div class="last highlight-python"><pre>// THIS IS WRONG - TRANSFORMER WILL BE APPLIED TO THE ENTIRE FORM
 // see above example for correct code
 $builder-&gt;add('issue', 'text')
-    -&gt;prependNormTransformer($transformer);</pre>
+    -&gt;addModelTransformer($transformer);</pre>
 </div>
 </div>
-<div class="section" id="norm-and-client-transformers">
-<h3>Norm and Client Transformers<a class="headerlink" href="#norm-and-client-transformers" title="Permalink to this headline">¶</a></h3>
-<p>In the above example, the transformer was used as a &#8220;norm&#8221; transformer.
+<div class="section" id="model-and-view-transformers">
+<h3>Model and View Transformers<a class="headerlink" href="#model-and-view-transformers" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The names and method of the transformers were changed in Symfony 2.1.
+<tt class="docutils literal"><span class="pre">prependNormTransformer</span></tt> became <tt class="docutils literal"><span class="pre">addModelTransformer</span></tt> and <tt class="docutils literal"><span class="pre">appendClientTransformer</span></tt>
+became <tt class="docutils literal"><span class="pre">addViewTransformer</span></tt>.</p>
+<p>In the above example, the transformer was used as a &#8220;model&#8221; transformer.
 In fact, there are two different type of transformers and three different
 types of underlying data.</p>
 <p>In any form, the 3 different types of data are:</p>
-<p>1) <strong>App data</strong> - This is the data in the format used in your application
+<p>1) <strong>Model data</strong> - This is the data in the format used in your application
 (e.g. an <tt class="docutils literal"><span class="pre">Issue</span></tt> object). If you call <tt class="docutils literal"><span class="pre">Form::getData</span></tt> or <tt class="docutils literal"><span class="pre">Form::setData</span></tt>,
-you&#8217;re dealing with the &#8220;app&#8221; data.</p>
+you&#8217;re dealing with the &#8220;model&#8221; data.</p>
 <p>2) <strong>Norm Data</strong> - This is a normalized version of your data, and is commonly
-the same as your &#8220;app&#8221; data (though not in our example). It&#8217;s not commonly
+the same as your &#8220;model&#8221; data (though not in our example). It&#8217;s not commonly
 used directly.</p>
-<p>3) <strong>Client Data</strong> - This is the format that&#8217;s used to fill in the form fields
+<p>3) <strong>View Data</strong> - This is the format that&#8217;s used to fill in the form fields
 themselves. It&#8217;s also the format in which the user will submit the data. When
-you call <tt class="docutils literal"><span class="pre">Form::bind($data)</span></tt>, the <tt class="docutils literal"><span class="pre">$data</span></tt> is in the &#8220;client&#8221; data format.</p>
+you call <tt class="docutils literal"><span class="pre">Form::bind($data)</span></tt>, the <tt class="docutils literal"><span class="pre">$data</span></tt> is in the &#8220;view&#8221; data format.</p>
 <p>The 2 different types of transformers help convert to and from each of these
 types of data:</p>
 <dl class="docutils">
-<dt><strong>Norm transformers</strong>:</dt>
+<dt><strong>Model transformers</strong>:</dt>
 <dd><ul class="first last simple">
-<li><tt class="docutils literal"><span class="pre">transform</span></tt>: &#8220;app data&#8221; =&gt; &#8220;norm data&#8221;</li>
-<li><tt class="docutils literal"><span class="pre">reverseTransform</span></tt>: &#8220;norm data&#8221; =&gt; &#8220;app data&#8221;</li>
+<li><tt class="docutils literal"><span class="pre">transform</span></tt>: &#8220;model data&#8221; =&gt; &#8220;norm data&#8221;</li>
+<li><tt class="docutils literal"><span class="pre">reverseTransform</span></tt>: &#8220;norm data&#8221; =&gt; &#8220;model data&#8221;</li>
 </ul>
 </dd>
-<dt><strong>Client transformers</strong>:</dt>
+<dt><strong>View transformers</strong>:</dt>
 <dd><ul class="first last simple">
-<li><tt class="docutils literal"><span class="pre">transform</span></tt>: &#8220;norm data&#8221; =&gt; &#8220;client data&#8221;</li>
-<li><tt class="docutils literal"><span class="pre">reverseTransform</span></tt>: &#8220;client data&#8221; =&gt; &#8220;norm data&#8221;</li>
+<li><tt class="docutils literal"><span class="pre">transform</span></tt>: &#8220;norm data&#8221; =&gt; &#8220;view data&#8221;</li>
+<li><tt class="docutils literal"><span class="pre">reverseTransform</span></tt>: &#8220;view data&#8221; =&gt; &#8220;norm data&#8221;</li>
 </ul>
 </dd>
 </dl>
 <p>Which transformer you need depends on your situation.</p>
-<p>To use the client transformer, call <tt class="docutils literal"><span class="pre">appendClientTransformer</span></tt>.</p>
+<p>To use the view transformer, call <tt class="docutils literal"><span class="pre">addViewTransformer</span></tt>.</p>
 </div>
 </div>
-<div class="section" id="so-why-did-we-use-the-norm-transformer">
-<h2>So why did we use the norm transformer?<a class="headerlink" href="#so-why-did-we-use-the-norm-transformer" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="so-why-did-we-use-the-model-transformer">
+<h2>So why did we use the model transformer?<a class="headerlink" href="#so-why-did-we-use-the-model-transformer" title="Permalink to this headline">¶</a></h2>
 <p>In our example, the field is a <tt class="docutils literal"><span class="pre">text</span></tt> field, and we always expect a text
-field to be a simple, scalar format in the &#8220;norm&#8221; and &#8220;client&#8221; formats. For
-this reason, the most appropriate transformer was the &#8220;norm&#8221; transformer
-(which converts to/from the <em>norm</em> format - string issue number - to the <em>app</em>
+field to be a simple, scalar format in the &#8220;norm&#8221; and &#8220;view&#8221; formats. For
+this reason, the most appropriate transformer was the &#8220;model&#8221; transformer
+(which converts to/from the <em>norm</em> format - string issue number - to the <em>model</em>
 format - Issue object).</p>
 <p>The difference between the transformers is subtle and you should always think
 about what the &#8220;norm&#8221; data for a field should really be. For example, the
@@ -259,9 +264,10 @@ First, create the custom field type class:</p>
 namespace Acme\TaskBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Acme\TaskBundle\Form\DataTransformer\IssueToNumberTransformer;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class IssueSelectorType extends AbstractType
 {
@@ -278,20 +284,20 @@ class IssueSelectorType extends AbstractType
         $this-&gt;om = $om;
     }
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $transformer = new IssueToNumberTransformer($this-&gt;om);
-        $builder-&gt;prependNormTransformer($transformer);
+        $builder-&gt;addModelTransformer($transformer);
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver-&gt;setDefaults(array(
             'invalid_message' =&gt; 'The selected issue does not exist',
-        );
+        ));
     }
 
-    public function getParent(array $options)
+    public function getParent()
     {
         return 'text';
     }
@@ -330,11 +336,11 @@ it&#8217;s quite easy:</p>
 namespace Acme\TaskBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class TaskType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             -&gt;add('task')
@@ -362,10 +368,10 @@ class TaskType extends AbstractType
 <li><a class="reference internal" href="#">How to use Data Transformers</a><ul>
 <li><a class="reference internal" href="#creating-the-transformer">Creating the Transformer</a></li>
 <li><a class="reference internal" href="#using-the-transformer">Using the Transformer</a><ul>
-<li><a class="reference internal" href="#norm-and-client-transformers">Norm and Client Transformers</a></li>
+<li><a class="reference internal" href="#model-and-view-transformers">Model and View Transformers</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#so-why-did-we-use-the-norm-transformer">So why did we use the norm transformer?</a></li>
+<li><a class="reference internal" href="#so-why-did-we-use-the-model-transformer">So why did we use the model transformer?</a></li>
 <li><a class="reference internal" href="#using-transformers-in-a-custom-field-type">Using Transformers in a custom field type</a></li>
 </ul>
 </li>
@@ -411,7 +417,7 @@ class TaskType extends AbstractType
         <li class="right" >
           <a href="form_customization.html" title="How to customize Form Rendering"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Form</a> &raquo;</li> 
       </ul>

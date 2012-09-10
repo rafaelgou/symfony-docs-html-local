@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Controller &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>The Controller &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Quick Tour" href="index.html" />
     <link rel="next" title="The Architecture" href="the_architecture.html" />
     <link rel="prev" title="The View" href="the_view.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="the_view.html" title="The View"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Quick Tour</a> &raquo;</li> 
       </ul>
     </div>  
@@ -168,8 +168,8 @@ $session-&gt;set('foo', 'bar');
 // in another controller for another request
 $foo = $session-&gt;get('foo');
 
-// set the user locale
-$session-&gt;setLocale('fr');</pre>
+// use a default value if the key doesn't exist
+$filters = $session-&gt;set('filters', array());</pre>
 </div>
 <p>You can also store small messages that will only be available for the very
 next request:</p>
@@ -197,9 +197,10 @@ fits most common needs:</p>
 
     <span class="l-Scalar-Plain">providers</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">in_memory</span><span class="p-Indicator">:</span>
-            <span class="l-Scalar-Plain">users</span><span class="p-Indicator">:</span>
-                <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">userpass</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span> <span class="s">&#39;ROLE_USER&#39;</span> <span class="p-Indicator">]</span> <span class="p-Indicator">}</span>
-                <span class="l-Scalar-Plain">admin</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">adminpass</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span> <span class="s">&#39;ROLE_ADMIN&#39;</span> <span class="p-Indicator">]</span> <span class="p-Indicator">}</span>
+            <span class="l-Scalar-Plain">memory</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">users</span><span class="p-Indicator">:</span>
+                    <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">userpass</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span> <span class="s">&#39;ROLE_USER&#39;</span> <span class="p-Indicator">]</span> <span class="p-Indicator">}</span>
+                    <span class="l-Scalar-Plain">admin</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">password</span><span class="p-Indicator">:</span> <span class="nv">adminpass</span><span class="p-Indicator">,</span> <span class="nv">roles</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span> <span class="s">&#39;ROLE_ADMIN&#39;</span> <span class="p-Indicator">]</span> <span class="p-Indicator">}</span>
 
     <span class="l-Scalar-Plain">firewalls</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">dev</span><span class="p-Indicator">:</span>
@@ -230,7 +231,7 @@ Moreover, the <tt class="docutils literal"><span class="pre">admin</span></tt> u
 configuration, but you can use any hashing algorithm by tweaking the
 <tt class="docutils literal"><span class="pre">encoders</span></tt> section.</p>
 </div>
-<p>Going to the <tt class="docutils literal"><span class="pre">http://localhost/Symfony/web/app_dev.php/demo/secured/hello</span></tt>
+<p>Going to the <tt class="docutils literal"><span class="pre">http://localhost/app_dev.php/demo/secured/hello</span></tt>
 URL will automatically redirect you to the login form because this resource is
 protected by a <tt class="docutils literal"><span class="pre">firewall</span></tt>.</p>
 <p>You can also force the action to require a given role by using the <tt class="docutils literal"><span class="pre">&#64;Secure</span></tt>
@@ -365,7 +366,7 @@ That&#8217;s the topic of the <a class="reference internal" href="the_architectu
         <li class="right" >
           <a href="the_view.html" title="The View"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Quick Tour</a> &raquo;</li> 
       </ul>
     </div>

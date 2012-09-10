@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Databases and Doctrine &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Databases and Doctrine &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Databases and Propel" href="propel.html" />
     <link rel="prev" title="Creating and using Templates" href="templating.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="templating.html" title="Creating and using Templates"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -89,19 +89,21 @@ an <tt class="docutils literal"><span class="pre">AcmeStoreBundle</span></tt> vi
 <h3>Configuring the Database<a class="headerlink" href="#configuring-the-database" title="Permalink to this headline">¶</a></h3>
 <p>Before you really begin, you&#8217;ll need to configure your database connection
 information. By convention, this information is usually configured in an
-<tt class="docutils literal"><span class="pre">app/config/parameters.ini</span></tt> file:</p>
-<div class="highlight-ini"><div class="highlight"><pre><span class="c">; app/config/parameters.ini</span>
-<span class="k">[parameters]</span>
-    <span class="na">database_driver</span>   <span class="o">=</span> <span class="s">pdo_mysql</span>
-<span class="s">    database_host     = localhost</span>
-<span class="s">    database_name     = test_project</span>
-<span class="s">    database_user     = root</span>
-<span class="s">    database_password = password</span>
+<tt class="docutils literal"><span class="pre">app/config/parameters.yml</span></tt> file:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/parameters.yml</span>
+<span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">database_driver</span><span class="p-Indicator">:</span>    <span class="l-Scalar-Plain">pdo_mysql</span>
+    <span class="l-Scalar-Plain">database_host</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">localhost</span>
+    <span class="l-Scalar-Plain">database_name</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">test_project</span>
+    <span class="l-Scalar-Plain">database_user</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">root</span>
+    <span class="l-Scalar-Plain">database_password</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">password</span>
+
+<span class="c1"># ...</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>Defining the configuration via <tt class="docutils literal"><span class="pre">parameters.ini</span></tt> is just a convention.
+<p>Defining the configuration via <tt class="docutils literal"><span class="pre">parameters.yml</span></tt> is just a convention.
 The parameters defined in that file are referenced by the main configuration
 file when setting up Doctrine:</p>
 <div class="highlight-yaml"><pre># app/config/config.yml
@@ -285,7 +287,7 @@ each with their own options. For information on the available field types,
 see the <a class="reference internal" href="#book-doctrine-field-types"><em>Doctrine Field Types Reference</em></a> section.</p>
 <div class="admonition-see-also admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last">You can also check out Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html">Basic Mapping Documentation</a> for
+<p class="last">You can also check out Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html">Basic Mapping Documentation</a> for
 all details about mapping information. If you use annotations, you&#8217;ll
 need to prepend all annotations with <tt class="docutils literal"><span class="pre">ORM\</span></tt> (e.g. <tt class="docutils literal"><span class="pre">ORM\Column(..)</span></tt>),
 which is not shown in Doctrine&#8217;s documentation. You&#8217;ll also need to include
@@ -298,10 +300,10 @@ the <tt class="docutils literal"><span class="pre">use</span> <span class="pre">
 SQL keyword (such as <tt class="docutils literal"><span class="pre">group</span></tt> or <tt class="docutils literal"><span class="pre">user</span></tt>). For example, if your entity
 class name is <tt class="docutils literal"><span class="pre">Group</span></tt>, then, by default, your table name will be <tt class="docutils literal"><span class="pre">group</span></tt>,
 which will cause an SQL error in some engines. See Doctrine&#8217;s
-<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html#quoting-reserved-words">Reserved SQL keywords documentation</a> on how to properly escape these
+<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words">Reserved SQL keywords documentation</a> on how to properly escape these
 names. Alternatively, if you&#8217;re free to choose your database schema,
 simply map to a different table name or column name. See Doctrine&#8217;s
-<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html#persistent-classes">Persistent classes</a> and <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html#property-mapping">Property Mapping</a> documentation.</p>
+<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#persistent-classes">Persistent classes</a> and <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping">Property Mapping</a> documentation.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -437,7 +439,7 @@ of the bundle:</p>
     <span class="nv">$product</span><span class="o">-&gt;</span><span class="na">setPrice</span><span class="p">(</span><span class="s1">&#39;19.99&#39;</span><span class="p">);</span>
     <span class="nv">$product</span><span class="o">-&gt;</span><span class="na">setDescription</span><span class="p">(</span><span class="s1">&#39;Lorem ipsum dolor&#39;</span><span class="p">);</span>
 
-    <span class="nv">$em</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getDoctrine</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getEntityManager</span><span class="p">();</span>
+    <span class="nv">$em</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getDoctrine</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getManager</span><span class="p">();</span>
     <span class="nv">$em</span><span class="o">-&gt;</span><span class="na">persist</span><span class="p">(</span><span class="nv">$product</span><span class="p">);</span>
     <span class="nv">$em</span><span class="o">-&gt;</span><span class="na">flush</span><span class="p">();</span>
 
@@ -562,7 +564,7 @@ queries that were made.</p>
 you have a route that maps a product id to an update action in a controller:</p>
 <div class="highlight-python"><pre>public function updateAction($id)
 {
-    $em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+    $em = $this-&gt;getDoctrine()-&gt;getManager();
     $product = $em-&gt;getRepository('AcmeStoreBundle:Product')-&gt;find($id);
 
     if (!$product) {
@@ -617,7 +619,7 @@ or using Doctrine&#8217;s Query Builder.</p>
 <p>Imagine that you want to query for products, but only return products that
 cost more than <tt class="docutils literal"><span class="pre">19.99</span></tt>, ordered from cheapest to most expensive. From inside
 a controller, do the following:</p>
-<div class="highlight-python"><pre>$em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+<div class="highlight-python"><pre>$em = $this-&gt;getDoctrine()-&gt;getManager();
 $query = $em-&gt;createQuery(
     'SELECT p FROM AcmeStoreBundle:Product p WHERE p.price &gt; :price ORDER BY p.price ASC'
 )-&gt;setParameter('price', '19.99');
@@ -654,7 +656,7 @@ try {
 <p>The DQL syntax is incredibly powerful, allowing you to easily join between
 entities (the topic of <a class="reference internal" href="#book-doctrine-relations"><em>relations</em></a> will be
 covered later), group, etc. For more information, see the official Doctrine
-<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/dql-doctrine-query-language.html">Doctrine Query Language</a> documentation.</p>
+<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html">Doctrine Query Language</a> documentation.</p>
 <div class="sidebar">
 <p class="first sidebar-title">Setting Parameters</p>
 <p>Take note of the <tt class="docutils literal"><span class="pre">setParameter()</span></tt> method. When working with Doctrine,
@@ -700,7 +702,7 @@ query. By calling the <tt class="docutils literal"><span class="pre">getQuery()<
 normal <tt class="docutils literal"><span class="pre">Query</span></tt> object, which is the same object you built directly in the
 previous section.</p>
 <p>For more information on Doctrine&#8217;s Query Builder, consult Doctrine&#8217;s
-<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/query-builder.html">Query Builder</a> documentation.</p>
+<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html">Query Builder</a> documentation.</p>
 </div>
 <div class="section" id="custom-repository-classes">
 <h3>Custom Repository Classes<a class="headerlink" href="#custom-repository-classes" title="Permalink to this headline">¶</a></h3>
@@ -779,7 +781,7 @@ ordered alphabetically.</p>
 from inside the repository.</p>
 </div>
 <p>You can use this new method just like the default finder methods of the repository:</p>
-<div class="highlight-python"><pre>$em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+<div class="highlight-python"><pre>$em = $this-&gt;getDoctrine()-&gt;getManager();
 $products = $em-&gt;getRepository('AcmeStoreBundle:Product')
             -&gt;findAllOrderedByName();</pre>
 </div>
@@ -958,7 +960,7 @@ class DefaultController extends Controller
         // relate this product to the category
         $product-&gt;setCategory($category);
 
-        $em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+        $em = $this-&gt;getDoctrine()-&gt;getManager();
         $em-&gt;persist($category);
         $em-&gt;persist($product);
         $em-&gt;flush();
@@ -1092,7 +1094,7 @@ object and its related <tt class="docutils literal"><span class="pre">Category</
 <p>This section has been an introduction to one common type of entity relationship,
 the one-to-many relationship. For more advanced details and examples of how
 to use other types of relations (e.g. <tt class="docutils literal"><span class="pre">one-to-one</span></tt>, <tt class="docutils literal"><span class="pre">many-to-many</span></tt>), see
-Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/association-mapping.html">Association Mapping Documentation</a>.</p>
+Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html">Association Mapping Documentation</a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you&#8217;re using annotations, you&#8217;ll need to prepend all annotations with
@@ -1187,7 +1189,7 @@ call this method and the <tt class="docutils literal"><span class="pre">created<
 <li><tt class="docutils literal"><span class="pre">loadClassMetadata</span></tt></li>
 </ul>
 <p>For more information on what these lifecycle events mean and lifecycle callbacks
-in general, see Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/events.html#lifecycle-events">Lifecycle Events documentation</a></p>
+in general, see Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#lifecycle-events">Lifecycle Events documentation</a></p>
 <div class="sidebar">
 <p class="first sidebar-title">Lifecycle Callbacks and Event Listeners</p>
 <p>Notice that the <tt class="docutils literal"><span class="pre">setCreatedValue()</span></tt> method receives no arguments. This
@@ -1242,7 +1244,7 @@ using. The following types are supported in Doctrine:</p>
 </ul>
 </li>
 </ul>
-<p>For more information, see Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html#doctrine-mapping-types">Mapping Types documentation</a>.</p>
+<p>For more information, see Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#doctrine-mapping-types">Mapping Types documentation</a>.</p>
 <div class="section" id="field-options">
 <h3>Field Options<a class="headerlink" href="#field-options" title="Permalink to this headline">¶</a></h3>
 <p>Each field can have a set of options applied to it. The available options
@@ -1290,7 +1292,7 @@ and <tt class="docutils literal"><span class="pre">nullable</span></tt>. Take a 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">There are a few more options not listed here. For more details, see
-Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/2.1/reference/basic-mapping.html#property-mapping">Property Mapping documentation</a></p>
+Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping">Property Mapping documentation</a></p>
 </div>
 </div>
 </div>
@@ -1445,7 +1447,7 @@ lifecycle.</p>
         <li class="right" >
           <a href="templating.html" title="Creating and using Templates"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

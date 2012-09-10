@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Internals &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Internals &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="The Symfony2 Stable API" href="stable_api.html" />
     <link rel="prev" title="Performance" href="performance.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="performance.html" title="Performance"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -344,6 +344,15 @@ and set a new <tt class="docutils literal"><span class="pre">Exception</span></t
 <span class="p">}</span>
 </pre></div>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>As Symfony ensures that the Response status code is set to the most
+appropriate one depending on the exception, setting the status on the
+response won&#8217;t work. If you want to overwrite the status code (which you
+should not without a good reason), set the <tt class="docutils literal"><span class="pre">X-Status-Code</span></tt> header:</p>
+<div class="last highlight-python"><pre>return new Response('Error', 404 /* ignored */, array('X-Status-Code' =&gt; 200));</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -448,7 +457,6 @@ the configuration for the development environment:</p>
 <span class="l-Scalar-Plain">web_profiler</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">toolbar</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
     <span class="l-Scalar-Plain">intercept_redirects</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
-    <span class="l-Scalar-Plain">verbose</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
 </pre></div>
 </div>
 </li>
@@ -490,9 +498,6 @@ when an exception is thrown by the application.</p>
 <p>When <tt class="docutils literal"><span class="pre">intercept-redirects</span></tt> is set to <tt class="docutils literal"><span class="pre">true</span></tt>, the web profiler intercepts
 the redirects and gives you the opportunity to look at the collected data
 before following the redirect.</p>
-<p>When <tt class="docutils literal"><span class="pre">verbose</span></tt> is set to <tt class="docutils literal"><span class="pre">true</span></tt>, the Web Debug Toolbar displays a lot of
-information. Setting <tt class="docutils literal"><span class="pre">verbose</span></tt> to <tt class="docutils literal"><span class="pre">false</span></tt> hides some secondary information
-to make the toolbar shorter.</p>
 <p>If you enable the web profiler, you also need to mount the profiler routes:</p>
 <div class="configuration-block">
 <ul class="simple">
@@ -702,7 +707,7 @@ portion of the website? You can use a request matcher:</p>
         <li class="right" >
           <a href="performance.html" title="Performance"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

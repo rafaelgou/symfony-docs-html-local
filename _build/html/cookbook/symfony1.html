@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How Symfony2 differs from symfony1 &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How Symfony2 differs from symfony1 &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Cookbook" href="index.html" />
     <link rel="next" title="The Components" href="../components/index.html" />
     <link rel="prev" title="How to Create a SOAP Web Service in a Symfony2 Controller" href="web_services/php_soap_extension.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="web_services/php_soap_extension.html" title="How to Create a SOAP Web Service in a Symfony2 Controller"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -91,7 +91,7 @@ lives inside a bundle (roughly equivalent to a symfony1 plugin) and, by default,
 each bundle lives inside the <tt class="docutils literal"><span class="pre">src</span></tt> directory. In that way, the <tt class="docutils literal"><span class="pre">src</span></tt>
 directory is a bit like the <tt class="docutils literal"><span class="pre">plugins</span></tt> directory in symfony1, but much more
 flexible. Additionally, while <em>your</em> bundles will live in the <tt class="docutils literal"><span class="pre">src/</span></tt> directory,
-third-party bundles may live in the <tt class="docutils literal"><span class="pre">vendor/bundles/</span></tt> directory.</p>
+third-party bundles will live somewhere in the <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory.</p>
 <p>To get a better picture of the <tt class="docutils literal"><span class="pre">src/</span></tt> directory, let&#8217;s first think of a
 symfony1 application. First, part of your code likely lives inside one or
 more applications. Most commonly these include modules, but could also include
@@ -116,8 +116,8 @@ templates and most anything else specific to your project will live.</p>
 directory in symfony1, which was the conventional directory for all vendor
 libraries and bundles. By default, you&#8217;ll find the Symfony2 library files in
 this directory, along with several other dependent libraries such as Doctrine2,
-Twig and Swiftmailer. 3rd party Symfony2 bundles usually live in the
-<tt class="docutils literal"><span class="pre">vendor/bundles/</span></tt>.</p>
+Twig and Swiftmailer. 3rd party Symfony2 bundles live somewhere in the
+<tt class="docutils literal"><span class="pre">vendor/</span></tt>.</p>
 </div>
 <div class="section" id="the-web-directory">
 <h3>The <tt class="docutils literal"><span class="pre">web/</span></tt> Directory<a class="headerlink" href="#the-web-directory" title="Permalink to this headline">¶</a></h3>
@@ -166,19 +166,19 @@ class SensioFrameworkExtraBundle extends Bundle
 }</pre>
 </div>
 <p>The file itself lives at
-<tt class="docutils literal"><span class="pre">vendor/bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php</span></tt>.
+<tt class="docutils literal"><span class="pre">vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/SensioFrameworkExtraBundle.php</span></tt>.
 As you can see, the location of the file follows the namespace of the class.
 Specifically, the namespace, <tt class="docutils literal"><span class="pre">Sensio\Bundle\FrameworkExtraBundle</span></tt>, spells out
 the directory that the file should live in
-(<tt class="docutils literal"><span class="pre">vendor/bundle/Sensio/Bundle/FrameworkExtraBundle</span></tt>). This is because, in the
-<tt class="docutils literal"><span class="pre">app/autoload.php</span></tt> file, you&#8217;ll configure Symfony to look for the <tt class="docutils literal"><span class="pre">Sensio</span></tt>
-namespace in the <tt class="docutils literal"><span class="pre">vendor/bundle</span></tt> directory:</p>
+(<tt class="docutils literal"><span class="pre">vendor/sensio/framework-extra-bundle/Sensio/Bundle/FrameworkExtraBundle/</span></tt>).
+This is because, in the <tt class="docutils literal"><span class="pre">app/autoload.php</span></tt> file, you&#8217;ll configure Symfony to
+look for the <tt class="docutils literal"><span class="pre">Sensio</span></tt> namespace in the <tt class="docutils literal"><span class="pre">vendor/sensio</span></tt> directory:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/autoload.php</span>
 
 <span class="c1">// ...</span>
 <span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">registerNamespaces</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
     <span class="o">...</span><span class="p">,</span>
-    <span class="s1">&#39;Sensio&#39;</span>           <span class="o">=&gt;</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../vendor/bundles&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Sensio&#39;</span>           <span class="o">=&gt;</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../vendor/sensio/framework-extra-bundle&#39;</span><span class="p">,</span>
 <span class="p">));</span>
 </pre></div>
 </div>
@@ -191,7 +191,7 @@ contains a different class). In order for a class to be autoloaded, you
 <strong>never need to clear your cache</strong> in Symfony2.</p>
 <p>As mentioned before, for the autoloader to work, it needs to know that the
 <tt class="docutils literal"><span class="pre">Sensio</span></tt> namespace lives in the <tt class="docutils literal"><span class="pre">vendor/bundles</span></tt> directory and that, for
-example, the <tt class="docutils literal"><span class="pre">Doctrine</span></tt> namespace lives in the <tt class="docutils literal"><span class="pre">vendor/doctrine/lib/</span></tt>
+example, the <tt class="docutils literal"><span class="pre">Doctrine</span></tt> namespace lives in the <tt class="docutils literal"><span class="pre">vendor/doctrine/orm/lib/</span></tt>
 directory. This mapping is entirely controlled by you via the
 <tt class="docutils literal"><span class="pre">app/autoload.php</span></tt> file.</p>
 <p>If you look at the <tt class="docutils literal"><span class="pre">HelloController</span></tt> from the Symfony2 Standard Edition you
@@ -389,7 +389,7 @@ the chapter titled &#8220;<a class="reference internal" href="../book/service_co
         <li class="right" >
           <a href="web_services/php_soap_extension.html" title="How to Create a SOAP Web Service in a Symfony2 Controller"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Cookbook</a> &raquo;</li> 
       </ul>
     </div>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use the Virtual Form Field Option &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to use the Virtual Form Field Option &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Form" href="index.html" />
     <link rel="next" title="Validation" href="../validation/index.html" />
     <link rel="prev" title="How to Create a Custom Form Field Type" href="create_custom_field_type.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="create_custom_field_type.html" title="How to Create a Custom Form Field Type"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Form</a> &raquo;</li> 
       </ul>
@@ -96,9 +96,11 @@ a <tt class="docutils literal"><span class="pre">Customer</span></tt>.</p>
 <div class="highlight-python"><pre>// src/Acme/HelloBundle/Form/Type/CompanyType.php
 namespace Acme\HelloBundle\Form\Type;
 
+use Symfony\Component\Form\FormBuilderInterface;
+
 class CompanyType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             -&gt;add('name', 'text')
@@ -109,9 +111,11 @@ class CompanyType extends AbstractType
 <div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/HelloBundle/Form/Type/CustomerType.php</span>
 <span class="k">namespace</span> <span class="nx">Acme\HelloBundle\Form\Type</span><span class="p">;</span>
 
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
+
 <span class="k">class</span> <span class="nc">CustomerType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilder</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nv">$builder</span>
             <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;firstName&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span>
@@ -125,9 +129,12 @@ location form type:</p>
 <div class="highlight-python"><pre>// src/Acme/HelloBundle/Form/Type/LocationType.php
 namespace Acme\HelloBundle\Form\Type;
 
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
 class LocationType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
             -&gt;add('address', 'textarea')
@@ -136,11 +143,11 @@ class LocationType extends AbstractType
             -&gt;add('country', 'text');
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
-            'virtual' =&gt; true,
-        );
+        $resolver-&gt;setDefaults(array(
+            'virtual' =&gt; true
+        ));
     }
 
     public function getName()
@@ -153,19 +160,23 @@ class LocationType extends AbstractType
 can&#8217;t directly link our <tt class="docutils literal"><span class="pre">LocationType</span></tt> to our <tt class="docutils literal"><span class="pre">CompanyType</span></tt> or <tt class="docutils literal"><span class="pre">CustomerType</span></tt>.
 But we absolutely want to have a dedicated form type to deal with location (remember, DRY!).</p>
 <p>The <tt class="docutils literal"><span class="pre">virtual</span></tt> form field option is the solution.</p>
-<p>We can set the option <tt class="docutils literal"><span class="pre">'virtual'</span> <span class="pre">=&gt;</span> <span class="pre">true</span></tt> in the <tt class="docutils literal"><span class="pre">getDefaultOptions</span></tt> method
+<p>We can set the option <tt class="docutils literal"><span class="pre">'virtual'</span> <span class="pre">=&gt;</span> <span class="pre">true</span></tt> in the <tt class="docutils literal"><span class="pre">setDefaultOptions()</span></tt> method
 of <tt class="docutils literal"><span class="pre">LocationType</span></tt> and directly start using it in the two original form types.</p>
 <p>Look at the result:</p>
 <div class="highlight-python"><pre>// CompanyType
-public function buildForm(FormBuilder $builder, array $options)
+public function buildForm(FormBuilderInterface $builder, array $options)
 {
-    $builder-&gt;add('foo', new LocationType());
+    $builder-&gt;add('foo', new LocationType(), array(
+        'data_class' =&gt; 'Acme\HelloBundle\Entity\Company'
+    ));
 }</pre>
 </div>
 <div class="highlight-php"><div class="highlight"><pre><span class="c1">// CustomerType</span>
-<span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilder</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
 <span class="p">{</span>
-    <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">LocationType</span><span class="p">());</span>
+    <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">LocationType</span><span class="p">(),</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;data_class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Acme\HelloBundle\Entity\Customer&#39;</span>
+    <span class="p">));</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -230,7 +241,7 @@ the third argument of <tt class="docutils literal"><span class="pre">$builder-&g
         <li class="right" >
           <a href="create_custom_field_type.html" title="How to Create a Custom Form Field Type"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Form</a> &raquo;</li> 
       </ul>

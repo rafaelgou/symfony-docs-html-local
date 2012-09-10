@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Embed a Collection of Forms &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to Embed a Collection of Forms &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Form" href="index.html" />
     <link rel="next" title="How to Create a Custom Form Field Type" href="create_custom_field_type.html" />
     <link rel="prev" title="How to Dynamically Generate Forms Using Form Events" href="dynamic_form_generation.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="dynamic_form_generation.html" title="How to Dynamically Generate Forms Using Form Events"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Form</a> &raquo;</li> 
       </ul>
@@ -135,20 +135,21 @@ can be modified by the user:</p>
 namespace Acme\TaskBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TagType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder-&gt;add('name');
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver-&gt;setDefaults(array(
             'data_class' =&gt; 'Acme\TaskBundle\Entity\Tag',
-        );
+        ));
     }
 
     public function getName()
@@ -166,22 +167,23 @@ form itself, create a form for the <tt class="docutils literal"><span class="pre
 namespace Acme\TaskBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TaskType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder-&gt;add('description');
 
         $builder-&gt;add('tags', 'collection', array('type' =&gt; new TagType()));
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver-&gt;setDefaults(array(
             'data_class' =&gt; 'Acme\TaskBundle\Entity\Task',
-        );
+        ));
     }
 
     public function getName()
@@ -220,7 +222,7 @@ class TaskController extends Controller
 
         // process the form on POST
         if ('POST' === $request-&gt;getMethod()) {
-            $form-&gt;bindRequest($request);
+            $form-&gt;bind($request);
             if ($form-&gt;isValid()) {
                 // maybe do some form processing, like saving the Task and Tag objects
             }
@@ -319,7 +321,9 @@ add the <tt class="docutils literal"><span class="pre">allow_add</span></tt> opt
 
 // ...
 
-public function buildForm(FormBuilder $builder, array $options)
+use Symfony\Component\Form\FormBuilderInterface;
+
+public function buildForm(FormBuilderInterface $builder, array $options)
 {
     $builder-&gt;add('description');
 
@@ -347,7 +351,7 @@ new &#8220;tag&#8221; forms. To render it, make the following change to your tem
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;tags&quot;</span> <span class="na">data-prototype=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">row</span><span class="p">(</span><span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;prototype&#39;</span><span class="p">)))</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;tags&quot;</span> <span class="na">data-prototype=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">row</span><span class="p">(</span><span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;tags&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getVar</span><span class="p">(</span><span class="s1">&#39;prototype&#39;</span><span class="p">)))</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;</span>
     ...
 <span class="nt">&lt;/ul&gt;</span>
 </pre></div>
@@ -373,7 +377,7 @@ on it. You could even choose to render only one of its fields (e.g. the
 </div>
 </div>
 <p>On the rendered page, the result will look something like this:</p>
-<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;tags&quot;</span> <span class="na">data-prototype=</span><span class="s">&quot;&amp;lt;div&amp;gt;&amp;lt;label class=&amp;quot; required&amp;quot;&amp;gt;$$name$$&amp;lt;/label&amp;gt;&amp;lt;div id=&amp;quot;task_tags_$$name$$&amp;quot;&amp;gt;&amp;lt;div&amp;gt;&amp;lt;label for=&amp;quot;task_tags_$$name$$_name&amp;quot; class=&amp;quot; required&amp;quot;&amp;gt;Name&amp;lt;/label&amp;gt;&amp;lt;input type=&amp;quot;text&amp;quot; id=&amp;quot;task_tags_$$name$$_name&amp;quot; name=&amp;quot;task[tags][$$name$$][name]&amp;quot; required=&amp;quot;required&amp;quot; maxlength=&amp;quot;255&amp;quot; /&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;&quot;</span><span class="nt">&gt;</span>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">&quot;tags&quot;</span> <span class="na">data-prototype=</span><span class="s">&quot;&amp;lt;div&amp;gt;&amp;lt;label class=&amp;quot; required&amp;quot;&amp;gt;__name__&amp;lt;/label&amp;gt;&amp;lt;div id=&amp;quot;task_tags___name__&amp;quot;&amp;gt;&amp;lt;div&amp;gt;&amp;lt;label for=&amp;quot;task_tags___name___name&amp;quot; class=&amp;quot; required&amp;quot;&amp;gt;Name&amp;lt;/label&amp;gt;&amp;lt;input type=&amp;quot;text&amp;quot; id=&amp;quot;task_tags___name___name&amp;quot; name=&amp;quot;task[tags][__name__][name]&amp;quot; required=&amp;quot;required&amp;quot; maxlength=&amp;quot;255&amp;quot; /&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;&amp;lt;/div&amp;gt;&quot;</span><span class="nt">&gt;</span>
 </pre></div>
 </div>
 <p>The goal of this section will be to use JavaScript to read this attribute
@@ -407,18 +411,20 @@ will be show next):</p>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">addTagForm</span></tt> function&#8217;s job will be to use the <tt class="docutils literal"><span class="pre">data-prototype</span></tt> attribute
 to dynamically add a new form when this link is clicked. The <tt class="docutils literal"><span class="pre">data-prototype</span></tt>
-HTML contains the tag <tt class="docutils literal"><span class="pre">text</span></tt> input element with a name of <tt class="docutils literal"><span class="pre">task[tags][$$name$$][name]</span></tt>
-and id of <tt class="docutils literal"><span class="pre">task_tags_$$name$$_name</span></tt>. The <tt class="docutils literal"><span class="pre">$$name</span></tt> is a little &#8220;placeholder&#8221;,
+HTML contains the tag <tt class="docutils literal"><span class="pre">text</span></tt> input element with a name of <tt class="docutils literal"><span class="pre">task[tags][__name__][name]</span></tt>
+and id of <tt class="docutils literal"><span class="pre">task_tags___name___name</span></tt>. The <tt class="docutils literal"><span class="pre">__name__</span></tt> is a little &#8220;placeholder&#8221;,
 which we&#8217;ll replace with a unique, incrementing number (e.g. <tt class="docutils literal"><span class="pre">task[tags][3][name]</span></tt>).</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The placeholder was changed from <tt class="docutils literal"><span class="pre">$$name$$</span></tt> to <tt class="docutils literal"><span class="pre">__name__</span></tt> in Symfony 2.1</p>
 <p>The actual code needed to make this all work can vary quite a bit, but here&#8217;s
 one example:</p>
 <div class="highlight-javascript"><div class="highlight"><pre><span class="kd">function</span> <span class="nx">addTagForm</span><span class="p">(</span><span class="nx">collectionHolder</span><span class="p">,</span> <span class="nx">$newLinkLi</span><span class="p">)</span> <span class="p">{</span>
     <span class="c1">// Get the data-prototype we explained earlier</span>
     <span class="kd">var</span> <span class="nx">prototype</span> <span class="o">=</span> <span class="nx">collectionHolder</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;data-prototype&#39;</span><span class="p">);</span>
 
-    <span class="c1">// Replace &#39;$$name$$&#39; in the prototype&#39;s HTML to</span>
+    <span class="c1">// Replace &#39;__name__&#39; in the prototype&#39;s HTML to</span>
     <span class="c1">// instead be a number based on the current collection&#39;s length.</span>
-    <span class="kd">var</span> <span class="nx">newForm</span> <span class="o">=</span> <span class="nx">prototype</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/\$\$name\$\$/g</span><span class="p">,</span> <span class="nx">collectionHolder</span><span class="p">.</span><span class="nx">children</span><span class="p">().</span><span class="nx">length</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">newForm</span> <span class="o">=</span> <span class="nx">prototype</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="sr">/__name__/g</span><span class="p">,</span> <span class="nx">collectionHolder</span><span class="p">.</span><span class="nx">children</span><span class="p">().</span><span class="nx">length</span><span class="p">);</span>
 
     <span class="c1">// Display the form in the page in an li, before the &quot;Add a tag&quot; link li</span>
     <span class="kd">var</span> <span class="nx">$newFormLi</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;li&gt;&lt;/li&gt;&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="nx">newForm</span><span class="p">);</span>
@@ -513,8 +519,9 @@ The solution is similar to allowing tags to be added.</p>
 <div class="highlight-python"><pre>// src/Acme/TaskBundle/Form/Type/TaskType.php
 
 // ...
+use Symfony\Component\Form\FormBuilderInterface;
 
-public function buildForm(FormBuilder $builder, array $options)
+public function buildForm(FormBuilderInterface $builder, array $options)
 {
     $builder-&gt;add('description');
 
@@ -589,7 +596,7 @@ is handling the &#8220;update&#8221; of your Task:</p>
 
 public function editAction($id, Request $request)
 {
-    $em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+    $em = $this-&gt;getDoctrine()-&gt;getManager();
     $task = $em-&gt;getRepository('AcmeTaskBundle:Task')-&gt;find($id);
 
     if (!$task) {
@@ -604,7 +611,7 @@ public function editAction($id, Request $request)
     $editForm = $this-&gt;createForm(new TaskType(), $task);
 
     if ('POST' === $request-&gt;getMethod()) {
-        $editForm-&gt;bindRequest($this-&gt;getRequest());
+        $editForm-&gt;bind($this-&gt;getRequest());
 
         if ($editForm-&gt;isValid()) {
 
@@ -710,7 +717,7 @@ each Tag object itself.</p>
         <li class="right" >
           <a href="dynamic_form_generation.html" title="How to Dynamically Generate Forms Using Form Events"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Form</a> &raquo;</li> 
       </ul>

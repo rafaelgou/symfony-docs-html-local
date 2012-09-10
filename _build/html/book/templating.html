@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Creating and using Templates &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Creating and using Templates &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Databases and Doctrine" href="doctrine.html" />
     <link rel="prev" title="Routing" href="routing.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="routing.html" title="Routing"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -629,6 +629,61 @@ syntax for controllers (i.e. <strong>bundle</strong>:<strong>controller</strong>
 <p>Whenever you find that you need a variable or a piece of information that
 you don&#8217;t have access to in a template, consider rendering a controller.
 Controllers are fast to execute and promote good code organization and reuse.</p>
+</div>
+<div class="section" id="asynchronous-content-with-hinclude-js">
+<h3>Asynchronous Content with hinclude.js<a class="headerlink" href="#asynchronous-content-with-hinclude-js" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>hinclude.js support was added in Symfony 2.1</p>
+<p>Controllers can be embedded asyncronous using the <a class="reference external" href="http://mnot.github.com/hinclude/">hinclude.js</a> javascript library.
+As the embedded content comes from another page (or controller for that matter),
+Symfony2 uses the standard <tt class="docutils literal"><span class="pre">render</span></tt> helper to configure <tt class="docutils literal"><span class="pre">hinclude</span></tt> tags:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>Twig</em><div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">render</span> <span class="s1">&#39;...:news&#39;</span> <span class="k">with</span> <span class="o">{},</span> <span class="o">{</span><span class="s1">&#39;standalone&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">}</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;actions&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;...:news&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(),</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;standalone&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;js&#39;</span><span class="p">))</span> <span class="cp">?&gt;</span><span class="x"></span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><a class="reference external" href="http://mnot.github.com/hinclude/">hinclude.js</a> needs to be included in your page to work.</p>
+</div>
+<p>Default content (while loading or if javascript is disabled) can be set globally
+in your application configuration:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
+    <span class="c1"># ...</span>
+    <span class="l-Scalar-Plain">templating</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">hinclude_default_template</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">AcmeDemoBundle::hinclude.html.twig</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<span class="nt">&lt;framework:config&gt;</span>
+    <span class="nt">&lt;framework:templating</span> <span class="na">hinclude-default-template=</span><span class="s">&quot;AcmeDemoBundle::hinclude.html.twig&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/framework:config&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="c1">// ...</span>
+    <span class="s1">&#39;templating&#39;</span>      <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;hinclude_default_template&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;AcmeDemoBundle::hinclude.html.twig&#39;</span><span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="linking-to-pages">
 <span id="index-9"></span><h3>Linking to Pages<a class="headerlink" href="#linking-to-pages" title="Permalink to this headline">¶</a></h3>
@@ -1286,6 +1341,7 @@ and in Symfony2, that&#8217;s absolutely fine.</p>
 <li><a class="reference internal" href="#tags-and-helpers">Tags and Helpers</a><ul>
 <li><a class="reference internal" href="#including-other-templates">Including other Templates</a></li>
 <li><a class="reference internal" href="#embedding-controllers">Embedding Controllers</a></li>
+<li><a class="reference internal" href="#asynchronous-content-with-hinclude-js">Asynchronous Content with hinclude.js</a></li>
 <li><a class="reference internal" href="#linking-to-pages">Linking to Pages</a></li>
 <li><a class="reference internal" href="#linking-to-assets">Linking to Assets</a></li>
 </ul>
@@ -1351,7 +1407,7 @@ and in Symfony2, that&#8217;s absolutely fine.</p>
         <li class="right" >
           <a href="routing.html" title="Routing"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

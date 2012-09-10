@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use PdoSessionStorage to store Sessions in the Database &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to use PdoSessionStorage to store Sessions in the Database &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Configuration" href="index.html" />
     <link rel="next" title="How to use the Apache Router" href="apache_router.html" />
     <link rel="prev" title="How to Set External Parameters in the Service Container" href="external_parameters.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="external_parameters.html" title="How to Set External Parameters in the Service Container"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Configuration</a> &raquo;</li> 
       </ul>
@@ -61,16 +61,22 @@ file(s). Most medium to large websites use a database to store the session
 values instead of files, because databases are easier to use and scale in a
 multi-webserver environment.</p>
 <p>Symfony2 has a built-in solution for database session storage called
-<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/SessionStorage/PdoSessionStorage.html" title="Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage"><span class="pre">PdoSessionStorage</span></a></tt>.
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Session/Storage/Handler/PdoSessionHandler.html" title="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler"><span class="pre">PdoSessionHandler</span></a></tt>.
 To use it, you just need to change some parameters in <tt class="docutils literal"><span class="pre">config.yml</span></tt> (or the
 configuration format of your choice):</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>In Symfony2.1 the class and namespace are slightly modified. You can now
+find the session storage classes in the <cite>Session\Storage</cite> namespace:
+<tt class="docutils literal"><span class="pre">Symfony\Component\HttpFoundation\Session\Storage</span></tt>. Also
+note that in Symfony2.1 you should configure <tt class="docutils literal"><span class="pre">handler_id</span></tt> not <tt class="docutils literal"><span class="pre">storage_id</span></tt> like in Symfony2.0.
+Below, you&#8217;ll notice that <tt class="docutils literal"><span class="pre">%session.storage.options%</span></tt> is not used anymore.</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><pre># app/config/config.yml
 framework:
     session:
         # ...
-        storage_id:     session.storage.pdo
+        handler_id:     session.handler.pdo
 
 parameters:
     pdo.db_options:
@@ -87,14 +93,14 @@ services:
             user:     myuser
             password: mypassword
 
-    session.storage.pdo:
-        class:     Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage
-        arguments: [@pdo, %session.storage.options%, %pdo.db_options%]</pre>
+    session.handler.pdo:
+        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+        arguments: [@pdo, %pdo.db_options%]</pre>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
 <span class="nt">&lt;framework:config&gt;</span>
-    <span class="nt">&lt;framework:session</span> <span class="na">storage-id=</span><span class="s">&quot;session.storage.pdo&quot;</span> <span class="na">default-locale=</span><span class="s">&quot;en&quot;</span> <span class="na">lifetime=</span><span class="s">&quot;3600&quot;</span> <span class="na">auto-start=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
+    <span class="nt">&lt;framework:session</span> <span class="na">handler-id=</span><span class="s">&quot;session.handler.pdo&quot;</span> <span class="na">lifetime=</span><span class="s">&quot;3600&quot;</span> <span class="na">auto-start=</span><span class="s">&quot;true&quot;</span><span class="nt">/&gt;</span>
 <span class="nt">&lt;/framework:config&gt;</span>
 
 <span class="nt">&lt;parameters&gt;</span>
@@ -113,9 +119,8 @@ services:
         <span class="nt">&lt;argument&gt;</span>mypassword<span class="nt">&lt;/argument&gt;</span>
     <span class="nt">&lt;/service&gt;</span>
 
-    <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;session.storage.pdo&quot;</span> <span class="na">class=</span><span class="s">&quot;Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;session.handler.pdo&quot;</span> <span class="na">class=</span><span class="s">&quot;Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;argument</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;pdo&quot;</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;argument&gt;</span>%session.storage.options%<span class="nt">&lt;/argument&gt;</span>
         <span class="nt">&lt;argument&gt;</span>%pdo.db_options%<span class="nt">&lt;/argument&gt;</span>
     <span class="nt">&lt;/service&gt;</span>
 <span class="nt">&lt;/services&gt;</span>
@@ -130,7 +135,7 @@ services:
     <span class="c1">// ...</span>
     <span class="s1">&#39;session&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
         <span class="o">...</span><span class="p">,</span>
-        <span class="s1">&#39;storage_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;session.storage.pdo&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;handler_id&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;session.handler.pdo&#39;</span><span class="p">,</span>
     <span class="p">),</span>
 <span class="p">));</span>
 
@@ -148,12 +153,11 @@ services:
 <span class="p">));</span>
 <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setDefinition</span><span class="p">(</span><span class="s1">&#39;pdo&#39;</span><span class="p">,</span> <span class="nv">$pdoDefinition</span><span class="p">);</span>
 
-<span class="nv">$storageDefinition</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Definition</span><span class="p">(</span><span class="s1">&#39;Symfony\Component\HttpFoundation\SessionStorage\PdoSessionStorage&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+<span class="nv">$storageDefinition</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Definition</span><span class="p">(</span><span class="s1">&#39;Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
     <span class="k">new</span> <span class="nx">Reference</span><span class="p">(</span><span class="s1">&#39;pdo&#39;</span><span class="p">),</span>
-    <span class="s1">&#39;%session.storage.options%&#39;</span><span class="p">,</span>
     <span class="s1">&#39;%pdo.db_options%&#39;</span><span class="p">,</span>
 <span class="p">));</span>
-<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setDefinition</span><span class="p">(</span><span class="s1">&#39;session.storage.pdo&#39;</span><span class="p">,</span> <span class="nv">$storageDefinition</span><span class="p">);</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setDefinition</span><span class="p">(</span><span class="s1">&#39;session.handler.pdo&#39;</span><span class="p">,</span> <span class="nv">$storageDefinition</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -291,7 +295,7 @@ following (MySQL):</p>
         <li class="right" >
           <a href="external_parameters.html" title="How to Set External Parameters in the Service Container"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Configuration</a> &raquo;</li> 
       </ul>

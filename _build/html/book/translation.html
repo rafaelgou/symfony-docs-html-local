@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Translations &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Translations &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Service Container" href="service_container.html" />
     <link rel="prev" title="HTTP Cache" href="http_cache.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="http_cache.html" title="HTTP Cache"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -83,7 +83,8 @@ the process has several common steps:</p>
 <li>Abstract strings (i.e. &#8220;messages&#8221;) by wrapping them in calls to the <tt class="docutils literal"><span class="pre">Translator</span></tt>;</li>
 <li>Create translation resources for each supported locale that translate
 each message in the application;</li>
-<li>Determine, set and manage the user&#8217;s locale in the session.</li>
+<li>Determine, set and manage the user&#8217;s locale for the request and optionally
+on the user&#8217;s entire session.</li>
 </ol>
 <div class="section" id="configuration">
 <span id="index-1"></span><h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
@@ -123,7 +124,8 @@ to find the translation for the language (<tt class="docutils literal"><span cla
 <tt class="docutils literal"><span class="pre">fr_FR</span></tt> for instance). If this also fails, it looks for a translation
 using the fallback locale.</p>
 </div>
-<p>The locale used in translations is the one stored in the user session.</p>
+<p>The locale used in translations is the one stored on the request. This is
+typically set via a <tt class="docutils literal"><span class="pre">_locale</span></tt> attribute on your routes (see <a class="reference internal" href="#book-translation-locale-url"><em>The Locale and the URL</em></a>).</p>
 </div>
 <div class="section" id="basic-translation">
 <span id="index-2"></span><h2>Basic Translation<a class="headerlink" href="#basic-translation" title="Permalink to this headline">¶</a></h2>
@@ -183,7 +185,8 @@ the message will be translated into <tt class="docutils literal"><span class="pr
 <h3>The Translation Process<a class="headerlink" href="#the-translation-process" title="Permalink to this headline">¶</a></h3>
 <p>To actually translate the message, Symfony2 uses a simple process:</p>
 <ul class="simple">
-<li>The <tt class="docutils literal"><span class="pre">locale</span></tt> of the current user, which is stored in the session, is determined;</li>
+<li>The <tt class="docutils literal"><span class="pre">locale</span></tt> of the current user, which is stored on the request (or
+stored as <tt class="docutils literal"><span class="pre">_locale</span></tt> on the session), is determined;</li>
 <li>A catalog of translated messages is loaded from translation resources defined
 for the <tt class="docutils literal"><span class="pre">locale</span></tt> (e.g. <tt class="docutils literal"><span class="pre">fr_FR</span></tt>). Messages from the fallback locale are
 also loaded and added to the catalog if they don&#8217;t already exist. The end
@@ -294,13 +297,18 @@ that Symfony can discover the new translation resource:</p>
 </div>
 <div class="section" id="translation-locations-and-naming-conventions">
 <span id="index-5"></span><h3>Translation Locations and Naming Conventions<a class="headerlink" href="#translation-locations-and-naming-conventions" title="Permalink to this headline">¶</a></h3>
-<p>Symfony2 looks for message files (i.e. translations) in two locations:</p>
+<p>Symfony2 looks for message files (i.e. translations) in the following locations:</p>
 <ul class="simple">
-<li>For messages found in a bundle, the corresponding message files should
-live in the <tt class="docutils literal"><span class="pre">Resources/translations/</span></tt> directory of the bundle;</li>
-<li>To override any bundle translations, place message files in the
-<tt class="docutils literal"><span class="pre">app/Resources/translations</span></tt> directory.</li>
+<li>the <tt class="docutils literal"><span class="pre">&lt;kernel</span> <span class="pre">root</span> <span class="pre">directory&gt;/Resources/translations</span></tt> directory;</li>
+<li>the <tt class="docutils literal"><span class="pre">&lt;kernel</span> <span class="pre">root</span> <span class="pre">directory&gt;/Resources/&lt;bundle</span> <span class="pre">name&gt;/translations</span></tt> directory;</li>
+<li>the <tt class="docutils literal"><span class="pre">Resources/translations/</span></tt> directory of the bundle.</li>
 </ul>
+<p>The locations are listed with the highest priority first. That is you can
+override the translation messages of a bundle in any of the top 2 directories.</p>
+<p>The override mechanism works at a key level: only the overriden keys need
+to be listed in a higher priority message file. When a key is not found
+in a message file, the translator will automatically fallback to the lower
+priority message files.</p>
 <p>The filename of the translations is also important as Symfony2 uses a convention
 to determine details about the translations. Each message file must be named
 according to the following pattern: <tt class="docutils literal"><span class="pre">domain.locale.loader</span></tt>:</p>
@@ -481,48 +489,62 @@ locale.</p>
 </div>
 <div class="section" id="handling-the-user-s-locale">
 <span id="index-8"></span><h2>Handling the User&#8217;s Locale<a class="headerlink" href="#handling-the-user-s-locale" title="Permalink to this headline">¶</a></h2>
-<p>The locale of the current user is stored in the session and is accessible
-via the <tt class="docutils literal"><span class="pre">session</span></tt> service:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="nv">$locale</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getLocale</span><span class="p">();</span>
+<p>The locale of the current user is stored in the request and is accessible
+via the <tt class="docutils literal"><span class="pre">request</span></tt> object:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// access the reqest object in a standard controller</span>
+<span class="nv">$request</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getRequest</span><span class="p">();</span>
 
-<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setLocale</span><span class="p">(</span><span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+<span class="nv">$locale</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getLocale</span><span class="p">();</span>
+
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">setLocale</span><span class="p">(</span><span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
+<p id="index-9">It is also possible to store the locale in the session instead of on a per
+request basis. If you do this, each subsequent request will have this locale.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;session&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;_locale&#39;</span><span class="p">,</span> <span class="s1">&#39;en_US&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="#book-translation-locale-url"><em>The Locale and the URL</em></a> section below about setting the
+locale via routing.</p>
 <div class="section" id="fallback-and-default-locale">
-<span id="index-9"></span><h3>Fallback and Default Locale<a class="headerlink" href="#fallback-and-default-locale" title="Permalink to this headline">¶</a></h3>
+<h3>Fallback and Default Locale<a class="headerlink" href="#fallback-and-default-locale" title="Permalink to this headline">¶</a></h3>
 <p>If the locale hasn&#8217;t been set explicitly in the session, the <tt class="docutils literal"><span class="pre">fallback_locale</span></tt>
 configuration parameter will be used by the <tt class="docutils literal"><span class="pre">Translator</span></tt>. The parameter
 defaults to <tt class="docutils literal"><span class="pre">en</span></tt> (see <a class="reference internal" href="#configuration">Configuration</a>).</p>
-<p>Alternatively, you can guarantee that a locale is set on the user&#8217;s session
-by defining a <tt class="docutils literal"><span class="pre">default_locale</span></tt> for the session service:</p>
+<p>Alternatively, you can guarantee that a locale is set on each user&#8217;s request
+by defining a <tt class="docutils literal"><span class="pre">default_locale</span></tt> for the framework:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">session</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">default_locale</span><span class="p-Indicator">:</span> <span class="nv">en</span> <span class="p-Indicator">}</span>
+    <span class="l-Scalar-Plain">default_locale</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">en</span>
 </pre></div>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
 <span class="nt">&lt;framework:config&gt;</span>
-    <span class="nt">&lt;framework:session</span> <span class="na">default-locale=</span><span class="s">&quot;en&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;framework:default-locale&gt;</span>en<span class="nt">&lt;/framework:default-locale&gt;</span>
 <span class="nt">&lt;/framework:config&gt;</span>
 </pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
 <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;session&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;default_locale&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;en&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;default_locale&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;en&#39;</span><span class="p">,</span>
 <span class="p">));</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The <tt class="docutils literal"><span class="pre">default_locale</span></tt> parameter was defined under the session key
+originally, however, as of 2.1 this has been moved. This is because the
+locale is now set on the request instead of the session.</p>
 </div>
 <div class="section" id="the-locale-and-the-url">
 <span id="book-translation-locale-url"></span><h3>The Locale and the URL<a class="headerlink" href="#the-locale-and-the-url" title="Permalink to this headline">¶</a></h3>
-<p>Since the locale of the user is stored in the session, it may be tempting
+<p>Since you can store the locale of the user is in the session, it may be tempting
 to use the same URL to display a resource in many different languages based
 on the user&#8217;s locale. For example, <tt class="docutils literal"><span class="pre">http://www.example.com/contact</span></tt> could
 show content in English for one user and French for another user. Unfortunately,
@@ -730,6 +752,14 @@ apply the raw filter after the translation filter:</p>
 </pre></div>
 </div>
 </div>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>You can now set the translation domain for an entire Twig template with a
+single tag:<div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">trans_default_domain</span> <span class="s2">&quot;app&quot;</span> <span class="cp">%}</span><span class="x"></span>
+</pre></div>
+</div>
+<p>Note that this only influences the current template, not any &#8220;included&#8221;
+templates (in order to avoid side effects).</p>
+</p>
 </div>
 <div class="section" id="php-templates">
 <h3>PHP Templates<a class="headerlink" href="#php-templates" title="Permalink to this headline">¶</a></h3>
@@ -748,7 +778,7 @@ apply the raw filter after the translation filter:</p>
 </div>
 <div class="section" id="forcing-the-translator-locale">
 <h2>Forcing the Translator Locale<a class="headerlink" href="#forcing-the-translator-locale" title="Permalink to this headline">¶</a></h2>
-<p>When translating a message, Symfony2 uses the locale from the user&#8217;s session
+<p>When translating a message, Symfony2 uses the locale from the current request
 or the <tt class="docutils literal"><span class="pre">fallback</span></tt> locale if necessary. You can also manually specify the
 locale to use for translation:</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;translator&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">trans</span><span class="p">(</span>
@@ -898,7 +928,8 @@ steps:</p>
 <li>Translate each message into multiple locales by creating translation message
 files. Symfony2 discovers and processes each file because its name follows
 a specific convention;</li>
-<li>Manage the user&#8217;s locale, which is stored in the session.</li>
+<li>Manage the user&#8217;s locale, which is stored on the request, but can also
+be set once the user&#8217;s session.</li>
 </ul>
 </div>
 </div>
@@ -986,7 +1017,7 @@ a specific convention;</li>
         <li class="right" >
           <a href="http_cache.html" title="HTTP Cache"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

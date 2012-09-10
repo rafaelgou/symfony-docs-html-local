@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to load Security Users from the Database (the Entity Provider) &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to load Security Users from the Database (the Entity Provider) &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Security" href="index.html" />
     <link rel="next" title="How to add “Remember Me” Login Functionality" href="remember_me.html" />
     <link rel="prev" title="Security" href="index.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="index.html" title="Security"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Security</a> &raquo;</li> 
       </ul>
@@ -175,34 +175,40 @@ focus on the most important methods that come from the
     <span class="k">public</span> <span class="k">function</span> <span class="nf">eraseCredentials</span><span class="p">()</span>
     <span class="p">{</span>
     <span class="p">}</span>
-
-    <span class="sd">/**</span>
-<span class="sd">     * @inheritDoc</span>
-<span class="sd">     */</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">equals</span><span class="p">(</span><span class="nx">UserInterface</span> <span class="nv">$user</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">username</span> <span class="o">===</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">getUsername</span><span class="p">();</span>
-    <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>In order to use an instance of the <tt class="docutils literal"><span class="pre">AcmeUserBundle:User</span></tt> class in the Symfony
 security layer, the entity class must implement the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/User/UserInterface.html" title="Symfony\Component\Security\Core\User\UserInterface"><span class="pre">UserInterface</span></a></tt>. This
-interface forces the class to implement the six following methods:</p>
+interface forces the class to implement the five following methods:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">getUsername()</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">getSalt()</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">getPassword()</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">getRoles()</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">getRoles()</span></tt>,</li>
+<li><tt class="docutils literal"><span class="pre">getPassword()</span></tt>,</li>
+<li><tt class="docutils literal"><span class="pre">getSalt()</span></tt>,</li>
+<li><tt class="docutils literal"><span class="pre">getUsername()</span></tt>,</li>
 <li><tt class="docutils literal"><span class="pre">eraseCredentials()</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">equals()</span></tt></li>
 </ul>
 <p>For more details on each of these, see <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/User/UserInterface.html" title="Symfony\Component\Security\Core\User\UserInterface"><span class="pre">UserInterface</span></a></tt>.</p>
-<p>To keep it simple, the <tt class="docutils literal"><span class="pre">equals()</span></tt> method just compares the <tt class="docutils literal"><span class="pre">username</span></tt> field
-but it&#8217;s also possible to do more checks depending on the complexity of your
-data model. On the other hand, the <tt class="docutils literal"><span class="pre">eraseCredentials()</span></tt> method remains empty
-as we don&#8217;t care about it in this tutorial.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>In Symfony 2.1, the <tt class="docutils literal"><span class="pre">equals</span></tt> method was removed from <tt class="docutils literal"><span class="pre">UserInterface</span></tt>.
+If you need to override the default implementation of comparison logic,
+implement the new <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/User/EquatableInterface.html" title="Symfony\Component\Security\Core\User\EquatableInterface"><span class="pre">EquatableInterface</span></a></tt>
+interface and implement the <tt class="docutils literal"><span class="pre">isEqualTo</span></tt> method.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/UserBundle/Entity/User.php</span>
+
+<span class="k">namespace</span> <span class="nx">Acme\UserBundle\Entity</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\User\EquatableInterface</span><span class="p">;</span>
+
+<span class="c1">// ...</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">isEqualTo</span><span class="p">(</span><span class="nx">UserInterface</span> <span class="nv">$user</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">username</span> <span class="o">===</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">getUsername</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 <p>Below is an export of my <tt class="docutils literal"><span class="pre">User</span></tt> table from MySQL. For details on how to
 create user records and encode their password, see <a class="reference internal" href="../../book/security.html#book-security-encoding-user-password"><em>Encoding the User&#8217;s Password</em></a>.</p>
 <div class="highlight-text"><div class="highlight"><pre>mysql&gt; select * from user;
@@ -620,7 +626,7 @@ address or username.</p>
         <li class="right" >
           <a href="index.html" title="Security"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Security</a> &raquo;</li> 
       </ul>

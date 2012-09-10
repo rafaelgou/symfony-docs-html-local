@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Dependency Injection Tags &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>The Dependency Injection Tags &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +25,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="Reference Documents" href="index.html" />
     <link rel="next" title="Requirements for running Symfony2" href="requirements.html" />
-    <link rel="prev" title="All" href="constraints/All.html" /> 
+    <link rel="prev" title="Valid" href="constraints/Valid.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,9 +41,9 @@
           <a href="requirements.html" title="Requirements for running Symfony2"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="constraints/All.html" title="All"
+          <a href="constraints/Valid.html" title="Valid"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Reference Documents</a> &raquo;</li> 
       </ul>
     </div>  
@@ -91,40 +91,43 @@ the AsseticBundle has several tags that aren&#8217;t listed here.</p>
 <tr class="row-odd"><td><a class="reference internal" href="#kernel-event-listener">kernel.event_listener</a></td>
 <td>Listen to different events/hooks in Symfony</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#monolog-logger">monolog.logger</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#kernel-event-subscriber">kernel.event_subscriber</a></td>
+<td>To subscribe to a set of different events/hooks in Symfony</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#monolog-logger">monolog.logger</a></td>
 <td>Logging with a custom logging channel</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#monolog-processor">monolog.processor</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#monolog-processor">monolog.processor</a></td>
 <td>Add a custom processor for logging</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#routing-loader">routing.loader</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#routing-loader">routing.loader</a></td>
 <td>Register a custom service that loads routes</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#security-voter">security.voter</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#security-voter">security.voter</a></td>
 <td>Add a custom voter to Symfony&#8217;s authorization logic</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#security-remember-me-aware">security.remember_me_aware</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#security-remember-me-aware">security.remember_me_aware</a></td>
 <td>To allow remember me authentication</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#security-listener-factory">security.listener.factory</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#security-listener-factory">security.listener.factory</a></td>
 <td>Necessary when creating a custom authentication system</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#swiftmailer-plugin">swiftmailer.plugin</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#swiftmailer-plugin">swiftmailer.plugin</a></td>
 <td>Register a custom SwiftMailer Plugin</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#templating-helper">templating.helper</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#templating-helper">templating.helper</a></td>
 <td>Make your service available in PHP templates</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#translation-loader">translation.loader</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#translation-loader">translation.loader</a></td>
 <td>Register a custom service that loads translations</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#twig-extension">twig.extension</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#twig-extension">twig.extension</a></td>
 <td>Register a custom Twig Extension</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#validator-constraint-validator">validator.constraint_validator</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#validator-constraint-validator">validator.constraint_validator</a></td>
 <td>Create your own custom validation constraint</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#validator-initializer">validator.initializer</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#validator-initializer">validator.initializer</a></td>
 <td>Register a service that initializes objects before validation</td>
 </tr>
 </tbody>
@@ -161,7 +164,7 @@ use Symfony\Component\Form\AbstractTypeExtension;
 class MyFormTypeExtension extends AbstractTypeExtension
 {
     // ... fill in whatever methods you want to override
-    // like buildForm(), buildView(), buildViewBottomUp(), getDefaultOptions() or getAllowedOptionValues()
+    // like buildForm(), buildView(), finishView(), setDefaultOptions()
 }</pre>
 </div>
 <p>In order for Symfony to know about your form extension and use it, give it
@@ -301,17 +304,20 @@ additional listener not listed here.</p>
 <tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/EventListener/ProfilerListener.html" title="Symfony\Component\HttpKernel\EventListener\ProfilerListener"><span class="pre">ProfilerListener</span></a></tt></td>
 <td>1024</td>
 </tr>
-<tr class="row-odd"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/EventListener/RouterListener.html" title="Symfony\Bundle\FrameworkBundle\EventListener\RouterListener"><span class="pre">RouterListener</span></a></tt></td>
-<td>0 and 255</td>
-</tr>
-<tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/EventListener/TestSessionListener.html" title="Symfony\Bundle\FrameworkBundle\EventListener\TestSessionListener"><span class="pre">TestSessionListener</span></a></tt></td>
+<tr class="row-odd"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/EventListener/TestSessionListener.html" title="Symfony\Bundle\FrameworkBundle\EventListener\TestSessionListener"><span class="pre">TestSessionListener</span></a></tt></td>
 <td>192</td>
 </tr>
-<tr class="row-odd"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/EventListener/SessionListener.html" title="Symfony\Bundle\FrameworkBundle\EventListener\SessionListener"><span class="pre">SessionListener</span></a></tt></td>
+<tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/EventListener/SessionListener.html" title="Symfony\Bundle\FrameworkBundle\EventListener\SessionListener"><span class="pre">SessionListener</span></a></tt></td>
 <td>128</td>
 </tr>
-<tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Http/Firewall.html" title="Symfony\Component\Security\Http\Firewall"><span class="pre">Firewall</span></a></tt></td>
-<td>64</td>
+<tr class="row-odd"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/EventListener/RouterListener.html" title="Symfony\Component\HttpKernel\EventListener\RouterListener"><span class="pre">RouterListener</span></a></tt></td>
+<td>32</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/EventListener/LocaleListener.html" title="Symfony\Component\HttpKernel\EventListener\LocaleListener"><span class="pre">LocaleListener</span></a></tt></td>
+<td>16</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Http/Firewall.html" title="Symfony\Component\Security\Http\Firewall"><span class="pre">Firewall</span></a></tt></td>
+<td>8</td>
 </tr>
 </tbody>
 </table>
@@ -362,6 +368,9 @@ additional listener not listed here.</p>
 <tr class="row-odd"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/WebProfilerBundle/EventListener/WebDebugToolbarListener.html" title="Symfony\Bundle\WebProfilerBundle\EventListener\WebDebugToolbarListener"><span class="pre">WebDebugToolbarListener</span></a></tt></td>
 <td>-128</td>
 </tr>
+<tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/EventListener/StreamedResponseListener.html" title="Symfony\Component\HttpKernel\EventListener\StreamedResponseListener"><span class="pre">StreamedResponseListener</span></a></tt></td>
+<td>-1024</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -385,6 +394,66 @@ additional listener not listed here.</p>
 </tbody>
 </table>
 </div>
+<div class="section" id="kernel-terminate">
+<h4>kernel.terminate<a class="headerlink" href="#kernel-terminate" title="Permalink to this headline">¶</a></h4>
+<table border="1" class="docutils">
+<colgroup>
+<col width="90%" />
+<col width="10%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td>Listener Class Name</td>
+<td>Priority</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/SwiftmailerBundle/EventListener/EmailSenderListener.html" title="Symfony\Bundle\SwiftmailerBundle\EventListener\EmailSenderListener"><span class="pre">EmailSenderListener</span></a></tt></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="kernel-event-subscriber">
+<span id="dic-tags-kernel-event-subscriber"></span><h2>kernel.event_subscriber<a class="headerlink" href="#kernel-event-subscriber" title="Permalink to this headline">¶</a></h2>
+<p><strong>Purpose</strong>: To subscribe to a set of different events/hooks in Symfony</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The ability to add kernel event subscribers is new to 2.1.</p>
+<p>To enable a custom subscriber, add it as a regular service in one of your
+configuration, and tag it with <tt class="docutils literal"><span class="pre">kernel.event_subscriber</span></tt>:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">kernel.subscriber.your_subscriber_name</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Fully\Qualified\Subscriber\Class\Name</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">kernel.event_subscriber</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;kernel.subscriber.your_subscriber_name&quot;</span> <span class="na">class=</span><span class="s">&quot;Fully\Qualified\Subscriber\Class\Name&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;kernel.event_subscriber&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span>
+    <span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="s1">&#39;kernel.subscriber.your_subscriber_name&#39;</span><span class="p">,</span> <span class="s1">&#39;Fully\Qualified\Subscriber\Class\Name&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addTag</span><span class="p">(</span><span class="s1">&#39;kernel.event_subscriber&#39;</span><span class="p">)</span>
+<span class="p">;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Your service must implement the <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/SymfonyComponentEventDispatcherEventSubscriberInterface.html" title="SymfonyComponentEventDispatcherEventSubscriberInterface"><span class="pre">SymfonyComponentEventDispatcherEventSubscriberInterface</span></a></tt>
+interface.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If your service is created by a factory, you <strong>MUST</strong> correctly set the <tt class="docutils literal"><span class="pre">class</span></tt>
+parameter for this tag to work correctly.</p>
 </div>
 </div>
 <div class="section" id="monolog-logger">
@@ -791,10 +860,12 @@ Then, tag it with the <tt class="docutils literal"><span class="pre">validator.i
 <li><a class="reference internal" href="#kernel-controller">kernel.controller</a></li>
 <li><a class="reference internal" href="#kernel-response">kernel.response</a></li>
 <li><a class="reference internal" href="#kernel-exception">kernel.exception</a></li>
+<li><a class="reference internal" href="#kernel-terminate">kernel.terminate</a></li>
 </ul>
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#kernel-event-subscriber">kernel.event_subscriber</a></li>
 <li><a class="reference internal" href="#monolog-logger">monolog.logger</a></li>
 <li><a class="reference internal" href="#monolog-processor">monolog.processor</a></li>
 <li><a class="reference internal" href="#routing-loader">routing.loader</a></li>
@@ -812,8 +883,8 @@ Then, tag it with the <tt class="docutils literal"><span class="pre">validator.i
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="constraints/All.html"
-                        title="previous chapter">All</a></p>
+  <p class="topless"><a href="constraints/Valid.html"
+                        title="previous chapter">Valid</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="requirements.html"
                         title="next chapter">Requirements for running Symfony2</a></p>
@@ -849,9 +920,9 @@ Then, tag it with the <tt class="docutils literal"><span class="pre">validator.i
           <a href="requirements.html" title="Requirements for running Symfony2"
              >next</a> |</li>
         <li class="right" >
-          <a href="constraints/All.html" title="All"
+          <a href="constraints/Valid.html" title="Valid"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >Reference Documents</a> &raquo;</li> 
       </ul>
     </div>

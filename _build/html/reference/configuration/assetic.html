@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>AsseticBundle Configuration Reference &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>AsseticBundle Configuration Reference &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Reference Documents" href="../index.html" />
     <link rel="next" title="Configuration Reference" href="doctrine.html" />
     <link rel="prev" title="FrameworkBundle Configuration (“framework”)" href="framework.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="framework.html" title="FrameworkBundle Configuration (“framework”)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Reference Documents</a> &raquo;</li> 
       </ul>
     </div>  
@@ -60,13 +60,19 @@
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><pre>assetic:
-    debug:                true
-    use_controller:       true
+    debug:                %kernel.debug%
+    use_controller:
+        enabled:              %kernel.debug%
+        profiler:             false
     read_from:            %kernel.root_dir%/../web
     write_to:             %assetic.read_from%
     java:                 /usr/bin/java
     node:                 /usr/bin/node
+    ruby:                 /usr/bin/ruby
     sass:                 /usr/bin/sass
+    # An key-value pair of any number of named elements
+    variables:
+        some_name:                 []
     bundles:
 
         # Defaults (all currently registered bundles):
@@ -78,26 +84,22 @@
         - DoctrineBundle
         - AsseticBundle
         - ...
-
     assets:
-
-        # Prototype
-        name:
+        # An array of named assets (e.g. some_asset, some_other_asset)
+        some_asset:
             inputs:               []
             filters:              []
             options:
-
-                # Prototype
-                name:                 []
+                # A key-value array of options and values
+                some_option_name: []
     filters:
 
-        # Prototype
-        name:                 []
+        # An array of named filters (e.g. some_filter, some_other_filter)
+        some_filter:                 []
     twig:
         functions:
-
-            # Prototype
-            name:                 []</pre>
+            # An array of named functions (e.g. some_function, some_other_function)
+            some_function:                 []</pre>
 </div>
 </li>
 </ul>
@@ -159,7 +161,7 @@
         <li class="right" >
           <a href="framework.html" title="FrameworkBundle Configuration (“framework”)"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li> 
       </ul>
     </div>

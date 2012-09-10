@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Routing &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Routing &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Creating and using Templates" href="templating.html" />
     <link rel="prev" title="Controller" href="controller.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="controller.html" title="Controller"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -146,6 +146,9 @@ will be executed and the <tt class="docutils literal"><span class="pre">$slug</s
 <p>This is the goal of the Symfony2 router: to map the URL of a request to a
 controller. Along the way, you&#8217;ll learn all sorts of tricks that make mapping
 even the most complex URLs easy.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>As of Symfony 2.1, the Routing component also accepts Unicode values
+in routes like: /Жени/</p>
 </div>
 <div class="section" id="routing-under-the-hood">
 <span id="index-2"></span><h2>Routing: Under the Hood<a class="headerlink" href="#routing-under-the-hood" title="Permalink to this headline">¶</a></h2>
@@ -841,8 +844,13 @@ that are special: each adds a unique piece of functionality inside your applicat
 <li><tt class="docutils literal"><span class="pre">_controller</span></tt>: As you&#8217;ve seen, this parameter is used to determine which
 controller is executed when the route is matched;</li>
 <li><tt class="docutils literal"><span class="pre">_format</span></tt>: Used to set the request format (<a class="reference internal" href="#book-routing-format-param"><em>read more</em></a>);</li>
-<li><tt class="docutils literal"><span class="pre">_locale</span></tt>: Used to set the locale on the session (<a class="reference internal" href="translation.html#book-translation-locale-url"><em>read more</em></a>);</li>
+<li><tt class="docutils literal"><span class="pre">_locale</span></tt>: Used to set the locale on the request (<a class="reference internal" href="translation.html#book-translation-locale-url"><em>read more</em></a>);</li>
 </ul>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If you use the <tt class="docutils literal"><span class="pre">_locale</span></tt> parameter in a route, that value will also
+be stored on the session so that subsequent requests keep this same locale.</p>
+</div>
 </div>
 </div>
 <div class="section" id="controller-naming-pattern">
@@ -1294,7 +1302,7 @@ should also be used to generate URLs.</p>
         <li class="right" >
           <a href="controller.html" title="Controller"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

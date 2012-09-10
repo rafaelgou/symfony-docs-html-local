@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Forms &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Forms &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Security" href="security.html" />
     <link rel="prev" title="Validation" href="validation.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="validation.html" title="Validation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -239,7 +239,7 @@ public function newAction(Request $request)
         -&gt;getForm();
 
     if ($request-&gt;getMethod() == 'POST') {
-        $form-&gt;bindRequest($request);
+        $form-&gt;bind($request);
 
         if ($form-&gt;isValid()) {
             // perform some action, such as saving the task to the database
@@ -251,12 +251,16 @@ public function newAction(Request $request)
     // ...
 }</pre>
 </div>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The <tt class="docutils literal"><span class="pre">bind</span></tt> method was made more flexible in Symfony 2.1. It now accepts
+the raw client data (same as before) or a Symfony Request object. This
+is preferred over the deprecated <tt class="docutils literal"><span class="pre">bindRequest</span></tt> method.</p>
 <p>Now, when submitting the form, the controller binds the submitted data to the
 form, which translates that data back to the <tt class="docutils literal"><span class="pre">task</span></tt> and <tt class="docutils literal"><span class="pre">dueDate</span></tt> properties
-of the <tt class="docutils literal"><span class="pre">$task</span></tt> object. This all happens via the <tt class="docutils literal"><span class="pre">bindRequest()</span></tt> method.</p>
+of the <tt class="docutils literal"><span class="pre">$task</span></tt> object. This all happens via the <tt class="docutils literal"><span class="pre">bind()</span></tt> method.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">As soon as <tt class="docutils literal"><span class="pre">bindRequest()</span></tt> is called, the submitted data is transferred
+<p class="last">As soon as <tt class="docutils literal"><span class="pre">bind()</span></tt> is called, the submitted data is transferred
 to the underlying object immediately. This happens regardless of whether
 or not the underlying data is actually valid.</p>
 </div>
@@ -392,17 +396,58 @@ you&#8217;ll need to specify which validation group(s) your form should use:</p>
 ))-&gt;add(...);</pre>
 </div>
 <p>If you&#8217;re creating <a class="reference internal" href="#book-form-creating-form-classes"><em>form classes</em></a> (a
-good practice), then you&#8217;ll need to add the following to the <tt class="docutils literal"><span class="pre">getDefaultOptions()</span></tt>
+good practice), then you&#8217;ll need to add the following to the <tt class="docutils literal"><span class="pre">setDefaultOptions()</span></tt>
 method:</p>
-<div class="highlight-python"><pre>public function getDefaultOptions(array $options)
+<div class="highlight-python"><pre>use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+public function setDefaultOptions(OptionsResolverInterface $resolver)
 {
-    return array(
+    $resolver-&gt;setDefaults(array(
         'validation_groups' =&gt; array('registration')
-    );
+    ));
 }</pre>
 </div>
 <p>In both of these cases, <em>only</em> the <tt class="docutils literal"><span class="pre">registration</span></tt> validation group will
 be used to validate the underlying object.</p>
+</div>
+<div class="section" id="groups-based-on-submitted-data">
+<h3>Groups based on Submitted Data<a class="headerlink" href="#groups-based-on-submitted-data" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The ability to specify a callback or Closure in <tt class="docutils literal"><span class="pre">validation_groups</span></tt>
+is new to version 2.1</p>
+<p>If you need some advanced logic to determine the validation groups (e.g.
+based on submitted data), you can set the <tt class="docutils literal"><span class="pre">validation_groups</span></tt> option
+to an array callback, or a <tt class="docutils literal"><span class="pre">Closure</span></tt>:</p>
+<div class="highlight-python"><pre>use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+public function setDefaultOptions(OptionsResolverInterface $resolver)
+{
+    $resolver-&gt;setDefaults(array(
+        'validation_groups' =&gt; array('Acme\\AcmeBundle\\Entity\\Client', 'determineValidationGroups'),
+    ));
+}</pre>
+</div>
+<p>This will call the static method <tt class="docutils literal"><span class="pre">determineValidationGroups()</span></tt> on the
+<tt class="docutils literal"><span class="pre">Client</span></tt> class after the form is bound, but before validation is executed.
+The Form object is passed as an argument to that method (see next example).
+You can also define whole logic inline by using a Closure:</p>
+<div class="highlight-python"><pre>use Symfony\Component\Form\FormInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+public function setDefaultOptions(OptionsResolverInterface $resolver)
+{
+    $resolver-&gt;setDefaults(array(
+        'validation_groups' =&gt; function(FormInterface $form) {
+            $data = $form-&gt;getData();
+            if (Entity\Client::TYPE_PERSON == $data-&gt;getType()) {
+                return array('person')
+            } else {
+                return array('company');
+            }
+        },
+    ));
+}</pre>
+</div>
 </div>
 </div>
 <div class="section" id="built-in-field-types">
@@ -776,11 +821,11 @@ that will house the logic for building the task form:</p>
 <span class="k">namespace</span> <span class="nx">Acme\TaskBundle\Form\Type</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractType</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilder</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">TaskType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
 <span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilder</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;task&#39;</span><span class="p">);</span>
         <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;widget&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;single_text&#39;</span><span class="p">));</span>
@@ -822,11 +867,13 @@ based off of the object passed to the second argument to <tt class="docutils lit
 longer be sufficient. So, while not always necessary, it&#8217;s generally a
 good idea to explicitly specify the <tt class="docutils literal"><span class="pre">data_class</span></tt> option by adding the
 following to your form type class:</p>
-<div class="last highlight-python"><pre>public function getDefaultOptions(array $options)
+<div class="last highlight-python"><pre>use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+public function setDefaultOptions(OptionsResolverInterface $resolver)
 {
-    return array(
+    $resolver-&gt;setDefaults(array(
         'data_class' =&gt; 'Acme\TaskBundle\Entity\Task',
-    );
+    ));
 }</pre>
 </div>
 </div>
@@ -838,7 +885,9 @@ be thrown.</p>
 <p>In cases where you need extra fields in the form (for example: a &#8220;do you
 agree with these terms&#8221; checkbox) that will not be mapped to the underlying
 object, you need to set the property_path option to <tt class="docutils literal"><span class="pre">false</span></tt>:</p>
-<div class="highlight-python"><pre>public function buildForm(FormBuilder $builder, array $options)
+<div class="highlight-python"><pre>use Symfony\Component\Form\FormBuilderInterface;
+
+public function buildForm(FormBuilderInterface $builder, array $options)
 {
     $builder-&gt;add('task');
     $builder-&gt;add('dueDate', null, array('property_path' =&gt; false));
@@ -861,7 +910,7 @@ to be persisted via Doctrine (i.e. you&#8217;ve added
 <a class="reference internal" href="doctrine.html#book-doctrine-adding-mapping"><em>mapping metadata</em></a> for it), then persisting
 it after a form submission can be done when the form is valid:</p>
 <div class="highlight-python"><pre>if ($form-&gt;isValid()) {
-    $em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+    $em = $this-&gt;getDoctrine()-&gt;getManager();
     $em-&gt;persist($task);
     $em-&gt;flush();
 
@@ -932,20 +981,21 @@ create a form class so that a <tt class="docutils literal"><span class="pre">Cat
 namespace Acme\TaskBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CategoryType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder-&gt;add('name');
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver-&gt;setDefaults(array(
             'data_class' =&gt; 'Acme\TaskBundle\Entity\Category',
-        );
+        ));
     }
 
     public function getName()
@@ -958,7 +1008,9 @@ class CategoryType extends AbstractType
 inside the task form itself. To accomplish this, add a <tt class="docutils literal"><span class="pre">category</span></tt> field
 to the <tt class="docutils literal"><span class="pre">TaskType</span></tt> object whose type is an instance of the new <tt class="docutils literal"><span class="pre">CategoryType</span></tt>
 class:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilder</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
+
+<span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="c1">// ...</span>
 
@@ -967,7 +1019,17 @@ class:</p>
 </pre></div>
 </div>
 <p>The fields from <tt class="docutils literal"><span class="pre">CategoryType</span></tt> can now be rendered alongside those from
-the <tt class="docutils literal"><span class="pre">TaskType</span></tt> class. Render the <tt class="docutils literal"><span class="pre">Category</span></tt> fields in the same way
+the <tt class="docutils literal"><span class="pre">TaskType</span></tt> class. To activate validation on CategoryType, add
+the <tt class="docutils literal"><span class="pre">cascade_validation</span></tt> option:</p>
+<div class="highlight-python"><pre>public function setDefaultOptions(OptionsResolverInterface $resolver)
+{
+    $resolver-&gt;setDefaults(array(
+        'data_class' =&gt; 'Acme\TaskBundle\Entity\Category',
+        'cascade_validation' =&gt; true,
+    ));
+}</pre>
+</div>
+<p>Render the <tt class="docutils literal"><span class="pre">Category</span></tt> fields in the same way
 as the original <tt class="docutils literal"><span class="pre">Task</span></tt> fields:</p>
 <div class="configuration-block">
 <ul class="simple">
@@ -1091,6 +1153,17 @@ before falling back to the global theme.</p>
 <p>To customize any portion of a form, you just need to override the appropriate
 fragment. Knowing exactly which block or file to override is the subject of
 the next section.</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>An alternate Twig syntax for <tt class="docutils literal"><span class="pre">form_theme</span></tt> has been introduced in 2.1. It accepts
+any valid Twig expression (the most noticeable difference is using an array when
+using multiple themes).<div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/TaskBundle/Resources/views/Default/new.html.twig #}</span>
+
+<span class="cp">{%</span> <span class="k">form_theme</span> <span class="nv">form</span> <span class="k">with</span> <span class="s1">&#39;AcmeTaskBundle:Form:fields.html.twig&#39;</span> <span class="cp">%}</span>
+
+<span class="cp">{%</span> <span class="k">form_theme</span> <span class="nv">form</span> <span class="k">with</span> <span class="o">[</span><span class="s1">&#39;AcmeTaskBundle:Form:fields.html.twig&#39;</span><span class="o">,</span> <span class="s1">&#39;AcmeTaskBundle:Form:fields2.html.twig&#39;</span><span class="o">]</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</p>
 <p>For a more extensive discussion, see <a class="reference internal" href="../cookbook/form/form_customization.html"><em>How to customize Form Rendering</em></a>.</p>
 <div class="section" id="form-fragment-naming">
 <span id="form-template-blocks"></span><span id="index-17"></span><h3>Form Fragment Naming<a class="headerlink" href="#form-fragment-naming" title="Permalink to this headline">¶</a></h3>
@@ -1310,19 +1383,21 @@ Symfony automatically validates the presence and accuracy of this token.</p>
 if you include the <tt class="docutils literal"><span class="pre">form_rest()</span></tt> function in your template, which ensures
 that all un-rendered fields are output.</p>
 <p>The CSRF token can be customized on a form-by-form basis. For example:</p>
-<div class="highlight-python"><pre>class TaskType extends AbstractType
+<div class="highlight-python"><pre>use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+class TaskType extends AbstractType
 {
     // ...
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array(
+        $resolver-&gt;setDefaults(array(
             'data_class'      =&gt; 'Acme\TaskBundle\Entity\Task',
             'csrf_protection' =&gt; true,
             'csrf_field_name' =&gt; '_token',
             // a unique key to help generate the secret token
             'intention'       =&gt; 'task_item',
-        );
+        ));
     }
 
     // ...
@@ -1359,7 +1434,7 @@ public function contactAction(Request $request)
         -&gt;getForm();
 
         if ($request-&gt;getMethod() == 'POST') {
-            $form-&gt;bindRequest($request);
+            $form-&gt;bind($request);
 
             // data is an array with "name", "email", and "message" keys
             $data = $form-&gt;getData();
@@ -1417,13 +1492,14 @@ $form = $this-&gt;createFormBuilder(null, array(
     // ...
 ;</pre>
 </div>
-<p>Now, when you call <cite>$form-&gt;bindRequest($request)</cite>, the constraints setup here are run
-against your form&#8217;s data. If you&#8217;re using a form class, override the <tt class="docutils literal"><span class="pre">getDefaultOptions</span></tt>
+<p>Now, when you call <cite>$form-&gt;bind($request)</cite>, the constraints setup here are run
+against your form&#8217;s data. If you&#8217;re using a form class, override the <tt class="docutils literal"><span class="pre">setDefaultOptions()</span></tt>
 method to specify the option:</p>
 <div class="highlight-python"><pre>namespace Acme\TaskBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\MinLength;
 use Symfony\Component\Validator\Constraints\Collection;
@@ -1432,14 +1508,16 @@ class ContactType extends AbstractType
 {
     // ...
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $collectionConstraint = new Collection(array(
             'name' =&gt; new MinLength(5),
             'email' =&gt; new Email(array('message' =&gt; 'Invalid email address')),
         ));
 
-        return array('validation_constraint' =&gt; $collectionConstraint);
+        $resolver-&gt;setDefaults(array(
+            'validation_constraint' =&gt; $collectionConstraint
+        ));
     }
 }</pre>
 </div>
@@ -1494,6 +1572,7 @@ includes examples of how to use each field type and its options.</p>
 </li>
 <li><a class="reference internal" href="#form-validation">Form Validation</a><ul>
 <li><a class="reference internal" href="#validation-groups">Validation Groups</a></li>
+<li><a class="reference internal" href="#groups-based-on-submitted-data">Groups based on Submitted Data</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#built-in-field-types">Built-in Field Types</a><ul>
@@ -1584,7 +1663,7 @@ includes examples of how to use each field type and its options.</p>
         <li class="right" >
           <a href="validation.html" title="Validation"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

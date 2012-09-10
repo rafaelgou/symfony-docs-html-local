@@ -99,9 +99,9 @@ if "%1" == "qthelp" (
 	echo.
 	echo.Build finished; now you can run "qcollectiongenerator" with the ^
 .qhcp project file in %BUILDDIR%/qthelp, like this:
-	echo.^> qcollectiongenerator %BUILDDIR%\qthelp\Symfony2Docsv2017.qhcp
+	echo.^> qcollectiongenerator %BUILDDIR%\qthelp\Symfony2Docsv210.qhcp
 	echo.To view the help file:
-	echo.^> assistant -collectionFile %BUILDDIR%\qthelp\Symfony2Docsv2017.ghc
+	echo.^> assistant -collectionFile %BUILDDIR%\qthelp\Symfony2Docsv210.ghc
 	goto end
 )
 

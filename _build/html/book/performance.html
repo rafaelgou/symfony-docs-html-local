@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Performance &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Performance &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Internals" href="internals.html" />
     <link rel="prev" title="Service Container" href="service_container.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="service_container.html" title="Service Container"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -84,25 +84,30 @@ your php.ini configuration.</p>
 <div class="section" id="use-an-autoloader-that-caches-e-g-apcuniversalclassloader">
 <span id="index-2"></span><h2>Use an Autoloader that caches (e.g. <tt class="docutils literal"><span class="pre">ApcUniversalClassLoader</span></tt>)<a class="headerlink" href="#use-an-autoloader-that-caches-e-g-apcuniversalclassloader" title="Permalink to this headline">¶</a></h2>
 <p>By default, the Symfony2 standard edition uses the <tt class="docutils literal"><span class="pre">UniversalClassLoader</span></tt>
-in the <a class="reference external" href="https://github.com/symfony/symfony-standard/blob/2.0/app/autoload.php">autoloader.php</a> file. This autoloader is easy to use, as it will
+in the <a class="reference external" href="https://github.com/symfony/symfony-standard/blob/master/app/autoload.php">autoloader.php</a> file. This autoloader is easy to use, as it will
 automatically find any new classes that you&#8217;ve placed in the registered
 directories.</p>
 <p>Unfortunately, this comes at a cost, as the loader iterates over all configured
 namespaces to find a particular file, making <tt class="docutils literal"><span class="pre">file_exists</span></tt> calls until it
 finally finds the file it&#8217;s looking for.</p>
 <p>The simplest solution is to cache the location of each class after it&#8217;s located
-the first time. Symfony comes with a class - <tt class="docutils literal"><span class="pre">ApcUniversalClassLoader</span></tt> -
-loader that extends the <tt class="docutils literal"><span class="pre">UniversalClassLoader</span></tt> and stores the class locations
-in APC.</p>
-<p>To use this class loader, simply adapt your <tt class="docutils literal"><span class="pre">autoloader.php</span></tt> as follows:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/autoload.php</span>
-<span class="k">require</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../vendor/symfony/src/Symfony/Component/ClassLoader/ApcUniversalClassLoader.php&#39;</span><span class="p">;</span>
+the first time. Symfony comes with a class - <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/ClassLoader/ApcClassLoader.html" title="Symfony\Component\ClassLoader\ApcClassLoader"><span class="pre">ApcClassLoader</span></a></tt> -
+that does exactly this. To use it, just adapt your front controller file.
+If you&#8217;re using the Standard Distribution, this code should already be available
+as comments in this file:</p>
+<div class="highlight-python"><pre>// app.php
+// ...
 
-<span class="k">use</span> <span class="nx">Symfony\Component\ClassLoader\ApcUniversalClassLoader</span><span class="p">;</span>
+$loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 
-<span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ApcUniversalClassLoader</span><span class="p">(</span><span class="s1">&#39;some caching unique prefix&#39;</span><span class="p">);</span>
-<span class="c1">// ...</span>
-</pre></div>
+// Use APC for autoloading to improve performance
+// Change 'sf2' by the prefix you want in order to prevent key conflict with another application
+/*
+$loader = new ApcClassLoader('sf2', $loader);
+$loader-&gt;register(true);
+*/
+
+// ...</pre>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -120,7 +125,7 @@ inside that namespace.</p>
 a variety of classes and 3rd party components. But loading all of these classes
 from separate files on each request can result in some overhead. To reduce
 this overhead, the Symfony2 Standard Edition provides a script to generate
-a so-called <a class="reference external" href="https://github.com/sensio/SensioDistributionBundle/blob/2.0/Resources/bin/build_bootstrap.php">bootstrap file</a>, consisting of multiple classes definitions
+a so-called <a class="reference external" href="https://github.com/sensio/SensioDistributionBundle/blob/master/Composer/ScriptHandler.php">bootstrap file</a>, consisting of multiple classes definitions
 in a single file. By including this file (which contains a copy of many of
 the core classes), Symfony no longer needs to include any of the source files
 containing those classes. This will reduce disc IO quite a bit.</p>
@@ -136,7 +141,7 @@ using the bootstrap file. To be sure, open your front controller (usually
 <li>when debugging, one will need to place break points inside the bootstrap file.</li>
 </ul>
 <p>If you&#8217;re using Symfony2 Standard Edition, the bootstrap file is automatically
-rebuilt after updating the vendor libraries via the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">bin/vendors</span> <span class="pre">install</span></tt>
+rebuilt after updating the vendor libraries via the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt>
 command.</p>
 <div class="section" id="bootstrap-files-and-byte-code-caches">
 <h3>Bootstrap Files and Byte Code Caches<a class="headerlink" href="#bootstrap-files-and-byte-code-caches" title="Permalink to this headline">¶</a></h3>
@@ -210,7 +215,7 @@ is no longer a reason to use a bootstrap file.</p>
         <li class="right" >
           <a href="service_container.html" title="Service Container"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

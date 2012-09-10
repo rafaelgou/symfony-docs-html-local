@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Email &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Email &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
     <link rel="next" title="MinLength" href="MinLength.html" />
     <link rel="prev" title="Type" href="Type.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="Type.html" title="Type"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -71,6 +71,7 @@ cast to a string before being validated.</p>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="#message">message</a></li>
 <li><a class="reference internal" href="#checkmx">checkMX</a></li>
+<li><a class="reference internal" href="#checkhost">checkHost</a></li>
 </ul>
 </td>
 </tr>
@@ -145,8 +146,17 @@ cast to a string before being validated.</p>
 <div class="section" id="checkmx">
 <h3>checkMX<a class="headerlink" href="#checkmx" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
-<p>If true, then the <a class="reference external" href="http://www.php.net/manual/en/function.checkdnsrr.php">checkdnsrr</a> PHP function will be used to check the validity
-of the MX record of the host of the given email.</p>
+<p>If true, then the <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.checkdnsrr.php" title="checkdnsrr"><span class="pre">checkdnsrr</span></a></tt> PHP function will be used to
+check the validity of the MX record of the host of the given email.</p>
+</div>
+<div class="section" id="checkhost">
+<h3>checkHost<a class="headerlink" href="#checkhost" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The <tt class="docutils literal"><span class="pre">checkHost</span></tt> option was added in Symfony 2.1</p>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
+<p>If true, then the <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.checkdnsrr.php" title="checkdnsrr"><span class="pre">checkdnsrr</span></a></tt> PHP function will be used to
+check the validity of the MX <em>or</em> the A <em>or</em> the AAAA record of the host
+of the given email.</p>
 </div>
 </div>
 </div>
@@ -164,6 +174,7 @@ of the MX record of the host of the given email.</p>
 <li><a class="reference internal" href="#options">Options</a><ul>
 <li><a class="reference internal" href="#message">message</a></li>
 <li><a class="reference internal" href="#checkmx">checkMX</a></li>
+<li><a class="reference internal" href="#checkhost">checkHost</a></li>
 </ul>
 </li>
 </ul>
@@ -210,7 +221,7 @@ of the MX record of the host of the given email.</p>
         <li class="right" >
           <a href="Type.html" title="Type"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>

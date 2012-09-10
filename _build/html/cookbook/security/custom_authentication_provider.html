@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to create a custom Authentication Provider &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to create a custom Authentication Provider &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +25,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Security" href="index.html" />
-    <link rel="next" title="Cache" href="../cache/index.html" />
+    <link rel="next" title="How to change the Default Target Path Behavior" href="target_path.html" />
     <link rel="prev" title="How to create a custom User Provider" href="custom_provider.html" /> 
   </head>
   <body>
@@ -38,12 +38,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../cache/index.html" title="Cache"
+          <a href="target_path.html" title="How to change the Default Target Path Behavior"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="custom_provider.html" title="How to create a custom User Provider"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Security</a> &raquo;</li> 
       </ul>
@@ -440,67 +440,27 @@ services:
 </ul>
 </div>
 <p>Now that your services are defined, tell your security context about your
-factory. Factories must be included in an individual configuration file,
-at the time of this writing. So, start first by creating the file with the
-factory service, tagged as <tt class="docutils literal"><span class="pre">security.listener.factory</span></tt>:</p>
-<div class="configuration-block">
-<ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/DemoBundle/Resources/config/security_factories.yml</span>
-<span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">security.authentication.factory.wsse</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory</span>
-        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
-            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">security.listener.factory</span> <span class="p-Indicator">}</span>
-</pre></div>
-</div>
-</li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/DemoBundle/Resources/config/security_factories.xml --&gt;</span>
-<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
-    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+factory in your bundle class:</p>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>Before 2.1, the factory below was added via <tt class="docutils literal"><span class="pre">security.yml</span></tt> instead.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/AcmeDemoBundle.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\DemoBundle</span><span class="p">;</span>
 
-    <span class="nt">&lt;services&gt;</span>
-        <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;security.authentication.factory.wsse&quot;</span>
-          <span class="na">class=</span><span class="s">&quot;Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory&quot;</span> <span class="na">public=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;security.listener.factory&quot;</span> <span class="nt">/&gt;</span>
-        <span class="nt">&lt;/service&gt;</span>
-    <span class="nt">&lt;/services&gt;</span>
-<span class="nt">&lt;/container&gt;</span>
+<span class="k">use</span> <span class="nx">Acme\DemoBundle\DependencyInjection\Security\Factory\WsseFactory</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpKernel\Bundle\Bundle</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\ContainerBuilder</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">AcmeDemoBundle</span> <span class="k">extends</span> <span class="nx">Bundle</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">build</span><span class="p">(</span><span class="nx">ContainerBuilder</span> <span class="nv">$container</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">build</span><span class="p">(</span><span class="nv">$container</span><span class="p">);</span>
+
+        <span class="nv">$extension</span> <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">getExtension</span><span class="p">(</span><span class="s1">&#39;security&#39;</span><span class="p">);</span>
+        <span class="nv">$extension</span><span class="o">-&gt;</span><span class="na">addSecurityListenerFactory</span><span class="p">(</span><span class="k">new</span> <span class="nx">WsseFactory</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
-</div>
-</li>
-</ul>
-</div>
-<p>Now, import the factory configuration via the the <tt class="docutils literal"><span class="pre">factories</span></tt> key in your
-security configuration:</p>
-<div class="configuration-block">
-<ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
-<span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">factories</span><span class="p-Indicator">:</span>
-    <span class="p-Indicator">-</span> <span class="s">&quot;%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.yml&quot;</span>
-</pre></div>
-</div>
-</li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/security.xml --&gt;</span>
-<span class="nt">&lt;config&gt;</span>
-    <span class="nt">&lt;factories&gt;</span>
-      &quot;%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.xml
-    <span class="nt">&lt;/factories&gt;</span>
-<span class="nt">&lt;/config&gt;</span>
-</pre></div>
-</div>
-</li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/security.php</span>
-<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;security&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;factories&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
-      <span class="s2">&quot;%kernel.root_dir%/../src/Acme/DemoBundle/Resources/config/security_factories.php&quot;</span>
-    <span class="p">),</span>
-<span class="p">));</span>
-</pre></div>
-</div>
-</li>
-</ul>
 </div>
 <p>You are finished! You can now define parts of your app as under WSSE protection.</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
@@ -612,8 +572,8 @@ in the factory and consumed or passed to the other classes in the container.</p>
   <p class="topless"><a href="custom_provider.html"
                         title="previous chapter">How to create a custom User Provider</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../cache/index.html"
-                        title="next chapter">Cache</a></p>
+  <p class="topless"><a href="target_path.html"
+                        title="next chapter">How to change the Default Target Path Behavior</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/security/custom_authentication_provider.txt"
@@ -643,12 +603,12 @@ in the factory and consumed or passed to the other classes in the container.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../cache/index.html" title="Cache"
+          <a href="target_path.html" title="How to change the Default Target Path Behavior"
              >next</a> |</li>
         <li class="right" >
           <a href="custom_provider.html" title="How to create a custom User Provider"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Security</a> &raquo;</li> 
       </ul>

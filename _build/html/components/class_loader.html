@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The ClassLoader Component &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>The ClassLoader Component &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Components" href="index.html" />
     <link rel="next" title="Config" href="config/index.html" />
     <link rel="prev" title="The Components" href="index.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="index.html" title="The Components"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Components</a> &raquo;</li> 
       </ul>
     </div>  
@@ -81,6 +81,8 @@ need.</p>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The <tt class="docutils literal"><span class="pre">useIncludePath</span></tt> method was added in Symfony 2.1.</p>
 <p>Registering the <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/ClassLoader/UniversalClassLoader.html" title="Symfony\Component\ClassLoader\UniversalClassLoader"><span class="pre">UniversalClassLoader</span></a></tt>
 autoloader is straightforward:</p>
 <div class="highlight-python"><pre>require_once '/path/to/src/Symfony/Component/ClassLoader/UniversalClassLoader.php';
@@ -88,6 +90,9 @@ autoloader is straightforward:</p>
 use Symfony\Component\ClassLoader\UniversalClassLoader;
 
 $loader = new UniversalClassLoader();
+
+// You can search the include_path as a last resort.
+$loader-&gt;useIncludePath(true);
 
 // ... register namespaces and prefixes here - see below
 
@@ -114,11 +119,11 @@ $loader-&gt;register();</pre>
 or
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/ClassLoader/UniversalClassLoader.html#method_registerNamespaces" title="Symfony\Component\ClassLoader\UniversalClassLoader::registerNamespaces()"><span class="pre">registerNamespaces()</span></a></tt>
 methods:</p>
-<div class="highlight-python"><pre>$loader-&gt;registerNamespace('Symfony', __DIR__.'/vendor/symfony/src');
+<div class="highlight-python"><pre>$loader-&gt;registerNamespace('Symfony', __DIR__.'/vendor/symfony/symfony/src');
 
 $loader-&gt;registerNamespaces(array(
-    'Symfony' =&gt; __DIR__.'/../vendor/symfony/src',
-    'Monolog' =&gt; __DIR__.'/../vendor/monolog/src',
+    'Symfony' =&gt; __DIR__.'/../vendor/symfony/symfony/src',
+    'Monolog' =&gt; __DIR__.'/../vendor/monolog/monolog/src',
 ));
 
 $loader-&gt;register();</pre>
@@ -128,11 +133,11 @@ $loader-&gt;register();</pre>
 or
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/ClassLoader/UniversalClassLoader.html#method_registerPrefixes" title="Symfony\Component\ClassLoader\UniversalClassLoader::registerPrefixes()"><span class="pre">registerPrefixes()</span></a></tt>
 methods:</p>
-<div class="highlight-python"><pre>$loader-&gt;registerPrefix('Twig_', __DIR__.'/vendor/twig/lib');
+<div class="highlight-python"><pre>$loader-&gt;registerPrefix('Twig_', __DIR__.'/vendor/twig/twig/lib');
 
 $loader-&gt;registerPrefixes(array(
-    'Swift_' =&gt; __DIR__.'/vendor/swiftmailer/lib/classes',
-    'Twig_'  =&gt; __DIR__.'/vendor/twig/lib',
+    'Swift_' =&gt; __DIR__.'/vendor/swiftmailer/swiftmailer/lib/classes',
+    'Twig_'  =&gt; __DIR__.'/vendor/twig/twig/lib',
 ));
 
 $loader-&gt;register();</pre>
@@ -146,10 +151,10 @@ include path (<tt class="docutils literal"><span class="pre">set_include_path()<
 for in a location list to ease the vendoring of a sub-set of classes for large
 projects:</p>
 <div class="highlight-python"><pre>$loader-&gt;registerNamespaces(array(
-    'Doctrine\\Common'           =&gt; __DIR__.'/vendor/doctrine-common/lib',
-    'Doctrine\\DBAL\\Migrations' =&gt; __DIR__.'/vendor/doctrine-migrations/lib',
-    'Doctrine\\DBAL'             =&gt; __DIR__.'/vendor/doctrine-dbal/lib',
-    'Doctrine'                   =&gt; __DIR__.'/vendor/doctrine/lib',
+    'Doctrine\\Common'           =&gt; __DIR__.'/vendor/doctrine/common/lib',
+    'Doctrine\\DBAL\\Migrations' =&gt; __DIR__.'/vendor/doctrine/migrations/lib',
+    'Doctrine\\DBAL'             =&gt; __DIR__.'/vendor/doctrine/dbal/lib',
+    'Doctrine'                   =&gt; __DIR__.'/vendor/doctrine/orm/lib',
 ));
 
 $loader-&gt;register();</pre>
@@ -217,7 +222,7 @@ The order of the registrations is significant in this case.</p>
         <li class="right" >
           <a href="index.html" title="The Components"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Components</a> &raquo;</li> 
       </ul>
     </div>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Validation &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Validation &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Forms" href="forms.html" />
     <link rel="prev" title="Testing" href="testing.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="testing.html" title="Testing"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -253,7 +253,7 @@ public function updateAction(Request $request)
     $form = $this-&gt;createForm(new AuthorType(), $author);
 
     if ($request-&gt;getMethod() == 'POST') {
-        $form-&gt;bindRequest($request);
+        $form-&gt;bind($request);
 
         if ($form-&gt;isValid()) {
             // the validation passed, do something with the $author object
@@ -337,6 +337,7 @@ the value of properties or the return value of methods on your object.</p>
 <li><a class="reference internal" href="../reference/constraints/Email.html"><em>Email</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/MinLength.html"><em>MinLength</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/MaxLength.html"><em>MaxLength</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Length.html"><em>Length</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/Url.html"><em>Url</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/Regex.html"><em>Regex</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/Ip.html"><em>Ip</em></a></li>
@@ -347,6 +348,7 @@ the value of properties or the return value of methods on your object.</p>
 <ul class="simple">
 <li><a class="reference internal" href="../reference/constraints/Max.html"><em>Max</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/Min.html"><em>Min</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Range.html"><em>Range</em></a></li>
 </ul>
 </div>
 <div class="section" id="date-constraints">
@@ -362,6 +364,7 @@ the value of properties or the return value of methods on your object.</p>
 <ul class="simple">
 <li><a class="reference internal" href="../reference/constraints/Choice.html"><em>Choice</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/Collection.html"><em>Collection</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/Count.html"><em>Count</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/UniqueEntity.html"><em>UniqueEntity</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/Language.html"><em>Language</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/Locale.html"><em>Locale</em></a></li>
@@ -380,6 +383,7 @@ the value of properties or the return value of methods on your object.</p>
 <ul class="simple">
 <li><a class="reference internal" href="../reference/constraints/Callback.html"><em>Callback</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/All.html"><em>All</em></a></li>
+<li><a class="reference internal" href="../reference/constraints/UserPassword.html"><em>UserPassword</em></a></li>
 <li><a class="reference internal" href="../reference/constraints/Valid.html"><em>Valid</em></a></li>
 </ul>
 <p>You can also create your own custom constraints. This topic is covered in
@@ -971,7 +975,7 @@ to validate any object.</p>
         <li class="right" >
           <a href="testing.html" title="Testing"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

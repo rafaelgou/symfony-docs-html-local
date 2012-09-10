@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to handle File Uploads with Doctrine &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to handle File Uploads with Doctrine &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Doctrine" href="index.html" />
     <link rel="next" title="How to use Doctrine Extensions: Timestampable, Sluggable, Translatable, etc." href="common_extensions.html" />
     <link rel="prev" title="Doctrine" href="index.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="index.html" title="Doctrine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Doctrine</a> &raquo;</li> 
       </ul>
@@ -194,9 +194,9 @@ public function uploadAction()
     ;
 
     if ($this-&gt;getRequest()-&gt;getMethod() === 'POST') {
-        $form-&gt;bindRequest($this-&gt;getRequest());
+        $form-&gt;bind($this-&gt;getRequest());
         if ($form-&gt;isValid()) {
-            $em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+            $em = $this-&gt;getDoctrine()-&gt;getManager();
 
             $em-&gt;persist($document);
             $em-&gt;flush();
@@ -228,7 +228,7 @@ persisted and then set the <tt class="docutils literal"><span class="pre">path</
 a new <tt class="docutils literal"><span class="pre">upload()</span></tt> method on the <tt class="docutils literal"><span class="pre">Document</span></tt> class, which you&#8217;ll create
 in a moment to handle the file upload:</p>
 <div class="highlight-python"><pre>if ($form-&gt;isValid()) {
-    $em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+    $em = $this-&gt;getDoctrine()-&gt;getManager();
 
     $document-&gt;upload();
 
@@ -338,7 +338,7 @@ entity is ever deleted.</p>
 <p>Now that the moving of the file is handled atomically by the entity, the
 call to <tt class="docutils literal"><span class="pre">$document-&gt;upload()</span></tt> should be removed from the controller:</p>
 <div class="highlight-python"><pre>if ($form-&gt;isValid()) {
-    $em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+    $em = $this-&gt;getDoctrine()-&gt;getManager();
 
     $em-&gt;persist($document);
     $em-&gt;flush();
@@ -495,7 +495,7 @@ from the database, you can safely delete the file (in <tt class="docutils litera
         <li class="right" >
           <a href="index.html" title="Doctrine"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Doctrine</a> &raquo;</li> 
       </ul>

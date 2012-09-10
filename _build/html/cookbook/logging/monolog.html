@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use Monolog to write Logs &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to use Monolog to write Logs &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Logging" href="index.html" />
     <link rel="next" title="How to Configure Monolog to Email Errors" href="monolog_email.html" />
     <link rel="prev" title="Logging" href="index.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="index.html" title="Logging"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Logging</a> &raquo;</li> 
       </ul>
@@ -94,7 +94,8 @@ allows to change the logger implementation without changing your code.</p>
 allows you to log the messages in several ways easily.</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">monolog</span><span class="p-Indicator">:</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config*.yml</span>
+<span class="l-Scalar-Plain">monolog</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">handlers</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">syslog</span><span class="p-Indicator">:</span>
             <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">stream</span>
@@ -165,7 +166,8 @@ easily. Your formatter must implement
 <tt class="docutils literal"><span class="pre">Monolog\Formatter\FormatterInterface</span></tt>.</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">my_formatter</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Monolog\Formatter\JsonFormatter</span>
 <span class="l-Scalar-Plain">monolog</span><span class="p-Indicator">:</span>
@@ -217,7 +219,7 @@ and/or request. The following example will add a unique token for each request
 using a processor.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="k">namespace</span> <span class="nx">Acme\MyBundle</span><span class="p">;</span>
 
-<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Session</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Session\Session</span><span class="p">;</span>
 
 <span class="k">class</span> <span class="nc">SessionRequestProcessor</span>
 <span class="p">{</span>
@@ -248,7 +250,8 @@ using a processor.</p>
 </div>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><pre>services:
+<li><em>YAML</em><div class="highlight-yaml"><pre># app/config/config.yml
+services:
     monolog.formatter.session_request:
         class: Monolog\Formatter\LineFormatter
         arguments:
@@ -342,7 +345,7 @@ handler level instead of globally.</p>
         <li class="right" >
           <a href="index.html" title="Logging"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Logging</a> &raquo;</li> 
       </ul>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Controller &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Controller &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Routing" href="routing.html" />
     <link rel="prev" title="Creating Pages in Symfony2" href="page_creation.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="page_creation.html" title="Creating Pages in Symfony2"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -354,7 +354,7 @@ public function updateAction(Request $request)
 {
     $form = $this-&gt;createForm(...);
 
-    $form-&gt;bindRequest($request);
+    $form-&gt;bind($request);
     // ...
 }</pre>
 </div>
@@ -588,8 +588,8 @@ $session-&gt;set('foo', 'bar');
 // in another controller for another request
 $foo = $session-&gt;get('foo');
 
-// set the user locale
-$session-&gt;setLocale('fr');</pre>
+// use a default value if the key doesn't exist
+$filters = $session-&gt;get('filters', array());</pre>
 </div>
 <p>These attributes will remain on the user for the remainder of that user&#8217;s
 session.</p>
@@ -604,11 +604,11 @@ These types of messages are called &#8220;flash&#8221; messages.</p>
 {
     $form = $this-&gt;createForm(...);
 
-    $form-&gt;bindRequest($this-&gt;getRequest());
+    $form-&gt;bind($this-&gt;getRequest());
     if ($form-&gt;isValid()) {
         // do some sort of processing
 
-        $this-&gt;get('session')-&gt;setFlash('notice', 'Your changes were saved!');
+        $this-&gt;get('session')-&gt;getFlashBag()-&gt;add('notice', 'Your changes were saved!');
 
         return $this-&gt;redirect($this-&gt;generateUrl(...));
     }
@@ -623,19 +623,19 @@ you&#8217;re using to identify the type of the message.</p>
 the <tt class="docutils literal"><span class="pre">notice</span></tt> message:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">if</span> <span class="nv">app.session.hasFlash</span><span class="o">(</span><span class="s1">&#39;notice&#39;</span><span class="o">)</span> <span class="cp">%}</span>
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">for</span> <span class="nv">flashMessage</span> <span class="k">in</span> <span class="nv">app.session.flashbag.get</span><span class="o">(</span><span class="s1">&#39;notice&#39;</span><span class="o">)</span> <span class="cp">%}</span>
     <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;flash-notice&quot;</span><span class="nt">&gt;</span>
-        <span class="cp">{{</span> <span class="nv">app.session.flash</span><span class="o">(</span><span class="s1">&#39;notice&#39;</span><span class="o">)</span> <span class="cp">}}</span>
+        <span class="cp">{{</span> <span class="nv">flashMessage</span> <span class="cp">}}</span>
     <span class="nt">&lt;/div&gt;</span>
-<span class="cp">{%</span> <span class="k">endif</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">endfor</span> <span class="cp">%}</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">if</span> <span class="p">(</span><span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;session&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">hasFlash</span><span class="p">(</span><span class="s1">&#39;notice&#39;</span><span class="p">))</span><span class="o">:</span> <span class="cp">?&gt;</span><span class="x"></span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;session&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getFlashBag</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;notice&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$message</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span><span class="x"></span>
 <span class="x">    &lt;div class=&quot;flash-notice&quot;&gt;</span>
-<span class="x">        </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;session&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getFlash</span><span class="p">(</span><span class="s1">&#39;notice&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x"></span>
+<span class="x">        </span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="s2">&quot;&lt;div class=&#39;flash-error&#39;&gt;</span><span class="si">$message</span><span class="s2">&lt;/div&gt;&quot;</span> <span class="cp">?&gt;</span><span class="x"></span>
 <span class="x">    &lt;/div&gt;</span>
-<span class="cp">&lt;?php</span> <span class="k">endif</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
+<span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span><span class="x"></span>
 </pre></div>
 </div>
 </li>
@@ -785,7 +785,7 @@ more.</p>
         <li class="right" >
           <a href="page_creation.html" title="Creating Pages in Symfony2"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

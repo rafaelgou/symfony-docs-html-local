@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The YAML Component &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>The YAML Component &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Components" href="index.html" />
     <link rel="next" title="Reference Documents" href="../reference/index.html" />
     <link rel="prev" title="The Templating Component" href="templating.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="templating.html" title="The Templating Component"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Components</a> &raquo;</li> 
       </ul>
     </div>  
@@ -158,15 +158,20 @@ different YAML strings.</p>
 </div>
 <p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Yaml/Yaml.html#method_parse" title="Symfony\Component\Yaml\Yaml::parse()"><span class="pre">parse()</span></a></tt> static method takes a YAML
 string or a file containing YAML. Internally, it calls the
-<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Yaml/Parser.html#method_parse" title="Symfony\Component\Yaml\Parser::parse()"><span class="pre">parse()</span></a></tt> method, but with some added
-bonuses:</p>
-<ul class="simple">
-<li>It executes the YAML file as if it was a PHP file, so that you can embed PHP
-commands in YAML files;</li>
-<li>When a file cannot be parsed, it automatically adds the file name to the
-error message, simplifying debugging when your application is loading
-several YAML files.</li>
-</ul>
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Yaml/Parser.html#method_parse" title="Symfony\Component\Yaml\Parser::parse()"><span class="pre">parse()</span></a></tt> method, but enhances the
+error if something goes wrong by adding the filename to the message.</p>
+</div>
+<div class="section" id="executing-php-inside-yaml-files">
+<h3>Executing PHP Inside YAML Files<a class="headerlink" href="#executing-php-inside-yaml-files" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The <tt class="docutils literal"><span class="pre">Yaml::enablePhpParsing()</span></tt> method is new to Symfony 2.1. Prior to 2.1,
+PHP was <em>always</em> executed when calling the <tt class="docutils literal"><span class="pre">parse()</span></tt> function.</p>
+<p>By default, if you include PHP inside a YAML file, it will not be parsed.
+If you do want PHP to be parsed, you must call <tt class="docutils literal"><span class="pre">Yaml::enablePhpParsing()</span></tt>
+before parsing the file to activate this mode. If you only want to allow
+PHP code for a single YAML file, be sure to disable PHP parsing after parsing
+the single file by calling <tt class="docutils literal"><span class="pre">Yaml::$enablePhpParsing</span> <span class="pre">=</span> <span class="pre">false;</span></tt> (<tt class="docutils literal"><span class="pre">$enablePhpParsing</span></tt>
+is a public property).</p>
 </div>
 <div class="section" id="writing-yaml-files">
 <h3>Writing YAML Files<a class="headerlink" href="#writing-yaml-files" title="Permalink to this headline">¶</a></h3>
@@ -464,6 +469,7 @@ indented according to the current level of nesting in a collection.</p>
 </li>
 <li><a class="reference internal" href="#using-the-symfony2-yaml-component">Using the Symfony2 YAML Component</a><ul>
 <li><a class="reference internal" href="#reading-yaml-files">Reading YAML Files</a></li>
+<li><a class="reference internal" href="#executing-php-inside-yaml-files">Executing PHP Inside YAML Files</a></li>
 <li><a class="reference internal" href="#writing-yaml-files">Writing YAML Files</a></li>
 </ul>
 </li>
@@ -524,7 +530,7 @@ indented according to the current level of nesting in a collection.</p>
         <li class="right" >
           <a href="templating.html" title="The Templating Component"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Components</a> &raquo;</li> 
       </ul>
     </div>

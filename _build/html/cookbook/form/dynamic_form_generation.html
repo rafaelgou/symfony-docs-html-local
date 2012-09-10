@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Dynamically Generate Forms Using Form Events &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to Dynamically Generate Forms Using Form Events &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Form" href="index.html" />
     <link rel="next" title="How to Embed a Collection of Forms" href="form_collections.html" />
     <link rel="prev" title="How to use Data Transformers" href="data_transformers.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="data_transformers.html" title="How to use Data Transformers"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Form</a> &raquo;</li> 
       </ul>
@@ -62,11 +62,11 @@ of what a bare form class looks like:</p>
 namespace Acme\DemoBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class ProductType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder-&gt;add('name');
         $builder-&gt;add('price');
@@ -101,13 +101,13 @@ to an Event Subscriber:</p>
 <div class="highlight-python"><pre>// src/Acme/DemoBundle/Form/Type/ProductType.php
 namespace Acme\DemoBundle\Form\Type;
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\AbstractType
+use Symfony\Component\Form\FormBuilderInterface;
 use Acme\DemoBundle\Form\EventListener\AddNameFieldSubscriber;
 
 class ProductType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $subscriber = new AddNameFieldSubscriber($builder-&gt;getFormFactory());
         $builder-&gt;addEventSubscriber($subscriber);
@@ -169,7 +169,7 @@ class AddNameFieldSubscriber implements EventSubscriberInterface
 
         // check if the product object is "new"
         if (!$data-&gt;getId()) {
-            $form-&gt;add($this-&gt;factory-&gt;createNamed('text', 'name'));
+            $form-&gt;add($this-&gt;factory-&gt;createNamed('name', 'text'));
         }
     }
 }</pre>
@@ -255,7 +255,7 @@ found in the form bundle.</p>
         <li class="right" >
           <a href="data_transformers.html" title="How to use Data Transformers"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Form</a> &raquo;</li> 
       </ul>

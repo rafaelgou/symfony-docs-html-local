@@ -130,8 +130,8 @@ from any controller::
     // in another controller for another request
     $foo = $session->get('foo');
 
-    // set the user locale
-    $session->setLocale('fr');
+    // use a default value if the key doesn't exist
+    $filters = $session->set('filters', array());
 
 You can also store small messages that will only be available for the very
 next request::
@@ -164,9 +164,10 @@ fits most common needs:
 
         providers:
             in_memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+                memory:
+                    users:
+                        user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+                        admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
 
         firewalls:
             dev:
@@ -197,7 +198,7 @@ Moreover, the ``admin`` user has a ``ROLE_ADMIN`` role, which includes the
     configuration, but you can use any hashing algorithm by tweaking the
     ``encoders`` section.
 
-Going to the ``http://localhost/Symfony/web/app_dev.php/demo/secured/hello``
+Going to the ``http://localhost/app_dev.php/demo/secured/hello``
 URL will automatically redirect you to the login form because this resource is
 protected by a ``firewall``.
 

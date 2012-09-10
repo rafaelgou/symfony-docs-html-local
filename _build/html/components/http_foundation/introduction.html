@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The HttpFoundation Component &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>The HttpFoundation Component &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +25,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="HTTP Foundation" href="index.html" />
-    <link rel="next" title="The Locale Component" href="../locale.html" />
+    <link rel="next" title="Session Management" href="sessions.html" />
     <link rel="prev" title="HTTP Foundation" href="index.html" /> 
   </head>
   <body>
@@ -38,12 +38,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../locale.html" title="The Locale Component"
+          <a href="sessions.html" title="Session Management"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="HTTP Foundation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">HTTP Foundation</a> &raquo;</li> 
       </ul>
@@ -333,11 +333,46 @@ actual response content.</p>
 $response = new RedirectResponse('http://example.com/');</pre>
 </div>
 </div>
+<div class="section" id="streaming-a-response">
+<h3>Streaming a Response<a class="headerlink" href="#streaming-a-response" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>Support for streamed responses was added in Symfony 2.1.</p>
+<p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/StreamedResponse.html" title="Symfony\Component\HttpFoundation\StreamedResponse"><span class="pre">StreamedResponse</span></a></tt> class allows
+you to stream the Response back to the client. The response content is
+represented by a PHP callable instead of a string:</p>
+<div class="highlight-python"><pre>use Symfony\Component\HttpFoundation\StreamedResponse;
+
+$response = new StreamedResponse();
+$response-&gt;setCallback(function () {
+    echo 'Hello World';
+    flush();
+    sleep(2);
+    echo 'Hello World';
+    flush();
+});
+$response-&gt;send();</pre>
+</div>
+</div>
+<div class="section" id="downloading-files">
+<h3>Downloading Files<a class="headerlink" href="#downloading-files" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.1: </span>The <tt class="docutils literal"><span class="pre">makeDisposition</span></tt> method was added in Symfony 2.1.</p>
+<p>When uploading a file, you must add a <tt class="docutils literal"><span class="pre">Content-Disposition</span></tt> header to your
+response. While creating this header for basic file downloads is easy, using
+non-ASCII filenames is more involving. The
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Response.html#method_makeDisposition" title="Symfony\Component\HttpFoundation\Response::makeDisposition()"><span class="pre">makeDisposition()</span></a></tt>
+abstracts the hard work behind a simple API:</p>
+<div class="highlight-python"><pre>use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+
+$d = $response-&gt;headers-&gt;makeDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, 'foo.pdf');
+
+$response-&gt;headers-&gt;set('Content-Disposition', $d);</pre>
+</div>
+</div>
 </div>
 <div class="section" id="session">
 <h2>Session<a class="headerlink" href="#session" title="Permalink to this headline">¶</a></h2>
-<p>TBD &#8211; This part has not been written yet as it will probably be refactored
-soon in Symfony 2.1.</p>
+<p>The session information is in its own document: <a class="reference internal" href="sessions.html"><em>Session Management</em></a>.</p>
 </div>
 </div>
 
@@ -364,6 +399,8 @@ soon in Symfony 2.1.</p>
 <li><a class="reference internal" href="#setting-cookies">Setting Cookies</a></li>
 <li><a class="reference internal" href="#managing-the-http-cache">Managing the HTTP Cache</a></li>
 <li><a class="reference internal" href="#redirecting-the-user">Redirecting the User</a></li>
+<li><a class="reference internal" href="#streaming-a-response">Streaming a Response</a></li>
+<li><a class="reference internal" href="#downloading-files">Downloading Files</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#session">Session</a></li>
@@ -375,8 +412,8 @@ soon in Symfony 2.1.</p>
   <p class="topless"><a href="index.html"
                         title="previous chapter">HTTP Foundation</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../locale.html"
-                        title="next chapter">The Locale Component</a></p>
+  <p class="topless"><a href="sessions.html"
+                        title="next chapter">Session Management</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/components/http_foundation/introduction.txt"
@@ -406,12 +443,12 @@ soon in Symfony 2.1.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../locale.html" title="The Locale Component"
+          <a href="sessions.html" title="Session Management"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="HTTP Foundation"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
           <li><a href="index.html" >HTTP Foundation</a> &raquo;</li> 
       </ul>

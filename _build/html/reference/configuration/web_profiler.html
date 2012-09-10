@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>WebProfilerBundle Configuration &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>WebProfilerBundle Configuration &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Reference Documents" href="../index.html" />
     <link rel="next" title="Form Types Reference" href="../forms/types.html" />
     <link rel="prev" title="Configuration Reference" href="monolog.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="monolog.html" title="Configuration Reference"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Reference Documents</a> &raquo;</li> 
       </ul>
     </div>  
@@ -61,14 +61,13 @@
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">web_profiler</span><span class="p-Indicator">:</span>
 
-    <span class="c1"># display secondary information, disable to make the toolbar shorter</span>
-    <span class="l-Scalar-Plain">verbose</span><span class="p-Indicator">:</span>             <span class="l-Scalar-Plain">true</span>
+    <span class="c1"># DEPRECATED, it is not useful anymore and can be removed safely from your configuration</span>
+    <span class="l-Scalar-Plain">verbose</span><span class="p-Indicator">:</span>              <span class="l-Scalar-Plain">true</span>
 
     <span class="c1"># display the web debug toolbar at the bottom of pages with a summary of profiler info</span>
-    <span class="l-Scalar-Plain">toolbar</span><span class="p-Indicator">:</span>             <span class="l-Scalar-Plain">false</span>
-
-    <span class="c1"># gives you the opportunity to look at the collected data before following the redirect</span>
-    <span class="l-Scalar-Plain">intercept_redirects</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+    <span class="l-Scalar-Plain">toolbar</span><span class="p-Indicator">:</span>              <span class="l-Scalar-Plain">false</span>
+    <span class="l-Scalar-Plain">position</span><span class="p-Indicator">:</span>             <span class="l-Scalar-Plain">bottom</span>
+    <span class="l-Scalar-Plain">intercept_redirects</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">false</span>
 </pre></div>
 </div>
 </li>
@@ -131,7 +130,7 @@
         <li class="right" >
           <a href="monolog.html" title="Configuration Reference"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li> 
       </ul>
     </div>

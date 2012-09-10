@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to implement a simple Registration Form &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to implement a simple Registration Form &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +25,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Doctrine" href="index.html" />
     <link rel="next" title="Form" href="../form/index.html" />
-    <link rel="prev" title="How to Register Custom DQL Functions" href="custom_dql_functions.html" /> 
+    <link rel="prev" title="Defining Relationships with Abstract Classes and Interfaces" href="resolve_target_entity.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,9 +41,9 @@
           <a href="../form/index.html" title="Form"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="custom_dql_functions.html" title="How to Register Custom DQL Functions"
+          <a href="resolve_target_entity.html" title="Defining Relationships with Abstract Classes and Interfaces"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Doctrine</a> &raquo;</li> 
       </ul>
@@ -140,11 +140,12 @@ security component.</p>
 namespace Acme\AccountBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class UserType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder-&gt;add('email', 'email');
         $builder-&gt;add('plainPassword', 'repeated', array(
@@ -154,9 +155,11 @@ class UserType extends AbstractType
         ));
     }
 
-    public function getDefaultOptions(array $options)
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        return array('data_class' =&gt; 'Acme\AccountBundle\Entity\User');
+        $resolver-&gt;setDefaults(array(
+            'data_class' =&gt; 'Acme\AccountBundle\Entity\User'
+        ));
     }
 
     public function getName()
@@ -226,11 +229,11 @@ class Registration
 namespace Acme\AccountBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class RegistrationType extends AbstractType
 {
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder-&gt;add('user', new UserType());
         $builder-&gt;add('terms', 'checkbox', array('property_path' =&gt; 'termsAccepted'));
@@ -287,7 +290,7 @@ the validation and saves the data into the database:</p>
 
     $form = $this-&gt;createForm(new RegistrationType(), new Registration());
 
-    $form-&gt;bindRequest($this-&gt;getRequest());
+    $form-&gt;bind($this-&gt;getRequest());
 
     if ($form-&gt;isValid()) {
         $registration = $form-&gt;getData();
@@ -326,8 +329,8 @@ saving the User to the database.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="custom_dql_functions.html"
-                        title="previous chapter">How to Register Custom DQL Functions</a></p>
+  <p class="topless"><a href="resolve_target_entity.html"
+                        title="previous chapter">Defining Relationships with Abstract Classes and Interfaces</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../form/index.html"
                         title="next chapter">Form</a></p>
@@ -363,9 +366,9 @@ saving the User to the database.</p>
           <a href="../form/index.html" title="Form"
              >next</a> |</li>
         <li class="right" >
-          <a href="custom_dql_functions.html" title="How to Register Custom DQL Functions"
+          <a href="resolve_target_entity.html" title="Defining Relationships with Abstract Classes and Interfaces"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Doctrine</a> &raquo;</li> 
       </ul>

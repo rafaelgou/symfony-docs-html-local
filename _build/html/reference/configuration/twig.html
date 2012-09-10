@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>TwigBundle Configuration Reference &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>TwigBundle Configuration Reference &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Reference Documents" href="../index.html" />
     <link rel="next" title="Configuration Reference" href="monolog.html" />
     <link rel="prev" title="SwiftmailerBundle Configuration (“swiftmailer”)" href="swiftmailer.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="swiftmailer.html" title="SwiftmailerBundle Configuration (“swiftmailer”)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Reference Documents</a> &raquo;</li> 
       </ul>
     </div>  
@@ -58,11 +58,12 @@
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">twig</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">exception_controller</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction</span>
     <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">resources</span><span class="p-Indicator">:</span>
 
             <span class="c1"># Default:</span>
-            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">div_layout.html.twig</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">form_div_layout.html.twig</span>
 
             <span class="c1"># Example:</span>
             <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">MyBundle::form.html.twig</span>
@@ -72,9 +73,11 @@
         <span class="l-Scalar-Plain">foo</span><span class="p-Indicator">:</span>                 <span class="s">&quot;@bar&quot;</span>
         <span class="l-Scalar-Plain">pi</span><span class="p-Indicator">:</span>                  <span class="l-Scalar-Plain">3.14</span>
 
-        <span class="c1"># Prototype</span>
-        <span class="l-Scalar-Plain">key</span><span class="p-Indicator">:</span>
+        <span class="c1"># Example options, but the easiest use is as seen above</span>
+        <span class="l-Scalar-Plain">some_variable_name</span><span class="p-Indicator">:</span>
+            <span class="c1"># a service id that should be the value</span>
             <span class="l-Scalar-Plain">id</span><span class="p-Indicator">:</span>                   <span class="l-Scalar-Plain">~</span>
+            <span class="c1"># set to service or leave blank</span>
             <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span>                 <span class="l-Scalar-Plain">~</span>
             <span class="l-Scalar-Plain">value</span><span class="p-Indicator">:</span>                <span class="l-Scalar-Plain">~</span>
     <span class="l-Scalar-Plain">autoescape</span><span class="p-Indicator">:</span>           <span class="l-Scalar-Plain">~</span>
@@ -84,7 +87,7 @@
     <span class="l-Scalar-Plain">debug</span><span class="p-Indicator">:</span>                <span class="s">&quot;%kernel.debug%&quot;</span>
     <span class="l-Scalar-Plain">strict_variables</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">~</span>
     <span class="l-Scalar-Plain">auto_reload</span><span class="p-Indicator">:</span>          <span class="l-Scalar-Plain">~</span>
-    <span class="l-Scalar-Plain">exception_controller</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">Symfony\Bundle\TwigBundle\Controller\ExceptionController::showAction</span>
+    <span class="l-Scalar-Plain">optimizations</span><span class="p-Indicator">:</span>        <span class="l-Scalar-Plain">~</span>
 </pre></div>
 </div>
 </li>
@@ -202,7 +205,7 @@ you should add a listener to the <tt class="docutils literal"><span class="pre">
         <li class="right" >
           <a href="swiftmailer.html" title="SwiftmailerBundle Configuration (“swiftmailer”)"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li> 
       </ul>
     </div>

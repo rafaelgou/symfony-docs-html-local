@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Installing and Configuring Symfony &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Installing and Configuring Symfony &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Creating Pages in Symfony2" href="page_creation.html" />
     <link rel="prev" title="Symfony2 versus Flat PHP" href="from_flat_php_to_symfony2.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="from_flat_php_to_symfony2.html" title="Symfony2 versus Flat PHP"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -64,15 +64,16 @@ developing in immediately.</p>
 <p class="last">If you&#8217;re looking for instructions on how best to create a new project
 and store it via source control, see <a class="reference internal" href="#using-source-control">Using Source Control</a>.</p>
 </div>
-<div class="section" id="downloading-a-symfony2-distribution">
-<h2>Downloading a Symfony2 Distribution<a class="headerlink" href="#downloading-a-symfony2-distribution" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="installing-a-symfony2-distribution">
+<h2>Installing a Symfony2 Distribution<a class="headerlink" href="#installing-a-symfony2-distribution" title="Permalink to this headline">¶</a></h2>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">First, check that you have installed and configured a Web server (such
-as Apache) with PHP 5.3.2 or higher. For more information on Symfony2
-requirements, see the <a class="reference internal" href="../reference/requirements.html"><em>requirements reference</em></a>.
-For information on configuring your specific web server document root, see the
-following documentation: <a class="reference external" href="http://httpd.apache.org/docs/current/mod/core.html#documentroot">Apache</a> | <a class="reference external" href="http://wiki.nginx.org/Symfony">Nginx</a> .</p>
+<p class="last">First, check that you have installed and configured a Web server (such as
+Apache) with the most recent PHP version possible (PHP 5.3.8 or newer is
+recommended). For more information on Symfony2 requirements, see the
+<a class="reference internal" href="../reference/requirements.html"><em>requirements reference</em></a>. For information on
+configuring your specific web server document root, see the following
+documentation: <a class="reference external" href="http://httpd.apache.org/docs/current/mod/core.html#documentroot">Apache</a> | <a class="reference external" href="http://wiki.nginx.org/Symfony">Nginx</a> .</p>
 </div>
 <p>Symfony2 packages &#8220;distributions&#8221;, which are fully-functional applications
 that include the Symfony2 core libraries, a selection of useful bundles, a
@@ -81,28 +82,32 @@ a Symfony2 distribution, you&#8217;re downloading a functional application skele
 that can be used immediately to begin developing your application.</p>
 <p>Start by visiting the Symfony2 download page at <a class="reference external" href="http://symfony.com/download">http://symfony.com/download</a>.
 On this page, you&#8217;ll see the <em>Symfony Standard Edition</em>, which is the main
-Symfony2 distribution. Here, you&#8217;ll need to make two choices:</p>
-<ul class="simple">
-<li>Download either a <tt class="docutils literal"><span class="pre">.tgz</span></tt> or <tt class="docutils literal"><span class="pre">.zip</span></tt> archive - both are equivalent, download
-whatever you&#8217;re more comfortable using;</li>
-<li>Download the distribution with or without vendors. If you have <a class="reference external" href="http://git-scm.com/">Git</a> installed
-on your computer, you should download Symfony2 &#8220;without vendors&#8221;, as it
-adds a bit more flexibility when including third-party/vendor libraries.</li>
-</ul>
-<p>Download one of the archives somewhere under your local web server&#8217;s root
-directory and unpack it. From a UNIX command line, this can be done with
-one of the following commands (replacing <tt class="docutils literal"><span class="pre">###</span></tt> with your actual filename):</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="c"># for .tgz file</span>
-<span class="nv">$ </span>tar zxvf Symfony_Standard_Vendors_2.0.###.tgz
-
-<span class="c"># for a .zip file</span>
-<span class="nv">$ </span>unzip Symfony_Standard_Vendors_2.0.###.zip
+Symfony2 distribution. There are 2 ways to get your project started:</p>
+<div class="section" id="option-1-composer">
+<h3>Option 1) Composer<a class="headerlink" href="#option-1-composer" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://getcomposer.org/">Composer</a> is a dependency management library for PHP, which you can use
+to download the Symfony2 Standard Edition.</p>
+<p>Start by <a class="reference external" href="http://getcomposer.org/download/">downloading Composer</a> anywhere onto your local computer. If you
+have curl installed, it&#8217;s as easy as:</p>
+<div class="highlight-bash"><div class="highlight"><pre>curl -s https://getcomposer.org/installer | php
 </pre></div>
 </div>
-<p>When you&#8217;re finished, you should have a <tt class="docutils literal"><span class="pre">Symfony/</span></tt> directory that looks
-something like this:</p>
-<div class="highlight-text"><div class="highlight"><pre>www/ &lt;- your web root directory
-    Symfony/ &lt;- the unpacked archive
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If your computer is not ready to use Composer, you&#8217;ll see some recommendations
+when running this command. Follow those recommendations to get Composer
+working properly.</p>
+</div>
+<p>Composer is an executable PHAR file, which you can use to download the Standard
+Distribution:</p>
+<div class="highlight-bash"><div class="highlight"><pre>php composer.phar create-project symfony/framework-standard-edition /path/to/webroot/Symfony
+</pre></div>
+</div>
+<p>This command may take several minutes to run as Composer download the Standard
+Distribution along with all of the vendor libraries that it needs. When it finishes,
+you should have a directory that looks something like this:</p>
+<div class="highlight-text"><div class="highlight"><pre>path/to/webroot/ &lt;- your web root directory
+    Symfony/ &lt;- the new directory
         app/
             cache/
             config/
@@ -116,17 +121,80 @@ something like this:</p>
             ...
 </pre></div>
 </div>
+</div>
+<div class="section" id="option-2-download-an-archive">
+<h3>Option 2) Download an Archive<a class="headerlink" href="#option-2-download-an-archive" title="Permalink to this headline">¶</a></h3>
+<p>You can also download an archive of the Standard Edition. Here, you&#8217;ll
+need to make two choices:</p>
+<ul class="simple">
+<li>Download either a <tt class="docutils literal"><span class="pre">.tgz</span></tt> or <tt class="docutils literal"><span class="pre">.zip</span></tt> archive - both are equivalent, download
+whatever you&#8217;re more comfortable using;</li>
+<li>Download the distribution with or without vendors. If you&#8217;re planning on
+using more third-party libraries or bundles and managing them via Composer,
+you should probably download &#8220;without vendors&#8221;.</li>
+</ul>
+<p>Download one of the archives somewhere under your local web server&#8217;s root
+directory and unpack it. From a UNIX command line, this can be done with
+one of the following commands (replacing <tt class="docutils literal"><span class="pre">###</span></tt> with your actual filename):</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># for .tgz file</span>
+<span class="nv">$ </span>tar zxvf Symfony_Standard_Vendors_2.1.###.tgz
+
+<span class="c"># for a .zip file</span>
+<span class="nv">$ </span>unzip Symfony_Standard_Vendors_2.1.###.zip
+</pre></div>
+</div>
+<p>If you&#8217;ve downloaded &#8220;without vendors&#8221;, you&#8217;ll definitely need to read the
+next section.</p>
+</div>
 <div class="section" id="updating-vendors">
-<h3>Updating Vendors<a class="headerlink" href="#updating-vendors" title="Permalink to this headline">¶</a></h3>
-<p>Finally, if you downloaded the archive &#8220;without vendors&#8221;, install the vendors
-by running the following command from the command line:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php bin/vendors install
+<span id="installation-updating-vendors"></span><h3>Updating Vendors<a class="headerlink" href="#updating-vendors" title="Permalink to this headline">¶</a></h3>
+<p>At this point, you&#8217;ve downloaded a fully-functional Symfony project in which
+you&#8217;ll start to develop your own application. A Symfony project depends on
+a number of external libraries. These are downloaded into the <cite>vendor/</cite> directory
+of your project via a library called <a class="reference external" href="http://getcomposer.org/">Composer</a>.</p>
+<p>Depending on how you downloaded Symfony, you may or may not need to do update
+your vendors right now. But, updating your vendors is always safe, and guarantees
+that you have all the vendor libraries you need.</p>
+<p>Step 1: Get <a class="reference external" href="http://getcomposer.org/">Composer</a> (The great new PHP packaging system)</p>
+<div class="highlight-bash"><div class="highlight"><pre>curl -s http://getcomposer.org/installer | php
+</pre></div>
+</div>
+<p>Make sure you download <tt class="docutils literal"><span class="pre">composer.phar</span></tt> in the same folder where
+the <tt class="docutils literal"><span class="pre">composer.json</span></tt> file is located (this is your Symfony project
+root by default).</p>
+<p>Step 2: Install vendors</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php composer.phar install
 </pre></div>
 </div>
 <p>This command downloads all of the necessary vendor libraries - including
-Symfony itself - into the <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory. For more information on
-how third-party vendor libraries are managed inside Symfony2, see
-&#8220;<a class="reference internal" href="../cookbook/workflow/new_project_git.html#cookbook-managing-vendor-libraries"><em>Managing Vendor Libraries with bin/vendors and deps</em></a>&#8221;.</p>
+Symfony itself - into the <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you don&#8217;t have <tt class="docutils literal"><span class="pre">curl</span></tt> installed, you can also just download the <tt class="docutils literal"><span class="pre">installer</span></tt>
+file manually at <a class="reference external" href="http://getcomposer.org/installer">http://getcomposer.org/installer</a>. Place this file into your
+project and then run:</p>
+<div class="last highlight-bash"><div class="highlight"><pre>php installer
+php composer.phar install
+</pre></div>
+</div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>When running <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt> or <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">update</span></tt>,
+composer will execute post install/update commands to clear the cache
+and install assets. By default, the assets will be copied into your <tt class="docutils literal"><span class="pre">web</span></tt>
+directory. To create symlinks instead of copying the assets, you can
+add an entry in the <tt class="docutils literal"><span class="pre">extra</span></tt> node of your composer.json file with the
+key <tt class="docutils literal"><span class="pre">symfony-assets-install</span></tt> and the value <tt class="docutils literal"><span class="pre">symlink</span></tt>:</p>
+<div class="highlight-json"><pre>"extra": {
+    "symfony-app-dir": "app",
+    "symfony-web-dir": "web",
+    "symfony-assets-install": "symlink"
+}</pre>
+</div>
+<p class="last">When passing <tt class="docutils literal"><span class="pre">relative</span></tt> instead of <tt class="docutils literal"><span class="pre">symlink</span></tt> to symfony-assets-install,
+the command will generate relative symlinks.</p>
+</div>
 </div>
 <div class="section" id="configuration-and-setup">
 <h3>Configuration and Setup<a class="headerlink" href="#configuration-and-setup" title="Permalink to this headline">¶</a></h3>
@@ -136,7 +204,7 @@ sample code inside the <tt class="docutils literal"><span class="pre">src/</span
 <p>Symfony2 comes with a visual server configuration tester to help make sure
 your Web server and PHP are configured to use Symfony. Use the following URL
 to check your configuration:</p>
-<div class="highlight-text"><div class="highlight"><pre>http://localhost/Symfony/web/config.php
+<div class="highlight-text"><div class="highlight"><pre>http://localhost/config.php
 </pre></div>
 </div>
 <p>If there are any issues, correct them now before moving on.</p>
@@ -190,7 +258,7 @@ on your server because changing the umask is not thread-safe.</p>
 </div>
 <p>When everything is fine, click on &#8220;Go to the Welcome page&#8221; to request your
 first &#8220;real&#8221; Symfony2 webpage:</p>
-<div class="highlight-text"><div class="highlight"><pre>http://localhost/Symfony/web/app_dev.php/
+<div class="highlight-text"><div class="highlight"><pre>http://localhost/app_dev.php/
 </pre></div>
 </div>
 <p>Symfony2 should welcome and congratulate you for your hard work so far!</p>
@@ -207,6 +275,8 @@ you can remove it later.</p>
 <p>If you&#8217;re new to Symfony, join us in the &#8220;<a class="reference internal" href="page_creation.html"><em>Creating Pages in Symfony2</em></a>&#8221;, where you&#8217;ll
 learn how to create pages, change configuration, and do everything else you&#8217;ll
 need in your new application.</p>
+<p>Be sure to also check out the <a class="reference internal" href="../cookbook/index.html"><em>Cookbook</em></a>, which contains
+a wide variety of articles about solving specific problems with Symfony.</p>
 </div>
 <div class="section" id="using-source-control">
 <h2>Using Source Control<a class="headerlink" href="#using-source-control" title="Permalink to this headline">¶</a></h2>
@@ -222,13 +292,13 @@ in git, see <a class="reference internal" href="../cookbook/workflow/new_project
 the entire <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory and not commit it to source control. With
 <tt class="docutils literal"><span class="pre">Git</span></tt>, this is done by creating and adding the following to a <tt class="docutils literal"><span class="pre">.gitignore</span></tt>
 file:</p>
-<div class="highlight-text"><div class="highlight"><pre>vendor/
+<div class="highlight-text"><div class="highlight"><pre>/vendor/
 </pre></div>
 </div>
 <p>Now, the vendor directory won&#8217;t be committed to source control. This is fine
 (actually, it&#8217;s great!) because when someone else clones or checks out the
-project, he/she can simply run the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">bin/vendors</span> <span class="pre">install</span></tt> script to
-download all the necessary vendor libraries.</p>
+project, he/she can simply run the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt> script to
+install all the necessary project dependencies.</p>
 </div>
 </div>
 </div>
@@ -242,7 +312,9 @@ download all the necessary vendor libraries.</p>
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Installing and Configuring Symfony</a><ul>
-<li><a class="reference internal" href="#downloading-a-symfony2-distribution">Downloading a Symfony2 Distribution</a><ul>
+<li><a class="reference internal" href="#installing-a-symfony2-distribution">Installing a Symfony2 Distribution</a><ul>
+<li><a class="reference internal" href="#option-1-composer">Option 1) Composer</a></li>
+<li><a class="reference internal" href="#option-2-download-an-archive">Option 2) Download an Archive</a></li>
 <li><a class="reference internal" href="#updating-vendors">Updating Vendors</a></li>
 <li><a class="reference internal" href="#configuration-and-setup">Configuration and Setup</a></li>
 </ul>
@@ -296,7 +368,7 @@ download all the necessary vendor libraries.</p>
         <li class="right" >
           <a href="from_flat_php_to_symfony2.html" title="Symfony2 versus Flat PHP"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>

@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Create and store a Symfony2 Project in Subversion &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>How to Create and store a Symfony2 Project in Subversion &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../../index.html" />
     <link rel="up" title="Workflow" href="index.html" />
     <link rel="next" title="Controller" href="../controller/index.html" />
     <link rel="prev" title="How to Create and store a Symfony2 Project in git" href="new_project_git.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="new_project_git.html" title="How to Create and store a Symfony2 Project in git"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Workflow</a> &raquo;</li> 
       </ul>
@@ -121,13 +121,13 @@ we can ignore specific files.</p>
 
 <span class="nv">$ </span>svn propset svn:ignore <span class="s2">&quot;vendor&quot;</span> .
 <span class="nv">$ </span>svn propset svn:ignore <span class="s2">&quot;bootstrap*&quot;</span> app/
-<span class="nv">$ </span>svn propset svn:ignore <span class="s2">&quot;parameters.ini&quot;</span> app/config/
+<span class="nv">$ </span>svn propset svn:ignore <span class="s2">&quot;parameters.yml&quot;</span> app/config/
 <span class="nv">$ </span>svn propset svn:ignore <span class="s2">&quot;*&quot;</span> app/cache/
 <span class="nv">$ </span>svn propset svn:ignore <span class="s2">&quot;*&quot;</span> app/logs/
 
 <span class="nv">$ </span>svn propset svn:ignore <span class="s2">&quot;bundles&quot;</span> web
 
-<span class="nv">$ </span>svn ci -m <span class="s2">&quot;commit basic symfony ignore list (vendor, app/bootstrap*, app/config/parameters.ini, app/cache/*, app/logs/*, web/bundles)&quot;</span>
+<span class="nv">$ </span>svn ci -m <span class="s2">&quot;commit basic symfony ignore list (vendor, app/bootstrap*, app/config/parameters.yml, app/cache/*, app/logs/*, web/bundles)&quot;</span>
 </pre></div>
 </div>
 </li>
@@ -137,24 +137,21 @@ we can ignore specific files.</p>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Copy <tt class="docutils literal"><span class="pre">app/config/parameters.ini</span></tt> to <tt class="docutils literal"><span class="pre">app/config/parameters.ini.dist</span></tt>.
-The <tt class="docutils literal"><span class="pre">parameters.ini</span></tt> file is ignored by svn (see above) so that
+<li><p class="first">Copy <tt class="docutils literal"><span class="pre">app/config/parameters.yml</span></tt> to <tt class="docutils literal"><span class="pre">app/config/parameters.yml.dist</span></tt>.
+The <tt class="docutils literal"><span class="pre">parameters.yml</span></tt> file is ignored by svn (see above) so that
 machine-specific settings like database passwords aren&#8217;t committed. By
-creating the <tt class="docutils literal"><span class="pre">parameters.ini.dist</span></tt> file, new developers can quickly clone
-the project, copy this file to <tt class="docutils literal"><span class="pre">parameters.ini</span></tt>, customize it, and start
+creating the <tt class="docutils literal"><span class="pre">parameters.yml.dist</span></tt> file, new developers can quickly clone
+the project, copy this file to <tt class="docutils literal"><span class="pre">parameters.yml</span></tt>, customize it, and start
 developing.</p>
 </li>
-<li><p class="first">Finally, download all of the third-party vendor libraries:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php bin/vendors install
-</pre></div>
-</div>
+<li><p class="first">Finally, download all of the third-party vendor libraries by
+executing composer. For details, see <a class="reference internal" href="../../book/installation.html#installation-updating-vendors"><em>Updating Vendors</em></a>.</p>
 </li>
 </ol>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last"><a class="reference external" href="http://git-scm.com/">git</a> has to be installed to run <tt class="docutils literal"><span class="pre">bin/vendors</span></tt>, this is the protocol
-used to fetch vendor libraries. This only means that <tt class="docutils literal"><span class="pre">git</span></tt> is used as
-a tool to basically help download the libraries in the <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory.</p>
+<p class="last">If you rely on any &#8220;dev&#8221; versions, then git may be used to install
+those libraries, since there is no archive available for download.</p>
 </div>
 <p>At this point, you have a fully-functional Symfony2 project stored in your
 Subversion repository. The development can start with commits in the Subversion
@@ -167,89 +164,46 @@ to learn more about how to configure and develop inside your application.</p>
 remove the sample code, follow the instructions on the <a class="reference external" href="https://github.com/symfony/symfony-standard/blob/master/README.md">Standard Edition Readme</a>.</p>
 </div>
 </div>
-<div class="section" id="managing-vendor-libraries-with-bin-vendors-and-deps">
-<h2>Managing Vendor Libraries with bin/vendors and deps<a class="headerlink" href="#managing-vendor-libraries-with-bin-vendors-and-deps" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="managing-vendor-libraries-with-composer-json">
+<h2>Managing Vendor Libraries with composer.json<a class="headerlink" href="#managing-vendor-libraries-with-composer-json" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="how-does-it-work">
 <h3>How does it work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this headline">¶</a></h3>
 <p>Every Symfony project uses a group of third-party &#8220;vendor&#8221; libraries. One
 way or another the goal is to download these files into your <tt class="docutils literal"><span class="pre">vendor/</span></tt>
 directory and, ideally, to give you some sane way to manage the exact version
 you need for each.</p>
-<p>By default, these libraries are downloaded by running a <tt class="docutils literal"><span class="pre">php</span> <span class="pre">bin/vendors</span> <span class="pre">install</span></tt>
-&#8220;downloader&#8221; script. This script reads from the <tt class="docutils literal"><span class="pre">deps</span></tt> file at the root
-of your project. This is an ini-formatted script, which holds a list of each
-of the external libraries you need, the directory each should be downloaded to,
-and (optionally) the version to be downloaded. The <tt class="docutils literal"><span class="pre">bin/vendors</span></tt> script
-uses <tt class="docutils literal"><span class="pre">git</span></tt> to downloaded these, solely because these external libraries
-themselves tend to be stored via git. The <tt class="docutils literal"><span class="pre">bin/vendors</span></tt> script also reads
-the <tt class="docutils literal"><span class="pre">deps.lock</span></tt> file, which allows you to pin each library to an exact
-git commit hash.</p>
+<p>By default, these libraries are downloaded by running a <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt>
+&#8220;downloader&#8221; binary. This <tt class="docutils literal"><span class="pre">composer.phar</span></tt> file is from a library called
+<a class="reference external" href="http://getcomposer.org/">Composer</a> and you can read more about installing it in the <a class="reference internal" href="../../book/installation.html#installation-updating-vendors"><em>Installation</em></a>
+chapter.</p>
+<p>The <tt class="docutils literal"><span class="pre">composer.phar</span></tt> file reads from the <tt class="docutils literal"><span class="pre">composer.json</span></tt> file at the root
+of your project. This is an JSON-formatted file, which holds a list of each
+of the external packages you need, the version to be downloaded and more.
+The <tt class="docutils literal"><span class="pre">composer.phar</span></tt> file also reads from a <tt class="docutils literal"><span class="pre">composer.lock</span></tt> file, which
+allows you to pin each library to an <strong>exact</strong> version. In fact, if a <tt class="docutils literal"><span class="pre">composer.lock</span></tt>
+file exists, the versions inside will override those in <tt class="docutils literal"><span class="pre">composer.json</span></tt>.
+To upgrade your libraries to new versions, run <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">update</span></tt>.</p>
+<p>To learn more about Composer, see <a class="reference external" href="http://getcomposer.org/">GetComposer.org</a>:</p>
 <p>It&#8217;s important to realize that these vendor libraries are <em>not</em> actually part
 of <em>your</em> repository. Instead, they&#8217;re simply un-tracked files that are downloaded
-into the <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory by the <tt class="docutils literal"><span class="pre">bin/vendors</span></tt> script. But since all
-the information needed to download these files is saved in <tt class="docutils literal"><span class="pre">deps</span></tt> and <tt class="docutils literal"><span class="pre">deps.lock</span></tt>
-(which <em>are</em> stored) in our repository), any other developer can use our
-project, run <tt class="docutils literal"><span class="pre">php</span> <span class="pre">bin/vendors</span> <span class="pre">install</span></tt>, and download the exact same set
-of vendor libraries. This means that you&#8217;re controlling exactly what each
-vendor library looks like, without needing to actually commit them to <em>your</em>
-repository.</p>
-<p>So, whenever a developer uses your project, he/she should run the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">bin/vendors</span> <span class="pre">install</span></tt>
+into the <tt class="docutils literal"><span class="pre">vendor/</span></tt>. But since all the information needed to download these
+files is saved in <tt class="docutils literal"><span class="pre">composer.json</span></tt> and <tt class="docutils literal"><span class="pre">composer.lock</span></tt> (which <em>are</em> stored)
+in our repository, any other developer can use our project, run <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt>,
+and download the exact same set of vendor libraries. This means that you&#8217;re
+controlling exactly what each vendor library looks like, without needing to
+actually commit them to <em>your</em> repository.</p>
+<p>So, whenever a developer uses your project, he/she should run the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt>
 script to ensure that all of the needed vendor libraries are downloaded.</p>
 <div class="sidebar">
 <p class="first sidebar-title">Upgrading Symfony</p>
 <p>Since Symfony is just a group of third-party libraries and third-party
-libraries are entirely controlled through <tt class="docutils literal"><span class="pre">deps</span></tt> and <tt class="docutils literal"><span class="pre">deps.lock</span></tt>,
+libraries are entirely controlled through <tt class="docutils literal"><span class="pre">composer.json</span></tt> and <tt class="docutils literal"><span class="pre">composer.lock</span></tt>,
 upgrading Symfony means simply upgrading each of these files to match
 their state in the latest Symfony Standard Edition.</p>
-<p class="last">Of course, if you&#8217;ve added new entries to <tt class="docutils literal"><span class="pre">deps</span></tt> or <tt class="docutils literal"><span class="pre">deps.lock</span></tt>, be sure
+<p class="last">Of course, if you&#8217;ve added new entries to <tt class="docutils literal"><span class="pre">composer.json</span></tt>, be sure
 to replace only the original parts (i.e. be sure not to also delete any of
 your custom entries).</p>
 </div>
-<div class="admonition caution">
-<p class="first admonition-title">Caution</p>
-<p class="last">There is also a <tt class="docutils literal"><span class="pre">php</span> <span class="pre">bin/vendors</span> <span class="pre">update</span></tt> command, but this has nothing
-to do with upgrading your project and you will normally not need to use
-it. This command is used to freeze the versions of all of your vendor libraries
-by updating them to the version specified in <tt class="docutils literal"><span class="pre">deps</span></tt> and recording it
-into the <tt class="docutils literal"><span class="pre">deps.lock</span></tt> file.</p>
-</div>
-</div>
-<div class="section" id="hacking-vendor-libraries">
-<h3>Hacking vendor libraries<a class="headerlink" href="#hacking-vendor-libraries" title="Permalink to this headline">¶</a></h3>
-<p>Sometimes, you want a specific branch, tag, or commit of a library to be downloaded
-or upgraded. You can set that directly to the <tt class="docutils literal"><span class="pre">deps</span></tt> file :</p>
-<div class="highlight-text"><div class="highlight"><pre>[AcmeAwesomeBundle]
-    git=http://github.com/johndoe/Acme/AwesomeBundle.git
-    target=/bundles/Acme/AwesomeBundle
-    version=the-awesome-version
-</pre></div>
-</div>
-<ul>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">git</span></tt> option sets the URL of the library. It can use various protocols,
-like <tt class="docutils literal"><span class="pre">http://</span></tt> as well as <tt class="docutils literal"><span class="pre">git://</span></tt>.</p>
-</li>
-<li><p class="first">The <tt class="docutils literal"><span class="pre">target</span></tt> option specifies where the repository will live : plain Symfony
-bundles should go under the <tt class="docutils literal"><span class="pre">vendor/bundles/Acme</span></tt> directory, other third-party
-libraries usually go to <tt class="docutils literal"><span class="pre">vendor/my-awesome-library-name</span></tt>. The target directory
-defaults to this last option when not specified.</p>
-</li>
-<li><dl class="first docutils">
-<dt>The <tt class="docutils literal"><span class="pre">version</span></tt> option allows you to set a specific revision. You can use a tag</dt>
-<dd><p class="first last">(<tt class="docutils literal"><span class="pre">version=origin/0.42</span></tt>) or a branch name (<tt class="docutils literal"><span class="pre">refs/remotes/origin/awesome-branch</span></tt>).
-It defaults to <tt class="docutils literal"><span class="pre">origin/HEAD</span></tt>.</p>
-</dd>
-</dl>
-</li>
-</ul>
-</div>
-<div class="section" id="updating-workflow">
-<h3>Updating workflow<a class="headerlink" href="#updating-workflow" title="Permalink to this headline">¶</a></h3>
-<p>When you execute the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">bin/vendors</span> <span class="pre">install</span></tt>, for every library, the script first
-checks if the install directory exists.</p>
-<p>If it does not (and ONLY if it does not), it runs a <tt class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span></tt>.</p>
-<p>Then, it does a <tt class="docutils literal"><span class="pre">git</span> <span class="pre">fetch</span> <span class="pre">origin</span></tt> and a <tt class="docutils literal"><span class="pre">git</span> <span class="pre">reset</span> <span class="pre">--hard</span> <span class="pre">the-awesome-version</span></tt>.</p>
-<p>This means that the repository will only be cloned once. If you want to perform any
-change of the git remote, you MUST delete the entire target directory, not only its content.</p>
 </div>
 </div>
 <div class="section" id="subversion-hosting-solutions">
@@ -278,10 +232,8 @@ git hosting as well.</li>
 <li><a class="reference internal" href="#">How to Create and store a Symfony2 Project in Subversion</a><ul>
 <li><a class="reference internal" href="#the-subversion-repository">The Subversion Repository</a></li>
 <li><a class="reference internal" href="#initial-project-setup">Initial Project Setup</a></li>
-<li><a class="reference internal" href="#managing-vendor-libraries-with-bin-vendors-and-deps">Managing Vendor Libraries with bin/vendors and deps</a><ul>
+<li><a class="reference internal" href="#managing-vendor-libraries-with-composer-json">Managing Vendor Libraries with composer.json</a><ul>
 <li><a class="reference internal" href="#how-does-it-work">How does it work?</a></li>
-<li><a class="reference internal" href="#hacking-vendor-libraries">Hacking vendor libraries</a></li>
-<li><a class="reference internal" href="#updating-workflow">Updating workflow</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#subversion-hosting-solutions">Subversion hosting solutions</a></li>
@@ -329,7 +281,7 @@ git hosting as well.</li>
         <li class="right" >
           <a href="new_project_git.html" title="How to Create and store a Symfony2 Project in git"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Workflow</a> &raquo;</li> 
       </ul>

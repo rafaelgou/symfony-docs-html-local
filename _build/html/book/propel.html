@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Databases and Propel &mdash; Symfony2Docs v.2.0.17 2.0.17 documentation</title>
+    <title>Databases and Propel &mdash; Symfony2Docs v2.1.0 2.1.0 documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +16,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.0.17',
+        VERSION:     '2.1.0',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v.2.0.17 2.0.17 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2Docs v2.1.0 2.1.0 documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Testing" href="testing.html" />
     <link rel="prev" title="Databases and Doctrine" href="doctrine.html" /> 
@@ -43,7 +43,7 @@
         <li class="right" >
           <a href="doctrine.html" title="Databases and Doctrine"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -75,20 +75,20 @@ persist it to the database and fetch it back out.</p>
 <h3>Configuring the Database<a class="headerlink" href="#configuring-the-database" title="Permalink to this headline">¶</a></h3>
 <p>Before you can start, you&#8217;ll need to configure your database connection
 information.  By convention, this information is usually configured in an
-<tt class="docutils literal"><span class="pre">app/config/parameters.ini</span></tt> file:</p>
-<div class="highlight-ini"><div class="highlight"><pre><span class="c">; app/config/parameters.ini</span>
-<span class="k">[parameters]</span>
-    <span class="na">database_driver</span>   <span class="o">=</span> <span class="s">mysql</span>
-<span class="s">    database_host     = localhost</span>
-<span class="s">    database_name     = test_project</span>
-<span class="s">    database_user     = root</span>
-<span class="s">    database_password = password</span>
-<span class="s">    database_charset  = UTF8</span>
+<tt class="docutils literal"><span class="pre">app/config/parameters.yml</span></tt> file:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/parameters.yml</span>
+<span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">database_driver</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">mysql</span>
+    <span class="l-Scalar-Plain">database_host</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">localhost</span>
+    <span class="l-Scalar-Plain">database_name</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">test_project</span>
+    <span class="l-Scalar-Plain">database_user</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">root</span>
+    <span class="l-Scalar-Plain">database_password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">password</span>
+    <span class="l-Scalar-Plain">database_charset</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">UTF8</span>
 </pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>Defining the configuration via <tt class="docutils literal"><span class="pre">parameters.ini</span></tt> is just a convention. The
+<p>Defining the configuration via <tt class="docutils literal"><span class="pre">parameters.yml</span></tt> is just a convention. The
 parameters defined in that file are referenced by the main configuration
 file when setting up Propel:</p>
 <div class="last highlight-yaml"><pre>propel:
@@ -511,7 +511,7 @@ section</a>.</p>
         <li class="right" >
           <a href="doctrine.html" title="Databases and Doctrine"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v.2.0.17 2.0.17 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2Docs v2.1.0 2.1.0 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>
