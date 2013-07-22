@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Use Assetic For Image Optimization with Twig Functions &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to Use Assetic For Image Optimization with Twig Functions &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,8 +25,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Assetic" href="index.html" />
     <link rel="next" title="How to Apply an Assetic Filter to a Specific File Extension" href="apply_to_option.html" />
     <link rel="prev" title="How to Minify JavaScripts and Stylesheets with YUI Compressor" href="yuicompressor.html" /> 
   </head>
@@ -40,8 +43,9 @@
         <li class="right" >
           <a href="yuicompressor.html" title="How to Minify JavaScripts and Stylesheets with YUI Compressor"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Assetic</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -51,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="how-to-use-assetic-for-image-optimization-with-twig-functions">
-<h1>How to Use Assetic For Image Optimization with Twig Functions<a class="headerlink" href="#how-to-use-assetic-for-image-optimization-with-twig-functions" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>How to Use Assetic For Image Optimization with Twig Functions<a class="headerlink" href="#how-to-use-assetic-for-image-optimization-with-twig-functions" title="Permalink to this headline">¶</a></h1>
 <p>Amongst its many filters, Assetic has four filters which can be used for on-the-fly
 image optimization. This allows you to get the benefits of smaller file sizes
 without having to use an image editor to process each image. The results
@@ -80,14 +84,14 @@ add the following to the Assetic config:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;assetic&#39;, array(</span>
-<span class="x">    &#39;filters&#39; =&gt; array(</span>
-<span class="x">        &#39;jpegoptim&#39; =&gt; array(</span>
-<span class="x">            &#39;bin&#39; =&gt; &#39;path/to/jpegoptim&#39;,</span>
-<span class="x">        ),</span>
-<span class="x">    ),</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;assetic&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;filters&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;jpegoptim&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;bin&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;path/to/jpegoptim&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -102,17 +106,17 @@ system. The <tt class="docutils literal"><span class="pre">bin</span></tt> optio
 <div class="configuration-block">
 <ul class="simple">
 <li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">image</span> <span class="s1">&#39;@AcmeFooBundle/Resources/public/images/example.jpg&#39;</span>
-    <span class="nv">filter</span><span class="o">=</span><span class="s1">&#39;jpegoptim&#39;</span> <span class="nv">output</span><span class="o">=</span><span class="s1">&#39;/images/example.jpg&#39;</span>
-<span class="cp">%}</span>
-<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset_url</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Example&quot;</span><span class="nt">/&gt;</span>
+    <span class="nv">filter</span><span class="o">=</span><span class="s1">&#39;jpegoptim&#39;</span> <span class="nv">output</span><span class="o">=</span><span class="s1">&#39;/images/example.jpg&#39;</span> <span class="cp">%}</span>
+    <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset_url</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Example&quot;</span><span class="nt">/&gt;</span>
 <span class="cp">{%</span> <span class="k">endimage</span> <span class="cp">%}</span>
 </pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;assetic&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">images</span><span class="p">(</span>
     <span class="k">array</span><span class="p">(</span><span class="s1">&#39;@AcmeFooBundle/Resources/public/images/example.jpg&#39;</span><span class="p">),</span>
-    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;jpegoptim&#39;</span><span class="p">))</span> <span class="k">as</span> <span class="nv">$url</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
-<span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$url</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Example&quot;</span><span class="nt">/&gt;</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;jpegoptim&#39;</span><span class="p">)</span>
+<span class="p">)</span> <span class="k">as</span> <span class="nv">$url</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+    <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$url</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Example&quot;</span><span class="nt">/&gt;</span>
 <span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
@@ -145,15 +149,15 @@ remove these by using the <tt class="docutils literal"><span class="pre">strip_a
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;assetic&#39;, array(</span>
-<span class="x">    &#39;filters&#39; =&gt; array(</span>
-<span class="x">        &#39;jpegoptim&#39; =&gt; array(</span>
-<span class="x">            &#39;bin&#39; =&gt; &#39;path/to/jpegoptim&#39;,</span>
-<span class="x">            &#39;strip_all&#39; =&gt; &#39;true&#39;,</span>
-<span class="x">        ),</span>
-<span class="x">    ),</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;assetic&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;filters&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;jpegoptim&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;bin&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;path/to/jpegoptim&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;strip_all&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -187,15 +191,15 @@ image quality:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;assetic&#39;, array(</span>
-<span class="x">    &#39;filters&#39; =&gt; array(</span>
-<span class="x">        &#39;jpegoptim&#39; =&gt; array(</span>
-<span class="x">            &#39;bin&#39; =&gt; &#39;path/to/jpegoptim&#39;,</span>
-<span class="x">            &#39;max&#39; =&gt; &#39;70&#39;,</span>
-<span class="x">        ),</span>
-<span class="x">    ),</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;assetic&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;filters&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;jpegoptim&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;bin&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;path/to/jpegoptim&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;max&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;70&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -234,26 +238,25 @@ following config:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;assetic&#39;, array(</span>
-<span class="x">    &#39;filters&#39; =&gt; array(</span>
-<span class="x">        &#39;jpegoptim&#39; =&gt; array(</span>
-<span class="x">            &#39;bin&#39; =&gt; &#39;path/to/jpegoptim&#39;,</span>
-<span class="x">        ),</span>
-<span class="x">    ),</span>
-<span class="x">    &#39;twig&#39; =&gt; array(</span>
-<span class="x">        &#39;functions&#39; =&gt; array(&#39;jpegoptim&#39;),</span>
-<span class="x">        ),</span>
-<span class="x">    ),</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;assetic&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;filters&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;jpegoptim&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;bin&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;path/to/jpegoptim&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;twig&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;functions&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;jpegoptim&#39;</span><span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
 <p>The Twig template can now be changed to the following:</p>
-<div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">jpegoptim</span><span class="o">(</span><span class="s1">&#39;@AcmeFooBundle/Resources/public/images/example.jpg&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span>
-     <span class="na">alt=</span><span class="s">&quot;Example&quot;</span><span class="nt">/&gt;</span>
+<div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">jpegoptim</span><span class="o">(</span><span class="s1">&#39;@AcmeFooBundle/Resources/public/images/example.jpg&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Example&quot;</span><span class="nt">/&gt;</span>
 </pre></div>
 </div>
 <p>You can specify the output directory in the config in the following way:</p>
@@ -284,21 +287,21 @@ following config:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;assetic&#39;, array(</span>
-<span class="x">    &#39;filters&#39; =&gt; array(</span>
-<span class="x">        &#39;jpegoptim&#39; =&gt; array(</span>
-<span class="x">            &#39;bin&#39; =&gt; &#39;path/to/jpegoptim&#39;,</span>
-<span class="x">        ),</span>
-<span class="x">    ),</span>
-<span class="x">    &#39;twig&#39; =&gt; array(</span>
-<span class="x">        &#39;functions&#39; =&gt; array(</span>
-<span class="x">            &#39;jpegoptim&#39; =&gt; array(</span>
-<span class="x">                output =&gt; &#39;images/*.jpg&#39;</span>
-<span class="x">            ),</span>
-<span class="x">        ),</span>
-<span class="x">    ),</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;assetic&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;filters&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;jpegoptim&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;bin&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;path/to/jpegoptim&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;twig&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;functions&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;jpegoptim&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="nx">output</span> <span class="o">=&gt;</span> <span class="s1">&#39;images/*.jpg&#39;</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -340,7 +343,7 @@ following config:</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -366,13 +369,14 @@ following config:</p>
         <li class="right" >
           <a href="yuicompressor.html" title="How to Minify JavaScripts and Stylesheets with YUI Compressor"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Assetic</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -19,9 +19,23 @@ data can be a ``DateTime`` object, a string, a timestamp or an array.
 |                      | - `time_widget`_                                                            |
 |                      | - `input`_                                                                  |
 |                      | - `date_format`_                                                            |
+|                      | - `hours`_                                                                  |
+|                      | - `minutes`_                                                                |
+|                      | - `seconds`_                                                                |
 |                      | - `years`_                                                                  |
 |                      | - `months`_                                                                 |
 |                      | - `days`_                                                                   |
+|                      | - `with_seconds`_                                                           |
+|                      | - `model_timezone`_                                                         |
+|                      | - `view_timezone`_                                                          |
+|                      | - `empty_value`_                                                            |
++----------------------+-----------------------------------------------------------------------------+
+| Inherited            | - `invalid_message`_                                                        |
+| options              | - `invalid_message_parameters`_                                             |
+|                      | - `read_only`_                                                              |
+|                      | - `disabled`_                                                               |
+|                      | - `mapped`_                                                                 |
+|                      | - `inherit_data`_                                                           |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | :doc:`form</reference/forms/types/form>`                                    |
 +----------------------+-----------------------------------------------------------------------------+
@@ -61,12 +75,16 @@ your underlying object. Valid values are:
 The value that comes back from the form will also be normalized back into
 this format.
 
+.. include:: /reference/forms/types/options/_date_limitation.rst.inc
+
 date_format
 ~~~~~~~~~~~
 
 **type**: ``integer`` or ``string`` **default**: ``IntlDateFormatter::MEDIUM``
 
 Defines the ``format`` option that will be passed down to the date field.
+See the :ref:`date type's format option<reference-forms-type-date-format>`
+for more details.
 
 .. include:: /reference/forms/types/options/hours.rst.inc
 
@@ -82,6 +100,25 @@ Defines the ``format`` option that will be passed down to the date field.
 
 .. include:: /reference/forms/types/options/with_seconds.rst.inc
 
-.. include:: /reference/forms/types/options/data_timezone.rst.inc
+.. include:: /reference/forms/types/options/model_timezone.rst.inc
 
-.. include:: /reference/forms/types/options/user_timezone.rst.inc
+.. include:: /reference/forms/types/options/view_timezone.rst.inc
+
+.. include:: /reference/forms/types/options/empty_value.rst.inc
+
+Inherited options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_data.rst.inc

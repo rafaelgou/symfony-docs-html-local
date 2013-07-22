@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to test Doctrine Repositories &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to test Doctrine Repositories &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +25,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to add “Remember Me” Login Functionality" href="../security/remember_me.html" />
-    <link rel="prev" title="How to use the Profiler in a Functional Test" href="profiling.html" /> 
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Testing" href="index.html" />
+    <link rel="next" title="How to customize the Bootstrap Process before running Tests" href="bootstrap.html" />
+    <link rel="prev" title="How to test code that interacts with the Database" href="database.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,13 +38,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../security/remember_me.html" title="How to add “Remember Me” Login Functionality"
+          <a href="bootstrap.html" title="How to customize the Bootstrap Process before running Tests"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="profiling.html" title="How to use the Profiler in a Functional Test"
+          <a href="database.html" title="How to test code that interacts with the Database"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Testing</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -52,156 +56,18 @@
             
   <div class="section" id="how-to-test-doctrine-repositories">
 <span id="index-0"></span><h1>How to test Doctrine Repositories<a class="headerlink" href="#how-to-test-doctrine-repositories" title="Permalink to this headline">¶</a></h1>
-<p>Unit testing Doctrine repositories in a Symfony project is not a straightforward
-task. Indeed, to load a repository you need to load your entities, an entity
-manager, and some other stuff like a connection.</p>
-<p>To test your repository, you have two different options:</p>
-<ol class="arabic simple">
-<li><strong>Functional test</strong>: This includes using a real database connection with
-real database objects. It&#8217;s easy to setup and can test anything, but is
-slower to execute. See <a class="reference internal" href="#cookbook-doctrine-repo-functional-test"><em>Functional Testing</em></a>.</li>
-<li><strong>Unit test</strong>: Unit testing is faster to run and more precise in how you
-test. It does require a little bit more setup, which is covered in this
-document. It can also only test methods that, for example, build queries,
-not methods that actually execute them.</li>
-</ol>
-<div class="section" id="unit-testing">
-<h2>Unit Testing<a class="headerlink" href="#unit-testing" title="Permalink to this headline">¶</a></h2>
-<p>As Symfony and Doctrine share the same testing framework, it&#8217;s quite easy to
-implement unit tests in your Symfony project. The ORM comes with its own set
-of tools to ease the unit testing and mocking of everything you need, such as
-a connection, an entity manager, etc. By using the testing components provided
-by Doctrine - along with some basic setup - you can leverage Doctrine&#8217;s tools
-to unit test your repositories.</p>
-<p>Keep in mind that if you want to test the actual execution of your queries,
-you&#8217;ll need a functional test (see <a class="reference internal" href="#cookbook-doctrine-repo-functional-test"><em>Functional Testing</em></a>).
-Unit testing is only possible when testing a method that builds a query.</p>
-<div class="section" id="setup">
-<h3>Setup<a class="headerlink" href="#setup" title="Permalink to this headline">¶</a></h3>
-<p>First, you need to add the DoctrineTests namespace to your autoloader:</p>
-<div class="highlight-python"><pre>// app/autoload.php
-$loader-&gt;registerNamespaces(array(
-    //...
-    'Doctrine\\Tests'                =&gt; __DIR__.'/../vendor/doctrine/tests',
-));</pre>
-</div>
-<p>Next, you will need to setup an entity manager in each test so that Doctrine
-will be able to load your entities and repositories for you.</p>
-<p>As Doctrine is not able by default to load annotation metadata from your
-entities, you&#8217;ll need to configure the annotation reader to be able to parse
-and load the entities:</p>
-<div class="highlight-python"><pre>// src/Acme/ProductBundle/Tests/Entity/ProductRepositoryTest.php
-namespace Acme\ProductBundle\Tests\Entity;
-
-use Doctrine\Tests\OrmTestCase;
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\ORM\Mapping\Driver\DriverChain;
-use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
-
-class ProductRepositoryTest extends OrmTestCase
-{
-    private $_em;
-
-    protected function setUp()
-    {
-        $reader = new AnnotationReader();
-        $reader-&gt;setIgnoreNotImportedAnnotations(true);
-        $reader-&gt;setEnableParsePhpImports(true);
-
-        $metadataDriver = new AnnotationDriver(
-            $reader,
-            // provide the namespace of the entities you want to tests
-            'Acme\\ProductBundle\\Entity'
-        );
-
-        $this-&gt;_em = $this-&gt;_getTestEntityManager();
-
-        $this-&gt;_em-&gt;getConfiguration()
-            -&gt;setMetadataDriverImpl($metadataDriver);
-
-        // allows you to use the AcmeProductBundle:Product syntax
-        $this-&gt;_em-&gt;getConfiguration()-&gt;setEntityNamespaces(array(
-            'AcmeProductBundle' =&gt; 'Acme\\ProductBundle\\Entity'
-        ));
-    }
-}</pre>
-</div>
-<p>If you look at the code, you can notice:</p>
-<ul class="simple">
-<li>You extend from <tt class="docutils literal"><span class="pre">\Doctrine\Tests\OrmTestCase</span></tt>, which provide useful methods
-for unit testing;</li>
-<li>You need to setup the <tt class="docutils literal"><span class="pre">AnnotationReader</span></tt> to be able to parse and load the
-entities;</li>
-<li>You create the entity manager by calling <tt class="docutils literal"><span class="pre">_getTestEntityManager</span></tt>, which
-returns a mocked entity manager with a mocked connection.</li>
-</ul>
-<p>That&#8217;s it! You&#8217;re ready to write units tests for your Doctrine repositories.</p>
-</div>
-<div class="section" id="writing-your-unit-test">
-<h3>Writing your Unit Test<a class="headerlink" href="#writing-your-unit-test" title="Permalink to this headline">¶</a></h3>
-<p>Remember that Doctrine repository methods can only be tested if they are
-building and returning a query (but not actually executing a query). Take
-the following example:</p>
-<div class="highlight-python"><pre>// src/Acme/StoreBundle/Entity/ProductRepository
-namespace Acme\StoreBundle\Entity;
-
-use Doctrine\ORM\EntityRepository;
-
-class ProductRepository extends EntityRepository
-{
-    public function createSearchByNameQueryBuilder($name)
-    {
-        return $this-&gt;createQueryBuilder('p')
-            -&gt;where('p.name LIKE :name')
-            -&gt;setParameter('name', $name);
-    }
-}</pre>
-</div>
-<p>In this example, the method is returning a <tt class="docutils literal"><span class="pre">QueryBuilder</span></tt> instance. You
-can test the result of this method in a variety of ways:</p>
-<div class="highlight-python"><pre>class ProductRepositoryTest extends \Doctrine\Tests\OrmTestCase
-{
-    /* ... */
-
-    public function testCreateSearchByNameQueryBuilder()
-    {
-        $queryBuilder = $this-&gt;_em-&gt;getRepository('AcmeProductBundle:Product')
-            -&gt;createSearchByNameQueryBuilder('foo');
-
-        $this-&gt;assertEquals('p.name LIKE :name', (string) $queryBuilder-&gt;getDqlPart('where'));
-        $this-&gt;assertEquals(array('name' =&gt; 'foo'), $queryBuilder-&gt;getParameters());
-    }
- }</pre>
-</div>
-<p>In this test, you dissect the <tt class="docutils literal"><span class="pre">QueryBuilder</span></tt> object, looking that each
-part is as you&#8217;d expect. If you were adding other things to the query builder,
-you might check the dql parts: <tt class="docutils literal"><span class="pre">select</span></tt>, <tt class="docutils literal"><span class="pre">from</span></tt>, <tt class="docutils literal"><span class="pre">join</span></tt>, <tt class="docutils literal"><span class="pre">set</span></tt>, <tt class="docutils literal"><span class="pre">groupBy</span></tt>,
-<tt class="docutils literal"><span class="pre">having</span></tt>, or <tt class="docutils literal"><span class="pre">orderBy</span></tt>.</p>
-<p>If you only have a raw <tt class="docutils literal"><span class="pre">Query</span></tt> object or prefer to test the actual query,
-you can test the DQL query string directly:</p>
-<div class="highlight-python"><pre>public function testCreateSearchByNameQueryBuilder()
-{
-    $queryBuilder = $this-&gt;_em-&gt;getRepository('AcmeProductBundle:Product')
-        -&gt;createSearchByNameQueryBuilder('foo');
-
-    $query = $queryBuilder-&gt;getQuery();
-
-    // test DQL
-    $this-&gt;assertEquals(
-        'SELECT p FROM Acme\ProductBundle\Entity\Product p WHERE p.name LIKE :name',
-        $query-&gt;getDql()
-    );
-}</pre>
-</div>
-</div>
-</div>
+<p>Unit testing Doctrine repositories in a Symfony project is not recommended.
+When you&#8217;re dealing with a repository, you&#8217;re really dealing with something
+that&#8217;s meant to be tested against a real database connection.</p>
+<p>Fortunately, you can easily test your queries against a real database, as
+described below.</p>
 <div class="section" id="functional-testing">
 <span id="cookbook-doctrine-repo-functional-test"></span><h2>Functional Testing<a class="headerlink" href="#functional-testing" title="Permalink to this headline">¶</a></h2>
 <p>If you need to actually execute a query, you will need to boot the kernel
 to get a valid connection. In this case, you&#8217;ll extend the <tt class="docutils literal"><span class="pre">WebTestCase</span></tt>,
 which makes all of this quite easy:</p>
-<div class="highlight-python"><pre>// src/Acme/ProductBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
-namespace Acme\ProductBundle\Tests\Entity;
+<div class="highlight-python"><pre>// src/Acme/StoreBundle/Tests/Entity/ProductRepositoryFunctionalTest.php
+namespace Acme\StoreBundle\Tests\Entity;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -210,23 +76,38 @@ class ProductRepositoryFunctionalTest extends WebTestCase
     /**
      * @var \Doctrine\ORM\EntityManager
      */
-    private $_em;
+    private $em;
 
+    /**
+     * {@inheritDoc}
+     */
     public function setUp()
     {
-            $kernel = static::createKernel();
-            $kernel-&gt;boot();
-        $this-&gt;_em = $kernel-&gt;getContainer()
-            -&gt;get('doctrine.orm.entity_manager');
+        static::$kernel = static::createKernel();
+        static::$kernel-&gt;boot();
+        $this-&gt;em = static::$kernel-&gt;getContainer()
+            -&gt;get('doctrine')
+            -&gt;getManager()
+        ;
     }
 
-    public function testProductByCategoryName()
+    public function testSearchByCategoryName()
     {
-        $results = $this-&gt;_em-&gt;getRepository('AcmeProductBundle:Product')
-            -&gt;searchProductsByNameQuery('foo')
-            -&gt;getResult();
+        $products = $this-&gt;em
+            -&gt;getRepository('AcmeStoreBundle:Product')
+            -&gt;searchByCategoryName('foo')
+        ;
 
-        $this-&gt;assertEquals(count($results), 1);
+        $this-&gt;assertCount(1, $products);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    protected function tearDown()
+    {
+        parent::tearDown();
+        $this-&gt;em-&gt;close();
     }
 }</pre>
 </div>
@@ -242,22 +123,17 @@ class ProductRepositoryFunctionalTest extends WebTestCase
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">How to test Doctrine Repositories</a><ul>
-<li><a class="reference internal" href="#unit-testing">Unit Testing</a><ul>
-<li><a class="reference internal" href="#setup">Setup</a></li>
-<li><a class="reference internal" href="#writing-your-unit-test">Writing your Unit Test</a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#functional-testing">Functional Testing</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="profiling.html"
-                        title="previous chapter">How to use the Profiler in a Functional Test</a></p>
+  <p class="topless"><a href="database.html"
+                        title="previous chapter">How to test code that interacts with the Database</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../security/remember_me.html"
-                        title="next chapter">How to add &#8220;Remember Me&#8221; Login Functionality</a></p>
+  <p class="topless"><a href="bootstrap.html"
+                        title="next chapter">How to customize the Bootstrap Process before running Tests</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/testing/doctrine.txt"
@@ -266,7 +142,7 @@ class ProductRepositoryFunctionalTest extends WebTestCase
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -287,18 +163,19 @@ class ProductRepositoryFunctionalTest extends WebTestCase
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../security/remember_me.html" title="How to add “Remember Me” Login Functionality"
+          <a href="bootstrap.html" title="How to customize the Bootstrap Process before running Tests"
              >next</a> |</li>
         <li class="right" >
-          <a href="profiling.html" title="How to use the Profiler in a Functional Test"
+          <a href="database.html" title="How to test code that interacts with the Database"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Testing</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

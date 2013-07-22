@@ -17,6 +17,7 @@ the power of the `Swiftmailer`_ library.
         {
             $bundles = array(
                 // ...
+
                 new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
             );
 
@@ -49,8 +50,8 @@ mandatory configuration parameter is ``transport``:
         <!-- app/config/config.xml -->
 
         <!--
-        xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
-        http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
+            xmlns:swiftmailer="http://symfony.com/schema/dic/swiftmailer"
+            http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd
         -->
 
         <swiftmailer:config
@@ -87,7 +88,7 @@ The following configuration attributes are available:
 * ``auth_mode``         (``plain``, ``login``, or ``cram-md5``)
 * ``spool``
 
-  * ``type`` (how to queue the messages, only ``file`` is supported currently)
+  * ``type`` (how to queue the messages, ``file`` or ``memory`` is supported, see :doc:`/cookbook/email/spool`)
   * ``path`` (where to store the messages)
 * ``delivery_address``  (an email address where to send ALL emails)
 * ``disable_delivery``  (set to true to disable delivery completely)
@@ -106,7 +107,12 @@ an email is pretty straightforward::
             ->setSubject('Hello Email')
             ->setFrom('send@example.com')
             ->setTo('recipient@example.com')
-            ->setBody($this->renderView('HelloBundle:Hello:email.txt.twig', array('name' => $name)))
+            ->setBody(
+                $this->renderView(
+                    'HelloBundle:Hello:email.txt.twig',
+                    array('name' => $name)
+                )
+            )
         ;
         $this->get('mailer')->send($message);
 
@@ -129,5 +135,5 @@ of `Creating Messages`_ in great detail in its documentation.
     * :doc:`dev_environment`
     * :doc:`spool`
 
-.. _`Swiftmailer`: http://www.swiftmailer.org/
-.. _`Creating Messages`: http://swiftmailer.org/docs/messages
+.. _`Swiftmailer`: http://swiftmailer.org/
+.. _`Creating Messages`: http://swiftmailer.org/docs/messages.html

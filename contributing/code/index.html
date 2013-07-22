@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Contributing Code &mdash; Symfony2Docs v1 documentation</title>
+    <title>Contributing Code &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
     <link rel="up" title="Contributing" href="../index.html" />
     <link rel="next" title="Reporting a Bug" href="bugs.html" />
     <link rel="prev" title="Contributing" href="../index.html" /> 
@@ -40,7 +43,7 @@
         <li class="right" >
           <a href="../index.html" title="Contributing"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Contributing</a> &raquo;</li> 
       </ul>
     </div>  
@@ -56,13 +59,18 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="bugs.html">Reporting a Bug</a></li>
 <li class="toctree-l1"><a class="reference internal" href="patches.html">Submitting a Patch</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="patches.html#check-list">Check List</a></li>
-<li class="toctree-l2"><a class="reference internal" href="patches.html#initial-setup">Initial Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="patches.html#working-on-a-patch">Working on a Patch</a></li>
-<li class="toctree-l2"><a class="reference internal" href="patches.html#id1">Submitting a Patch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="patches.html#step-1-setup-your-environment">Step 1: Setup your Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="patches.html#step-2-work-on-your-patch">Step 2: Work on your Patch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="patches.html#step-3-submit-your-patch">Step 3: Submit your Patch</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="security.html">Reporting a Security Issue</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security.html">Security Issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="security.html#reporting-a-security-issue">Reporting a Security Issue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html#resolving-process">Resolving Process</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html#collaborating-with-downstream-open-source-projects">Collaborating with Downstream Open-Source Projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="security.html#security-advisories">Security Advisories</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="tests.html">Running Symfony2 Tests</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tests.html#phpunit">PHPUnit</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tests.html#dependencies-optional">Dependencies (optional)</a></li>
@@ -79,6 +87,11 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="conventions.html">Conventions</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="conventions.html#method-names">Method Names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="conventions.html#deprecations">Deprecations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="git.html">Git</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="git.html#pull-requests">Pull Requests</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="license.html">Symfony2 License</a><ul>
@@ -109,7 +122,7 @@
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -135,13 +148,13 @@
         <li class="right" >
           <a href="../index.html" title="Contributing"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

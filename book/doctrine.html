@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Databases and Doctrine (“The Model”) &mdash; Symfony2Docs v1 documentation</title>
+    <title>Databases and Doctrine &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +25,9 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
-    <link rel="up" title="Book" href="index.html" />
-    <link rel="next" title="Testing" href="testing.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="up" title="The Book" href="index.html" />
+    <link rel="next" title="Databases and Propel" href="propel.html" />
     <link rel="prev" title="Creating and using Templates" href="templating.html" /> 
   </head>
   <body>
@@ -35,13 +38,13 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="testing.html" title="Testing"
+          <a href="propel.html" title="Databases and Propel"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="templating.html" title="Creating and using Templates"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -50,9 +53,9 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="databases-and-doctrine-the-model">
-<span id="index-0"></span><h1>Databases and Doctrine (&#8220;The Model&#8221;)<a class="headerlink" href="#databases-and-doctrine-the-model" title="Permalink to this headline">¶</a></h1>
-<p>Let&#8217;s face it, one of the most common and challenging tasks for any application
+  <div class="section" id="databases-and-doctrine">
+<span id="index-0"></span><h1>Databases and Doctrine<a class="headerlink" href="#databases-and-doctrine" title="Permalink to this headline">¶</a></h1>
+<p>One of the most common and challenging tasks for any application
 involves persisting and reading information to and from a database. Fortunately,
 Symfony comes integrated with <a class="reference external" href="http://www.doctrine-project.org/">Doctrine</a>, a library whose sole goal is to
 give you powerful tools to make this easy. In this chapter, you&#8217;ll learn the
@@ -62,9 +65,9 @@ be.</p>
 <p class="first admonition-title">Note</p>
 <p>Doctrine is totally decoupled from Symfony and using it is optional.
 This chapter is all about the Doctrine ORM, which aims to let you map
-objects to a relational database (such as <em>MySQL</em>, <em>PostgreSQL</em> or <em>Microsoft SQL</em>).
-If you prefer to use raw database queries, this is easy, and explained
-in the &#8220;<a class="reference internal" href="../cookbook/doctrine/dbal.html"><em>How to use Doctrine&#8217;s DBAL Layer</em></a>&#8221; cookbook entry.</p>
+objects to a relational database (such as <em>MySQL</em>, <em>PostgreSQL</em> or
+<em>Microsoft SQL</em>). If you prefer to use raw database queries, this is
+easy, and explained in the &#8220;<a class="reference internal" href="../cookbook/doctrine/dbal.html"><em>How to use Doctrine&#8217;s DBAL Layer</em></a>&#8221; cookbook entry.</p>
 <p class="last">You can also persist data to <a class="reference external" href="http://www.mongodb.org/">MongoDB</a> using Doctrine ODM library. For
 more information, read the &#8220;<tt class="xref doc docutils literal"><span class="pre">/bundles/DoctrineMongoDBBundle/index</span></tt>&#8221;
 documentation.</p>
@@ -78,7 +81,7 @@ persist it to the database and fetch it back out.</p>
 <p class="first sidebar-title">Code along with the example</p>
 <p>If you want to follow along with the example in this chapter, create
 an <tt class="docutils literal"><span class="pre">AcmeStoreBundle</span></tt> via:</p>
-<div class="last highlight-bash"><div class="highlight"><pre>php app/console generate:bundle --namespace<span class="o">=</span>Acme/StoreBundle
+<div class="last highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console generate:bundle --namespace<span class="o">=</span>Acme/StoreBundle
 </pre></div>
 </div>
 </div>
@@ -89,11 +92,13 @@ information. By convention, this information is usually configured in an
 <tt class="docutils literal"><span class="pre">app/config/parameters.yml</span></tt> file:</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/parameters.yml</span>
 <span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">database_driver</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">pdo_mysql</span>
-    <span class="l-Scalar-Plain">database_host</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">localhost</span>
-    <span class="l-Scalar-Plain">database_name</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">test_project</span>
-    <span class="l-Scalar-Plain">database_user</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">root</span>
-    <span class="l-Scalar-Plain">database_password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">password</span>
+    <span class="l-Scalar-Plain">database_driver</span><span class="p-Indicator">:</span>    <span class="l-Scalar-Plain">pdo_mysql</span>
+    <span class="l-Scalar-Plain">database_host</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">localhost</span>
+    <span class="l-Scalar-Plain">database_name</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">test_project</span>
+    <span class="l-Scalar-Plain">database_user</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">root</span>
+    <span class="l-Scalar-Plain">database_password</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">password</span>
+
+<span class="c1"># ...</span>
 </pre></div>
 </div>
 <div class="admonition note">
@@ -101,13 +106,46 @@ information. By convention, this information is usually configured in an
 <p>Defining the configuration via <tt class="docutils literal"><span class="pre">parameters.yml</span></tt> is just a convention.
 The parameters defined in that file are referenced by the main configuration
 file when setting up Doctrine:</p>
-<div class="highlight-yaml"><pre>doctrine:
-    dbal:
-        driver:   %database_driver%
-        host:     %database_host%
-        dbname:   %database_name%
-        user:     %database_user%
-        password: %database_password%</pre>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">doctrine</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">dbal</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span>   <span class="s">&quot;%database_driver%&quot;</span>
+        <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span>     <span class="s">&quot;%database_host%&quot;</span>
+        <span class="l-Scalar-Plain">dbname</span><span class="p-Indicator">:</span>   <span class="s">&quot;%database_name%&quot;</span>
+        <span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span>     <span class="s">&quot;%database_user%&quot;</span>
+        <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="s">&quot;%database_password%&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<span class="nt">&lt;doctrine:config&gt;</span>
+    <span class="nt">&lt;doctrine:dbal</span>
+        <span class="na">driver=</span><span class="s">&quot;%database_driver%&quot;</span>
+        <span class="na">host=</span><span class="s">&quot;%database_host%&quot;</span>
+        <span class="na">dbname=</span><span class="s">&quot;%database_name%&quot;</span>
+        <span class="na">user=</span><span class="s">&quot;%database_user%&quot;</span>
+        <span class="na">password=</span><span class="s">&quot;%database_password%&quot;</span>
+    <span class="nt">&gt;</span>
+<span class="nt">&lt;/doctrine:config&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$configuration</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;doctrine&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;dbal&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;driver&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;%database_driver%&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;host&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;%database_host%&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;dbname&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;%database_name%&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;user&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;%database_user%&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;%database_password%&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+</li>
+</ul>
 </div>
 <p class="last">By separating the database information into a separate file, you can
 easily keep different versions of the file on each server. You can also
@@ -117,8 +155,70 @@ more information, see <a class="reference internal" href="../cookbook/configurat
 </div>
 <p>Now that Doctrine knows about your database, you can have it create the database
 for you:</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:database:create
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:database:create
 </pre></div>
+</div>
+<div class="sidebar">
+<p class="first sidebar-title">Setting Up The Database to be UTF8</p>
+<p>One mistake even seasoned developers make when starting a Symfony2 project
+is forgetting to setup default charset and collation on their database,
+ending up with latin type collations, which are default for most databases.
+They might even remember to do it the very first time, but forget that
+it&#8217;s all gone after running a relatively common command during development:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:database:drop --force
+<span class="nv">$ </span>php app/console doctrine:database:create
+</pre></div>
+</div>
+<p>There&#8217;s no way to configure these defaults inside Doctrine, as it tries to be
+as agnostic as possible in terms of environment configuration. One way to solve
+this problem is to configure server-level defaults.</p>
+<p>Setting UTF8 defaults for MySQL is as simple as adding a few lines to
+your configuration file  (typically <tt class="docutils literal"><span class="pre">my.cnf</span></tt>):</p>
+<div class="last highlight-ini"><div class="highlight"><pre><span class="k">[mysqld]</span>
+<span class="na">collation-server</span> <span class="o">=</span> <span class="s">utf8_general_ci</span>
+<span class="na">character-set-server</span> <span class="o">=</span> <span class="s">utf8</span>
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you want to use SQLite as your database, you need to set the path
+where your database file should be stored:</p>
+<div class="last configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">doctrine</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">dbal</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">driver</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">pdo_sqlite</span>
+        <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span> <span class="s">&quot;%kernel.root_dir%/sqlite.db&quot;</span>
+        <span class="l-Scalar-Plain">charset</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">UTF8</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<span class="nt">&lt;doctrine:config</span>
+    <span class="na">driver=</span><span class="s">&quot;pdo_sqlite&quot;</span>
+    <span class="na">path=</span><span class="s">&quot;%kernel.root_dir%/sqlite.db&quot;</span>
+    <span class="na">charset=</span><span class="s">&quot;UTF-8&quot;</span>
+<span class="nt">&gt;</span>
+    <span class="c">&lt;!-- ... --&gt;</span>
+<span class="nt">&lt;/doctrine:config&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;doctrine&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;dbal&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;driver&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;pdo_sqlite&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;path&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;%kernel.root_dir%/sqlite.db&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;charset&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="section" id="creating-an-entity-class">
@@ -146,8 +246,9 @@ just a simple PHP class.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p>Once you learn the concepts behind Doctrine, you can have Doctrine create
-this entity class for you:</p>
-<div class="last highlight-bash"><div class="highlight"><pre>php app/console doctrine:generate:entity --entity<span class="o">=</span><span class="s2">&quot;AcmeStoreBundle:Product&quot;</span> --fields<span class="o">=</span><span class="s2">&quot;name:string(255) price:float description:text&quot;</span>
+simple entity classes for you. This will ask you interactive questions
+to help you build any entity:</p>
+<div class="last highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:generate:entity
 </pre></div>
 </div>
 </div>
@@ -165,47 +266,42 @@ configuration that tells Doctrine exactly how the <tt class="docutils literal"><
 properties should be <em>mapped</em> to the database. This metadata can be specified
 in a number of different formats including YAML, XML or directly inside the
 <tt class="docutils literal"><span class="pre">Product</span></tt> class via annotations:</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">A bundle can accept only one metadata definition format. For example, it&#8217;s
-not possible to mix YAML metadata definitions with annotated PHP entity
-class definitions.</p>
-</div>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/StoreBundle/Entity/Product.php
-namespace Acme\StoreBundle\Entity;
+<li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/StoreBundle/Entity/Product.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\StoreBundle\Entity</span><span class="p">;</span>
 
-use Doctrine\ORM\Mapping as ORM;
+<span class="k">use</span> <span class="nx">Doctrine\ORM\Mapping</span> <span class="k">as</span> <span class="nx">ORM</span><span class="p">;</span>
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="product")
- */
-class Product
-{
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+<span class="sd">/**</span>
+<span class="sd"> * @ORM\Entity</span>
+<span class="sd"> * @ORM\Table(name=&quot;product&quot;)</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">Product</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @ORM\Id</span>
+<span class="sd">     * @ORM\Column(type=&quot;integer&quot;)</span>
+<span class="sd">     * @ORM\GeneratedValue(strategy=&quot;AUTO&quot;)</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$id</span><span class="p">;</span>
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    protected $name;
+    <span class="sd">/**</span>
+<span class="sd">     * @ORM\Column(type=&quot;string&quot;, length=100)</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$name</span><span class="p">;</span>
 
-    /**
-     * @ORM\Column(type="decimal", scale=2)
-     */
-    protected $price;
+    <span class="sd">/**</span>
+<span class="sd">     * @ORM\Column(type=&quot;decimal&quot;, scale=2)</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$price</span><span class="p">;</span>
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    protected $description;
-}</pre>
+    <span class="sd">/**</span>
+<span class="sd">     * @ORM\Column(type=&quot;text&quot;)</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$description</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </li>
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.yml</span>
@@ -248,6 +344,12 @@ class Product
 </li>
 </ul>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">A bundle can accept only one metadata definition format. For example, it&#8217;s
+not possible to mix YAML metadata definitions with annotated PHP entity
+class definitions.</p>
+</div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">The table name is optional and if omitted, will be determined automatically
@@ -258,7 +360,7 @@ each with their own options. For information on the available field types,
 see the <a class="reference internal" href="#book-doctrine-field-types"><em>Doctrine Field Types Reference</em></a> section.</p>
 <div class="admonition-see-also admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last">You can also check out Doctrine&#8217;s <a class="reference external" href="http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html">Basic Mapping Documentation</a> for
+<p class="last">You can also check out Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html">Basic Mapping Documentation</a> for
 all details about mapping information. If you use annotations, you&#8217;ll
 need to prepend all annotations with <tt class="docutils literal"><span class="pre">ORM\</span></tt> (e.g. <tt class="docutils literal"><span class="pre">ORM\Column(..)</span></tt>),
 which is not shown in Doctrine&#8217;s documentation. You&#8217;ll also need to include
@@ -271,8 +373,10 @@ the <tt class="docutils literal"><span class="pre">use</span> <span class="pre">
 SQL keyword (such as <tt class="docutils literal"><span class="pre">group</span></tt> or <tt class="docutils literal"><span class="pre">user</span></tt>). For example, if your entity
 class name is <tt class="docutils literal"><span class="pre">Group</span></tt>, then, by default, your table name will be <tt class="docutils literal"><span class="pre">group</span></tt>,
 which will cause an SQL error in some engines. See Doctrine&#8217;s
-<a class="reference external" href="http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#quoting-reserved-words">Reserved SQL keywords documentation</a> on how to properly escape these
-names.</p>
+<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#quoting-reserved-words">Reserved SQL keywords documentation</a> on how to properly escape these
+names. Alternatively, if you&#8217;re free to choose your database schema,
+simply map to a different table name or column name. See Doctrine&#8217;s
+<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#persistent-classes">Persistent classes</a> and <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping">Property Mapping</a> documentation.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -284,34 +388,41 @@ add the following:</p>
 <div class="last highlight-python"><pre>/**
  * @IgnoreAnnotation("fn")
  */
-class Product</pre>
+class Product
+// ...</pre>
 </div>
 </div>
 </div>
 <div class="section" id="generating-getters-and-setters">
-<h3>Generating Getters and Setters<a class="headerlink" href="#generating-getters-and-setters" title="Permalink to this headline">¶</a></h3>
+<span id="book-doctrine-generating-getters-and-setters"></span><h3>Generating Getters and Setters<a class="headerlink" href="#generating-getters-and-setters" title="Permalink to this headline">¶</a></h3>
 <p>Even though Doctrine now knows how to persist a <tt class="docutils literal"><span class="pre">Product</span></tt> object to the
 database, the class itself isn&#8217;t really useful yet. Since <tt class="docutils literal"><span class="pre">Product</span></tt> is just
 a regular PHP class, you need to create getter and setter methods (e.g. <tt class="docutils literal"><span class="pre">getName()</span></tt>,
 <tt class="docutils literal"><span class="pre">setName()</span></tt>) in order to access its properties (since the properties are
 <tt class="docutils literal"><span class="pre">protected</span></tt>). Fortunately, Doctrine can do this for you by running:</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:generate:entities Acme/StoreBundle/Entity/Product
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:generate:entities Acme/StoreBundle/Entity/Product
 </pre></div>
 </div>
 <p>This command makes sure that all of the getters and setters are generated
 for the <tt class="docutils literal"><span class="pre">Product</span></tt> class. This is a safe command - you can run it over and
 over again: it only generates getters and setters that don&#8217;t exist (i.e. it
 doesn&#8217;t replace your existing methods).</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">Keep in mind that Doctrine&#8217;s entity generator produces simple getters/setters.
+You should check generated entities and adjust getter/setter logic to your own
+needs.</p>
+</div>
 <div class="sidebar">
 <p class="first sidebar-title">More about <tt class="docutils literal"><span class="pre">doctrine:generate:entities</span></tt></p>
 <p>With the <tt class="docutils literal"><span class="pre">doctrine:generate:entities</span></tt> command you can:</p>
 <blockquote>
 <div><ul>
-<li><p class="first">generate getters and setters,</p>
+<li><p class="first">generate getters and setters;</p>
 </li>
 <li><dl class="first docutils">
 <dt>generate repository classes configured with the</dt>
-<dd><p class="first last"><tt class="docutils literal"><span class="pre">&#64;ORM\Entity(repositoryClass=&quot;...&quot;)</span></tt> annotation,</p>
+<dd><p class="first last"><tt class="docutils literal"><span class="pre">&#64;ORM\Entity(repositoryClass=&quot;...&quot;)</span></tt> annotation;</p>
 </dd>
 </dl>
 </li>
@@ -322,7 +433,8 @@ doesn&#8217;t replace your existing methods).</p>
 <p>The <tt class="docutils literal"><span class="pre">doctrine:generate:entities</span></tt> command saves a backup of the original
 <tt class="docutils literal"><span class="pre">Product.php</span></tt> named <tt class="docutils literal"><span class="pre">Product.php~</span></tt>. In some cases, the presence of
 this file can cause a &#8220;Cannot redeclare class&#8221; error. It can be safely
-removed.</p>
+removed. You can also use the <tt class="docutils literal"><span class="pre">--no-backup</span></tt> option to prevent generating
+these backup files.</p>
 <p class="last">Note that you don&#8217;t <em>need</em> to use this command. Doctrine doesn&#8217;t rely
 on code generation. Like with normal PHP classes, you just need to make
 sure that your protected/private properties have getter and setter methods.
@@ -331,8 +443,8 @@ was created.</p>
 </div>
 <p>You can also generate all known entities (i.e. any PHP class with Doctrine
 mapping information) of a bundle or an entire namespace:</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:generate:entities AcmeStoreBundle
-php app/console doctrine:generate:entities Acme
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:generate:entities AcmeStoreBundle
+<span class="nv">$ </span>php app/console doctrine:generate:entities Acme
 </pre></div>
 </div>
 <div class="admonition note">
@@ -344,13 +456,13 @@ to interact with your PHP object.</p>
 </div>
 </div>
 <div class="section" id="creating-the-database-tables-schema">
-<h3>Creating the Database Tables/Schema<a class="headerlink" href="#creating-the-database-tables-schema" title="Permalink to this headline">¶</a></h3>
+<span id="book-doctrine-creating-the-database-tables-schema"></span><h3>Creating the Database Tables/Schema<a class="headerlink" href="#creating-the-database-tables-schema" title="Permalink to this headline">¶</a></h3>
 <p>You now have a usable <tt class="docutils literal"><span class="pre">Product</span></tt> class with mapping information so that
 Doctrine knows exactly how to persist it. Of course, you don&#8217;t yet have the
 corresponding <tt class="docutils literal"><span class="pre">product</span></tt> table in your database. Fortunately, Doctrine can
 automatically create all the database tables needed for every known entity
 in your application. To do this, run:</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:schema:update --force
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:schema:update --force
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -394,24 +506,26 @@ of the bundle:</p>
 15
 16
 17
-18</pre></div></td><td class="code"><div class="highlight"><pre><span class="x">// src/Acme/StoreBundle/Controller/DefaultController.php</span>
-<span class="x">use Acme\StoreBundle\Entity\Product;</span>
-<span class="x">use Symfony\Component\HttpFoundation\Response;</span>
-<span class="x">// ...</span>
+18
+19</pre></div></td><td class="code"><div class="highlight"><pre><span class="c1">// src/Acme/StoreBundle/Controller/DefaultController.php</span>
 
-<span class="x">public function createAction()</span>
-<span class="x">{</span>
-<span class="x">    $product = new Product();</span>
-<span class="x">    $product-&gt;setName(&#39;A Foo Bar&#39;);</span>
-<span class="x">    $product-&gt;setPrice(&#39;19.99&#39;);</span>
-<span class="x">    $product-&gt;setDescription(&#39;Lorem ipsum dolor&#39;);</span>
+<span class="c1">// ...</span>
+<span class="k">use</span> <span class="nx">Acme\StoreBundle\Entity\Product</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
 
-<span class="x">    $em = $this-&gt;getDoctrine()-&gt;getEntityManager();</span>
-<span class="x">    $em-&gt;persist($product);</span>
-<span class="x">    $em-&gt;flush();</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">createAction</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$product</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Product</span><span class="p">();</span>
+    <span class="nv">$product</span><span class="o">-&gt;</span><span class="na">setName</span><span class="p">(</span><span class="s1">&#39;A Foo Bar&#39;</span><span class="p">);</span>
+    <span class="nv">$product</span><span class="o">-&gt;</span><span class="na">setPrice</span><span class="p">(</span><span class="s1">&#39;19.99&#39;</span><span class="p">);</span>
+    <span class="nv">$product</span><span class="o">-&gt;</span><span class="na">setDescription</span><span class="p">(</span><span class="s1">&#39;Lorem ipsum dolor&#39;</span><span class="p">);</span>
 
-<span class="x">    return new Response(&#39;Created product id &#39;.$product-&gt;getId());</span>
-<span class="x">}</span>
+    <span class="nv">$em</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getDoctrine</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getManager</span><span class="p">();</span>
+    <span class="nv">$em</span><span class="o">-&gt;</span><span class="na">persist</span><span class="p">(</span><span class="nv">$product</span><span class="p">);</span>
+    <span class="nv">$em</span><span class="o">-&gt;</span><span class="na">flush</span><span class="p">();</span>
+
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="s1">&#39;Created product id &#39;</span><span class="o">.</span><span class="nv">$product</span><span class="o">-&gt;</span><span class="na">getId</span><span class="p">());</span>
+<span class="p">}</span>
 </pre></div>
 </td></tr></table></div>
 <div class="admonition note">
@@ -419,16 +533,16 @@ of the bundle:</p>
 <p class="last">If you&#8217;re following along with this example, you&#8217;ll need to create a
 route that points to this action to see it work.</p>
 </div>
-<p>Let&#8217;s walk through this example:</p>
+<p>Take a look at the previous example in more detail:</p>
 <ul class="simple">
-<li><strong>lines 8-11</strong> In this section, you instantiate and work with the <tt class="docutils literal"><span class="pre">$product</span></tt>
-object like any other, normal PHP object;</li>
-<li><strong>line 13</strong> This line fetches Doctrine&#8217;s <em>entity manager</em> object, which is
+<li><strong>lines 9-12</strong> In this section, you instantiate and work with the <tt class="docutils literal"><span class="pre">$product</span></tt>
+object like any other, normal PHP object.</li>
+<li><strong>line 14</strong> This line fetches Doctrine&#8217;s <em>entity manager</em> object, which is
 responsible for handling the process of persisting and fetching objects
-to and from the database;</li>
-<li><strong>line 14</strong> The <tt class="docutils literal"><span class="pre">persist()</span></tt> method tells Doctrine to &#8220;manage&#8221; the <tt class="docutils literal"><span class="pre">$product</span></tt>
+to and from the database.</li>
+<li><strong>line 15</strong> The <tt class="docutils literal"><span class="pre">persist()</span></tt> method tells Doctrine to &#8220;manage&#8221; the <tt class="docutils literal"><span class="pre">$product</span></tt>
 object. This does not actually cause a query to be made to the database (yet).</li>
-<li><strong>line 15</strong> When the <tt class="docutils literal"><span class="pre">flush()</span></tt> method is called, Doctrine looks through
+<li><strong>line 16</strong> When the <tt class="docutils literal"><span class="pre">flush()</span></tt> method is called, Doctrine looks through
 all of the objects that it&#8217;s managing to see if they need to be persisted
 to the database. In this example, the <tt class="docutils literal"><span class="pre">$product</span></tt> object has not been
 persisted yet, so the entity manager executes an <tt class="docutils literal"><span class="pre">INSERT</span></tt> query and a
@@ -466,11 +580,20 @@ on its <tt class="docutils literal"><span class="pre">id</span></tt> value:</p>
         -&gt;find($id);
 
     if (!$product) {
-        throw $this-&gt;createNotFoundException('No product found for id '.$id);
+        throw $this-&gt;createNotFoundException(
+            'No product found for id '.$id
+        );
     }
 
-    // do something, like pass the $product object into a template
+    // ... do something, like pass the $product object into a template
 }</pre>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">You can achieve the equivalent of this without writing any code by using
+the <tt class="docutils literal"><span class="pre">&#64;ParamConverter</span></tt> shortcut. See the
+<tt class="xref doc docutils literal"><span class="pre">FrameworkExtraBundle</span> <span class="pre">documentation</span></tt>
+for more details.</p>
 </div>
 <p>When you query for a particular type of object, you always use what&#8217;s known
 as its &#8220;repository&#8221;. You can think of a repository as a PHP class whose only
@@ -511,7 +634,7 @@ to easily fetch objects based on multiple conditions:</p>
 $product = $repository-&gt;findOneBy(array('name' =&gt; 'foo', 'price' =&gt; 19.99));
 
 // query for all products matching the name, ordered by price
-$product = $repository-&gt;findBy(
+$products = $repository-&gt;findBy(
     array('name' =&gt; 'foo'),
     array('price' =&gt; 'ASC')
 );</pre>
@@ -531,11 +654,13 @@ queries that were made.</p>
 you have a route that maps a product id to an update action in a controller:</p>
 <div class="highlight-python"><pre>public function updateAction($id)
 {
-    $em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+    $em = $this-&gt;getDoctrine()-&gt;getManager();
     $product = $em-&gt;getRepository('AcmeStoreBundle:Product')-&gt;find($id);
 
     if (!$product) {
-        throw $this-&gt;createNotFoundException('No product found for id '.$id);
+        throw $this-&gt;createNotFoundException(
+            'No product found for id '.$id
+        );
     }
 
     $product-&gt;setName('New product name!');
@@ -586,9 +711,12 @@ or using Doctrine&#8217;s Query Builder.</p>
 <p>Imagine that you want to query for products, but only return products that
 cost more than <tt class="docutils literal"><span class="pre">19.99</span></tt>, ordered from cheapest to most expensive. From inside
 a controller, do the following:</p>
-<div class="highlight-python"><pre>$em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+<div class="highlight-python"><pre>$em = $this-&gt;getDoctrine()-&gt;getManager();
 $query = $em-&gt;createQuery(
-    'SELECT p FROM AcmeStoreBundle:Product p WHERE p.price &gt; :price ORDER BY p.price ASC'
+    'SELECT p
+    FROM AcmeStoreBundle:Product p
+    WHERE p.price &gt; :price
+    ORDER BY p.price ASC'
 )-&gt;setParameter('price', '19.99');
 
 $products = $query-&gt;getResult();</pre>
@@ -609,7 +737,7 @@ if <em>more</em> than one result is returned. If you use this method, you may
 need to wrap it in a try-catch block and ensure that only one result is
 returned (if you&#8217;re querying on something that could feasibly return
 more than one result):</p>
-<div class="last highlight-python"><pre>$query = $em-&gt;createQuery('SELECT ....')
+<div class="last highlight-python"><pre>$query = $em-&gt;createQuery('SELECT ...')
     -&gt;setMaxResults(1);
 
 try {
@@ -623,7 +751,7 @@ try {
 <p>The DQL syntax is incredibly powerful, allowing you to easily join between
 entities (the topic of <a class="reference internal" href="#book-doctrine-relations"><em>relations</em></a> will be
 covered later), group, etc. For more information, see the official Doctrine
-<a class="reference external" href="http://www.doctrine-project.org/docs/orm/2.0/en/reference/dql-doctrine-query-language.html">Doctrine Query Language</a> documentation.</p>
+<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/dql-doctrine-query-language.html">Doctrine Query Language</a> documentation.</p>
 <div class="sidebar">
 <p class="first sidebar-title">Setting Parameters</p>
 <p>Take note of the <tt class="docutils literal"><span class="pre">setParameter()</span></tt> method. When working with Doctrine,
@@ -669,7 +797,7 @@ query. By calling the <tt class="docutils literal"><span class="pre">getQuery()<
 normal <tt class="docutils literal"><span class="pre">Query</span></tt> object, which is the same object you built directly in the
 previous section.</p>
 <p>For more information on Doctrine&#8217;s Query Builder, consult Doctrine&#8217;s
-<a class="reference external" href="http://www.doctrine-project.org/docs/orm/2.0/en/reference/query-builder.html">Query Builder</a> documentation.</p>
+<a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/query-builder.html">Query Builder</a> documentation.</p>
 </div>
 <div class="section" id="custom-repository-classes">
 <h3>Custom Repository Classes<a class="headerlink" href="#custom-repository-classes" title="Permalink to this headline">¶</a></h3>
@@ -680,34 +808,36 @@ add methods with your query logic there.</p>
 <p>To do this, add the name of the repository class to your mapping definition.</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/StoreBundle/Entity/Product.php
-namespace Acme\StoreBundle\Entity;
+<li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/StoreBundle/Entity/Product.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\StoreBundle\Entity</span><span class="p">;</span>
 
-use Doctrine\ORM\Mapping as ORM;
+<span class="k">use</span> <span class="nx">Doctrine\ORM\Mapping</span> <span class="k">as</span> <span class="nx">ORM</span><span class="p">;</span>
 
-/**
- * @ORM\Entity(repositoryClass="Acme\StoreBundle\Repository\ProductRepository")
- */
-class Product
-{
-    //...
-}</pre>
+<span class="sd">/**</span>
+<span class="sd"> * @ORM\Entity(repositoryClass=&quot;Acme\StoreBundle\Entity\ProductRepository&quot;)</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">Product</span>
+<span class="p">{</span>
+    <span class="c1">//...</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </li>
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.yml</span>
 <span class="l-Scalar-Plain">Acme\StoreBundle\Entity\Product</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">entity</span>
-    <span class="l-Scalar-Plain">repositoryClass</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Acme\StoreBundle\Repository\ProductRepository</span>
+    <span class="l-Scalar-Plain">repositoryClass</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Acme\StoreBundle\Entity\ProductRepository</span>
     <span class="c1"># ...</span>
 </pre></div>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml --&gt;</span>
+
 <span class="c">&lt;!-- ... --&gt;</span>
 <span class="nt">&lt;doctrine-mapping&gt;</span>
 
     <span class="nt">&lt;entity</span> <span class="na">name=</span><span class="s">&quot;Acme\StoreBundle\Entity\Product&quot;</span>
-            <span class="na">repository-class=</span><span class="s">&quot;Acme\StoreBundle\Repository\ProductRepository&quot;</span><span class="nt">&gt;</span>
+            <span class="na">repository-class=</span><span class="s">&quot;Acme\StoreBundle\Entity\ProductRepository&quot;</span><span class="nt">&gt;</span>
             <span class="c">&lt;!-- ... --&gt;</span>
     <span class="nt">&lt;/entity&gt;</span>
 <span class="nt">&lt;/doctrine-mapping&gt;</span>
@@ -718,26 +848,28 @@ class Product
 </div>
 <p>Doctrine can generate the repository class for you by running the same command
 used earlier to generate the missing getter and setter methods:</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:generate:entities Acme
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:generate:entities Acme
 </pre></div>
 </div>
 <p>Next, add a new method - <tt class="docutils literal"><span class="pre">findAllOrderedByName()</span></tt> - to the newly generated
 repository class. This method will query for all of the <tt class="docutils literal"><span class="pre">Product</span></tt> entities,
 ordered alphabetically.</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/StoreBundle/Repository/ProductRepository.php</span>
-<span class="x">namespace Acme\StoreBundle\Repository;</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/StoreBundle/Entity/ProductRepository.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\StoreBundle\Entity</span><span class="p">;</span>
 
-<span class="x">use Doctrine\ORM\EntityRepository;</span>
+<span class="k">use</span> <span class="nx">Doctrine\ORM\EntityRepository</span><span class="p">;</span>
 
-<span class="x">class ProductRepository extends EntityRepository</span>
-<span class="x">{</span>
-<span class="x">    public function findAllOrderedByName()</span>
-<span class="x">    {</span>
-<span class="x">        return $this-&gt;getEntityManager()</span>
-<span class="x">            -&gt;createQuery(&#39;SELECT p FROM AcmeStoreBundle:Product p ORDER BY p.name ASC&#39;)</span>
-<span class="x">            -&gt;getResult();</span>
-<span class="x">    }</span>
-<span class="x">}</span>
+<span class="k">class</span> <span class="nc">ProductRepository</span> <span class="k">extends</span> <span class="nx">EntityRepository</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">findAllOrderedByName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getEntityManager</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">createQuery</span><span class="p">(</span>
+                <span class="s1">&#39;SELECT p FROM AcmeStoreBundle:Product p ORDER BY p.name ASC&#39;</span>
+            <span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">getResult</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <div class="admonition tip">
@@ -746,7 +878,7 @@ ordered alphabetically.</p>
 from inside the repository.</p>
 </div>
 <p>You can use this new method just like the default finder methods of the repository:</p>
-<div class="highlight-python"><pre>$em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+<div class="highlight-python"><pre>$em = $this-&gt;getDoctrine()-&gt;getManager();
 $products = $em-&gt;getRepository('AcmeStoreBundle:Product')
             -&gt;findAllOrderedByName();</pre>
 </div>
@@ -764,7 +896,7 @@ In this case, you&#8217;ll need a <tt class="docutils literal"><span class="pre"
 object to a <tt class="docutils literal"><span class="pre">Category</span></tt> object. Start by creating the <tt class="docutils literal"><span class="pre">Category</span></tt> entity.
 Since you know that you&#8217;ll eventually need to persist the class through Doctrine,
 you can let Doctrine create the class for you.</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:generate:entity --entity<span class="o">=</span><span class="s2">&quot;AcmeStoreBundle:Category&quot;</span> --fields<span class="o">=</span><span class="s2">&quot;name:string(255)&quot;</span>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:generate:entity --entity<span class="o">=</span><span class="s2">&quot;AcmeStoreBundle:Category&quot;</span> --fields<span class="o">=</span><span class="s2">&quot;name:string(255)&quot;</span>
 </pre></div>
 </div>
 <p>This task generates the <tt class="docutils literal"><span class="pre">Category</span></tt> entity for you, with an <tt class="docutils literal"><span class="pre">id</span></tt> field,
@@ -775,24 +907,26 @@ a <tt class="docutils literal"><span class="pre">name</span></tt> field and the 
 <tt class="docutils literal"><span class="pre">products</span></tt> property on the <tt class="docutils literal"><span class="pre">Category</span></tt> class:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/StoreBundle/Entity/Category.php
-// ...
-use Doctrine\Common\Collections\ArrayCollection;
+<li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/StoreBundle/Entity/Category.php</span>
 
-class Category
-{
-    // ...
+<span class="c1">// ...</span>
+<span class="k">use</span> <span class="nx">Doctrine\Common\Collections\ArrayCollection</span><span class="p">;</span>
 
-    /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
-     */
-    protected $products;
+<span class="k">class</span> <span class="nc">Category</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
 
-    public function __construct()
-    {
-        $this-&gt;products = new ArrayCollection();
-    }
-}</pre>
+    <span class="sd">/**</span>
+<span class="sd">     * @ORM\OneToMany(targetEntity=&quot;Product&quot;, mappedBy=&quot;category&quot;)</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$products</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">products</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArrayCollection</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </li>
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/StoreBundle/Resources/config/doctrine/Category.orm.yml</span>
@@ -803,7 +937,29 @@ class Category
         <span class="l-Scalar-Plain">products</span><span class="p-Indicator">:</span>
             <span class="l-Scalar-Plain">targetEntity</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Product</span>
             <span class="l-Scalar-Plain">mappedBy</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">category</span>
-    <span class="c1"># don&#39;t forget to init the collection in entity __construct() method</span>
+    <span class="c1"># don&#39;t forget to init the collection in the __construct() method of the entity</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/StoreBundle/Resources/config/doctrine/Category.orm.xml --&gt;</span>
+<span class="nt">&lt;doctrine-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://doctrine-project.org/schemas/orm/doctrine-mapping&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://doctrine-project.org/schemas/orm/doctrine-mapping</span>
+<span class="s">                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;entity</span> <span class="na">name=</span><span class="s">&quot;Acme\StoreBundle\Entity\Category&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- ... --&gt;</span>
+        <span class="nt">&lt;one-to-many</span> <span class="na">field=</span><span class="s">&quot;products&quot;</span>
+            <span class="na">target-entity=</span><span class="s">&quot;product&quot;</span>
+            <span class="na">mapped-by=</span><span class="s">&quot;category&quot;</span>
+        <span class="nt">/&gt;</span>
+
+        <span class="c">&lt;!--</span>
+<span class="c">            don&#39;t forget to init the collection in</span>
+<span class="c">            the __construct() method of the entity</span>
+<span class="c">        --&gt;</span>
+    <span class="nt">&lt;/entity&gt;</span>
+<span class="nt">&lt;/doctrine-mapping&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -833,19 +989,20 @@ namespace as the targetEntity.</p>
 object, you&#8217;ll want to add a <tt class="docutils literal"><span class="pre">$category</span></tt> property to the <tt class="docutils literal"><span class="pre">Product</span></tt> class:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/StoreBundle/Entity/Product.php
-// ...
+<li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/StoreBundle/Entity/Product.php</span>
 
-class Product
-{
-    // ...
+<span class="c1">// ...</span>
+<span class="k">class</span> <span class="nc">Product</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     */
-    protected $category;
-}</pre>
+    <span class="sd">/**</span>
+<span class="sd">     * @ORM\ManyToOne(targetEntity=&quot;Category&quot;, inversedBy=&quot;products&quot;)</span>
+<span class="sd">     * @ORM\JoinColumn(name=&quot;category_id&quot;, referencedColumnName=&quot;id&quot;)</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$category</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </li>
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.yml</span>
@@ -862,12 +1019,34 @@ class Product
 </pre></div>
 </div>
 </li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml --&gt;</span>
+<span class="nt">&lt;doctrine-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://doctrine-project.org/schemas/orm/doctrine-mapping&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://doctrine-project.org/schemas/orm/doctrine-mapping</span>
+<span class="s">                    http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;entity</span> <span class="na">name=</span><span class="s">&quot;Acme\StoreBundle\Entity\Product&quot;</span><span class="nt">&gt;</span>
+        <span class="c">&lt;!-- ... --&gt;</span>
+        <span class="nt">&lt;many-to-one</span> <span class="na">field=</span><span class="s">&quot;category&quot;</span>
+            <span class="na">target-entity=</span><span class="s">&quot;products&quot;</span>
+            <span class="na">join-column=</span><span class="s">&quot;category&quot;</span>
+        <span class="nt">&gt;</span>
+            <span class="nt">&lt;join-column</span>
+                <span class="na">name=</span><span class="s">&quot;category_id&quot;</span>
+                <span class="na">referenced-column-name=</span><span class="s">&quot;id&quot;</span>
+            <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/many-to-one&gt;</span>
+    <span class="nt">&lt;/entity&gt;</span>
+<span class="nt">&lt;/doctrine-mapping&gt;</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </div>
 <p>Finally, now that you&#8217;ve added a new property to both the <tt class="docutils literal"><span class="pre">Category</span></tt> and
 <tt class="docutils literal"><span class="pre">Product</span></tt> classes, tell Doctrine to generate the missing getter and setter
 methods for you:</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:generate:entities Acme
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:generate:entities Acme
 </pre></div>
 </div>
 <p>Ignore the Doctrine metadata for a moment. You now have two classes - <tt class="docutils literal"><span class="pre">Category</span></tt>
@@ -889,7 +1068,7 @@ is less important, and simply tells Doctrine to look at the <tt class="docutils 
 property to figure out how the relationship is mapped.</p>
 <p>Before you continue, be sure to tell Doctrine to add the new <tt class="docutils literal"><span class="pre">category</span></tt>
 table, and <tt class="docutils literal"><span class="pre">product.category_id</span></tt> column, and new foreign key:</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:schema:update --force
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:schema:update --force
 </pre></div>
 </div>
 <div class="admonition note">
@@ -901,12 +1080,12 @@ method of systematically updating your production database, read about
 </div>
 <div class="section" id="saving-related-entities">
 <h3>Saving Related Entities<a class="headerlink" href="#saving-related-entities" title="Permalink to this headline">¶</a></h3>
-<p>Now, let&#8217;s see the code in action. Imagine you&#8217;re inside a controller:</p>
+<p>Now you can see this new code in action! Imagine you&#8217;re inside a controller:</p>
 <div class="highlight-python"><pre>// ...
+
 use Acme\StoreBundle\Entity\Category;
 use Acme\StoreBundle\Entity\Product;
 use Symfony\Component\HttpFoundation\Response;
-// ...
 
 class DefaultController extends Controller
 {
@@ -921,7 +1100,7 @@ class DefaultController extends Controller
         // relate this product to the category
         $product-&gt;setCategory($category);
 
-        $em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+        $em = $this-&gt;getDoctrine()-&gt;getManager();
         $em-&gt;persist($category);
         $em-&gt;persist($product);
         $em-&gt;flush();
@@ -1019,8 +1198,7 @@ the web debug toolbar.</p>
 <p>Of course, if you know up front that you&#8217;ll need to access both objects, you
 can avoid the second query by issuing a join in the original query. Add the
 following method to the <tt class="docutils literal"><span class="pre">ProductRepository</span></tt> class:</p>
-<div class="highlight-python"><pre>// src/Acme/StoreBundle/Repository/ProductRepository.php
-
+<div class="highlight-python"><pre>// src/Acme/StoreBundle/Entity/ProductRepository.php
 public function findOneByIdJoinedToCategory($id)
 {
     $query = $this-&gt;getEntityManager()
@@ -1056,7 +1234,7 @@ object and its related <tt class="docutils literal"><span class="pre">Category</
 <p>This section has been an introduction to one common type of entity relationship,
 the one-to-many relationship. For more advanced details and examples of how
 to use other types of relations (e.g. <tt class="docutils literal"><span class="pre">one-to-one</span></tt>, <tt class="docutils literal"><span class="pre">many-to-many</span></tt>), see
-Doctrine&#8217;s <a class="reference external" href="http://www.doctrine-project.org/docs/orm/2.0/en/reference/association-mapping.html">Association Mapping Documentation</a>.</p>
+Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html">Association Mapping Documentation</a>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you&#8217;re using annotations, you&#8217;ll need to prepend all annotations with
@@ -1081,27 +1259,29 @@ stages of the lifecycle of an entity (e.g. the entity is inserted, updated,
 deleted, etc).</p>
 <p>If you&#8217;re using annotations for your metadata, start by enabling the lifecycle
 callbacks. This is not necessary if you&#8217;re using YAML or XML for your mapping:</p>
-<div class="highlight-php-annotations"><pre>/**
- * @ORM\Entity()
- * @ORM\HasLifecycleCallbacks()
- */
-class Product
-{
-    // ...
-}</pre>
+<div class="highlight-php-annotations"><div class="highlight"><pre><span class="sd">/**</span>
+<span class="sd"> * @ORM\Entity()</span>
+<span class="sd"> * @ORM\HasLifecycleCallbacks()</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">Product</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Now, you can tell Doctrine to execute a method on any of the available lifecycle
 events. For example, suppose you want to set a <tt class="docutils literal"><span class="pre">created</span></tt> date column to
 the current date, only when the entity is first persisted (i.e. inserted):</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>/**
- * @ORM\prePersist
- */
-public function setCreatedValue()
-{
-    $this-&gt;created = new \DateTime();
-}</pre>
+<li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="sd">/**</span>
+<span class="sd"> * @ORM\PrePersist</span>
+<span class="sd"> */</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">setCreatedValue</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">created</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\DateTime</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </li>
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.yml</span>
@@ -1109,18 +1289,20 @@ public function setCreatedValue()
     <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">entity</span>
     <span class="c1"># ...</span>
     <span class="l-Scalar-Plain">lifecycleCallbacks</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">prePersist</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span> <span class="nv">setCreatedValue</span> <span class="p-Indicator">]</span>
+        <span class="l-Scalar-Plain">prePersist</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">setCreatedValue</span><span class="p-Indicator">]</span>
 </pre></div>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/StoreBundle/Resources/config/doctrine/Product.orm.xml --&gt;</span>
+
 <span class="c">&lt;!-- ... --&gt;</span>
 <span class="nt">&lt;doctrine-mapping&gt;</span>
 
     <span class="nt">&lt;entity</span> <span class="na">name=</span><span class="s">&quot;Acme\StoreBundle\Entity\Product&quot;</span><span class="nt">&gt;</span>
             <span class="c">&lt;!-- ... --&gt;</span>
             <span class="nt">&lt;lifecycle-callbacks&gt;</span>
-                <span class="nt">&lt;lifecycle-callback</span> <span class="na">type=</span><span class="s">&quot;prePersist&quot;</span> <span class="na">method=</span><span class="s">&quot;setCreatedValue&quot;</span> <span class="nt">/&gt;</span>
+                <span class="nt">&lt;lifecycle-callback</span> <span class="na">type=</span><span class="s">&quot;prePersist&quot;</span>
+                    <span class="na">method=</span><span class="s">&quot;setCreatedValue&quot;</span> <span class="nt">/&gt;</span>
             <span class="nt">&lt;/lifecycle-callbacks&gt;</span>
     <span class="nt">&lt;/entity&gt;</span>
 <span class="nt">&lt;/doctrine-mapping&gt;</span>
@@ -1148,18 +1330,18 @@ call this method and the <tt class="docutils literal"><span class="pre">created<
 <li><tt class="docutils literal"><span class="pre">loadClassMetadata</span></tt></li>
 </ul>
 <p>For more information on what these lifecycle events mean and lifecycle callbacks
-in general, see Doctrine&#8217;s <a class="reference external" href="http://www.doctrine-project.org/docs/orm/2.0/en/reference/events.html#lifecycle-events">Lifecycle Events documentation</a></p>
+in general, see Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#lifecycle-events">Lifecycle Events documentation</a></p>
 <div class="sidebar">
 <p class="first sidebar-title">Lifecycle Callbacks and Event Listeners</p>
 <p>Notice that the <tt class="docutils literal"><span class="pre">setCreatedValue()</span></tt> method receives no arguments. This
-is always the case for lifecylce callbacks and is intentional: lifecycle
+is always the case for lifecycle callbacks and is intentional: lifecycle
 callbacks should be simple methods that are concerned with internally
 transforming data in the entity (e.g. setting a created/updated field,
 generating a slug value).</p>
 <p class="last">If you need to do some heavier lifting - like perform logging or send
 an email - you should register an external class as an event listener
 or subscriber and give it access to whatever resources you need. For
-more information, see <a class="reference internal" href="../cookbook/doctrine/event_listeners_subscribers.html"><em>Registering Event Listeners and Subscribers</em></a>.</p>
+more information, see <a class="reference internal" href="../cookbook/doctrine/event_listeners_subscribers.html"><em>How to Register Event Listeners and Subscribers</em></a>.</p>
 </div>
 </div>
 <div class="section" id="doctrine-extensions-timestampable-sluggable-etc">
@@ -1203,7 +1385,7 @@ using. The following types are supported in Doctrine:</p>
 </ul>
 </li>
 </ul>
-<p>For more information, see Doctrine&#8217;s <a class="reference external" href="http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#doctrine-mapping-types">Mapping Types documentation</a>.</p>
+<p>For more information, see Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#doctrine-mapping-types">Mapping Types documentation</a>.</p>
 <div class="section" id="field-options">
 <h3>Field Options<a class="headerlink" href="#field-options" title="Permalink to this headline">¶</a></h3>
 <p>Each field can have a set of options applied to it. The available options
@@ -1211,21 +1393,23 @@ include <tt class="docutils literal"><span class="pre">type</span></tt> (default
 and <tt class="docutils literal"><span class="pre">nullable</span></tt>. Take a few examples:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>/**
- * A string field with length 255 that cannot be null
- * (reflecting the default values for the "type", "length" and *nullable* options)
- *
- * @ORM\Column()
- */
-protected $name;
+<li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="sd">/**</span>
+<span class="sd"> * A string field with length 255 that cannot be null</span>
+<span class="sd"> * (reflecting the default values for the &quot;type&quot;, &quot;length&quot;</span>
+<span class="sd"> * and *nullable* options)</span>
+<span class="sd"> *</span>
+<span class="sd"> * @ORM\Column()</span>
+<span class="sd"> */</span>
+<span class="k">protected</span> <span class="nv">$name</span><span class="p">;</span>
 
-/**
- * A string field of length 150 that persists to an "email_address" column
- * and has a unique index.
- *
- * @ORM\Column(name="email_address", unique="true", length="150")
- */
-protected $email;</pre>
+<span class="sd">/**</span>
+<span class="sd"> * A string field of length 150 that persists to an &quot;email_address&quot; column</span>
+<span class="sd"> * and has a unique index.</span>
+<span class="sd"> *</span>
+<span class="sd"> * @ORM\Column(name=&quot;email_address&quot;, unique=true, length=150)</span>
+<span class="sd"> */</span>
+<span class="k">protected</span> <span class="nv">$email</span><span class="p">;</span>
+</pre></div>
 </div>
 </li>
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
@@ -1245,12 +1429,27 @@ protected $email;</pre>
 </pre></div>
 </div>
 </li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!--</span>
+<span class="c">    A string field length 255 that cannot be null</span>
+<span class="c">    (reflecting the default values for the &quot;length&quot; and *nullable* options)</span>
+<span class="c">    type attribute is necessary in xml definitions</span>
+<span class="c">--&gt;</span>
+<span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;field</span> <span class="na">name=</span><span class="s">&quot;email&quot;</span>
+    <span class="na">type=</span><span class="s">&quot;string&quot;</span>
+    <span class="na">column=</span><span class="s">&quot;email_address&quot;</span>
+    <span class="na">length=</span><span class="s">&quot;150&quot;</span>
+    <span class="na">unique=</span><span class="s">&quot;true&quot;</span>
+<span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">There are a few more options not listed here. For more details, see
-Doctrine&#8217;s <a class="reference external" href="http://www.doctrine-project.org/docs/orm/2.0/en/reference/basic-mapping.html#property-mapping">Property Mapping documentation</a></p>
+Doctrine&#8217;s <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/basic-mapping.html#property-mapping">Property Mapping documentation</a></p>
 </div>
 </div>
 </div>
@@ -1259,14 +1458,14 @@ Doctrine&#8217;s <a class="reference external" href="http://www.doctrine-project
 <p>The Doctrine2 ORM integration offers several console commands under the
 <tt class="docutils literal"><span class="pre">doctrine</span></tt> namespace. To view the command list you can run the console
 without any arguments:</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console
 </pre></div>
 </div>
-<p>A list of available command will print out, many of which start with the
+<p>A list of available commands will print out, many of which start with the
 <tt class="docutils literal"><span class="pre">doctrine:</span></tt> prefix. You can find out more information about any of these
 commands (or any Symfony command) by running the <tt class="docutils literal"><span class="pre">help</span></tt> command. For example,
 to get details about the <tt class="docutils literal"><span class="pre">doctrine:database:create</span></tt> task, run:</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console <span class="nb">help </span>doctrine:database:create
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console <span class="nb">help </span>doctrine:database:create
 </pre></div>
 </div>
 <p>Some notable or interesting tasks include:</p>
@@ -1274,7 +1473,7 @@ to get details about the <tt class="docutils literal"><span class="pre">doctrine
 <li><p class="first"><tt class="docutils literal"><span class="pre">doctrine:ensure-production-settings</span></tt> - checks to see if the current
 environment is configured efficiently for production. This should always
 be run in the <tt class="docutils literal"><span class="pre">prod</span></tt> environment:</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console doctrine:ensure-production-settings --env<span class="o">=</span>prod
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:ensure-production-settings --env<span class="o">=</span>prod
 </pre></div>
 </div>
 </li>
@@ -1296,6 +1495,16 @@ the <tt class="docutils literal"><span class="pre">DoctrineFixturesBundle</span>
 read the &#8220;<tt class="xref doc docutils literal"><span class="pre">/bundles/DoctrineFixturesBundle/index</span></tt>&#8221; entry of the
 documentation.</p>
 </div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">This page shows working with Doctrine within a controller. You may also
+want to work with Doctrine elsewhere in your application. The
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Controller/Controller.html#method_getDoctrine" title="Symfony\Bundle\FrameworkBundle\Controller\Controller::getDoctrine()"><span class="pre">getDoctrine()</span></a></tt>
+method of the controller returns the <tt class="docutils literal"><span class="pre">doctrine</span></tt> service, you can work with
+this in the same way elsewhere by injecting this into your own
+services. See <a class="reference internal" href="service_container.html"><em>Service Container</em></a> for more on creating
+your own services.</p>
+</div>
 </div>
 <div class="section" id="summary">
 <h2>Summary<a class="headerlink" href="#summary" title="Permalink to this headline">¶</a></h2>
@@ -1312,7 +1521,7 @@ lifecycle.</p>
 <a class="reference internal" href="../cookbook/index.html"><em>cookbook</em></a>, which includes the following articles:</p>
 <ul class="simple">
 <li><tt class="xref doc docutils literal"><span class="pre">/bundles/DoctrineFixturesBundle/index</span></tt></li>
-<li><a class="reference internal" href="../cookbook/doctrine/common_extensions.html"><em>Doctrine Extensions: Timestampable: Sluggable, Translatable, etc.</em></a></li>
+<li><a class="reference internal" href="../cookbook/doctrine/common_extensions.html"><em>How to use Doctrine Extensions: Timestampable, Sluggable, Translatable, etc.</em></a></li>
 </ul>
 </div>
 </div>
@@ -1325,7 +1534,7 @@ lifecycle.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Databases and Doctrine (&#8220;The Model&#8221;)</a><ul>
+<li><a class="reference internal" href="#">Databases and Doctrine</a><ul>
 <li><a class="reference internal" href="#a-simple-example-a-product">A Simple Example: A Product</a><ul>
 <li><a class="reference internal" href="#configuring-the-database">Configuring the Database</a></li>
 <li><a class="reference internal" href="#creating-an-entity-class">Creating an Entity Class</a></li>
@@ -1369,8 +1578,8 @@ lifecycle.</p>
   <p class="topless"><a href="templating.html"
                         title="previous chapter">Creating and using Templates</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="testing.html"
-                        title="next chapter">Testing</a></p>
+  <p class="topless"><a href="propel.html"
+                        title="next chapter">Databases and Propel</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/book/doctrine.txt"
@@ -1379,7 +1588,7 @@ lifecycle.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -1400,18 +1609,18 @@ lifecycle.</p>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="testing.html" title="Testing"
+          <a href="propel.html" title="Databases and Propel"
              >next</a> |</li>
         <li class="right" >
           <a href="templating.html" title="Creating and using Templates"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Book</a> &raquo;</li> 
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

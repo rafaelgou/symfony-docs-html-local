@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Testing &mdash; Symfony2Docs v1 documentation</title>
+    <title>Testing &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +25,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
-    <link rel="up" title="Book" href="index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Validation" href="validation.html" />
-    <link rel="prev" title="Databases and Doctrine (“The Model”)" href="doctrine.html" /> 
+    <link rel="prev" title="Databases and Propel" href="propel.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,10 +41,10 @@
           <a href="validation.html" title="Validation"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="doctrine.html" title="Databases and Doctrine (“The Model”)"
+          <a href="propel.html" title="Databases and Propel"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -74,7 +77,7 @@ command:</p>
 </pre></div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">-c</span></tt> option tells PHPUnit to look in the <tt class="docutils literal"><span class="pre">app/</span></tt> directory for a configuration
-file. If you&#8217;re curious about how the PHPUnit options, check out the <tt class="docutils literal"><span class="pre">app/phpunit.xml.dist</span></tt>
+file. If you&#8217;re curious about the PHPUnit options, check out the <tt class="docutils literal"><span class="pre">app/phpunit.xml.dist</span></tt>
 file.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -113,7 +116,7 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
         $calc = new Calculator();
         $result = $calc-&gt;add(30, 12);
 
-        // assert that our calculator added the numbers correctly!
+        // assert that your calculator added the numbers correctly!
         $this-&gt;assertEquals(42, $result);
     }
 }</pre>
@@ -172,7 +175,10 @@ class DemoControllerTest extends WebTestCase
 
         $crawler = $client-&gt;request('GET', '/demo/hello/Fabien');
 
-        $this-&gt;assertTrue($crawler-&gt;filter('html:contains("Hello Fabien")')-&gt;count() &gt; 0);
+        $this-&gt;assertGreaterThan(
+            0,
+            $crawler-&gt;filter('html:contains("Hello Fabien")')-&gt;count()
+        );
     }
 }</pre>
 </div>
@@ -183,13 +189,14 @@ kernel of your application. In most cases, this happens automatically.
 However, if your kernel is in a non-standard directory, you&#8217;ll need
 to modify your <tt class="docutils literal"><span class="pre">phpunit.xml.dist</span></tt> file to set the <tt class="docutils literal"><span class="pre">KERNEL_DIR</span></tt> environment
 variable to the directory of your kernel:</p>
-<div class="last highlight-python"><pre>&lt;phpunit
-    &lt;!-- ... --&gt;
-    &lt;php&gt;
-        &lt;server name="KERNEL_DIR" value="/path/to/your/app/" /&gt;
-    &lt;/php&gt;
-    &lt;!-- ... --&gt;
-&lt;/phpunit&gt;</pre>
+<div class="last highlight-xml"><div class="highlight"><pre><span class="nt">&lt;phpunit&gt;</span>
+    <span class="c">&lt;!-- ... --&gt;</span>
+    <span class="nt">&lt;php&gt;</span>
+        <span class="nt">&lt;server</span> <span class="na">name=</span><span class="s">&quot;KERNEL_DIR&quot;</span> <span class="na">value=</span><span class="s">&quot;/path/to/your/app/&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/php&gt;</span>
+    <span class="c">&lt;!-- ... --&gt;</span>
+<span class="nt">&lt;/phpunit&gt;</span>
+</pre></div>
 </div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">createClient()</span></tt> method returns a client, which is like a browser that
@@ -197,7 +204,7 @@ you&#8217;ll use to crawl your site:</p>
 <div class="highlight-python"><pre>$crawler = $client-&gt;request('GET', '/demo/hello/Fabien');</pre>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">request()</span></tt> method (see <a class="reference internal" href="#book-testing-request-method-sidebar"><em>more about the request method</em></a>)
-returns a <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DomCrawler\Crawler</span></tt> object which can
+returns a <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Crawler.html" title="Symfony\Component\DomCrawler\Crawler"><span class="pre">Crawler</span></a></tt> object which can
 be used to select elements in the Response, click on links, and submit forms.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -233,12 +240,15 @@ of form fields (e.g. <tt class="docutils literal"><span class="pre">select()</sp
 that it actually does what you expect it to. Use the Crawler to make assertions
 on the DOM:</p>
 <div class="highlight-python"><pre>// Assert that the response matches a given CSS selector.
-$this-&gt;assertTrue($crawler-&gt;filter('h1')-&gt;count() &gt; 0);</pre>
+$this-&gt;assertGreaterThan(0, $crawler-&gt;filter('h1')-&gt;count());</pre>
 </div>
 <p>Or, test against the Response content directly if you just want to assert that
 the content contains some text, or if the Response is not an XML/HTML
 document:</p>
-<div class="highlight-python"><pre>$this-&gt;assertRegExp('/Hello Fabien/', $client-&gt;getResponse()-&gt;getContent());</pre>
+<div class="highlight-python"><pre>$this-&gt;assertRegExp(
+    '/Hello Fabien/',
+    $client-&gt;getResponse()-&gt;getContent()
+);</pre>
 </div>
 <div class="sidebar" id="book-testing-request-method-sidebar">
 <p class="first sidebar-title">More about the <tt class="docutils literal"><span class="pre">request()</span></tt> method:</p>
@@ -254,25 +264,70 @@ document:</p>
 )</pre>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">server</span></tt> array is the raw values that you&#8217;d expect to normally
-find in the PHP <a class="reference external" href="http://php.net/manual/en/reserved.variables.server.php">$_SERVER</a> superglobal. For example, to set the <cite>Content-Type</cite>
-and <cite>Referer</cite> HTTP headers, you&#8217;d pass the following:</p>
+find in the PHP <a class="reference external" href="http://php.net/manual/en/reserved.variables.server.php">$_SERVER</a> superglobal. For example, to set the <cite>Content-Type</cite>,
+<cite>Referer</cite> and <cite>X-Requested-With&#8217; HTTP headers, you&#8217;d pass the following (mind
+the `HTTP_</cite> prefix for non standard headers):</p>
 <div class="last highlight-python"><pre>$client-&gt;request(
     'GET',
     '/demo/hello/Fabien',
     array(),
     array(),
     array(
-        'CONTENT_TYPE' =&gt; 'application/json',
-        'HTTP_REFERER' =&gt; '/foo/bar',
+        'CONTENT_TYPE'          =&gt; 'application/json',
+        'HTTP_REFERER'          =&gt; '/foo/bar',
+        'HTTP_X-Requested-With' =&gt; 'XMLHttpRequest',
     )
 );</pre>
 </div>
 </div>
-<span class="target" id="index-3"></span></div>
+<div class="sidebar" id="index-3">
+<p class="first sidebar-title">Useful Assertions</p>
+<p>To get you started faster, here is a list of the most common and
+useful test assertions:</p>
+<div class="last highlight-python"><pre>// Assert that there is at least one h2 tag
+// with the class "subtitle"
+$this-&gt;assertGreaterThan(
+    0,
+    $crawler-&gt;filter('h2.subtitle')-&gt;count()
+);
+
+// Assert that there are exactly 4 h2 tags on the page
+$this-&gt;assertCount(4, $crawler-&gt;filter('h2'));
+
+// Assert that the "Content-Type" header is "application/json"
+$this-&gt;assertTrue(
+    $client-&gt;getResponse()-&gt;headers-&gt;contains(
+        'Content-Type',
+        'application/json'
+    )
+);
+
+// Assert that the response content matches a regexp.
+$this-&gt;assertRegExp('/foo/', $client-&gt;getResponse()-&gt;getContent());
+
+// Assert that the response status code is 2xx
+$this-&gt;assertTrue($client-&gt;getResponse()-&gt;isSuccessful());
+// Assert that the response status code is 404
+$this-&gt;assertTrue($client-&gt;getResponse()-&gt;isNotFound());
+// Assert a specific 200 status code
+$this-&gt;assertEquals(
+    200,
+    $client-&gt;getResponse()-&gt;getStatusCode()
+);
+
+// Assert that the response is a redirect to /demo/contact
+$this-&gt;assertTrue(
+    $client-&gt;getResponse()-&gt;isRedirect('/demo/contact')
+);
+// or simply check that the response is a redirect to any URL
+$this-&gt;assertTrue($client-&gt;getResponse()-&gt;isRedirect());</pre>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="working-with-the-test-client">
 <span id="index-4"></span><h2>Working with the Test Client<a class="headerlink" href="#working-with-the-test-client" title="Permalink to this headline">¶</a></h2>
-<p>The test Client simulates an HTTP client like a browser and makes requests
+<p>The Test Client simulates an HTTP client like a browser and makes requests
 into your Symfony2 application:</p>
 <div class="highlight-python"><pre>$crawler = $client-&gt;request('GET', '/hello/Fabien');</pre>
 </div>
@@ -300,6 +355,16 @@ or perform more complex requests:</p>
 <div class="highlight-python"><pre>// Directly submit a form (but using the Crawler is easier!)
 $client-&gt;request('POST', '/submit', array('name' =&gt; 'Fabien'));
 
+// Submit a raw JSON string in the request body
+$client-&gt;request(
+    'POST',
+    '/submit',
+    array(),
+    array(),
+    array('CONTENT_TYPE' =&gt; 'application/json'),
+    '{"name":"Fabien"}'
+);
+
 // Form submission with a file upload
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -308,14 +373,6 @@ $photo = new UploadedFile(
     'photo.jpg',
     'image/jpeg',
     123
-);
-// or
-$photo = array(
-    'tmp_name' =&gt; '/path/to/photo.jpg',
-    'name' =&gt; 'photo.jpg',
-    'type' =&gt; 'image/jpeg',
-    'size' =&gt; 123,
-    'error' =&gt; UPLOAD_ERR_OK
 );
 $client-&gt;request(
     'POST',
@@ -351,14 +408,27 @@ $client-&gt;restart();</pre>
 </div>
 <div class="section" id="accessing-internal-objects">
 <h3>Accessing Internal Objects<a class="headerlink" href="#accessing-internal-objects" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.3: </span>The <tt class="docutils literal"><span class="pre">getInternalRequest()</span></tt> and <tt class="docutils literal"><span class="pre">getInternalResponse()</span></tt> method were
+added in Symfony 2.3.</p>
 <p>If you use the client to test your application, you might want to access the
 client&#8217;s internal objects:</p>
 <div class="highlight-python"><pre>$history   = $client-&gt;getHistory();
 $cookieJar = $client-&gt;getCookieJar();</pre>
 </div>
 <p>You can also get the objects related to the latest request:</p>
-<div class="highlight-python"><pre>$request  = $client-&gt;getRequest();
+<div class="highlight-python"><pre>// the HttpKernel request instance
+$request  = $client-&gt;getRequest();
+
+// the BrowserKit request instance
+$request  = $client-&gt;getInternalRequest();
+
+// the HttpKernel response instance
 $response = $client-&gt;getResponse();
+
+// the BrowserKit response instance
+$response = $client-&gt;getInternalResponse();
+
 $crawler  = $client-&gt;getCrawler();</pre>
 </div>
 <p>If your requests are not insulated, you can also access the <tt class="docutils literal"><span class="pre">Container</span></tt> and
@@ -386,26 +456,32 @@ it instead.</p>
 </div>
 <div class="section" id="accessing-the-profiler-data">
 <h3>Accessing the Profiler Data<a class="headerlink" href="#accessing-the-profiler-data" title="Permalink to this headline">¶</a></h3>
-<p>On each request, the Symfony profiler collects and stores a lot of data about
-the internal handling of that request. For example, the profiler could be
-used to verify that a given page executes less than a certain number of database
+<p>On each request, you can enable the Symfony profiler to collect data about the
+internal handling of that request. For example, the profiler could be used to
+verify that a given page executes less than a certain number of database
 queries when loading.</p>
 <p>To get the Profiler for the last request, do the following:</p>
-<div class="highlight-python"><pre>$profile = $client-&gt;getProfile();</pre>
+<div class="highlight-python"><pre>// enable the profiler for the very next request
+$client-&gt;enableProfiler();
+
+$crawler = $client-&gt;request('GET', '/profiler');
+
+// get the profile
+$profile = $client-&gt;getProfile();</pre>
 </div>
 <p>For specific details on using the profiler inside a test, see the
 <a class="reference internal" href="../cookbook/testing/profiling.html"><em>How to use the Profiler in a Functional Test</em></a> cookbook entry.</p>
 </div>
 <div class="section" id="redirecting">
 <h3>Redirecting<a class="headerlink" href="#redirecting" title="Permalink to this headline">¶</a></h3>
-<p>When a request returns a redirect response, the client automatically follows
-it. If you want to examine the Response before redirecting, you can force
-the client to not follow redirects with the  <tt class="docutils literal"><span class="pre">followRedirects()</span></tt> method:</p>
-<div class="highlight-python"><pre>$client-&gt;followRedirects(false);</pre>
-</div>
-<p>When the client does not follow redirects, you can force the redirection with
-the <tt class="docutils literal"><span class="pre">followRedirect()</span></tt> method:</p>
+<p>When a request returns a redirect response, the client does not follow
+it automatically. You can examine the response and force a redirection
+afterwards  with the <tt class="docutils literal"><span class="pre">followRedirect()</span></tt> method:</p>
 <div class="highlight-python"><pre>$crawler = $client-&gt;followRedirect();</pre>
+</div>
+<p>If you want the client to automatically follow all redirects, you can
+force him with the <tt class="docutils literal"><span class="pre">followRedirects()</span></tt> method:</p>
+<div class="highlight-python"><pre>$client-&gt;followRedirects();</pre>
 </div>
 </div>
 </div>
@@ -431,42 +507,42 @@ selects the last one on the page, and then selects its immediate parent element:
 <col width="68%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Method</th>
+<tr class="row-odd"><th class="head">Method</th>
 <th class="head">Description</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td><tt class="docutils literal"><span class="pre">filter('h1.title')</span></tt></td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">filter('h1.title')</span></tt></td>
 <td>Nodes that match the CSS selector</td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">filterXpath('h1')</span></tt></td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">filterXpath('h1')</span></tt></td>
 <td>Nodes that match the XPath expression</td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">eq(1)</span></tt></td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">eq(1)</span></tt></td>
 <td>Node for the specified index</td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">first()</span></tt></td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">first()</span></tt></td>
 <td>First node</td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">last()</span></tt></td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">last()</span></tt></td>
 <td>Last node</td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">siblings()</span></tt></td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">siblings()</span></tt></td>
 <td>Siblings</td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">nextAll()</span></tt></td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">nextAll()</span></tt></td>
 <td>All following siblings</td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">previousAll()</span></tt></td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">previousAll()</span></tt></td>
 <td>All preceding siblings</td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">parents()</span></tt></td>
-<td>Parent nodes</td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">parents()</span></tt></td>
+<td>Returns the parent nodes</td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">children()</span></tt></td>
-<td>Children</td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">children()</span></tt></td>
+<td>Returns children nodes</td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">reduce($lambda)</span></tt></td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">reduce($lambda)</span></tt></td>
 <td>Nodes for which the callable does not return false</td>
 </tr>
 </tbody>
@@ -498,8 +574,10 @@ $crawler-&gt;attr('class');
 // Returns the node value for the first node
 $crawler-&gt;text();
 
-// Extracts an array of attributes for all nodes (_text returns the node value)
-// returns an array for each element in crawler, each with the value and href
+// Extracts an array of attributes for all nodes
+// (_text returns the node value)
+// returns an array for each element in crawler,
+// each with the value and href
 $info = $crawler-&gt;extract(array('_text', 'href'));
 
 // Executes a lambda for each node and return an array of results
@@ -534,7 +612,7 @@ $client-&gt;click($link);</pre>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Notice that we select form buttons and not forms as a form can have several
+<p class="last">Notice that you select form buttons and not forms as a form can have several
 buttons; if you use the traversing API, keep in mind that you must look for a
 button.</p>
 </div>
@@ -558,7 +636,7 @@ that overrides the default ones:</p>
 </div>
 <p>And if you want to simulate a specific HTTP method for the form, pass it as a
 second argument:</p>
-<div class="highlight-python"><pre>$form = $crawler-&gt;form(array(), 'DELETE');</pre>
+<div class="highlight-python"><pre>$form = $buttonCrawlerNode-&gt;form(array(), 'DELETE');</pre>
 </div>
 <p>The Client can submit <tt class="docutils literal"><span class="pre">Form</span></tt> instances:</p>
 <div class="highlight-python"><pre>$client-&gt;submit($form);</pre>
@@ -610,8 +688,8 @@ configuration option:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config_test.yml</span>
-<span class="c1"># ...</span>
 
+<span class="c1"># ...</span>
 <span class="l-Scalar-Plain">swiftmailer</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">disable_delivery</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
 </pre></div>
@@ -620,18 +698,17 @@ configuration option:</p>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config_test.xml --&gt;</span>
 <span class="nt">&lt;container&gt;</span>
     <span class="c">&lt;!-- ... --&gt;</span>
-
     <span class="nt">&lt;swiftmailer:config</span> <span class="na">disable-delivery=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/container&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config_test.php</span>
-<span class="x">// ...</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config_test.php</span>
 
-<span class="x">$container-&gt;loadFromExtension(&#39;swiftmailer&#39;, array(</span>
-<span class="x">    &#39;disable_delivery&#39; =&gt; true</span>
-<span class="x">));</span>
+<span class="c1">// ...</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;swiftmailer&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;disable_delivery&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -691,7 +768,8 @@ the installed third-party bundles:</p>
 </div>
 <p>To include other directories in the code coverage, also edit the <tt class="docutils literal"><span class="pre">&lt;filter&gt;</span></tt>
 section:</p>
-<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;filter&gt;</span>
+<div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- ... --&gt;</span>
+<span class="nt">&lt;filter&gt;</span>
     <span class="nt">&lt;whitelist&gt;</span>
         <span class="nt">&lt;directory&gt;</span>../src<span class="nt">&lt;/directory&gt;</span>
         <span class="nt">&lt;exclude&gt;</span>
@@ -706,12 +784,15 @@ section:</p>
 </div>
 </div>
 </div>
-<div class="section" id="learn-more-from-the-cookbook">
-<h2>Learn more from the Cookbook<a class="headerlink" href="#learn-more-from-the-cookbook" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="learn-more">
+<h2>Learn more<a class="headerlink" href="#learn-more" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
+<li><a class="reference internal" href="../components/dom_crawler.html"><em>The DomCrawler Component</em></a></li>
+<li><a class="reference internal" href="../components/css_selector.html"><em>The CssSelector Component</em></a></li>
 <li><a class="reference internal" href="../cookbook/testing/http_authentication.html"><em>How to simulate HTTP Authentication in a Functional Test</em></a></li>
 <li><a class="reference internal" href="../cookbook/testing/insulating_clients.html"><em>How to test the Interaction of several Clients</em></a></li>
 <li><a class="reference internal" href="../cookbook/testing/profiling.html"><em>How to use the Profiler in a Functional Test</em></a></li>
+<li><a class="reference internal" href="../cookbook/testing/bootstrap.html"><em>How to customize the Bootstrap Process before running Tests</em></a></li>
 </ul>
 </div>
 </div>
@@ -750,14 +831,14 @@ section:</p>
 <li><a class="reference internal" href="#phpunit-configuration">PHPUnit Configuration</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#learn-more-from-the-cookbook">Learn more from the Cookbook</a></li>
+<li><a class="reference internal" href="#learn-more">Learn more</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="doctrine.html"
-                        title="previous chapter">Databases and Doctrine (&#8220;The Model&#8221;)</a></p>
+  <p class="topless"><a href="propel.html"
+                        title="previous chapter">Databases and Propel</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="validation.html"
                         title="next chapter">Validation</a></p>
@@ -769,7 +850,7 @@ section:</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -793,15 +874,15 @@ section:</p>
           <a href="validation.html" title="Validation"
              >next</a> |</li>
         <li class="right" >
-          <a href="doctrine.html" title="Databases and Doctrine (“The Model”)"
+          <a href="propel.html" title="Databases and Propel"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Book</a> &raquo;</li> 
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

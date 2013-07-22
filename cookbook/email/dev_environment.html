@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Work with Emails During Development &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to Work with Emails During Development &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +25,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to Spool Email" href="spool.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Email" href="index.html" />
+    <link rel="next" title="How to Spool Emails" href="spool.html" />
     <link rel="prev" title="How to use Gmail to send Emails" href="gmail.html" /> 
   </head>
   <body>
@@ -35,13 +38,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="spool.html" title="How to Spool Email"
+          <a href="spool.html" title="How to Spool Emails"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="gmail.html" title="How to use Gmail to send Emails"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Email</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -51,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="how-to-work-with-emails-during-development">
-<h1>How to Work with Emails During Development<a class="headerlink" href="#how-to-work-with-emails-during-development" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>How to Work with Emails During Development<a class="headerlink" href="#how-to-work-with-emails-during-development" title="Permalink to this headline">¶</a></h1>
 <p>When developing an application which sends email, you will often
 not want to actually send the email to the specified recipient during
 development. If you are using the <tt class="docutils literal"><span class="pre">SwiftmailerBundle</span></tt> with Symfony2, you
@@ -78,8 +82,8 @@ will not be sent when you run tests, but will continue to be sent in the
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config_test.xml --&gt;</span>
 
 <span class="c">&lt;!--</span>
-<span class="c">xmlns:swiftmailer=&quot;http://symfony.com/schema/dic/swiftmailer&quot;</span>
-<span class="c">http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd</span>
+<span class="c">    xmlns:swiftmailer=&quot;http://symfony.com/schema/dic/swiftmailer&quot;</span>
+<span class="c">    http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd</span>
 <span class="c">--&gt;</span>
 
 <span class="nt">&lt;swiftmailer:config</span>
@@ -87,10 +91,10 @@ will not be sent when you run tests, but will continue to be sent in the
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config_test.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;swiftmailer&#39;, array(</span>
-<span class="x">    &#39;disable_delivery&#39;  =&gt; &quot;true&quot;,</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config_test.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;swiftmailer&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;disable_delivery&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -115,8 +119,8 @@ via the <tt class="docutils literal"><span class="pre">delivery_address</span></
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config_dev.xml --&gt;</span>
 
 <span class="c">&lt;!--</span>
-<span class="c">xmlns:swiftmailer=&quot;http://symfony.com/schema/dic/swiftmailer&quot;</span>
-<span class="c">http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd</span>
+<span class="c">    xmlns:swiftmailer=&quot;http://symfony.com/schema/dic/swiftmailer&quot;</span>
+<span class="c">    http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd</span>
 <span class="c">--&gt;</span>
 
 <span class="nt">&lt;swiftmailer:config</span>
@@ -124,28 +128,33 @@ via the <tt class="docutils literal"><span class="pre">delivery_address</span></
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config_dev.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;swiftmailer&#39;, array(</span>
-<span class="x">    &#39;delivery_address&#39;  =&gt; &quot;dev@example.com&quot;,</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config_dev.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;swiftmailer&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;delivery_address&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;dev@example.com&quot;</span><span class="p">,</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
 <p>Now, suppose you&#8217;re sending an email to <tt class="docutils literal"><span class="pre">recipient&#64;example.com</span></tt>.</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">public function indexAction($name)</span>
-<span class="x">{</span>
-<span class="x">    $message = \Swift_Message::newInstance()</span>
-<span class="x">        -&gt;setSubject(&#39;Hello Email&#39;)</span>
-<span class="x">        -&gt;setFrom(&#39;send@example.com&#39;)</span>
-<span class="x">        -&gt;setTo(&#39;recipient@example.com&#39;)</span>
-<span class="x">        -&gt;setBody($this-&gt;renderView(&#39;HelloBundle:Hello:email.txt.twig&#39;, array(&#39;name&#39; =&gt; $name)))</span>
-<span class="x">    ;</span>
-<span class="x">    $this-&gt;get(&#39;mailer&#39;)-&gt;send($message);</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="k">function</span> <span class="nf">indexAction</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$message</span> <span class="o">=</span> <span class="nx">\Swift_Message</span><span class="o">::</span><span class="na">newInstance</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">setSubject</span><span class="p">(</span><span class="s1">&#39;Hello Email&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">&#39;send@example.com&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">&#39;recipient@example.com&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">renderView</span><span class="p">(</span>
+                <span class="s1">&#39;HelloBundle:Hello:email.txt.twig&#39;</span><span class="p">,</span>
+                <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">;</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;mailer&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="nv">$message</span><span class="p">);</span>
 
-<span class="x">    return $this-&gt;render(...);</span>
-<span class="x">}</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="o">...</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>In the <tt class="docutils literal"><span class="pre">dev</span></tt> environment, the email will instead be sent to <tt class="docutils literal"><span class="pre">dev&#64;example.com</span></tt>.
@@ -189,8 +198,11 @@ for any past requests.</p>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config_dev.xml --&gt;</span>
 
-<span class="c">&lt;!-- xmlns:webprofiler=&quot;http://symfony.com/schema/dic/webprofiler&quot; --&gt;</span>
-<span class="c">&lt;!-- xsi:schemaLocation=&quot;http://symfony.com/schema/dic/webprofiler http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd&quot;&gt; --&gt;</span>
+<span class="c">&lt;!--</span>
+<span class="c">    xmlns:webprofiler=&quot;http://symfony.com/schema/dic/webprofiler&quot;</span>
+<span class="c">    xsi:schemaLocation=&quot;http://symfony.com/schema/dic/webprofiler</span>
+<span class="c">    http://symfony.com/schema/dic/webprofiler/webprofiler-1.0.xsd&quot;&gt;</span>
+<span class="c">--&gt;</span>
 
 <span class="nt">&lt;webprofiler:config</span>
     <span class="na">intercept-redirects=</span><span class="s">&quot;true&quot;</span>
@@ -198,10 +210,10 @@ for any past requests.</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config_dev.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;web_profiler&#39;, array(</span>
-<span class="x">    &#39;intercept_redirects&#39; =&gt; &#39;true&#39;,</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config_dev.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;web_profiler&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;intercept_redirects&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;true&#39;</span><span class="p">,</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -231,7 +243,7 @@ for any past requests.</p>
                         title="previous chapter">How to use Gmail to send Emails</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="spool.html"
-                        title="next chapter">How to Spool Email</a></p>
+                        title="next chapter">How to Spool Emails</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/email/dev_environment.txt"
@@ -240,7 +252,7 @@ for any past requests.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -261,18 +273,19 @@ for any past requests.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="spool.html" title="How to Spool Email"
+          <a href="spool.html" title="How to Spool Emails"
              >next</a> |</li>
         <li class="right" >
           <a href="gmail.html" title="How to use Gmail to send Emails"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Email</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

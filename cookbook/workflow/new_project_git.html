@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Create and store a Symfony2 Project in git &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to Create and store a Symfony2 Project in git &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +25,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Workflow" href="index.html" />
     <link rel="next" title="How to Create and store a Symfony2 Project in Subversion" href="new_project_svn.html" />
-    <link rel="prev" title="Cookbook" href="../index.html" /> 
+    <link rel="prev" title="Workflow" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,10 +41,11 @@
           <a href="new_project_svn.html" title="How to Create and store a Symfony2 Project in Subversion"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../index.html" title="Cookbook"
+          <a href="index.html" title="Workflow"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Workflow</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -51,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="how-to-create-and-store-a-symfony2-project-in-git">
-<h1>How to Create and store a Symfony2 Project in git<a class="headerlink" href="#how-to-create-and-store-a-symfony2-project-in-git" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>How to Create and store a Symfony2 Project in git<a class="headerlink" href="#how-to-create-and-store-a-symfony2-project-in-git" title="Permalink to this headline">¶</a></h1>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">Though this entry is specifically about git, the same generic principles
@@ -72,10 +76,9 @@ git repository:</p>
 your new project structure, config files, etc. Rename it to whatever you like.</p>
 </li>
 <li><p class="first">Create a new file called <tt class="docutils literal"><span class="pre">.gitignore</span></tt> at the root of your new project
-(e.g. next to the <tt class="docutils literal"><span class="pre">deps</span></tt> file) and paste the following into it. Files
+(e.g. next to the <tt class="docutils literal"><span class="pre">composer.json</span></tt> file) and paste the following into it. Files
 matching these patterns will be ignored by git:</p>
-<blockquote>
-<div><div class="highlight-text"><div class="highlight"><pre>/web/bundles/
+<div class="highlight-text"><div class="highlight"><pre>/web/bundles/
 /app/bootstrap*
 /app/cache/*
 /app/logs/*
@@ -83,8 +86,15 @@ matching these patterns will be ignored by git:</p>
 /app/config/parameters.yml
 </pre></div>
 </div>
-</div></blockquote>
 </li>
+</ol>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">You may also want to create a .gitignore file that can be used system-wide,
+in which case, you can find more information here: <a class="reference external" href="https://help.github.com/articles/ignoring-files">Github .gitignore</a>
+This way you can exclude files/folders often used by your IDE for all of your projects.</p>
+</div>
+<ol class="arabic" start="4">
 <li><p class="first">Copy <tt class="docutils literal"><span class="pre">app/config/parameters.yml</span></tt> to <tt class="docutils literal"><span class="pre">app/config/parameters.yml.dist</span></tt>.
 The <tt class="docutils literal"><span class="pre">parameters.yml</span></tt> file is ignored by git (see above) so that machine-specific
 settings like database passwords aren&#8217;t committed. By creating the <tt class="docutils literal"><span class="pre">parameters.yml.dist</span></tt>
@@ -92,32 +102,22 @@ file, new developers can quickly clone the project, copy this file to
 <tt class="docutils literal"><span class="pre">parameters.yml</span></tt>, customize it, and start developing.</p>
 </li>
 <li><p class="first">Initialize your git repository:</p>
-<blockquote>
-<div><div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git init
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git init
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 <li><p class="first">Add all of the initial files to git:</p>
-<blockquote>
-<div><div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git add .
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git add .
 </pre></div>
 </div>
-</div></blockquote>
 </li>
 <li><p class="first">Create an initial commit with your started project:</p>
-<blockquote>
-<div><div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git commit -m <span class="s2">&quot;Initial commit&quot;</span>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git commit -m <span class="s2">&quot;Initial commit&quot;</span>
 </pre></div>
 </div>
-</div></blockquote>
 </li>
-<li><p class="first">Finally, download all of the third-party vendor libraries:</p>
-<blockquote>
-<div><div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php bin/vendors install
-</pre></div>
-</div>
-</div></blockquote>
+<li><p class="first">Finally, download all of the third-party vendor libraries by
+executing composer. For details, see <a class="reference internal" href="../../book/installation.html#installation-updating-vendors"><em>Updating Vendors</em></a>.</p>
 </li>
 </ol>
 <p>At this point, you have a fully-functional Symfony2 project that&#8217;s correctly
@@ -128,15 +128,79 @@ to learn more about how to configure and develop inside your application.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">The Symfony2 Standard Edition comes with some example functionality. To
-remove the sample code, follow the instructions on the <a class="reference external" href="https://github.com/symfony/symfony-standard/blob/master/README.md">Standard Edition Readme</a>.</p>
+remove the sample code, follow the instructions in the
+&#8220;<a class="reference internal" href="../bundles/remove.html"><em>How to remove the AcmeDemoBundle</em></a>&#8221; article.</p>
+</div>
+</div>
+<div class="section" id="managing-vendor-libraries-with-composer-json">
+<span id="cookbook-managing-vendor-libraries"></span><h2>Managing Vendor Libraries with composer.json<a class="headerlink" href="#managing-vendor-libraries-with-composer-json" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="how-does-it-work">
+<h3>How does it work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this headline">¶</a></h3>
+<p>Every Symfony project uses a group of third-party &#8220;vendor&#8221; libraries. One
+way or another the goal is to download these files into your <tt class="docutils literal"><span class="pre">vendor/</span></tt>
+directory and, ideally, to give you some sane way to manage the exact version
+you need for each.</p>
+<p>By default, these libraries are downloaded by running a <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt>
+&#8220;downloader&#8221; binary. This <tt class="docutils literal"><span class="pre">composer.phar</span></tt> file is from a library called
+<a class="reference external" href="http://getcomposer.org/">Composer</a> and you can read more about installing it in the <a class="reference internal" href="../../book/installation.html#installation-updating-vendors"><em>Installation</em></a>
+chapter.</p>
+<p>The <tt class="docutils literal"><span class="pre">composer.phar</span></tt> file reads from the <tt class="docutils literal"><span class="pre">composer.json</span></tt> file at the root
+of your project. This is an JSON-formatted file, which holds a list of each
+of the external packages you need, the version to be downloaded and more.
+The <tt class="docutils literal"><span class="pre">composer.phar</span></tt> file also reads from a <tt class="docutils literal"><span class="pre">composer.lock</span></tt> file, which
+allows you to pin each library to an <strong>exact</strong> version. In fact, if a <tt class="docutils literal"><span class="pre">composer.lock</span></tt>
+file exists, the versions inside will override those in <tt class="docutils literal"><span class="pre">composer.json</span></tt>.
+To upgrade your libraries to new versions, run <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">update</span></tt>.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>If you want to add a new package to your application, modify the <tt class="docutils literal"><span class="pre">composer.json</span></tt>
+file:</p>
+<div class="highlight-json"><pre>{
+    "require": {
+        ...
+        "doctrine/doctrine-fixtures-bundle": "@dev"
+    }
+}</pre>
+</div>
+<p>and then execute the <tt class="docutils literal"><span class="pre">update</span></tt> command for this specific package, i.e.:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php composer.phar update doctrine/doctrine-fixtures-bundle
+</pre></div>
+</div>
+<p>You can also combine both steps into a single command:</p>
+<div class="last highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php composer.phar require doctrine/doctrine-fixtures-bundle:@dev
+</pre></div>
+</div>
+</div>
+<p>To learn more about Composer, see <a class="reference external" href="http://getcomposer.org/">GetComposer.org</a>:</p>
+<p>It&#8217;s important to realize that these vendor libraries are <em>not</em> actually part
+of <em>your</em> repository. Instead, they&#8217;re simply un-tracked files that are downloaded
+into the <tt class="docutils literal"><span class="pre">vendor/</span></tt>. But since all the information needed to download these
+files is saved in <tt class="docutils literal"><span class="pre">composer.json</span></tt> and <tt class="docutils literal"><span class="pre">composer.lock</span></tt> (which <em>are</em> stored
+in the repository), any other developer can use the project, run <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt>,
+and download the exact same set of vendor libraries. This means that you&#8217;re
+controlling exactly what each vendor library looks like, without needing to
+actually commit them to <em>your</em> repository.</p>
+<p>So, whenever a developer uses your project, he/she should run the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt>
+script to ensure that all of the needed vendor libraries are downloaded.</p>
+<div class="sidebar">
+<p class="first sidebar-title">Upgrading Symfony</p>
+<p>Since Symfony is just a group of third-party libraries and third-party
+libraries are entirely controlled through <tt class="docutils literal"><span class="pre">composer.json</span></tt> and <tt class="docutils literal"><span class="pre">composer.lock</span></tt>,
+upgrading Symfony means simply upgrading each of these files to match
+their state in the latest Symfony Standard Edition.</p>
+<p class="last">Of course, if you&#8217;ve added new entries to <tt class="docutils literal"><span class="pre">composer.json</span></tt>, be sure
+to replace only the original parts (i.e. be sure not to also delete any of
+your custom entries).</p>
+</div>
 </div>
 <div class="section" id="vendors-and-submodules">
 <h3>Vendors and Submodules<a class="headerlink" href="#vendors-and-submodules" title="Permalink to this headline">¶</a></h3>
-<p>Instead of using the <tt class="docutils literal"><span class="pre">deps</span></tt>, <tt class="docutils literal"><span class="pre">bin/vendors</span></tt> system for managing your vendor
-libraries, you may instead choose to use native <a class="reference external" href="http://book.git-scm.com/5_submodules.html">git submodules</a>. There
-is nothing wrong with this approach, though the <tt class="docutils literal"><span class="pre">deps</span></tt> system is the official
-way to solve this problem and git submodules can be difficult to work with
-at times.</p>
+<p>Instead of using the <tt class="docutils literal"><span class="pre">composer.json</span></tt> system for managing your vendor
+libraries, you may instead choose to use native <a class="reference external" href="http://git-scm.com/book/en/Git-Tools-Submodules">git submodules</a>. There
+is nothing wrong with this approach, though the <tt class="docutils literal"><span class="pre">composer.json</span></tt> system
+is the official way to solve this problem and probably much easier to
+deal with. Unlike git submodules, <tt class="docutils literal"><span class="pre">Composer</span></tt> is smart enough to calculate
+which libraries depend on which other libraries.</p>
 </div>
 </div>
 <div class="section" id="storing-your-project-on-a-remote-server">
@@ -149,7 +213,7 @@ the project.</p>
 Public repositories are free, however you will need to pay a monthly fee
 to host private repositories.</p>
 <p>Alternatively, you can store your git repository on any server by creating
-a <a class="reference external" href="http://progit.org/book/ch4-4.html">barebones repository</a> and then pushing to it. One library that helps
+a <a class="reference external" href="http://git-scm.com/book/en/Git-Basics-Getting-a-Git-Repository">barebones repository</a> and then pushing to it. One library that helps
 manage this is <a class="reference external" href="https://github.com/sitaramc/gitolite">Gitolite</a>.</p>
 </div>
 </div>
@@ -163,7 +227,9 @@ manage this is <a class="reference external" href="https://github.com/sitaramc/g
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">How to Create and store a Symfony2 Project in git</a><ul>
-<li><a class="reference internal" href="#initial-project-setup">Initial Project Setup</a><ul>
+<li><a class="reference internal" href="#initial-project-setup">Initial Project Setup</a></li>
+<li><a class="reference internal" href="#managing-vendor-libraries-with-composer-json">Managing Vendor Libraries with composer.json</a><ul>
+<li><a class="reference internal" href="#how-does-it-work">How does it work?</a></li>
 <li><a class="reference internal" href="#vendors-and-submodules">Vendors and Submodules</a></li>
 </ul>
 </li>
@@ -173,8 +239,8 @@ manage this is <a class="reference external" href="https://github.com/sitaramc/g
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../index.html"
-                        title="previous chapter">Cookbook</a></p>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Workflow</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="new_project_svn.html"
                         title="next chapter">How to Create and store a Symfony2 Project in Subversion</a></p>
@@ -186,7 +252,7 @@ manage this is <a class="reference external" href="https://github.com/sitaramc/g
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -210,15 +276,16 @@ manage this is <a class="reference external" href="https://github.com/sitaramc/g
           <a href="new_project_svn.html" title="How to Create and store a Symfony2 Project in Subversion"
              >next</a> |</li>
         <li class="right" >
-          <a href="../index.html" title="Cookbook"
+          <a href="index.html" title="Workflow"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Workflow</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

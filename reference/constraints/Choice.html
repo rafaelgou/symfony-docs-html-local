@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Choice &mdash; Symfony2Docs v1 documentation</title>
+    <title>Choice &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
     <link rel="next" title="Collection" href="Collection.html" />
     <link rel="prev" title="Time" href="Time.html" /> 
@@ -40,7 +43,7 @@
         <li class="right" >
           <a href="Time.html" title="Time"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -62,10 +65,10 @@ an array of items is one of those valid choices.</p>
 <col width="82%" />
 </colgroup>
 <tbody valign="top">
-<tr><td>Applies to</td>
+<tr class="row-odd"><td>Applies to</td>
 <td><a class="reference internal" href="../../book/validation.html#validation-property-target"><em>property or method</em></a></td>
 </tr>
-<tr><td>Options</td>
+<tr class="row-even"><td>Options</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="#choices">choices</a></li>
 <li><a class="reference internal" href="#callback">callback</a></li>
@@ -80,11 +83,11 @@ an array of items is one of those valid choices.</p>
 </ul>
 </td>
 </tr>
-<tr><td>Class</td>
-<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\Choice</span></tt></td>
+<tr class="row-odd"><td>Class</td>
+<td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Validator/Constraints/Choice.html" title="Symfony\Component\Validator\Constraints\Choice"><span class="pre">Choice</span></a></tt></td>
 </tr>
-<tr><td>Validator</td>
-<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\ChoiceValidator</span></tt></td>
+<tr class="row-even"><td>Validator</td>
+<td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Validator/Constraints/ChoiceValidator.html" title="Symfony\Component\Validator\Constraints\ChoiceValidator"><span class="pre">ChoiceValidator</span></a></tt></td>
 </tr>
 </tbody>
 </table>
@@ -107,8 +110,23 @@ value of the given property exists in that array.</p>
 </pre></div>
 </div>
 </li>
+<li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Entity/Author.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Author</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @Assert\Choice(choices = {&quot;male&quot;, &quot;female&quot;}, message = &quot;Choose a valid gender.&quot;)</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$gender</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/config/validation.xml --&gt;</span>
-<span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\EntityAuthor&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;gender&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Choice&quot;</span><span class="nt">&gt;</span>
             <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;choices&quot;</span><span class="nt">&gt;</span>
@@ -122,34 +140,24 @@ value of the given property exists in that array.</p>
 </pre></div>
 </div>
 </li>
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/BlogBundle/Entity/Author.php
-use Symfony\Component\Validator\Constraints as Assert;
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/EntityAuthor.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
 
-class Author
-{
-    /**
-     * @Assert\Choice(choices = {"male", "female"}, message = "Choose a valid gender.")
-     */
-    protected $gender;
-}</pre>
-</div>
-</li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/BlogBundle/EntityAuthor.php</span>
-<span class="x">use Symfony\Component\Validator\Mapping\ClassMetadata;</span>
-<span class="x">use Symfony\Component\Validator\Constraints\Choice;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Mapping\ClassMetadata</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
 
-<span class="x">class Author</span>
-<span class="x">{</span>
-<span class="x">    protected $gender;</span>
+<span class="k">class</span> <span class="nc">Author</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$gender</span><span class="p">;</span>
 
-<span class="x">    public static function loadValidatorMetadata(ClassMetadata $metadata)</span>
-<span class="x">    {</span>
-<span class="x">        $metadata-&gt;addPropertyConstraint(&#39;gender&#39;, new Choice(array(</span>
-<span class="x">            &#39;choices&#39; =&gt; array(&#39;male&#39;, &#39;female&#39;),</span>
-<span class="x">            &#39;message&#39; =&gt; &#39;Choose a valid gender&#39;,</span>
-<span class="x">        )));</span>
-<span class="x">    }</span>
-<span class="x">}</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">loadValidatorMetadata</span><span class="p">(</span><span class="nx">ClassMetadata</span> <span class="nv">$metadata</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$metadata</span><span class="o">-&gt;</span><span class="na">addPropertyConstraint</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Assert\Choice</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;choices&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Choose a valid gender.&#39;</span><span class="p">,</span>
+        <span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </li>
@@ -162,14 +170,16 @@ class Author
 if you want to keep your choices in some central location so that, for example,
 you can easily access those choices for validation or for building a select
 form element.</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/BlogBundle/Entity/Author.php</span>
-<span class="x">class Author</span>
-<span class="x">{</span>
-<span class="x">    public static function getGenders()</span>
-<span class="x">    {</span>
-<span class="x">        return array(&#39;male&#39;, &#39;female&#39;);</span>
-<span class="x">    }</span>
-<span class="x">}</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Entity/Author.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Author</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">getGenders</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;male&#39;</span><span class="p">,</span> <span class="s1">&#39;female&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>You can pass the name of this method to the <cite>callback_</cite> option of the <tt class="docutils literal"><span class="pre">Choice</span></tt>
@@ -184,16 +194,19 @@ constraint.</p>
 </pre></div>
 </div>
 </li>
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/BlogBundle/Entity/Author.php
-use Symfony\Component\Validator\Constraints as Assert;
+<li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Entity/Author.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
 
-class Author
-{
-    /**
-     * @Assert\Choice(callback = "getGenders")
-     */
-    protected $gender;
-}</pre>
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Author</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @Assert\Choice(callback = &quot;getGenders&quot;)</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$gender</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/config/validation.xml --&gt;</span>
@@ -204,6 +217,26 @@ class Author
         <span class="nt">&lt;/constraint&gt;</span>
     <span class="nt">&lt;/property&gt;</span>
 <span class="nt">&lt;/class&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/EntityAuthor.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Mapping\ClassMetadata</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Author</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$gender</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">loadValidatorMetadata</span><span class="p">(</span><span class="nx">ClassMetadata</span> <span class="nv">$metadata</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$metadata</span><span class="o">-&gt;</span><span class="na">addPropertyConstraint</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Assert\Choice</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;callback&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;getGenders&#39;</span><span class="p">,</span>
+        <span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </li>
@@ -221,6 +254,21 @@ you can pass the class name and the method as an array.</p>
 </pre></div>
 </div>
 </li>
+<li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Entity/Author.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Author</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @Assert\Choice(callback = {&quot;Util&quot;, &quot;getGenders&quot;})</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$gender</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/config/validation.xml --&gt;</span>
 <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;gender&quot;</span><span class="nt">&gt;</span>
@@ -235,16 +283,24 @@ you can pass the class name and the method as an array.</p>
 </pre></div>
 </div>
 </li>
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/BlogBundle/Entity/Author.php
-use Symfony\Component\Validator\Constraints as Assert;
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/EntityAuthor.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
 
-class Author
-{
-    /**
-     * @Assert\Choice(callback = {"Util", "getGenders"})
-     */
-    protected $gender;
-}</pre>
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Mapping\ClassMetadata</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Author</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$gender</span><span class="p">;</span>
+
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">loadValidatorMetadata</span><span class="p">(</span><span class="nx">ClassMetadata</span> <span class="nv">$metadata</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$metadata</span><span class="o">-&gt;</span><span class="na">addPropertyConstraint</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Assert\Choice</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;callback&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Util&#39;</span><span class="p">,</span> <span class="s1">&#39;getGenders&#39;</span><span class="p">),</span>
+        <span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </li>
 </ul>
@@ -319,7 +375,7 @@ too many options per the <a class="reference internal" href="#max">max</a> optio
 <h3>strict<a class="headerlink" href="#strict" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
 <p>If true, the validator will also check the type of the input value. Specifically,
-this value is passed to as the third argument to the PHP <a class="reference external" href="http://php.net/manual/en/function.in-array.php">in_array</a> method
+this value is passed to as the third argument to the PHP <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.in-array.php" title="in_array"><span class="pre">in_array</span></a></tt> method
 when checking to see if a value is in the valid choices array.</p>
 </div>
 </div>
@@ -367,7 +423,7 @@ when checking to see if a value is in the valid choices array.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -393,14 +449,14 @@ when checking to see if a value is in the valid choices array.</p>
         <li class="right" >
           <a href="Time.html" title="Time"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

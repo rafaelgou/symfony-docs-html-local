@@ -31,7 +31,7 @@ command:
     $ phpunit -c app/
 
 The ``-c`` option tells PHPUnit to look in the ``app/`` directory for a configuration
-file. If you're curious about how the PHPUnit options, check out the ``app/phpunit.xml.dist``
+file. If you're curious about the PHPUnit options, check out the ``app/phpunit.xml.dist``
 file.
 
 .. tip::
@@ -39,7 +39,7 @@ file.
     Code coverage can be generated with the ``--coverage-html`` option.
 
 .. index::
-   single: Tests; Unit Tests
+   single: Tests; Unit tests
 
 Unit Tests
 ----------
@@ -53,7 +53,7 @@ called ``Calculator`` in the ``Utility/`` directory of your bundle::
 
     // src/Acme/DemoBundle/Utility/Calculator.php
     namespace Acme\DemoBundle\Utility;
-    
+
     class Calculator
     {
         public function add($a, $b)
@@ -77,7 +77,7 @@ of your bundle::
             $calc = new Calculator();
             $result = $calc->add(30, 12);
 
-            // assert that our calculator added the numbers correctly!
+            // assert that your calculator added the numbers correctly!
             $this->assertEquals(42, $result);
         }
     }
@@ -106,7 +106,7 @@ Running tests for a given file or directory is also very easy:
     $ phpunit -c app src/Acme/DemoBundle/
 
 .. index::
-   single: Tests; Functional Tests
+   single: Tests; Functional tests
 
 Functional Tests
 ----------------
@@ -145,7 +145,10 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
 
             $crawler = $client->request('GET', '/demo/hello/Fabien');
 
-            $this->assertTrue($crawler->filter('html:contains("Hello Fabien")')->count() > 0);
+            $this->assertGreaterThan(
+                0,
+                $crawler->filter('html:contains("Hello Fabien")')->count()
+            );
         }
     }
 
@@ -155,9 +158,11 @@ for its ``DemoController`` (`DemoControllerTest`_) that reads as follows::
     kernel of your application. In most cases, this happens automatically.
     However, if your kernel is in a non-standard directory, you'll need
     to modify your ``phpunit.xml.dist`` file to set the ``KERNEL_DIR`` environment
-    variable to the directory of your kernel::
+    variable to the directory of your kernel:
 
-        <phpunit
+    .. code-block:: xml
+
+        <phpunit>
             <!-- ... -->
             <php>
                 <server name="KERNEL_DIR" value="/path/to/your/app/" />
@@ -211,13 +216,16 @@ that it actually does what you expect it to. Use the Crawler to make assertions
 on the DOM::
 
     // Assert that the response matches a given CSS selector.
-    $this->assertTrue($crawler->filter('h1')->count() > 0);
+    $this->assertGreaterThan(0, $crawler->filter('h1')->count());
 
 Or, test against the Response content directly if you just want to assert that
 the content contains some text, or if the Response is not an XML/HTML
 document::
 
-    $this->assertRegExp('/Hello Fabien/', $client->getResponse()->getContent());
+    $this->assertRegExp(
+        '/Hello Fabien/',
+        $client->getResponse()->getContent()
+    );
 
 .. _book-testing-request-method-sidebar:
 
@@ -227,17 +235,18 @@ document::
 
         request(
             $method,
-            $uri, 
-            array $parameters = array(), 
-            array $files = array(), 
-            array $server = array(), 
-            $content = null, 
+            $uri,
+            array $parameters = array(),
+            array $files = array(),
+            array $server = array(),
+            $content = null,
             $changeHistory = true
         )
 
     The ``server`` array is the raw values that you'd expect to normally
-    find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`
-    and `Referer` HTTP headers, you'd pass the following::
+    find in the PHP `$_SERVER`_ superglobal. For example, to set the `Content-Type`,
+    `Referer` and `X-Requested-With' HTTP headers, you'd pass the following (mind
+    the `HTTP_` prefix for non standard headers)::
 
         $client->request(
             'GET',
@@ -245,27 +254,37 @@ document::
             array(),
             array(),
             array(
-                'CONTENT_TYPE' => 'application/json',
-                'HTTP_REFERER' => '/foo/bar',
+                'CONTENT_TYPE'          => 'application/json',
+                'HTTP_REFERER'          => '/foo/bar',
+                'HTTP_X-Requested-With' => 'XMLHttpRequest',
             )
         );
 
 .. index::
    single: Tests; Assertions
 
-.. sidebar: Useful Assertions
+.. sidebar:: Useful Assertions
 
     To get you started faster, here is a list of the most common and
     useful test assertions::
 
-        // Assert that there is exactly one h2 tag with the class "subtitle"
-        $this->assertTrue($crawler->filter('h2.subtitle')->count() > 0);
+        // Assert that there is at least one h2 tag
+        // with the class "subtitle"
+        $this->assertGreaterThan(
+            0,
+            $crawler->filter('h2.subtitle')->count()
+        );
 
-        // Assert that there are 4 h2 tags on the page
-        $this->assertEquals(4, $crawler->filter('h2')->count());
+        // Assert that there are exactly 4 h2 tags on the page
+        $this->assertCount(4, $crawler->filter('h2'));
 
-        // Assert the the "Content-Type" header is "application/json"
-        $this->assertTrue($client->getResponse()->headers->contains('Content-Type', 'application/json'));
+        // Assert that the "Content-Type" header is "application/json"
+        $this->assertTrue(
+            $client->getResponse()->headers->contains(
+                'Content-Type',
+                'application/json'
+            )
+        );
 
         // Assert that the response content matches a regexp.
         $this->assertRegExp('/foo/', $client->getResponse()->getContent());
@@ -275,10 +294,15 @@ document::
         // Assert that the response status code is 404
         $this->assertTrue($client->getResponse()->isNotFound());
         // Assert a specific 200 status code
-        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertEquals(
+            200,
+            $client->getResponse()->getStatusCode()
+        );
 
         // Assert that the response is a redirect to /demo/contact
-        $this->assertTrue($client->getResponse()->isRedirect('/demo/contact'));
+        $this->assertTrue(
+            $client->getResponse()->isRedirect('/demo/contact')
+        );
         // or simply check that the response is a redirect to any URL
         $this->assertTrue($client->getResponse()->isRedirect());
 
@@ -288,7 +312,7 @@ document::
 Working with the Test Client
 -----------------------------
 
-The test Client simulates an HTTP client like a browser and makes requests
+The Test Client simulates an HTTP client like a browser and makes requests
 into your Symfony2 application::
 
     $crawler = $client->request('GET', '/hello/Fabien');
@@ -321,6 +345,16 @@ or perform more complex requests::
     // Directly submit a form (but using the Crawler is easier!)
     $client->request('POST', '/submit', array('name' => 'Fabien'));
 
+    // Submit a raw JSON string in the request body
+    $client->request(
+        'POST',
+        '/submit',
+        array(),
+        array(),
+        array('CONTENT_TYPE' => 'application/json'),
+        '{"name":"Fabien"}'
+    );
+
     // Form submission with a file upload
     use Symfony\Component\HttpFoundation\File\UploadedFile;
 
@@ -329,14 +363,6 @@ or perform more complex requests::
         'photo.jpg',
         'image/jpeg',
         123
-    );
-    // or
-    $photo = array(
-        'tmp_name' => '/path/to/photo.jpg',
-        'name' => 'photo.jpg',
-        'type' => 'image/jpeg',
-        'size' => 123,
-        'error' => UPLOAD_ERR_OK
     );
     $client->request(
         'POST',
@@ -375,6 +401,10 @@ The Client supports many operations that can be done in a real browser::
 Accessing Internal Objects
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+.. versionadded:: 2.3
+    The ``getInternalRequest()`` and ``getInternalResponse()`` method were
+    added in Symfony 2.3.
+
 If you use the client to test your application, you might want to access the
 client's internal objects::
 
@@ -383,8 +413,18 @@ client's internal objects::
 
 You can also get the objects related to the latest request::
 
+    // the HttpKernel request instance
     $request  = $client->getRequest();
+
+    // the BrowserKit request instance
+    $request  = $client->getInternalRequest();
+
+    // the HttpKernel response instance
     $response = $client->getResponse();
+
+    // the BrowserKit response instance
+    $response = $client->getInternalResponse();
+
     $crawler  = $client->getCrawler();
 
 If your requests are not insulated, you can also access the ``Container`` and
@@ -415,13 +455,19 @@ HTTP layer. For a list of services available in your application, use the
 Accessing the Profiler Data
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-On each request, the Symfony profiler collects and stores a lot of data about
-the internal handling of that request. For example, the profiler could be
-used to verify that a given page executes less than a certain number of database
+On each request, you can enable the Symfony profiler to collect data about the
+internal handling of that request. For example, the profiler could be used to
+verify that a given page executes less than a certain number of database
 queries when loading.
 
 To get the Profiler for the last request, do the following::
 
+    // enable the profiler for the very next request
+    $client->enableProfiler();
+
+    $crawler = $client->request('GET', '/profiler');
+
+    // get the profile
     $profile = $client->getProfile();
 
 For specific details on using the profiler inside a test, see the
@@ -430,16 +476,16 @@ For specific details on using the profiler inside a test, see the
 Redirecting
 ~~~~~~~~~~~
 
-When a request returns a redirect response, the client automatically follows
-it. If you want to examine the Response before redirecting, you can force
-the client to not follow redirects with the  ``followRedirects()`` method::
-
-    $client->followRedirects(false);
-
-When the client does not follow redirects, you can force the redirection with
-the ``followRedirect()`` method::
+When a request returns a redirect response, the client does not follow
+it automatically. You can examine the response and force a redirection
+afterwards  with the ``followRedirect()`` method::
 
     $crawler = $client->followRedirect();
+
+If you want the client to automatically follow all redirects, you can
+force him with the ``followRedirects()`` method::
+
+    $client->followRedirects();
 
 .. index::
    single: Tests; Crawler
@@ -486,9 +532,9 @@ Many other methods are also available:
 +------------------------+----------------------------------------------------+
 | ``previousAll()``      | All preceding siblings                             |
 +------------------------+----------------------------------------------------+
-| ``parents()``          | Parent nodes                                       |
+| ``parents()``          | Returns the parent nodes                           |
 +------------------------+----------------------------------------------------+
-| ``children()``         | Children                                           |
+| ``children()``         | Returns children nodes                             |
 +------------------------+----------------------------------------------------+
 | ``reduce($lambda)``    | Nodes for which the callable does not return false |
 +------------------------+----------------------------------------------------+
@@ -522,8 +568,10 @@ The Crawler can extract information from the nodes::
     // Returns the node value for the first node
     $crawler->text();
 
-    // Extracts an array of attributes for all nodes (_text returns the node value)
-    // returns an array for each element in crawler, each with the value and href
+    // Extracts an array of attributes for all nodes
+    // (_text returns the node value)
+    // returns an array for each element in crawler,
+    // each with the value and href
     $info = $crawler->extract(array('_text', 'href'));
 
     // Executes a lambda for each node and return an array of results
@@ -562,7 +610,7 @@ Just like links, you select forms with the ``selectButton()`` method::
 
 .. note::
 
-    Notice that we select form buttons and not forms as a form can have several
+    Notice that you select form buttons and not forms as a form can have several
     buttons; if you use the traversing API, keep in mind that you must look for a
     button.
 
@@ -591,7 +639,7 @@ that overrides the default ones::
 And if you want to simulate a specific HTTP method for the form, pass it as a
 second argument::
 
-    $form = $crawler->form(array(), 'DELETE');
+    $form = $buttonCrawlerNode->form(array(), 'DELETE');
 
 The Client can submit ``Form`` instances::
 
@@ -653,8 +701,8 @@ configuration option:
     .. code-block:: yaml
 
         # app/config/config_test.yml
-        # ...
 
+        # ...
         swiftmailer:
             disable_delivery: true
 
@@ -663,17 +711,16 @@ configuration option:
         <!-- app/config/config_test.xml -->
         <container>
             <!-- ... -->
-
             <swiftmailer:config disable-delivery="true" />
         </container>
 
     .. code-block:: php
 
         // app/config/config_test.php
-        // ...
 
+        // ...
         $container->loadFromExtension('swiftmailer', array(
-            'disable_delivery' => true
+            'disable_delivery' => true,
         ));
 
 You can also use a different environment entirely, or override the default
@@ -743,6 +790,7 @@ section:
 
 .. code-block:: xml
 
+    <!-- ... -->
     <filter>
         <whitelist>
             <directory>../src</directory>
@@ -755,13 +803,15 @@ section:
         </whitelist>
     </filter>
 
-Learn more from the Cookbook
-----------------------------
+Learn more
+----------
 
+* :doc:`/components/dom_crawler`
+* :doc:`/components/css_selector`
 * :doc:`/cookbook/testing/http_authentication`
 * :doc:`/cookbook/testing/insulating_clients`
 * :doc:`/cookbook/testing/profiling`
-
+* :doc:`/cookbook/testing/bootstrap`
 
 .. _`DemoControllerTest`: https://github.com/symfony/symfony-standard/blob/master/src/Acme/DemoBundle/Tests/Controller/DemoControllerTest.php
 .. _`$_SERVER`: http://php.net/manual/en/reserved.variables.server.php

@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Big Picture &mdash; Symfony2Docs v1 documentation</title>
+    <title>The Big Picture &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +25,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
-    <link rel="up" title="Quick Tour" href="index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="up" title="The Quick Tour" href="index.html" />
     <link rel="next" title="The View" href="the_view.html" />
-    <link rel="prev" title="Quick Tour" href="index.html" /> 
+    <link rel="prev" title="The Quick Tour" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,10 +41,10 @@
           <a href="the_view.html" title="The View"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Quick Tour"
+          <a href="index.html" title="The Quick Tour"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Quick Tour</a> &raquo;</li> 
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Quick Tour</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -65,7 +68,22 @@ in 5 minutes</a>&#8221; document.</p>
 <div class="section" id="downloading-symfony2">
 <h2>Downloading Symfony2<a class="headerlink" href="#downloading-symfony2" title="Permalink to this headline">¶</a></h2>
 <p>First, check that you have installed and configured a Web server (such as
-Apache) with PHP 5.3.2 or higher.</p>
+Apache) with PHP 5.3.3 or higher.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>If you have PHP 5.4, you could use the built-in web server. The built-in
+server should be used only for development purpose, but it can help you
+to start your project quickly and easily.</p>
+<p>Just use this command to launch the server:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php -S localhost:80 -t /path/to/www
+</pre></div>
+</div>
+<p class="last">where &#8220;/path/to/www&#8221; is the path to some directory on your machine that
+you&#8217;ll extract Symfony into so that the eventual URL to your application
+is &#8220;<a class="reference external" href="http://localhost/Symfony/app_dev.php">http://localhost/Symfony/app_dev.php</a>&#8221;. You can also extract Symfony
+first and then start the web server in the Symfony &#8220;web&#8221; directory. If
+you do this, the URL to your application will be &#8220;<a class="reference external" href="http://localhost/app_dev.php">http://localhost/app_dev.php</a>&#8221;.</p>
+</div>
 <p>Ready? Start by downloading the &#8220;<a class="reference external" href="http://symfony.com/download">Symfony2 Standard Edition</a>&#8221;, a Symfony
 <a class="reference internal" href="../glossary.html#term-distribution"><em class="xref std std-term">distribution</em></a> that is preconfigured for the most common use cases and
 also contains some code that demonstrates how to use Symfony2 (get the archive
@@ -97,11 +115,30 @@ have a <tt class="docutils literal"><span class="pre">Symfony/</span></tt> direc
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>If you downloaded the Standard Edition <em>without vendors</em>, simply run the
-following command to download all of the vendor libraries:</p>
-<div class="last highlight-bash"><div class="highlight"><pre>php bin/vendors install
+<p>If you are familiar with Composer, you can run the following command
+instead of downloading the archive:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>composer.phar create-project symfony/framework-standard-edition path/to/install 2.3.0
+
+<span class="c"># remove the Git history</span>
+<span class="nv">$ </span>rm -rf .git
 </pre></div>
 </div>
+<p class="last">For an exact version, replace &#8220;2.3.0&#8221; with the latest Symfony version
+(e.g. 2.3.1). For details, see the <a class="reference external" href="http://symfony.com/download">Symfony Installation Page</a></p>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>If you have PHP 5.4, you can use the built-in web server:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="c"># check your PHP CLI configuration</span>
+<span class="nv">$ </span>php ./app/check.php
+
+<span class="c"># run the built-in web server</span>
+<span class="nv">$ </span>php ./app/console server:run
+</pre></div>
+</div>
+<p>Then the URL to your application will be &#8220;<a class="reference external" href="http://localhost:8000/app_dev.php">http://localhost:8000/app_dev.php</a>&#8220;</p>
+<p class="last">The built-in server should be used only for development purpose, but it
+can help you to start your project quickly and easily.</p>
 </div>
 </div>
 <div class="section" id="checking-the-configuration">
@@ -109,18 +146,43 @@ following command to download all of the vendor libraries:</p>
 <p>Symfony2 comes with a visual server configuration tester to help avoid some
 headaches that come from Web server or PHP misconfiguration. Use the following
 URL to see the diagnostics for your machine:</p>
+<div class="highlight-text"><div class="highlight"><pre>http://localhost/config.php
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>All of the example URLs assume that you&#8217;ve downloaded and unzipped Symfony
+directly into the web server web root. If you&#8217;ve followed the directions
+above and unzipped the <cite>Symfony</cite> directory into your web root, then add
+<cite>/Symfony/web</cite> after <cite>localhost</cite> for all the URLs you see:</p>
+<div class="last highlight-text"><div class="highlight"><pre>http://localhost/Symfony/web/config.php
+</pre></div>
+</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>All of the example URLs assume that you&#8217;ve downloaded and unzipped <tt class="docutils literal"><span class="pre">Symfony</span></tt>
+directly into the web server web root. If you&#8217;ve followed the directions
+above and done this, then add <tt class="docutils literal"><span class="pre">/Symfony/web</span></tt> after <tt class="docutils literal"><span class="pre">localhost</span></tt> for all
+the URLs you see:</p>
 <div class="highlight-text"><div class="highlight"><pre>http://localhost/Symfony/web/config.php
 </pre></div>
+</div>
+<p class="last">To get nice and short urls you should point the document root of your
+webserver or virtual host to the <tt class="docutils literal"><span class="pre">Symfony/web/</span></tt> directory. In that
+case, your URLs will look like <tt class="docutils literal"><span class="pre">http://localhost/config.php</span></tt> or
+<tt class="docutils literal"><span class="pre">http://site.local/config.php</span></tt>, if you created a virtual host to a
+local domain called, for example, <tt class="docutils literal"><span class="pre">site.local</span></tt>.</p>
 </div>
 <p>If there are any outstanding issues listed, correct them. You might also tweak
 your configuration by following any given recommendations. When everything is
 fine, click on &#8220;<em>Bypass configuration and go to the Welcome page</em>&#8221; to request
 your first &#8220;real&#8221; Symfony2 webpage:</p>
-<div class="highlight-text"><div class="highlight"><pre>http://localhost/Symfony/web/app_dev.php/
+<div class="highlight-text"><div class="highlight"><pre>http://localhost/app_dev.php/
 </pre></div>
 </div>
 <p>Symfony2 should welcome and congratulate you for your hard work so far!</p>
-<img alt="../_images/welcome.jpg" class="align-center" src="../_images/welcome.jpg" />
+<img alt="../_images/welcome.png" class="align-center" src="../_images/welcome.png" />
 </div>
 <div class="section" id="understanding-the-fundamentals">
 <h2>Understanding the Fundamentals<a class="headerlink" href="#understanding-the-fundamentals" title="Permalink to this headline">¶</a></h2>
@@ -138,7 +200,7 @@ chapter of the book.</p>
 <p>The distribution comes with some sample code that you can use to learn more
 about the main Symfony2 concepts. Go to the following URL to be greeted by
 Symfony2 (replace <em>Fabien</em> with your first name):</p>
-<div class="highlight-text"><div class="highlight"><pre>http://localhost/Symfony/web/app_dev.php/demo/hello/Fabien
+<div class="highlight-text"><div class="highlight"><pre>http://localhost/app_dev.php/demo/hello/Fabien
 </pre></div>
 </div>
 <img alt="../_images/hello_fabien.png" class="align-center" src="../_images/hello_fabien.png" />
@@ -155,15 +217,24 @@ wants to access.</li>
 <div class="section" id="routing">
 <h3>Routing<a class="headerlink" href="#routing" title="Permalink to this headline">¶</a></h3>
 <p>Symfony2 routes the request to the code that handles it by trying to match the
-requested URL against some configured patterns. By default, these patterns
+requested URL against some configured paths. By default, these paths
 (called routes) are defined in the <tt class="docutils literal"><span class="pre">app/config/routing.yml</span></tt> configuration
 file. When you&#8217;re in the <tt class="docutils literal"><span class="pre">dev</span></tt> <a class="reference internal" href="#quick-tour-big-picture-environments"><em>environment</em></a> -
 indicated by the app_**dev**.php front controller - the <tt class="docutils literal"><span class="pre">app/config/routing_dev.yml</span></tt>
 configuration file is also loaded. In the Standard Edition, the routes to
-these &#8220;demo&#8221; pages are placed in that file:</p>
+these &#8220;demo&#8221; pages are imported from this file:</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/routing_dev.yml</span>
+<span class="c1"># ...</span>
+
+<span class="c1"># AcmeDemoBundle routes (to be removed)</span>
+<span class="l-Scalar-Plain">_acme_demo</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@AcmeDemoBundle/Resources/config/routing.yml&quot;</span>
+</pre></div>
+</div>
+<p>This imports a <tt class="docutils literal"><span class="pre">routing.yml</span></tt> file that lives inside the AcmeDemoBundle:</p>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/DemoBundle/Resources/config/routing.yml</span>
 <span class="l-Scalar-Plain">_welcome</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeDemoBundle</span><span class="p-Indicator">:</span><span class="nv">Welcome</span><span class="p-Indicator">:</span><span class="nv">index</span> <span class="p-Indicator">}</span>
 
 <span class="l-Scalar-Plain">_demo</span><span class="p-Indicator">:</span>
@@ -193,8 +264,8 @@ first request.</p>
 <p>A controller is a fancy name for a PHP function or method that handles incoming
 <em>requests</em> and returns <em>responses</em> (often HTML code). Instead of using the
 PHP global variables and functions (like <tt class="docutils literal"><span class="pre">$_GET</span></tt> or <tt class="docutils literal"><span class="pre">header()</span></tt>) to manage
-these HTTP messages, Symfony uses objects: <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\HttpFoundation\Request</span></tt>
-and <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\HttpFoundation\Response</span></tt>. The simplest possible
+these HTTP messages, Symfony uses objects: <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Request.html" title="Symfony\Component\HttpFoundation\Request"><span class="pre">Request</span></a></tt>
+and <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Response.html" title="Symfony\Component\HttpFoundation\Response"><span class="pre">Response</span></a></tt>. The simplest possible
 controller might create the response by hand, based on the request:</p>
 <div class="highlight-python"><pre>use Symfony\Component\HttpFoundation\Response;
 
@@ -235,7 +306,7 @@ logical name is shorter and allows for more flexibility.</p>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">WelcomeController</span></tt> class extends the built-in <tt class="docutils literal"><span class="pre">Controller</span></tt> class,
 which provides useful shortcut methods, like the
-<a href="#id1"><span class="problematic" id="id2">:method:`Symfony\\Bundle\\FrameworkBundle\\Controller\\Controller::render`</span></a>
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Controller/Controller.html#method_render" title="Symfony\Bundle\FrameworkBundle\Controller\Controller::render()"><span class="pre">render()</span></a></tt>
 method that loads and renders a template
 (<tt class="docutils literal"><span class="pre">AcmeDemoBundle:Welcome:index.html.twig</span></tt>). The returned value is a Response
 object populated with the rendered content. So, if the needs arise, the
@@ -266,7 +337,8 @@ everything about Symfony2 controllers.</p>
 why this is useful.</p>
 <p>Now, take a look at the routing configuration again and find the <tt class="docutils literal"><span class="pre">_demo</span></tt>
 key:</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/routing_dev.yml</span>
+<div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/DemoBundle/Resources/config/routing.yml</span>
+<span class="c1"># ...</span>
 <span class="l-Scalar-Plain">_demo</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">resource</span><span class="p-Indicator">:</span> <span class="s">&quot;@AcmeDemoBundle/Controller/DemoController.php&quot;</span>
     <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">annotation</span>
@@ -296,7 +368,7 @@ class DemoController extends Controller
     // ...
 }</pre>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">&#64;Route()</span></tt> annotation defines a new route with a pattern of
+<p>The <tt class="docutils literal"><span class="pre">&#64;Route()</span></tt> annotation defines a new route with a path of
 <tt class="docutils literal"><span class="pre">/hello/{name}</span></tt> that executes the <tt class="docutils literal"><span class="pre">helloAction</span></tt> method when matched. A
 string enclosed in curly brackets like <tt class="docutils literal"><span class="pre">{name}</span></tt> is called a placeholder. As
 you can see, its value can be retrieved through the <tt class="docutils literal"><span class="pre">$name</span></tt> method argument.</p>
@@ -341,12 +413,12 @@ templates work in Symfony2.</p>
 </div>
 <div class="section" id="bundles">
 <h3>Bundles<a class="headerlink" href="#bundles" title="Permalink to this headline">¶</a></h3>
-<p>You might have wondered why the <a class="reference internal" href="../glossary.html#term-bundle"><em class="xref std std-term">bundle</em></a> word is used in many names we
+<p>You might have wondered why the <a class="reference internal" href="../glossary.html#term-bundle"><em class="xref std std-term">bundle</em></a> word is used in many names you
 have seen so far. All the code you write for your application is organized in
 bundles. In Symfony2 speak, a bundle is a structured set of files (PHP files,
 stylesheets, JavaScripts, images, ...) that implements a single feature (a
 blog, a forum, ...) and which can be easily shared with other developers. As
-of now, we have manipulated one bundle, <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt>. You will learn
+of now, you have manipulated one bundle, <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt>. You will learn
 more about bundles in the last chapter of this tutorial.</p>
 </div>
 </div>
@@ -357,22 +429,30 @@ look at the bottom of any Symfony2 rendered page. You should notice a small
 bar with the Symfony2 logo. This is called the &#8220;Web Debug Toolbar&#8221; and it
 is the developer&#8217;s best friend.</p>
 <img alt="../_images/web_debug_toolbar.png" class="align-center" src="../_images/web_debug_toolbar.png" />
-<p>But what you see initially is only the tip of the iceberg; click on the weird
-hexadecimal number to reveal yet another very useful Symfony2 debugging tool:
-the profiler.</p>
+<p>But what you see initially is only the tip of the iceberg; click on the long
+hexadecimal number (the session token) to reveal yet another very useful
+Symfony2 debugging tool: the profiler.</p>
 <img alt="../_images/profiler.png" class="align-center" src="../_images/profiler.png" />
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can get more information quickly by hovering over the items on the
+Web Debug Toolbar.</p>
+</div>
 <p>Of course, you won&#8217;t want to show these tools when you deploy your application
 to production. That&#8217;s why you will find another front controller in the
-<tt class="docutils literal"><span class="pre">web/</span></tt> directory (<tt class="docutils literal"><span class="pre">app.php</span></tt>), which is optimized for the production environment:</p>
-<div class="highlight-text"><div class="highlight"><pre>http://localhost/Symfony/web/app.php/demo/hello/Fabien
+<tt class="docutils literal"><span class="pre">web/</span></tt> directory (<tt class="docutils literal"><span class="pre">app.php</span></tt>), which is optimized for the production environment.
+The <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt> is normally only available in the dev environment (see
+the note below), but if you were to add it to the production environment, you
+could go here:</p>
+<div class="highlight-text"><div class="highlight"><pre>http://localhost/app.php/demo/hello/Fabien
 </pre></div>
 </div>
 <p>And if you use Apache with <tt class="docutils literal"><span class="pre">mod_rewrite</span></tt> enabled, you can even omit the
 <tt class="docutils literal"><span class="pre">app.php</span></tt> part of the URL:</p>
-<div class="highlight-text"><div class="highlight"><pre>http://localhost/Symfony/web/demo/hello/Fabien
+<div class="highlight-text"><div class="highlight"><pre>http://localhost/demo/hello/Fabien
 </pre></div>
 </div>
-<p>Last but not least, on the production servers, you should point your web root
+<p>Last but not least, on production servers, you should point your web root
 directory to the <tt class="docutils literal"><span class="pre">web/</span></tt> directory to secure your installation and have an
 even better looking URL:</p>
 <div class="highlight-text"><div class="highlight"><pre>http://localhost/demo/hello/Fabien
@@ -387,7 +467,7 @@ installation of <em>Symfony Standard Edition</em> you will get a 404 error as
 <em>AcmeDemoBundle</em> is enabled only in dev environment and its routes imported
 in <em>app/config/routing_dev.yml</em>.</p>
 </div>
-<p>To make you application respond faster, Symfony2 maintains a cache under the
+<p>To make your application respond faster, Symfony2 maintains a cache under the
 <tt class="docutils literal"><span class="pre">app/cache/</span></tt> directory. In the development environment (<tt class="docutils literal"><span class="pre">app_dev.php</span></tt>),
 this cache is flushed automatically whenever you make changes to any code or
 configuration. But that&#8217;s not the case in the production environment
@@ -445,7 +525,7 @@ are eager to learn more about Symfony2, dive into the next section:
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
-                        title="previous chapter">Quick Tour</a></p>
+                        title="previous chapter">The Quick Tour</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="the_view.html"
                         title="next chapter">The View</a></p>
@@ -457,7 +537,7 @@ are eager to learn more about Symfony2, dive into the next section:
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -481,15 +561,15 @@ are eager to learn more about Symfony2, dive into the next section:
           <a href="the_view.html" title="The View"
              >next</a> |</li>
         <li class="right" >
-          <a href="index.html" title="Quick Tour"
+          <a href="index.html" title="The Quick Tour"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Quick Tour</a> &raquo;</li> 
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" >The Quick Tour</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

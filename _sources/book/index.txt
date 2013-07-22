@@ -1,5 +1,5 @@
-Book
-====
+The Book
+========
 
 .. toctree::
     :hidden:
@@ -12,6 +12,7 @@ Book
     routing
     templating
     doctrine
+    propel
     testing
     validation
     forms

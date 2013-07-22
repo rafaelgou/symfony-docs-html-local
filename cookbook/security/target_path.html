@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to change the Default Target Path Behavior &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to change the Default Target Path Behavior &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +25,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to use Varnish to speed up my Website" href="../cache/varnish.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Security" href="index.html" />
+    <link rel="next" title="Cache" href="../cache/index.html" />
     <link rel="prev" title="How to create a custom Authentication Provider" href="custom_authentication_provider.html" /> 
   </head>
   <body>
@@ -35,13 +38,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../cache/varnish.html" title="How to use Varnish to speed up my Website"
+          <a href="../cache/index.html" title="Cache"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="custom_authentication_provider.html" title="How to create a custom Authentication Provider"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Security</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -53,9 +57,10 @@
   <div class="section" id="how-to-change-the-default-target-path-behavior">
 <span id="index-0"></span><h1>How to change the Default Target Path Behavior<a class="headerlink" href="#how-to-change-the-default-target-path-behavior" title="Permalink to this headline">¶</a></h1>
 <p>By default, the security component retains the information of the last request
-URI in a session variable named <tt class="docutils literal"><span class="pre">_security.target_path</span></tt>. Upon a successful
-login, the user is redirected to this path, as to help her continue from
-the last known page she visited.</p>
+URI in a session variable named <tt class="docutils literal"><span class="pre">_security.main.target_path</span></tt> (with <tt class="docutils literal"><span class="pre">main</span></tt> being
+the name of the firewall, defined in <tt class="docutils literal"><span class="pre">security.yml</span></tt>). Upon a successful
+login, the user is redirected to this path, as to help her continue from the
+last known page she visited.</p>
 <p>On some occasions, this is unexpected. For example when the last request
 URI was an HTTP POST against a route which is configured to allow only a POST
 method, the user is redirected to this route only to get a 404 error.</p>
@@ -81,9 +86,9 @@ configuration file. This can be done from your main configuration file (in
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/Resources/config/services.php</span>
-<span class="x">// ...</span>
-<span class="x">$container-&gt;setParameter(&#39;security.exception_listener.class&#39;, &#39;Acme\HelloBundle\Security\Firewall\ExceptionListener&#39;);</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/HelloBundle/Resources/config/services.php</span>
+<span class="c1">// ...</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setParameter</span><span class="p">(</span><span class="s1">&#39;security.exception_listener.class&#39;</span><span class="p">,</span> <span class="s1">&#39;Acme\HelloBundle\Security\Firewall\ExceptionListener&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -106,7 +111,7 @@ class ExceptionListener extends BaseExceptionListener
             return;
         }
 
-        $request-&gt;getSession()-&gt;set('_security.target_path', $request-&gt;getUri());
+        parent::setTargetPath($request);
     }
 }</pre>
 </div>
@@ -123,8 +128,8 @@ class ExceptionListener extends BaseExceptionListener
   <p class="topless"><a href="custom_authentication_provider.html"
                         title="previous chapter">How to create a custom Authentication Provider</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../cache/varnish.html"
-                        title="next chapter">How to use Varnish to speed up my Website</a></p>
+  <p class="topless"><a href="../cache/index.html"
+                        title="next chapter">Cache</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/security/target_path.txt"
@@ -133,7 +138,7 @@ class ExceptionListener extends BaseExceptionListener
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -154,18 +159,19 @@ class ExceptionListener extends BaseExceptionListener
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../cache/varnish.html" title="How to use Varnish to speed up my Website"
+          <a href="../cache/index.html" title="Cache"
              >next</a> |</li>
         <li class="right" >
           <a href="custom_authentication_provider.html" title="How to create a custom Authentication Provider"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Security</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

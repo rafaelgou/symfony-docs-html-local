@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The DomCrawler Component &mdash; Symfony2Docs v1 documentation</title>
+    <title>The DomCrawler Component &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +25,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
     <link rel="up" title="The Components" href="index.html" />
-    <link rel="next" title="The Finder Component" href="finder.html" />
-    <link rel="prev" title="The CssSelector Component" href="css_selector.html" /> 
+    <link rel="next" title="Dependency Injection" href="dependency_injection/index.html" />
+    <link rel="prev" title="The Debug Component" href="debug.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,12 +38,12 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="finder.html" title="The Finder Component"
+          <a href="dependency_injection/index.html" title="Dependency Injection"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="css_selector.html" title="The CssSelector Component"
+          <a href="debug.html" title="The Debug Component"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Components</a> &raquo;</li> 
       </ul>
     </div>  
@@ -54,25 +57,30 @@
 <span id="index-0"></span><h1>The DomCrawler Component<a class="headerlink" href="#the-domcrawler-component" title="Permalink to this headline">¶</a></h1>
 <blockquote>
 <div>The DomCrawler Component eases DOM navigation for HTML and XML documents.</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">While possible, the DomCrawler component is not designed for manipulation
+of the DOM or re-dumping HTML/XML.</p>
+</div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>You can install the component in many different ways:</p>
+<p>You can install the component in 2 different ways:</p>
 <ul class="simple">
 <li>Use the official Git repository (<a class="reference external" href="https://github.com/symfony/DomCrawler">https://github.com/symfony/DomCrawler</a>);</li>
-<li>Install it via PEAR ( <cite>pear.symfony.com/DomCrawler</cite>);</li>
-<li>Install it via Composer (<cite>symfony/dom-crawler</cite> on Packagist).</li>
+<li><a class="reference internal" href="using_components.html"><em>Install it via Composer</em></a> (<tt class="docutils literal"><span class="pre">symfony/dom-crawler</span></tt> on <a class="reference external" href="https://packagist.org/packages/symfony/dom-crawler">Packagist</a>).</li>
 </ul>
 </div>
 <div class="section" id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Permalink to this headline">¶</a></h2>
-<p>The <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DomCrawler\Crawler</span></tt> class provides methods
+<p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Crawler.html" title="Symfony\Component\DomCrawler\Crawler"><span class="pre">Crawler</span></a></tt> class provides methods
 to query and manipulate HTML and XML documents.</p>
-<p>An instance of the Crawler represents a set (<a href="#id1"><span class="problematic" id="id2">:phpclass:`SplObjectStorage`</span></a>)
-of <a href="#id3"><span class="problematic" id="id4">:phpclass:`DOMElement`</span></a> objects, which are basically nodes that you can
+<p>An instance of the Crawler represents a set (<tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/class.splobjectstorage.php" title="SplObjectStorage"><span class="pre">SplObjectStorage</span></a></tt>)
+of <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/class.domelement.php" title="DOMElement"><span class="pre">DOMElement</span></a></tt> objects, which are basically nodes that you can
 traverse easily:</p>
 <div class="highlight-python"><pre>use Symfony\Component\DomCrawler\Crawler;
 
 $html = &lt;&lt;&lt;'HTML'
+&lt;!DOCTYPE html&gt;
 &lt;html&gt;
     &lt;body&gt;
         &lt;p class="message"&gt;Hello World!&lt;/p&gt;
@@ -87,9 +95,19 @@ foreach ($crawler as $domElement) {
     print $domElement-&gt;nodeName;
 }</pre>
 </div>
-<p>Specialized <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DomCrawler\Link</span></tt> and
-<tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DomCrawler\Form</span></tt> classes are useful for
+<p>Specialized <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Link.html" title="Symfony\Component\DomCrawler\Link"><span class="pre">Link</span></a></tt> and
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Form.html" title="Symfony\Component\DomCrawler\Form"><span class="pre">Form</span></a></tt> classes are useful for
 interacting with html links and forms as you traverse through the HTML tree.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The DomCrawler will attempt to automatically fix your HTML to match the
+official specification. For example, if you nest a <tt class="docutils literal"><span class="pre">&lt;p&gt;</span></tt> tag inside
+another <tt class="docutils literal"><span class="pre">&lt;p&gt;</span></tt> tag, it will be moved to be a sibling of the parent tag.
+This is expected and is part of the HTML5 spec. But if you&#8217;re getting
+unexpected behavior, this could be a cause. And while the <tt class="docutils literal"><span class="pre">DomCrawler</span></tt>
+isn&#8217;t meant to dump content, you can see the &#8220;fixed&#8221; version if your HTML
+by <em class="xref std std-ref">dumping it</em>.</p>
+</div>
 <div class="section" id="node-filtering">
 <h3>Node Filtering<a class="headerlink" href="#node-filtering" title="Permalink to this headline">¶</a></h3>
 <p>Using XPath expressions is really easy:</p>
@@ -104,7 +122,10 @@ This allows you to use jQuery-like selectors to traverse:</p>
 <div class="highlight-python"><pre>$crawler = $crawler-&gt;filter('body &gt; p');</pre>
 </div>
 <p>Anonymous function can be used to filter with more complex criteria:</p>
-<div class="highlight-python"><pre>$crawler = $crawler-&gt;filter('body &gt; p')-&gt;reduce(function ($node, $i) {
+<div class="highlight-python"><pre>use Symfony\Component\DomCrawler\Crawler;
+// ...
+
+$crawler = $crawler-&gt;filter('body &gt; p')-&gt;reduce(function (Crawler $node, $i) {
     // filter even nodes
     return ($i % 2) == 0;
 });</pre>
@@ -112,7 +133,7 @@ This allows you to use jQuery-like selectors to traverse:</p>
 <p>To remove a node the anonymous function must return false.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">All filter methods return a new <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DomCrawler\Crawler</span></tt>
+<p class="last">All filter methods return a new <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Crawler.html" title="Symfony\Component\DomCrawler\Crawler"><span class="pre">Crawler</span></a></tt>
 instance with filtered content.</p>
 </div>
 </div>
@@ -138,7 +159,7 @@ $crawler-&gt;filter('body &gt; p')-&gt;parents();</pre>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">All the traversal methods return a new <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DomCrawler\Crawler</span></tt>
+<p class="last">All the traversal methods return a new <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Crawler.html" title="Symfony\Component\DomCrawler\Crawler"><span class="pre">Crawler</span></a></tt>
 instance.</p>
 </div>
 </div>
@@ -151,18 +172,28 @@ instance.</p>
 <div class="highlight-python"><pre>$class = $crawler-&gt;filterXPath('//body/p')-&gt;attr('class');</pre>
 </div>
 <p>Extract attribute and/or node values from the list of nodes:</p>
-<div class="highlight-python"><pre>$attributes = $crawler-&gt;filterXpath('//body/p')-&gt;extract(array('_text', 'class'));</pre>
+<div class="highlight-python"><pre>$attributes = $crawler
+    -&gt;filterXpath('//body/p')
+    -&gt;extract(array('_text', 'class'))
+;</pre>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Special attribute <tt class="docutils literal"><span class="pre">_text</span></tt> represents a node value.</p>
 </div>
 <p>Call an anonymous function on each node of the list:</p>
-<div class="highlight-python"><pre>$nodeValues = $crawler-&gt;filter('p')-&gt;each(function ($node, $i) {
-    return $node-&gt;nodeValue;
+<div class="highlight-python"><pre>use Symfony\Component\DomCrawler\Crawler;
+// ...
+
+$nodeValues = $crawler-&gt;filter('p')-&gt;each(function (Crawler $node, $i) {
+    return $node-&gt;text();
 });</pre>
 </div>
-<p>The anonymous function receives the position and the node as arguments.
+<p class="versionadded">
+<span class="versionmodified">New in version As: </span>seen here, in Symfony 2.3, the <tt class="docutils literal"><span class="pre">each</span></tt> and <tt class="docutils literal"><span class="pre">reduce</span></tt> Closure functions
+are passed a <tt class="docutils literal"><span class="pre">Crawler</span></tt> as the first argument. Previously, that argument
+was a <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/class.domnode.php" title="DOMNode"><span class="pre">DOMNode</span></a></tt>.</p>
+<p>The anonymous function receives the position and the node (as a Crawler) as arguments.
 The result is an array of values returned by the anonymous function calls.</p>
 </div>
 <div class="section" id="adding-the-content">
@@ -179,20 +210,48 @@ $crawler-&gt;addContent('&lt;root&gt;&lt;node /&gt;&lt;/root&gt;', 'text/xml');
 $crawler-&gt;add('&lt;html&gt;&lt;body /&gt;&lt;/html&gt;');
 $crawler-&gt;add('&lt;root&gt;&lt;node /&gt;&lt;/root&gt;');</pre>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When dealing with character sets other than ISO-8859-1, always add HTML
+content using the <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Crawler.html#method_addHTMLContent" title="Symfony\Component\DomCrawler\Crawler::addHTMLContent()"><span class="pre">addHTMLContent()</span></a></tt>
+method where you can specify the second parameter to be your target character
+set.</p>
+</div>
 <p>As the Crawler&#8217;s implementation is based on the DOM extension, it is also able
-to interact with native <a href="#id5"><span class="problematic" id="id6">:phpclass:`DOMDocument`</span></a>, <a href="#id7"><span class="problematic" id="id8">:phpclass:`DOMNodeList`</span></a>
-and <a href="#id9"><span class="problematic" id="id10">:phpclass:`DOMNode`</span></a> objects:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">$document = new \DOMDocument();</span>
-<span class="x">$document-&gt;loadXml(&#39;&lt;root&gt;&lt;node /&gt;&lt;node /&gt;&lt;/root&gt;&#39;);</span>
-<span class="x">$nodeList = $document-&gt;getElementsByTagName(&#39;node&#39;);</span>
-<span class="x">$node = $document-&gt;getElementsByTagName(&#39;node&#39;)-&gt;item(0);</span>
+to interact with native <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/class.domdocument.php" title="DOMDocument"><span class="pre">DOMDocument</span></a></tt>, <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/class.domnodelist.php" title="DOMNodeList"><span class="pre">DOMNodeList</span></a></tt>
+and <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/class.domnode.php" title="DOMNode"><span class="pre">DOMNode</span></a></tt> objects:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$document</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\DOMDocument</span><span class="p">();</span>
+<span class="nv">$document</span><span class="o">-&gt;</span><span class="na">loadXml</span><span class="p">(</span><span class="s1">&#39;&lt;root&gt;&lt;node /&gt;&lt;node /&gt;&lt;/root&gt;&#39;</span><span class="p">);</span>
+<span class="nv">$nodeList</span> <span class="o">=</span> <span class="nv">$document</span><span class="o">-&gt;</span><span class="na">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;node&#39;</span><span class="p">);</span>
+<span class="nv">$node</span> <span class="o">=</span> <span class="nv">$document</span><span class="o">-&gt;</span><span class="na">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;node&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">item</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
 
-<span class="x">$crawler-&gt;addDocument($document);</span>
-<span class="x">$crawler-&gt;addNodeList($nodeList);</span>
-<span class="x">$crawler-&gt;addNodes(array($node));</span>
-<span class="x">$crawler-&gt;addNode($node);</span>
-<span class="x">$crawler-&gt;add($document);</span>
+<span class="nv">$crawler</span><span class="o">-&gt;</span><span class="na">addDocument</span><span class="p">(</span><span class="nv">$document</span><span class="p">);</span>
+<span class="nv">$crawler</span><span class="o">-&gt;</span><span class="na">addNodeList</span><span class="p">(</span><span class="nv">$nodeList</span><span class="p">);</span>
+<span class="nv">$crawler</span><span class="o">-&gt;</span><span class="na">addNodes</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="nv">$node</span><span class="p">));</span>
+<span class="nv">$crawler</span><span class="o">-&gt;</span><span class="na">addNode</span><span class="p">(</span><span class="nv">$node</span><span class="p">);</span>
+<span class="nv">$crawler</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nv">$document</span><span class="p">);</span>
 </pre></div>
+</div>
+<div class="sidebar">
+<p class="first sidebar-title">Manipulating and Dumping a <tt class="docutils literal"><span class="pre">Crawler</span></tt></p>
+<p>These methods on the <tt class="docutils literal"><span class="pre">Crawler</span></tt> are intended to initially populate your
+<tt class="docutils literal"><span class="pre">Crawler</span></tt> and aren&#8217;t intended to be used to further manipulate a DOM
+(though this is possible). However, since the <tt class="docutils literal"><span class="pre">Crawler</span></tt> is a set of
+<tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/class.domelement.php" title="DOMElement"><span class="pre">DOMElement</span></a></tt> objects, you can use any method or property available
+on <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/class.domelement.php" title="DOMElement"><span class="pre">DOMElement</span></a></tt>, <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/class.domnode.php" title="DOMNode"><span class="pre">DOMNode</span></a></tt> or <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/class.domdocument.php" title="DOMDocument"><span class="pre">DOMDocument</span></a></tt>.
+For example, you could get the HTML of a <tt class="docutils literal"><span class="pre">Crawler</span></tt> with something like
+this:</p>
+<div class="highlight-python"><pre>$html = '';
+
+foreach ($crawler as $domElement) {
+    $html .= $domElement-&gt;ownerDocument-&gt;saveHTML($domElement);
+}</pre>
+</div>
+<p>Or you can get the HTML of the first node using
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Crawler.html#method_html" title="Symfony\Component\DomCrawler\Crawler::html()"><span class="pre">html()</span></a></tt>:</p>
+<div class="highlight-python"><pre>$html = $crawler-&gt;html();</pre>
+</div>
+<p class="last">The <tt class="docutils literal"><span class="pre">html</span></tt> method is new in Symfony 2.3.</p>
 </div>
 </div>
 <div class="section" id="form-and-link-support">
@@ -202,27 +261,27 @@ and <a href="#id9"><span class="problematic" id="id10">:phpclass:`DOMNode`</span
 <h4>Links<a class="headerlink" href="#links" title="Permalink to this headline">¶</a></h4>
 <p>To find a link by name (or a clickable image by its <tt class="docutils literal"><span class="pre">alt</span></tt> attribute), use
 the <tt class="docutils literal"><span class="pre">selectLink</span></tt> method on an existing crawler. This returns a Crawler
-instance with just the selected link(s). Calling <tt class="docutils literal"><span class="pre">link()</span></tt> gives us a special
-<tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DomCrawler\Link</span></tt> object:</p>
+instance with just the selected link(s). Calling <tt class="docutils literal"><span class="pre">link()</span></tt> gives you a special
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Link.html" title="Symfony\Component\DomCrawler\Link"><span class="pre">Link</span></a></tt> object:</p>
 <div class="highlight-python"><pre>$linksCrawler = $crawler-&gt;selectLink('Go elsewhere...');
 $link = $linksCrawler-&gt;link();
 
 // or do this all at once
 $link = $crawler-&gt;selectLink('Go elsewhere...')-&gt;link();</pre>
 </div>
-<p>The <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DomCrawler\Link</span></tt> object has several useful
+<p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Link.html" title="Symfony\Component\DomCrawler\Link"><span class="pre">Link</span></a></tt> object has several useful
 methods to get more information about the selected link itself:</p>
-<div class="highlight-python"><pre>// return the raw href value
-$href = $link-&gt;getRawUri();
-
-// return the proper URI that can be used to make another request
+<div class="highlight-python"><pre>// return the proper URI that can be used to make another request
 $uri = $link-&gt;getUri();</pre>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">getUri()</span></tt> is especially useful as it cleans the <tt class="docutils literal"><span class="pre">href</span></tt> value and
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="docutils literal"><span class="pre">getUri()</span></tt> is especially useful as it cleans the <tt class="docutils literal"><span class="pre">href</span></tt> value and
 transforms it into how it should really be processed. For example, for a
 link with <tt class="docutils literal"><span class="pre">href=&quot;#foo&quot;</span></tt>, this would return the full URI of the current
 page suffixed with <tt class="docutils literal"><span class="pre">#foo</span></tt>. The return from <tt class="docutils literal"><span class="pre">getUri()</span></tt> is always a full
 URI that you can act on.</p>
+</div>
 </div>
 <div class="section" id="forms">
 <h4>Forms<a class="headerlink" href="#forms" title="Permalink to this headline">¶</a></h4>
@@ -230,7 +289,7 @@ URI that you can act on.</p>
 available on the Crawler which returns another Crawler that matches a button
 (<tt class="docutils literal"><span class="pre">input[type=submit]</span></tt>, <tt class="docutils literal"><span class="pre">input[type=image]</span></tt>, or a <tt class="docutils literal"><span class="pre">button</span></tt>) with the
 given text. This method is especially useful because you can use it to return
-a <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DomCrawler\Form</span></tt> object that represents the
+a <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Form.html" title="Symfony\Component\DomCrawler\Form"><span class="pre">Form</span></a></tt> object that represents the
 form that the button lives in:</p>
 <div class="highlight-python"><pre>$form = $crawler-&gt;selectButton('validate')-&gt;form();
 
@@ -239,13 +298,13 @@ $form = $crawler-&gt;selectButton('validate')-&gt;form(array(
     'name' =&gt; 'Ryan',
 ));</pre>
 </div>
-<p>The <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DomCrawler\Form</span></tt> object has lots of very
+<p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Form.html" title="Symfony\Component\DomCrawler\Form"><span class="pre">Form</span></a></tt> object has lots of very
 useful methods for working with forms:</p>
-<blockquote>
-<div><p>$uri = $form-&gt;getUri();</p>
-<p>$method = $form-&gt;getMethod();</p>
-</div></blockquote>
-<p>The <a href="#id11"><span class="problematic" id="id12">:method:`Symfony\\Component\\DomCrawler\\Form::getUri`</span></a> method does more
+<div class="highlight-python"><pre>$uri = $form-&gt;getUri();
+
+$method = $form-&gt;getMethod();</pre>
+</div>
+<p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DomCrawler/Form.html#method_getUri" title="Symfony\Component\DomCrawler\Form::getUri()"><span class="pre">getUri()</span></a></tt> method does more
 than just return the <tt class="docutils literal"><span class="pre">action</span></tt> attribute of the form. If the form method
 is GET, then it mimics the browser&#8217;s behavior and returns the <tt class="docutils literal"><span class="pre">action</span></tt>
 attribute followed by a query string of all of the form&#8217;s values.</p>
@@ -259,7 +318,8 @@ $form-&gt;setValues(array(
 // get back an array of values - in the "flat" array like above
 $values = $form-&gt;getValues();
 
-// returns the values like PHP would see them, where "registration" is its own array
+// returns the values like PHP would see them,
+// where "registration" is its own array
 $values = $form-&gt;getPhpValues();</pre>
 </div>
 <p>To work with multi-dimensional fields:</p>
@@ -269,15 +329,15 @@ $values = $form-&gt;getPhpValues();</pre>
     &lt;input name="multi[dimensional]" /&gt;
 &lt;/form&gt;</pre>
 </div>
-<p>You must specify the fully qualified name of the field:</p>
+<p>Pass an array of values:</p>
 <div class="highlight-python"><pre>// Set a single field
-$form-&gt;setValue('multi[0]', 'value');
+$form-&gt;setValues(array('multi' =&gt; array('value')));
 
 // Set multiple fields at once
-$form-&gt;setValue('multi', array(
+$form-&gt;setValues(array('multi' =&gt; array(
     1             =&gt; 'value',
     'dimensional' =&gt; 'an other value'
-));</pre>
+)));</pre>
 </div>
 <p>This is great, but it gets better! The <tt class="docutils literal"><span class="pre">Form</span></tt> object allows you to interact
 with your form like a browser, selecting radio values, ticking checkboxes,
@@ -291,7 +351,7 @@ $form['registration[terms]']-&gt;untick();
 // select an option
 $form['registration[birthday][year]']-&gt;select(1984);
 
-// select many options from a "multiple" select or checkboxes
+// select many options from a "multiple" select
 $form['registration[interests]']-&gt;select(array('symfony', 'cookies'));
 
 // even fake a file upload
@@ -317,7 +377,7 @@ Goutte understands the Symfony Crawler object and can use it to submit forms
 directly:</p>
 <div class="highlight-python"><pre>use Goutte\Client;
 
-// make a real reqeust to an external site
+// make a real request to an external site
 $client = new Client();
 $crawler = $client-&gt;request('GET', 'https://github.com/login');
 
@@ -361,11 +421,11 @@ $crawler = $client-&gt;submit($form);</pre>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="css_selector.html"
-                        title="previous chapter">The CssSelector Component</a></p>
+  <p class="topless"><a href="debug.html"
+                        title="previous chapter">The Debug Component</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="finder.html"
-                        title="next chapter">The Finder Component</a></p>
+  <p class="topless"><a href="dependency_injection/index.html"
+                        title="next chapter">Dependency Injection</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/components/dom_crawler.txt"
@@ -374,7 +434,7 @@ $crawler = $client-&gt;submit($form);</pre>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -395,18 +455,18 @@ $crawler = $client-&gt;submit($form);</pre>
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="finder.html" title="The Finder Component"
+          <a href="dependency_injection/index.html" title="Dependency Injection"
              >next</a> |</li>
         <li class="right" >
-          <a href="css_selector.html" title="The CssSelector Component"
+          <a href="debug.html" title="The Debug Component"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="index.html" >The Components</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

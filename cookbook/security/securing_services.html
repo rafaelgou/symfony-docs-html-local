@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to secure any Service or Method in your Application &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to secure any Service or Method in your Application &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +25,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to load Security Users from the Database (the Entity Provider)" href="entity_provider.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Security" href="index.html" />
+    <link rel="next" title="How to create a custom User Provider" href="custom_provider.html" />
     <link rel="prev" title="How to customize your Form Login" href="form_login.html" /> 
   </head>
   <body>
@@ -35,13 +38,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="entity_provider.html" title="How to load Security Users from the Database (the Entity Provider)"
+          <a href="custom_provider.html" title="How to create a custom User Provider"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="form_login.html" title="How to customize your Form Login"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Security</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -51,12 +55,12 @@
           <div class="body">
             
   <div class="section" id="how-to-secure-any-service-or-method-in-your-application">
-<h1>How to secure any Service or Method in your Application<a class="headerlink" href="#how-to-secure-any-service-or-method-in-your-application" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>How to secure any Service or Method in your Application<a class="headerlink" href="#how-to-secure-any-service-or-method-in-your-application" title="Permalink to this headline">¶</a></h1>
 <p>In the security chapter, you can see how to <a class="reference internal" href="../../book/security.html#book-security-securing-controller"><em>secure a controller</em></a>
 by requesting the <tt class="docutils literal"><span class="pre">security.context</span></tt> service from the Service Container
 and checking the current user&#8217;s role:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-// ...
+<div class="highlight-python"><pre>// ...
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 public function helloAction($name)
 {
@@ -73,18 +77,19 @@ services see the <a class="reference internal" href="../../book/service_containe
 example, suppose you have a <tt class="docutils literal"><span class="pre">NewsletterManager</span></tt> class that sends out emails
 and you want to restrict its use to only users who have some <tt class="docutils literal"><span class="pre">ROLE_NEWSLETTER_ADMIN</span></tt>
 role. Before you add security, the class looks something like this:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">namespace Acme\HelloBundle\Newsletter;</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/HelloBundle/Newsletter/NewsletterManager.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\HelloBundle\Newsletter</span><span class="p">;</span>
 
-<span class="x">class NewsletterManager</span>
-<span class="x">{</span>
+<span class="k">class</span> <span class="nc">NewsletterManager</span>
+<span class="p">{</span>
 
-<span class="x">    public function sendNewsletter()</span>
-<span class="x">    {</span>
-<span class="x">        // where you actually do the work</span>
-<span class="x">    }</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">sendNewsletter</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// ... where you actually do the work</span>
+    <span class="p">}</span>
 
-<span class="x">    // ...</span>
-<span class="x">}</span>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Your goal is to check the user&#8217;s role when the <tt class="docutils literal"><span class="pre">sendNewsletter()</span></tt> method is
@@ -112,14 +117,15 @@ class NewsletterManager
 <p>Then in your service configuration, you can inject the service:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><pre># src/Acme/HelloBundle/Resources/config/services.yml
-parameters:
-    newsletter_manager.class: Acme\HelloBundle\Newsletter\NewsletterManager
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/HelloBundle/Resources/config/services.yml</span>
+<span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">newsletter_manager.class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Acme\HelloBundle\Newsletter\NewsletterManager</span>
 
-services:
-    newsletter_manager:
-        class:     %newsletter_manager.class%
-        arguments: [@security.context]</pre>
+<span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">newsletter_manager</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span>     <span class="s">&quot;%newsletter_manager.class%&quot;</span>
+        <span class="l-Scalar-Plain">arguments</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&quot;@security.context&quot;</span><span class="p-Indicator">]</span>
+</pre></div>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/HelloBundle/Resources/config/services.xml --&gt;</span>
@@ -135,16 +141,16 @@ services:
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/Resources/config/services.php</span>
-<span class="x">use Symfony\Component\DependencyInjection\Definition;</span>
-<span class="x">use Symfony\Component\DependencyInjection\Reference;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/HelloBundle/Resources/config/services.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\Definition</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\Reference</span><span class="p">;</span>
 
-<span class="x">$container-&gt;setParameter(&#39;newsletter_manager.class&#39;, &#39;Acme\HelloBundle\Newsletter\NewsletterManager&#39;);</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setParameter</span><span class="p">(</span><span class="s1">&#39;newsletter_manager.class&#39;</span><span class="p">,</span> <span class="s1">&#39;Acme\HelloBundle\Newsletter\NewsletterManager&#39;</span><span class="p">);</span>
 
-<span class="x">$container-&gt;setDefinition(&#39;newsletter_manager&#39;, new Definition(</span>
-<span class="x">    &#39;%newsletter_manager.class%&#39;,</span>
-<span class="x">    array(new Reference(&#39;security.context&#39;))</span>
-<span class="x">));</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setDefinition</span><span class="p">(</span><span class="s1">&#39;newsletter_manager&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Definition</span><span class="p">(</span>
+    <span class="s1">&#39;%newsletter_manager.class%&#39;</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="k">new</span> <span class="nx">Reference</span><span class="p">(</span><span class="s1">&#39;security.context&#39;</span><span class="p">))</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -173,7 +179,7 @@ class NewsletterManager
             throw new AccessDeniedException();
         }
 
-        //--
+        // ...
     }
 
     // ...
@@ -184,8 +190,8 @@ be prompted to log in.</p>
 <div class="section" id="securing-methods-using-annotations">
 <h2>Securing Methods Using Annotations<a class="headerlink" href="#securing-methods-using-annotations" title="Permalink to this headline">¶</a></h2>
 <p>You can also secure method calls in any service with annotations by using the
-optional <a class="reference external" href="https://github.com/schmittjoh/JMSSecurityExtraBundle">JMSSecurityExtraBundle</a> bundle. This bundle is included in the
-Symfony2 Standard Distribution.</p>
+optional <a class="reference external" href="https://github.com/schmittjoh/JMSSecurityExtraBundle">JMSSecurityExtraBundle</a> bundle. This bundle is not included in the
+Symfony2 Standard Distribution, but you can choose to install it.</p>
 <p>To enable the annotations functionality, <a class="reference internal" href="../../book/service_container.html#book-service-container-tags"><em>tag</em></a>
 the service you want to secure with the <tt class="docutils literal"><span class="pre">security.secure_service</span></tt> tag
 (you can also automatically enable this functionality for all services, see
@@ -215,16 +221,16 @@ the <a class="reference internal" href="#securing-services-annotations-sidebar">
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/Resources/config/services.php</span>
-<span class="x">use Symfony\Component\DependencyInjection\Definition;</span>
-<span class="x">use Symfony\Component\DependencyInjection\Reference;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/HelloBundle/Resources/config/services.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\Definition</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\Reference</span><span class="p">;</span>
 
-<span class="x">$definition = new Definition(</span>
-<span class="x">    &#39;%newsletter_manager.class%&#39;,</span>
-<span class="x">    array(new Reference(&#39;security.context&#39;))</span>
-<span class="x">));</span>
-<span class="x">$definition-&gt;addTag(&#39;security.secure_service&#39;);</span>
-<span class="x">$container-&gt;setDefinition(&#39;newsletter_manager&#39;, $definition);</span>
+<span class="nv">$definition</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Definition</span><span class="p">(</span>
+    <span class="s1">&#39;%newsletter_manager.class%&#39;</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="k">new</span> <span class="nx">Reference</span><span class="p">(</span><span class="s1">&#39;security.context&#39;</span><span class="p">))</span>
+<span class="p">));</span>
+<span class="nv">$definition</span><span class="o">-&gt;</span><span class="na">addTag</span><span class="p">(</span><span class="s1">&#39;security.secure_service&#39;</span><span class="p">);</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setDefinition</span><span class="p">(</span><span class="s1">&#39;newsletter_manager&#39;</span><span class="p">,</span> <span class="nv">$definition</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
@@ -244,7 +250,7 @@ class NewsletterManager
      */
     public function sendNewsletter()
     {
-        //--
+        // ...
     }
 
     // ...
@@ -275,11 +281,14 @@ option to true:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
-<span class="nt">&lt;srv:container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/security&quot;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; ?&gt;</span>
+
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xmlns:srv=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xmlns:acme_hello=</span><span class="s">&quot;http://www.example.com/symfony/schema/&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="c">&lt;!-- app/config/config.xml --&gt;</span>
 
     <span class="nt">&lt;jms_security_extra</span> <span class="na">secure_controllers=</span><span class="s">&quot;true&quot;</span> <span class="na">secure_all_services=</span><span class="s">&quot;true&quot;</span> <span class="nt">/&gt;</span>
 
@@ -287,11 +296,12 @@ option to true:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;jms_security_extra&#39;, array(</span>
-<span class="x">    // ...</span>
-<span class="x">    &#39;secure_all_services&#39; =&gt; true,</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;jms_security_extra&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="c1">// ...</span>
+
+    <span class="s1">&#39;secure_all_services&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -321,8 +331,8 @@ load may be very slow depending on how many services you have defined.</p>
   <p class="topless"><a href="form_login.html"
                         title="previous chapter">How to customize your Form Login</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="entity_provider.html"
-                        title="next chapter">How to load Security Users from the Database (the Entity Provider)</a></p>
+  <p class="topless"><a href="custom_provider.html"
+                        title="next chapter">How to create a custom User Provider</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/security/securing_services.txt"
@@ -331,7 +341,7 @@ load may be very slow depending on how many services you have defined.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -352,18 +362,19 @@ load may be very slow depending on how many services you have defined.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="entity_provider.html" title="How to load Security Users from the Database (the Entity Provider)"
+          <a href="custom_provider.html" title="How to create a custom User Provider"
              >next</a> |</li>
         <li class="right" >
           <a href="form_login.html" title="How to customize your Form Login"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Security</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

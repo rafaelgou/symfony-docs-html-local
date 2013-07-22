@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use Gmail to send Emails &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to use Gmail to send Emails &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,8 +25,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Email" href="index.html" />
     <link rel="next" title="How to Work with Emails During Development" href="dev_environment.html" />
     <link rel="prev" title="How to send an Email" href="email.html" /> 
   </head>
@@ -40,8 +43,9 @@
         <li class="right" >
           <a href="email.html" title="How to send an Email"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Email</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -75,8 +79,8 @@ that you create a special account.</p>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config_dev.xml --&gt;</span>
 
 <span class="c">&lt;!--</span>
-<span class="c">xmlns:swiftmailer=&quot;http://symfony.com/schema/dic/swiftmailer&quot;</span>
-<span class="c">http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd</span>
+<span class="c">    xmlns:swiftmailer=&quot;http://symfony.com/schema/dic/swiftmailer&quot;</span>
+<span class="c">    http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd</span>
 <span class="c">--&gt;</span>
 
 <span class="nt">&lt;swiftmailer:config</span>
@@ -86,18 +90,31 @@ that you create a special account.</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config_dev.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;swiftmailer&#39;, array(</span>
-<span class="x">    &#39;transport&#39; =&gt; &quot;gmail&quot;,</span>
-<span class="x">    &#39;username&#39;  =&gt; &quot;your_gmail_username&quot;,</span>
-<span class="x">    &#39;password&#39;  =&gt; &quot;your_gmail_password&quot;,</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config_dev.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;swiftmailer&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;transport&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;gmail&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;username&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;your_gmail_username&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;your_gmail_password&quot;</span><span class="p">,</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
 <p>You&#8217;re done!</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>If you are using the Symfony Standard Edition, configure the parameters at <tt class="docutils literal"><span class="pre">parameters.yml</span></tt>:</p>
+<div class="last highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/parameters.yml</span>
+<span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">...</span>
+    <span class="l-Scalar-Plain">mailer_transport</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">gmail</span>
+    <span class="l-Scalar-Plain">mailer_host</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">~</span>
+    <span class="l-Scalar-Plain">mailer_user</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">your_gmail_username</span>
+    <span class="l-Scalar-Plain">mailer_password</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">your_gmail_password</span>
+</pre></div>
+</div>
+</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The <tt class="docutils literal"><span class="pre">gmail</span></tt> transport is simply a shortcut that uses the <tt class="docutils literal"><span class="pre">smtp</span></tt> transport
@@ -125,7 +142,7 @@ and sets <tt class="docutils literal"><span class="pre">encryption</span></tt>, 
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -151,13 +168,14 @@ and sets <tt class="docutils literal"><span class="pre">encryption</span></tt>, 
         <li class="right" >
           <a href="email.html" title="How to send an Email"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Email</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

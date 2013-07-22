@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Routing &mdash; Symfony2Docs v1 documentation</title>
+    <title>Routing &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,8 +25,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
-    <link rel="up" title="Book" href="index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Creating and using Templates" href="templating.html" />
     <link rel="prev" title="Controller" href="controller.html" /> 
   </head>
@@ -40,8 +43,8 @@
         <li class="right" >
           <a href="controller.html" title="Controller"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -69,7 +72,7 @@ areas of your application. By the end of this chapter, you&#8217;ll be able to:<
 </ul>
 <div class="section" id="routing-in-action">
 <span id="index-1"></span><h2>Routing in Action<a class="headerlink" href="#routing-in-action" title="Permalink to this headline">¶</a></h2>
-<p>A <em>route</em> is a map from a URL pattern to a controller. For example, suppose
+<p>A <em>route</em> is a map from a URL path to a controller. For example, suppose
 you want to match any URL like <tt class="docutils literal"><span class="pre">/blog/my-post</span></tt> or <tt class="docutils literal"><span class="pre">/blog/all-about-symfony</span></tt>
 and send it to a controller that can look up and render that blog entry.
 The route is simple:</p>
@@ -77,7 +80,7 @@ The route is simple:</p>
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/routing.yml</span>
 <span class="l-Scalar-Plain">blog_show</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/blog/{slug}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">/blog/{slug}</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">show</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
@@ -86,31 +89,35 @@ The route is simple:</p>
 <span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog_show&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/blog/{slug}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog_show&quot;</span> <span class="na">path=</span><span class="s">&quot;/blog/{slug}&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeBlogBundle:Blog:show<span class="nt">&lt;/default&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
 <span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/routing.php</span>
-<span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/routing.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;blog_show&#39;, new Route(&#39;/blog/{slug}&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeBlogBundle:Blog:show&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;blog_show&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/blog/{slug}&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeBlogBundle:Blog:show&#39;</span><span class="p">,</span>
+<span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
-<p>The pattern defined by the <tt class="docutils literal"><span class="pre">blog_show</span></tt> route acts like <tt class="docutils literal"><span class="pre">/blog/*</span></tt> where
+<p class="versionadded">
+<span class="versionmodified">New in version 2.2: </span>The <tt class="docutils literal"><span class="pre">path</span></tt> option is new in Symfony2.2, <tt class="docutils literal"><span class="pre">pattern</span></tt> is used in older
+versions.</p>
+<p>The path defined by the <tt class="docutils literal"><span class="pre">blog_show</span></tt> route acts like <tt class="docutils literal"><span class="pre">/blog/*</span></tt> where
 the wildcard is given the name <tt class="docutils literal"><span class="pre">slug</span></tt>. For the URL <tt class="docutils literal"><span class="pre">/blog/my-blog-post</span></tt>,
 the <tt class="docutils literal"><span class="pre">slug</span></tt> variable gets a value of <tt class="docutils literal"><span class="pre">my-blog-post</span></tt>, which is available
 for you to use in your controller (keep reading).</p>
@@ -118,23 +125,23 @@ for you to use in your controller (keep reading).</p>
 should be executed when a URL matches this route. The <tt class="docutils literal"><span class="pre">_controller</span></tt> string
 is called the <a class="reference internal" href="#controller-string-syntax"><em>logical name</em></a>. It follows a
 pattern that points to a specific PHP class and method:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/BlogBundle/Controller/BlogController.php</span>
+<div class="highlight-python"><pre>// src/Acme/BlogBundle/Controller/BlogController.php
+namespace Acme\BlogBundle\Controller;
 
-<span class="x">namespace Acme\BlogBundle\Controller;</span>
-<span class="x">use Symfony\Bundle\FrameworkBundle\Controller\Controller;</span>
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-<span class="x">class BlogController extends Controller</span>
-<span class="x">{</span>
-<span class="x">    public function showAction($slug)</span>
-<span class="x">    {</span>
-<span class="x">        $blog = // use the $slug varible to query the database</span>
+class BlogController extends Controller
+{
+    public function showAction($slug)
+    {
+        // use the $slug variable to query the database
+        $blog = ...;
 
-<span class="x">        return $this-&gt;render(&#39;AcmeBlogBundle:Blog:show.html.twig&#39;, array(</span>
-<span class="x">            &#39;blog&#39; =&gt; $blog,</span>
-<span class="x">        ));</span>
-<span class="x">    }</span>
-<span class="x">}</span>
-</pre></div>
+        return $this-&gt;render('AcmeBlogBundle:Blog:show.html.twig', array(
+            'blog' =&gt; $blog,
+        ));
+    }
+}</pre>
 </div>
 <p>Congratulations! You&#8217;ve just created your first route and connected it to
 a controller. Now, when you visit <tt class="docutils literal"><span class="pre">/blog/my-post</span></tt>, the <tt class="docutils literal"><span class="pre">showAction</span></tt> controller
@@ -190,11 +197,13 @@ file:</p>
 &lt;/framework:config&gt;</pre>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;framework&#39;, array(</span>
-<span class="x">    // ...</span>
-<span class="x">    &#39;router&#39;        =&gt; array(&#39;resource&#39; =&gt; &#39;%kernel.root_dir%/config/routing.php&#39;),</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="c1">// ...</span>
+    <span class="s1">&#39;router&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;resource&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;%kernel.root_dir%/config/routing.php&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -203,18 +212,20 @@ file:</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">Even though all routes are loaded from a single file, it&#8217;s common practice
-to include additional routing resources from inside the file. See the
-<a class="reference internal" href="#routing-include-external-resources"><em>Including External Routing Resources</em></a> section for more information.</p>
+to include additional routing resources. To do so, just point out in the
+main routing configuration file which external files should be included.
+See the <a class="reference internal" href="#routing-include-external-resources"><em>Including External Routing Resources</em></a> section for more
+information.</p>
 </div>
 <div class="section" id="basic-route-configuration">
 <h3>Basic Route Configuration<a class="headerlink" href="#basic-route-configuration" title="Permalink to this headline">¶</a></h3>
 <p>Defining a route is easy, and a typical application will have lots of routes.
-A basic route consists of just two parts: the <tt class="docutils literal"><span class="pre">pattern</span></tt> to match and a
+A basic route consists of just two parts: the <tt class="docutils literal"><span class="pre">path</span></tt> to match and a
 <tt class="docutils literal"><span class="pre">defaults</span></tt> array:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">_welcome</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">/</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeDemoBundle</span><span class="p-Indicator">:</span><span class="nv">Main</span><span class="p-Indicator">:</span><span class="nv">homepage</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
@@ -223,9 +234,10 @@ A basic route consists of just two parts: the <tt class="docutils literal"><span
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;_welcome&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;_welcome&quot;</span> <span class="na">path=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeDemoBundle:Main:homepage<span class="nt">&lt;/default&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
 
@@ -233,15 +245,15 @@ A basic route consists of just two parts: the <tt class="docutils literal"><span
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;_welcome&#39;, new Route(&#39;/&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeDemoBundle:Main:homepage&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;_welcome&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeDemoBundle:Main:homepage&#39;</span><span class="p">,</span>
+<span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -259,7 +271,7 @@ routes will contain one or more named &#8220;wildcard&#8221; placeholders:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">blog_show</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/blog/{slug}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">/blog/{slug}</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">show</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
@@ -268,35 +280,36 @@ routes will contain one or more named &#8220;wildcard&#8221; placeholders:</p>
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog_show&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/blog/{slug}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog_show&quot;</span> <span class="na">path=</span><span class="s">&quot;/blog/{slug}&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeBlogBundle:Blog:show<span class="nt">&lt;/default&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
 <span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;blog_show&#39;, new Route(&#39;/blog/{slug}&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeBlogBundle:Blog:show&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;blog_show&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/blog/{slug}&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeBlogBundle:Blog:show&#39;</span><span class="p">,</span>
+<span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
-<p>The pattern will match anything that looks like <tt class="docutils literal"><span class="pre">/blog/*</span></tt>. Even better,
+<p>The path will match anything that looks like <tt class="docutils literal"><span class="pre">/blog/*</span></tt>. Even better,
 the value matching the <tt class="docutils literal"><span class="pre">{slug}</span></tt> placeholder will be available inside your
 controller. In other words, if the URL is <tt class="docutils literal"><span class="pre">/blog/hello-world</span></tt>, a <tt class="docutils literal"><span class="pre">$slug</span></tt>
 variable, with a value of <tt class="docutils literal"><span class="pre">hello-world</span></tt>, will be available in the controller.
 This can be used, for example, to load the blog post matching that string.</p>
-<p>The pattern will <em>not</em>, however, match simply <tt class="docutils literal"><span class="pre">/blog</span></tt>. That&#8217;s because,
+<p>The path will <em>not</em>, however, match simply <tt class="docutils literal"><span class="pre">/blog</span></tt>. That&#8217;s because,
 by default, all placeholders are required. This can be changed by adding
 a placeholder value to the <tt class="docutils literal"><span class="pre">defaults</span></tt> array.</p>
 </div>
@@ -307,7 +320,7 @@ the available blog posts for this imaginary blog application:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">blog</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/blog</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">/blog</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">index</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
@@ -316,24 +329,25 @@ the available blog posts for this imaginary blog application:</p>
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/blog&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog&quot;</span> <span class="na">path=</span><span class="s">&quot;/blog&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeBlogBundle:Blog:index<span class="nt">&lt;/default&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
 <span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;blog&#39;, new Route(&#39;/blog&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeBlogBundle:Blog:index&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/blog&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeBlogBundle:Blog:index&#39;</span><span class="p">,</span>
+<span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -346,7 +360,7 @@ entries? Update the route to have a new <tt class="docutils literal"><span class
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">blog</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/blog/{page}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">/blog/{page}</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">index</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
@@ -355,24 +369,25 @@ entries? Update the route to have a new <tt class="docutils literal"><span class
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/blog/{page}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog&quot;</span> <span class="na">path=</span><span class="s">&quot;/blog/{page}&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeBlogBundle:Blog:index<span class="nt">&lt;/default&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
 <span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;blog&#39;, new Route(&#39;/blog/{page}&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeBlogBundle:Blog:index&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/blog/{page}&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeBlogBundle:Blog:index&#39;</span><span class="p">,</span>
+<span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -389,7 +404,7 @@ This is done by including it in the <tt class="docutils literal"><span class="pr
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">blog</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/blog/{page}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">/blog/{page}</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">index</span><span class="p-Indicator">,</span> <span class="nv">page</span><span class="p-Indicator">:</span> <span class="nv">1</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
@@ -398,9 +413,10 @@ This is done by including it in the <tt class="docutils literal"><span class="pr
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/blog/{page}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog&quot;</span> <span class="na">path=</span><span class="s">&quot;/blog/{page}&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeBlogBundle:Blog:index<span class="nt">&lt;/default&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;page&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/default&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
@@ -408,16 +424,16 @@ This is done by including it in the <tt class="docutils literal"><span class="pr
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;blog&#39;, new Route(&#39;/blog/{page}&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeBlogBundle:Blog:index&#39;,</span>
-<span class="x">    &#39;page&#39; =&gt; 1,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/blog/{page}&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeBlogBundle:Blog:index&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;page&#39;</span>        <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -433,17 +449,22 @@ match, giving the <tt class="docutils literal"><span class="pre">page</span></tt
 <col width="57%" />
 </colgroup>
 <tbody valign="top">
-<tr><td>/blog</td>
+<tr class="row-odd"><td>/blog</td>
 <td>{page} = 1</td>
 </tr>
-<tr><td>/blog/1</td>
+<tr class="row-even"><td>/blog/1</td>
 <td>{page} = 1</td>
 </tr>
-<tr><td>/blog/2</td>
+<tr class="row-odd"><td>/blog/2</td>
 <td>{page} = 2</td>
 </tr>
 </tbody>
 </table>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Routes with optional parameters at the end will not match on requests
+with a trailing slash (i.e. <tt class="docutils literal"><span class="pre">/blog/</span></tt> will not match, <tt class="docutils literal"><span class="pre">/blog</span></tt> will match).</p>
+</div>
 </div>
 <div class="section" id="adding-requirements">
 <span id="index-5"></span><h3>Adding Requirements<a class="headerlink" href="#adding-requirements" title="Permalink to this headline">¶</a></h3>
@@ -451,11 +472,11 @@ match, giving the <tt class="docutils literal"><span class="pre">page</span></tt
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">blog</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/blog/{page}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">/blog/{page}</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">index</span><span class="p-Indicator">,</span> <span class="nv">page</span><span class="p-Indicator">:</span> <span class="nv">1</span> <span class="p-Indicator">}</span>
 
 <span class="l-Scalar-Plain">blog_show</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/blog/{slug}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">/blog/{slug}</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">show</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
@@ -464,34 +485,35 @@ match, giving the <tt class="docutils literal"><span class="pre">page</span></tt
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/blog/{page}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog&quot;</span> <span class="na">path=</span><span class="s">&quot;/blog/{page}&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeBlogBundle:Blog:index<span class="nt">&lt;/default&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;page&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/default&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog_show&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/blog/{slug}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog_show&quot;</span> <span class="na">path=</span><span class="s">&quot;/blog/{slug}&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeBlogBundle:Blog:show<span class="nt">&lt;/default&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
 <span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;blog&#39;, new Route(&#39;/blog/{page}&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeBlogBundle:Blog:index&#39;,</span>
-<span class="x">    &#39;page&#39; =&gt; 1,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/blog/{page}&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeBlogBundle:Blog:index&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;page&#39;</span>        <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">)));</span>
 
-<span class="x">$collection-&gt;add(&#39;blog_show&#39;, new Route(&#39;/blog/{show}&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeBlogBundle:Blog:show&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;blog_show&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/blog/{show}&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeBlogBundle:Blog:show&#39;</span><span class="p">,</span>
+<span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -510,30 +532,30 @@ to the <tt class="docutils literal"><span class="pre">{page}</span></tt> paramet
 <col width="46%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">URL</th>
+<tr class="row-odd"><th class="head">URL</th>
 <th class="head">route</th>
 <th class="head">parameters</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>/blog/2</td>
+<tr class="row-even"><td>/blog/2</td>
 <td>blog</td>
 <td>{page} = 2</td>
 </tr>
-<tr><td>/blog/my-blog-post</td>
+<tr class="row-odd"><td>/blog/my-blog-post</td>
 <td>blog</td>
 <td>{page} = my-blog-post</td>
 </tr>
 </tbody>
 </table>
 <p>The answer to the problem is to add route <em>requirements</em>. The routes in this
-example would work perfectly if the <tt class="docutils literal"><span class="pre">/blog/{page}</span></tt> pattern <em>only</em> matched
+example would work perfectly if the <tt class="docutils literal"><span class="pre">/blog/{page}</span></tt> path <em>only</em> matched
 URLs where the <tt class="docutils literal"><span class="pre">{page}</span></tt> portion is an integer. Fortunately, regular expression
 requirements can easily be added for each parameter. For example:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">blog</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/blog/{page}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">/blog/{page}</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">index</span><span class="p-Indicator">,</span> <span class="nv">page</span><span class="p-Indicator">:</span> <span class="nv">1</span> <span class="p-Indicator">}</span>
     <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">page</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">\d+</span>
@@ -544,9 +566,10 @@ requirements can easily be added for each parameter. For example:</p>
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/blog/{page}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;blog&quot;</span> <span class="na">path=</span><span class="s">&quot;/blog/{page}&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeBlogBundle:Blog:index<span class="nt">&lt;/default&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;page&quot;</span><span class="nt">&gt;</span>1<span class="nt">&lt;/default&gt;</span>
         <span class="nt">&lt;requirement</span> <span class="na">key=</span><span class="s">&quot;page&quot;</span><span class="nt">&gt;</span>\d+<span class="nt">&lt;/requirement&gt;</span>
@@ -555,18 +578,18 @@ requirements can easily be added for each parameter. For example:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;blog&#39;, new Route(&#39;/blog/{page}&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeBlogBundle:Blog:index&#39;,</span>
-<span class="x">    &#39;page&#39; =&gt; 1,</span>
-<span class="x">), array(</span>
-<span class="x">    &#39;page&#39; =&gt; &#39;\d+&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;blog&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/blog/{page}&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeBlogBundle:Blog:index&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;page&#39;</span>        <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+<span class="p">),</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;page&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;\d+&#39;</span><span class="p">,</span>
+<span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -586,17 +609,17 @@ is <em>not</em> a number).</p>
 <col width="43%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">URL</th>
+<tr class="row-odd"><th class="head">URL</th>
 <th class="head">route</th>
 <th class="head">parameters</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>/blog/2</td>
+<tr class="row-even"><td>/blog/2</td>
 <td>blog</td>
 <td>{page} = 2</td>
 </tr>
-<tr><td>/blog/my-blog-post</td>
+<tr class="row-odd"><td>/blog/my-blog-post</td>
 <td>blog_show</td>
 <td>{slug} = my-blog-post</td>
 </tr>
@@ -617,7 +640,7 @@ URL:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">homepage</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/{culture}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">/{culture}</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span>  <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeDemoBundle</span><span class="p-Indicator">:</span><span class="nv">Main</span><span class="p-Indicator">:</span><span class="nv">homepage</span><span class="p-Indicator">,</span> <span class="nv">culture</span><span class="p-Indicator">:</span> <span class="nv">en</span> <span class="p-Indicator">}</span>
     <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">culture</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">en|fr</span>
@@ -628,9 +651,10 @@ URL:</p>
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;homepage&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/{culture}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;homepage&quot;</span> <span class="na">path=</span><span class="s">&quot;/{culture}&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeDemoBundle:Main:homepage<span class="nt">&lt;/default&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;culture&quot;</span><span class="nt">&gt;</span>en<span class="nt">&lt;/default&gt;</span>
         <span class="nt">&lt;requirement</span> <span class="na">key=</span><span class="s">&quot;culture&quot;</span><span class="nt">&gt;</span>en|fr<span class="nt">&lt;/requirement&gt;</span>
@@ -639,18 +663,18 @@ URL:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;homepage&#39;, new Route(&#39;/{culture}&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeDemoBundle:Main:homepage&#39;,</span>
-<span class="x">    &#39;culture&#39; =&gt; &#39;en&#39;,</span>
-<span class="x">), array(</span>
-<span class="x">    &#39;culture&#39; =&gt; &#39;en|fr&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;homepage&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/{culture}&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeDemoBundle:Main:homepage&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;culture&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;en&#39;</span><span class="p">,</span>
+<span class="p">),</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;culture&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;en|fr&#39;</span><span class="p">,</span>
+<span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -664,16 +688,16 @@ the regular expression <tt class="docutils literal"><span class="pre">(en|fr)</s
 <col width="84%" />
 </colgroup>
 <tbody valign="top">
-<tr><td>/</td>
+<tr class="row-odd"><td>/</td>
 <td>{culture} = en</td>
 </tr>
-<tr><td>/en</td>
+<tr class="row-even"><td>/en</td>
 <td>{culture} = en</td>
 </tr>
-<tr><td>/fr</td>
+<tr class="row-odd"><td>/fr</td>
 <td>{culture} = fr</td>
 </tr>
-<tr><td>/es</td>
+<tr class="row-even"><td>/es</td>
 <td><em>won&#8217;t match this route</em></td>
 </tr>
 </tbody>
@@ -689,16 +713,14 @@ be accomplished with the following route configuration:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">contact</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/contact</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">/contact</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeDemoBundle</span><span class="p-Indicator">:</span><span class="nv">Main</span><span class="p-Indicator">:</span><span class="nv">contact</span> <span class="p-Indicator">}</span>
-    <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">_method</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">GET</span>
+    <span class="l-Scalar-Plain">methods</span><span class="p-Indicator">:</span>  <span class="p-Indicator">[</span><span class="nv">GET</span><span class="p-Indicator">]</span>
 
 <span class="l-Scalar-Plain">contact_process</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/contact</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">/contact</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeDemoBundle</span><span class="p-Indicator">:</span><span class="nv">Main</span><span class="p-Indicator">:</span><span class="nv">contactProcess</span> <span class="p-Indicator">}</span>
-    <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">_method</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">POST</span>
+    <span class="l-Scalar-Plain">methods</span><span class="p-Indicator">:</span>  <span class="p-Indicator">[</span><span class="nv">POST</span><span class="p-Indicator">]</span>
 </pre></div>
 </div>
 </li>
@@ -706,54 +728,57 @@ be accomplished with the following route configuration:</p>
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;contact&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/contact&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;contact&quot;</span> <span class="na">path=</span><span class="s">&quot;/contact&quot;</span> <span class="na">methods=</span><span class="s">&quot;GET&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeDemoBundle:Main:contact<span class="nt">&lt;/default&gt;</span>
-        <span class="nt">&lt;requirement</span> <span class="na">key=</span><span class="s">&quot;_method&quot;</span><span class="nt">&gt;</span>GET<span class="nt">&lt;/requirement&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;contact_process&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/contact&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;contact_process&quot;</span> <span class="na">path=</span><span class="s">&quot;/contact&quot;</span> <span class="na">methods=</span><span class="s">&quot;POST&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeDemoBundle:Main:contactProcess<span class="nt">&lt;/default&gt;</span>
-        <span class="nt">&lt;requirement</span> <span class="na">key=</span><span class="s">&quot;_method&quot;</span><span class="nt">&gt;</span>POST<span class="nt">&lt;/requirement&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
 <span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;contact&#39;, new Route(&#39;/contact&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeDemoBundle:Main:contact&#39;,</span>
-<span class="x">), array(</span>
-<span class="x">    &#39;_method&#39; =&gt; &#39;GET&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;contact&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/contact&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeDemoBundle:Main:contact&#39;</span><span class="p">,</span>
+<span class="p">),</span> <span class="k">array</span><span class="p">(),</span> <span class="k">array</span><span class="p">(),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(),</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">)));</span>
 
-<span class="x">$collection-&gt;add(&#39;contact_process&#39;, new Route(&#39;/contact&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeDemoBundle:Main:contactProcess&#39;,</span>
-<span class="x">), array(</span>
-<span class="x">    &#39;_method&#39; =&gt; &#39;POST&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;contact_process&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/contact&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeDemoBundle:Main:contactProcess&#39;</span><span class="p">,</span>
+<span class="p">),</span> <span class="k">array</span><span class="p">(),</span> <span class="k">array</span><span class="p">(),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(),</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
-<p>Despite the fact that these two routes have identical patterns (<tt class="docutils literal"><span class="pre">/contact</span></tt>),
+<p class="versionadded">
+<span class="versionmodified">New in version 2.2: </span>The <tt class="docutils literal"><span class="pre">methods</span></tt> option is added in Symfony2.2. Use the <tt class="docutils literal"><span class="pre">_method</span></tt>
+requirement in older versions.</p>
+<p>Despite the fact that these two routes have identical paths (<tt class="docutils literal"><span class="pre">/contact</span></tt>),
 the first route will match only GET requests and the second route will match
 only POST requests. This means that you can display the form and submit the
 form via the same URL, while using distinct controllers for the two actions.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If no <tt class="docutils literal"><span class="pre">_method</span></tt> requirement is specified, the route will match on
-<em>all</em> methods.</p>
+<p class="last">If no <tt class="docutils literal"><span class="pre">methods</span></tt> are specified, the route will match on <em>all</em> methods.</p>
 </div>
-<p>Like the other requirements, the <tt class="docutils literal"><span class="pre">_method</span></tt> requirement is parsed as a regular
-expression. To match <tt class="docutils literal"><span class="pre">GET</span></tt> <em>or</em> <tt class="docutils literal"><span class="pre">POST</span></tt> requests, you can use <tt class="docutils literal"><span class="pre">GET|POST</span></tt>.</p>
+</div>
+<div class="section" id="adding-a-host">
+<h3>Adding a Host<a class="headerlink" href="#adding-a-host" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.2: </span>Host matching support was added in Symfony 2.2</p>
+<p>You can also match on the HTTP <em>host</em> of the incoming request. For more
+information, see <a class="reference internal" href="../components/routing/hostname_pattern.html"><em>How to match a route based on the Host</em></a> in the Routing
+component documentation.</p>
 </div>
 <div class="section" id="advanced-routing-example">
 <span id="index-7"></span><span id="id1"></span><h3>Advanced Routing Example<a class="headerlink" href="#advanced-routing-example" title="Permalink to this headline">¶</a></h3>
@@ -763,7 +788,7 @@ routing system can be:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">article_show</span><span class="p-Indicator">:</span>
-  <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/articles/{culture}/{year}/{title}.{_format}</span>
+  <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">/articles/{culture}/{year}/{title}.{_format}</span>
   <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeDemoBundle</span><span class="p-Indicator">:</span><span class="nv">Article</span><span class="p-Indicator">:</span><span class="nv">show</span><span class="p-Indicator">,</span> <span class="nv">_format</span><span class="p-Indicator">:</span> <span class="nv">html</span> <span class="p-Indicator">}</span>
   <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
       <span class="l-Scalar-Plain">culture</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">en|fr</span>
@@ -776,33 +801,40 @@ routing system can be:</p>
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;article_show&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/articles/{culture}/{year}/{title}.{_format}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;article_show&quot;</span>
+        <span class="na">path=</span><span class="s">&quot;/articles/{culture}/{year}/{title}.{_format}&quot;</span><span class="nt">&gt;</span>
+
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeDemoBundle:Article:show<span class="nt">&lt;/default&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_format&quot;</span><span class="nt">&gt;</span>html<span class="nt">&lt;/default&gt;</span>
         <span class="nt">&lt;requirement</span> <span class="na">key=</span><span class="s">&quot;culture&quot;</span><span class="nt">&gt;</span>en|fr<span class="nt">&lt;/requirement&gt;</span>
         <span class="nt">&lt;requirement</span> <span class="na">key=</span><span class="s">&quot;_format&quot;</span><span class="nt">&gt;</span>html|rss<span class="nt">&lt;/requirement&gt;</span>
         <span class="nt">&lt;requirement</span> <span class="na">key=</span><span class="s">&quot;year&quot;</span><span class="nt">&gt;</span>\d+<span class="nt">&lt;/requirement&gt;</span>
+
     <span class="nt">&lt;/route&gt;</span>
 <span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;homepage&#39;, new Route(&#39;/articles/{culture}/{year}/{title}.{_format}&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeDemoBundle:Article:show&#39;,</span>
-<span class="x">    &#39;_format&#39; =&gt; &#39;html&#39;,</span>
-<span class="x">), array(</span>
-<span class="x">    &#39;culture&#39; =&gt; &#39;en|fr&#39;,</span>
-<span class="x">    &#39;_format&#39; =&gt; &#39;html|rss&#39;,</span>
-<span class="x">    &#39;year&#39; =&gt; &#39;\d+&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span>
+    <span class="s1">&#39;homepage&#39;</span><span class="p">,</span>
+    <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/articles/{culture}/{year}/{title}.{_format}&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeDemoBundle:Article:show&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_format&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;html&#39;</span><span class="p">,</span>
+    <span class="p">),</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;culture&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;en|fr&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;_format&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;html|rss&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;year&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;\d+&#39;</span><span class="p">,</span>
+    <span class="p">))</span>
+<span class="p">);</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -810,14 +842,13 @@ routing system can be:</p>
 </div>
 <p>As you&#8217;ve seen, this route will only match if the <tt class="docutils literal"><span class="pre">{culture}</span></tt> portion of
 the URL is either <tt class="docutils literal"><span class="pre">en</span></tt> or <tt class="docutils literal"><span class="pre">fr</span></tt> and if the <tt class="docutils literal"><span class="pre">{year}</span></tt> is a number. This
-route also shows how you can use a period between placeholders instead of
+route also shows how you can use a dot between placeholders instead of
 a slash. URLs matching this route might look like:</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li><tt class="docutils literal"><span class="pre">/articles/en/2010/my-post</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">/articles/fr/2010/my-post.rss</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">/articles/en/2013/my-latest-post.html</span></tt></li>
 </ul>
-</div></blockquote>
 <div class="sidebar" id="book-routing-format-param">
 <p class="first sidebar-title">The Special <tt class="docutils literal"><span class="pre">_format</span></tt> Routing Parameter</p>
 <p class="last">This example also highlights the special <tt class="docutils literal"><span class="pre">_format</span></tt> routing parameter.
@@ -828,6 +859,12 @@ request format translates into a <tt class="docutils literal"><span class="pre">
 It can also be used in the controller to render a different template for
 each value of <tt class="docutils literal"><span class="pre">_format</span></tt>. The <tt class="docutils literal"><span class="pre">_format</span></tt> parameter is a very powerful way
 to render the same content in different formats.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Sometimes you want to make certain parts of your routes globally configurable.
+Symfony provides you with a way to do this by leveraging service container
+parameters. Read more about this in &#8220;<a class="reference internal" href="../cookbook/routing/service_container_parameters.html"><em>How to use Service Container Parameters in your Routes</em></a>.</p>
 </div>
 </div>
 <div class="section" id="special-routing-parameters">
@@ -865,32 +902,31 @@ each separated by a colon:</p>
 <col width="28%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Bundle</th>
+<tr class="row-odd"><th class="head">Bundle</th>
 <th class="head">Controller Class</th>
 <th class="head">Method Name</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>AcmeBlogBundle</td>
+<tr class="row-even"><td>AcmeBlogBundle</td>
 <td>BlogController</td>
 <td>showAction</td>
 </tr>
 </tbody>
 </table>
 <p>The controller might look like this:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/BlogBundle/Controller/BlogController.php</span>
+<div class="highlight-python"><pre>// src/Acme/BlogBundle/Controller/BlogController.php
+namespace Acme\BlogBundle\Controller;
 
-<span class="x">namespace Acme\BlogBundle\Controller;</span>
-<span class="x">use Symfony\Bundle\FrameworkBundle\Controller\Controller;</span>
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-<span class="x">class BlogController extends Controller</span>
-<span class="x">{</span>
-<span class="x">    public function showAction($slug)</span>
-<span class="x">    {</span>
-<span class="x">        // ...</span>
-<span class="x">    }</span>
-<span class="x">}</span>
-</pre></div>
+class BlogController extends Controller
+{
+    public function showAction($slug)
+    {
+        // ...
+    }
+}</pre>
 </div>
 <p>Notice that Symfony adds the string <tt class="docutils literal"><span class="pre">Controller</span></tt> to the class name (<tt class="docutils literal"><span class="pre">Blog</span></tt>
 =&gt; <tt class="docutils literal"><span class="pre">BlogController</span></tt>) and <tt class="docutils literal"><span class="pre">Action</span></tt> to the method name (<tt class="docutils literal"><span class="pre">show</span></tt> =&gt; <tt class="docutils literal"><span class="pre">showAction</span></tt>).</p>
@@ -910,11 +946,10 @@ refers to the controller as a service (see <a class="reference internal" href=".
 <h2>Route Parameters and Controller Arguments<a class="headerlink" href="#route-parameters-and-controller-arguments" title="Permalink to this headline">¶</a></h2>
 <p>The route parameters (e.g. <tt class="docutils literal"><span class="pre">{slug}</span></tt>) are especially important because
 each is made available as an argument to the controller method:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">public function showAction($slug)</span>
-<span class="x">{</span>
-<span class="x">  // ...</span>
-<span class="x">}</span>
-</pre></div>
+<div class="highlight-python"><pre>public function showAction($slug)
+{
+  // ...
+}</pre>
 </div>
 <p>In reality, the entire <tt class="docutils literal"><span class="pre">defaults</span></tt> collection is merged with the parameter
 values to form a single array. Each key of that array is available as an
@@ -958,20 +993,23 @@ be done by &#8220;importing&#8221; that file:</p>
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
     <span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&quot;@AcmeHelloBundle/Resources/config/routing.xml&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/routing.php</span>
-<span class="x">use Symfony\Component\Routing\RouteCollection;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/routing.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;addCollection($loader-&gt;import(&quot;@AcmeHelloBundle/Resources/config/routing.php&quot;));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">addCollection</span><span class="p">(</span>
+    <span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">import</span><span class="p">(</span><span class="s2">&quot;@AcmeHelloBundle/Resources/config/routing.php&quot;</span><span class="p">)</span>
+<span class="p">);</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -990,7 +1028,7 @@ like this:</p>
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre> <span class="c1"># src/Acme/HelloBundle/Resources/config/routing.yml</span>
 <span class="l-Scalar-Plain">acme_hello</span><span class="p-Indicator">:</span>
-     <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/hello/{name}</span>
+     <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">/hello/{name}</span>
      <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeHelloBundle</span><span class="p-Indicator">:</span><span class="nv">Hello</span><span class="p-Indicator">:</span><span class="nv">index</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
@@ -1000,25 +1038,26 @@ like this:</p>
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;acme_hello&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/hello/{name}&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;acme_hello&quot;</span> <span class="na">path=</span><span class="s">&quot;/hello/{name}&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeHelloBundle:Hello:index<span class="nt">&lt;/default&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
 <span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// src/Acme/HelloBundle/Resources/config/routing.php</span>
-<span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/HelloBundle/Resources/config/routing.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;acme_hello&#39;, new Route(&#39;/hello/{name}&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeHelloBundle:Hello:index&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;acme_hello&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/hello/{name}&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeHelloBundle:Hello:index&#39;</span><span class="p">,</span>
+<span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -1029,7 +1068,7 @@ routing file.</p>
 <div class="section" id="prefixing-imported-routes">
 <h3>Prefixing Imported Routes<a class="headerlink" href="#prefixing-imported-routes" title="Permalink to this headline">¶</a></h3>
 <p>You can also choose to provide a &#8220;prefix&#8221; for the imported routes. For example,
-suppose you want the <tt class="docutils literal"><span class="pre">acme_hello</span></tt> route to have a final pattern of <tt class="docutils literal"><span class="pre">/admin/hello/{name}</span></tt>
+suppose you want the <tt class="docutils literal"><span class="pre">acme_hello</span></tt> route to have a final path of <tt class="docutils literal"><span class="pre">/admin/hello/{name}</span></tt>
 instead of simply <tt class="docutils literal"><span class="pre">/hello/{name}</span></tt>:</p>
 <div class="configuration-block">
 <ul class="simple">
@@ -1045,27 +1084,48 @@ instead of simply <tt class="docutils literal"><span class="pre">/hello/{name}</
 
 <span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
-    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&quot;@AcmeHelloBundle/Resources/config/routing.xml&quot;</span> <span class="na">prefix=</span><span class="s">&quot;/admin&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&quot;@AcmeHelloBundle/Resources/config/routing.xml&quot;</span>
+        <span class="na">prefix=</span><span class="s">&quot;/admin&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/routing.php</span>
-<span class="x">use Symfony\Component\Routing\RouteCollection;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/routing.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;addCollection($loader-&gt;import(&quot;@AcmeHelloBundle/Resources/config/routing.php&quot;), &#39;/admin&#39;);</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
 
-<span class="x">return $collection;</span>
+<span class="nv">$acmeHello</span> <span class="o">=</span> <span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">import</span><span class="p">(</span>
+    <span class="s2">&quot;@AcmeHelloBundle/Resources/config/routing.php&quot;</span>
+<span class="p">);</span>
+<span class="nv">$acmeHello</span><span class="o">-&gt;</span><span class="na">setPrefix</span><span class="p">(</span><span class="s1">&#39;/admin&#39;</span><span class="p">);</span>
+
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">addCollection</span><span class="p">(</span><span class="nv">$acmeHello</span><span class="p">);</span>
+
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
-<p>The string <tt class="docutils literal"><span class="pre">/admin</span></tt> will now be prepended to the pattern of each route
-loaded from the new routing resource.</p>
+<p>The string <tt class="docutils literal"><span class="pre">/admin</span></tt> will now be prepended to the path of each route loaded
+from the new routing resource.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">You can also define routes using annotations. See the
+<tt class="xref doc docutils literal"><span class="pre">FrameworkExtraBundle</span> <span class="pre">documentation</span></tt>
+to see how.</p>
+</div>
+</div>
+<div class="section" id="adding-a-host-regex-to-imported-routes">
+<h3>Adding a Host regex to Imported Routes<a class="headerlink" href="#adding-a-host-regex-to-imported-routes" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.2: </span>Host matching support was added in Symfony 2.2</p>
+<p>You can set the host regex on imported routes. For more information, see
+<a class="reference internal" href="../components/routing/hostname_pattern.html#component-routing-host-imported"><em>Adding a Host Regex to Imported Routes</em></a>.</p>
 </div>
 </div>
 <div class="section" id="visualizing-debugging-routes">
@@ -1074,10 +1134,10 @@ loaded from the new routing resource.</p>
 and get detailed information about your routes. A great way to see every route
 in your application is via the <tt class="docutils literal"><span class="pre">router:debug</span></tt> console command. Execute
 the command by running the following from the root of your project.</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console router:debug
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console router:debug
 </pre></div>
 </div>
-<p>The command will print a helpful list of <em>all</em> the configured routes in
+<p>This command will print a helpful list of <em>all</em> the configured routes in
 your application:</p>
 <div class="highlight-text"><div class="highlight"><pre>homepage              ANY       /
 contact               GET       /contact
@@ -1089,7 +1149,16 @@ blog_show             ANY       /blog/{slug}
 </div>
 <p>You can also get very specific information on a single route by including
 the route name after the command:</p>
-<div class="highlight-bash"><div class="highlight"><pre>php app/console router:debug article_show
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console router:debug article_show
+</pre></div>
+</div>
+<p>Likewise, if you want to test whether a URL matches a given route, you can
+use the <tt class="docutils literal"><span class="pre">router:match</span></tt> console command:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console router:match /blog/my-latest-post
+</pre></div>
+</div>
+<p>This command will print which route the URL matches.</p>
+<div class="highlight-text"><div class="highlight"><pre>Route &quot;blog_show&quot; matches
 </pre></div>
 </div>
 </div>
@@ -1098,28 +1167,42 @@ the route name after the command:</p>
 <p>The routing system should also be used to generate URLs. In reality, routing
 is a bi-directional system: mapping the URL to a controller+parameters and
 a route+parameters back to a URL. The
-<a href="#id2"><span class="problematic" id="id3">:method:`Symfony\\Component\\Routing\\Router::match`</span></a> and
-<a href="#id4"><span class="problematic" id="id5">:method:`Symfony\\Component\\Routing\\Router::generate`</span></a> methods form this bi-directional
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Routing/Router.html#method_match" title="Symfony\Component\Routing\Router::match()"><span class="pre">match()</span></a></tt> and
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Routing/Router.html#method_generate" title="Symfony\Component\Routing\Router::generate()"><span class="pre">generate()</span></a></tt> methods form this bi-directional
 system. Take the <tt class="docutils literal"><span class="pre">blog_show</span></tt> example route from earlier:</p>
-<div class="highlight-python"><pre>$params = $router-&gt;match('/blog/my-blog-post');
-// array('slug' =&gt; 'my-blog-post', '_controller' =&gt; 'AcmeBlogBundle:Blog:show')
+<div class="highlight-python"><pre>$params = $this-&gt;get('router')-&gt;match('/blog/my-blog-post');
+// array(
+//     'slug'        =&gt; 'my-blog-post',
+//     '_controller' =&gt; 'AcmeBlogBundle:Blog:show',
+// )
 
-$uri = $router-&gt;generate('blog_show', array('slug' =&gt; 'my-blog-post'));
+$uri = $this-&gt;get('router')-&gt;generate('blog_show', array('slug' =&gt; 'my-blog-post'));
 // /blog/my-blog-post</pre>
 </div>
 <p>To generate a URL, you need to specify the name of the route (e.g. <tt class="docutils literal"><span class="pre">blog_show</span></tt>)
-and any wildcards (e.g. <tt class="docutils literal"><span class="pre">slug</span> <span class="pre">=</span> <span class="pre">my-blog-post</span></tt>) used in the pattern for
-that route. With this information, any URL can easily be generated:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">class MainController extends Controller</span>
-<span class="x">{</span>
-<span class="x">    public function showAction($slug)</span>
-<span class="x">    {</span>
-<span class="x">      // ...</span>
+and any wildcards (e.g. <tt class="docutils literal"><span class="pre">slug</span> <span class="pre">=</span> <span class="pre">my-blog-post</span></tt>) used in the path for that
+route. With this information, any URL can easily be generated:</p>
+<div class="highlight-python"><pre>class MainController extends Controller
+{
+    public function showAction($slug)
+    {
+        // ...
 
-<span class="x">      $url = $this-&gt;get(&#39;router&#39;)-&gt;generate(&#39;blog_show&#39;, array(&#39;slug&#39; =&gt; &#39;my-blog-post&#39;));</span>
-<span class="x">    }</span>
-<span class="x">}</span>
-</pre></div>
+        $url = $this-&gt;generateUrl(
+            'blog_show',
+            array('slug' =&gt; 'my-blog-post')
+        );
+    }
+}</pre>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In controllers that extend Symfony&#8217;s base
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Controller/Controller.html" title="Symfony\Bundle\FrameworkBundle\Controller\Controller"><span class="pre">Controller</span></a></tt>,
+you can use the
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Controller/Controller.html#method_generateUrl" title="Symfony\Bundle\FrameworkBundle\Controller\Controller::generateUrl()"><span class="pre">generateUrl()</span></a></tt>
+method, which call&#8217;s the router service&#8217;s
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Routing/Router.html#method_generate" title="Symfony\Component\Routing\Router::generate()"><span class="pre">generate()</span></a></tt> method.</p>
 </div>
 <p>In an upcoming section, you&#8217;ll learn how to generate URLs from inside templates.</p>
 <div class="admonition tip">
@@ -1127,7 +1210,11 @@ that route. With this information, any URL can easily be generated:</p>
 <p>If the frontend of your application uses AJAX requests, you might want
 to be able to generate URLs in JavaScript based on your routing configuration.
 By using the <a class="reference external" href="https://github.com/FriendsOfSymfony/FOSJsRoutingBundle">FOSJsRoutingBundle</a>, you can do exactly that:</p>
-<div class="highlight-javascript"><pre>var url = Routing.generate('blog_show', { "slug": 'my-blog-post});</pre>
+<div class="highlight-javascript"><div class="highlight"><pre><span class="kd">var</span> <span class="nx">url</span> <span class="o">=</span> <span class="nx">Routing</span><span class="p">.</span><span class="nx">generate</span><span class="p">(</span>
+    <span class="s1">&#39;blog_show&#39;</span><span class="p">,</span>
+    <span class="p">{</span><span class="s2">&quot;slug&quot;</span><span class="o">:</span> <span class="s1">&#39;my-blog-post&#39;</span><span class="p">}</span>
+<span class="p">);</span>
+</pre></div>
 </div>
 <p class="last">For more information, see the documentation for that bundle.</p>
 </div>
@@ -1136,9 +1223,8 @@ By using the <a class="reference external" href="https://github.com/FriendsOfSym
 <p>By default, the router will generate relative URLs (e.g. <tt class="docutils literal"><span class="pre">/blog</span></tt>). To generate
 an absolute URL, simply pass <tt class="docutils literal"><span class="pre">true</span></tt> to the third argument of the <tt class="docutils literal"><span class="pre">generate()</span></tt>
 method:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">$router-&gt;generate(&#39;blog_show&#39;, array(&#39;slug&#39; =&gt; &#39;my-blog-post&#39;), true);</span>
-<span class="x">// http://www.example.com/blog/my-blog-post</span>
-</pre></div>
+<div class="highlight-python"><pre>$router-&gt;generate('blog_show', array('slug' =&gt; 'my-blog-post'), true);
+// http://www.example.com/blog/my-blog-post</pre>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -1146,9 +1232,8 @@ method:</p>
 the current <tt class="docutils literal"><span class="pre">Request</span></tt> object. This is detected automatically based
 on server information supplied by PHP. When generating absolute URLs for
 scripts run from the command line, you&#8217;ll need to manually set the desired
-host on the <tt class="docutils literal"><span class="pre">Request</span></tt> object:</p>
-<div class="last highlight-php"><div class="highlight"><pre><span class="x">$request-&gt;headers-&gt;set(&#39;HOST&#39;, &#39;www.example.com&#39;);</span>
-</pre></div>
+host on the <tt class="docutils literal"><span class="pre">RequestContext</span></tt> object:</p>
+<div class="last highlight-python"><pre>$router-&gt;getContext()-&gt;setHost('www.example.com');</pre>
 </div>
 </div>
 </div>
@@ -1167,15 +1252,17 @@ between pages in your application. This is done just as before, but using
 a template helper function:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">path</span><span class="o">(</span><span class="s1">&#39;blog_show&#39;</span><span class="o">,</span> <span class="o">{</span> <span class="s1">&#39;slug&#39;</span><span class="o">:</span> <span class="s1">&#39;my-blog-post&#39;</span> <span class="o">})</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">path</span><span class="o">(</span><span class="s1">&#39;blog_show&#39;</span><span class="o">,</span> <span class="o">{</span><span class="s1">&#39;slug&#39;</span><span class="o">:</span> <span class="s1">&#39;my-blog-post&#39;</span><span class="o">})</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
   Read this blog post.
 <span class="nt">&lt;/a&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&lt;a href=&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;blog_show&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;slug&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;my-blog-post&#39;</span><span class="p">))</span> <span class="cp">?&gt;</span><span class="x">&quot;&gt;</span>
-<span class="x">    Read this blog post.</span>
-<span class="x">&lt;/a&gt;</span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;blog_show&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;slug&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;my-blog-post&#39;</span><span class="p">,</span>
+<span class="p">))</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+    Read this blog post.
+<span class="nt">&lt;/a&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -1184,15 +1271,17 @@ a template helper function:</p>
 <p>Absolute URLs can also be generated.</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">url</span><span class="o">(</span><span class="s1">&#39;blog_show&#39;</span><span class="o">,</span> <span class="o">{</span> <span class="s1">&#39;slug&#39;</span><span class="o">:</span> <span class="s1">&#39;my-blog-post&#39;</span> <span class="o">})</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">url</span><span class="o">(</span><span class="s1">&#39;blog_show&#39;</span><span class="o">,</span> <span class="o">{</span><span class="s1">&#39;slug&#39;</span><span class="o">:</span> <span class="s1">&#39;my-blog-post&#39;</span><span class="o">})</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
   Read this blog post.
 <span class="nt">&lt;/a&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">&lt;a href=&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;blog_show&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;slug&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;my-blog-post&#39;</span><span class="p">),</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="x">&quot;&gt;</span>
-<span class="x">    Read this blog post.</span>
-<span class="x">&lt;/a&gt;</span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;blog_show&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;slug&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;my-blog-post&#39;</span><span class="p">,</span>
+<span class="p">),</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+    Read this blog post.
+<span class="nt">&lt;/a&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -1233,6 +1322,7 @@ should also be used to generate URLs.</p>
 <li><a class="reference internal" href="#required-and-optional-placeholders">Required and Optional Placeholders</a></li>
 <li><a class="reference internal" href="#adding-requirements">Adding Requirements</a></li>
 <li><a class="reference internal" href="#adding-http-method-requirements">Adding HTTP Method Requirements</a></li>
+<li><a class="reference internal" href="#adding-a-host">Adding a Host</a></li>
 <li><a class="reference internal" href="#advanced-routing-example">Advanced Routing Example</a></li>
 <li><a class="reference internal" href="#special-routing-parameters">Special Routing Parameters</a></li>
 </ul>
@@ -1241,6 +1331,7 @@ should also be used to generate URLs.</p>
 <li><a class="reference internal" href="#route-parameters-and-controller-arguments">Route Parameters and Controller Arguments</a></li>
 <li><a class="reference internal" href="#including-external-routing-resources">Including External Routing Resources</a><ul>
 <li><a class="reference internal" href="#prefixing-imported-routes">Prefixing Imported Routes</a></li>
+<li><a class="reference internal" href="#adding-a-host-regex-to-imported-routes">Adding a Host regex to Imported Routes</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#visualizing-debugging-routes">Visualizing &amp; Debugging Routes</a></li>
@@ -1270,7 +1361,7 @@ should also be used to generate URLs.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -1296,13 +1387,13 @@ should also be used to generate URLs.</p>
         <li class="right" >
           <a href="controller.html" title="Controller"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Book</a> &raquo;</li> 
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

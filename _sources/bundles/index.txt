@@ -1,12 +1,11 @@
-Symfony SE Bundles
-==================
+The Symfony Standard Edition Bundles
+====================================
 
 .. toctree::
     :hidden:
 
     SensioFrameworkExtraBundle/index
     SensioGeneratorBundle/index
-    JMSSecurityExtraBundle/index
     DoctrineFixturesBundle/index
     DoctrineMigrationsBundle/index
     DoctrineMongoDBBundle/index

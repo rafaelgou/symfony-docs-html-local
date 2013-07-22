@@ -1,15 +1,15 @@
 .. index::
-   single: Bundles; Best Practices
+   single: Bundle; Best practices
 
-Bundle Structure and Best Practices
-===================================
+How to use Best Practices for Structuring Bundles
+=================================================
 
 A bundle is a directory that has a well-defined structure and can host anything
 from classes to controllers and web resources. Even if bundles are very
 flexible, you should follow some best practices if you want to distribute them.
 
 .. index::
-   pair: Bundles; Naming Conventions
+   pair: Bundle; Naming conventions
 
 .. _bundles-naming-conventions:
 
@@ -134,6 +134,12 @@ The following classes and files have specific emplacements:
 | Unit and Functional Tests    | ``Tests/``                  |
 +------------------------------+-----------------------------+
 
+.. note::
+
+    When building a reusable bundle, model classes should be placed in the
+    ``Model`` namespace. See :doc:`/cookbook/doctrine/mapping_model_classes` for
+    how to handle the mapping with a compiler pass.
+
 Classes
 -------
 
@@ -172,7 +178,7 @@ the ``Tests/`` directory. Tests should follow the following principles:
   a sample application;
 * The functional tests should only be used to test the response output and
   some profiling information if you have some;
-* The code coverage should at least covers 95% of the code base.
+* The tests should cover at least 95% of the code base.
 
 .. note::
    A test suite must not contain ``AllTests.php`` scripts, but must rely on the
@@ -263,6 +269,7 @@ The end user can provide values in any configuration file:
 
     .. code-block:: ini
 
+        ; app/config/config.ini
         [parameters]
         acme_hello.email.from = fabien@example.com
 
@@ -283,4 +290,4 @@ Learn more from the Cookbook
 
 * :doc:`/cookbook/bundles/extension`
 
-.. _standards: https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md
+.. _standards: http://symfony.com/PSR0

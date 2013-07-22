@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Bundle Structure and Best Practices &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to use Best Practices for Structuring Bundles &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +25,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Bundles" href="index.html" />
     <link rel="next" title="How to use Bundle Inheritance to Override parts of a Bundle" href="inheritance.html" />
-    <link rel="prev" title="How to use PdoSessionStorage to store Sessions in the Database" href="../configuration/pdo_session_storage.html" /> 
+    <link rel="prev" title="How to install 3rd party Bundles" href="installation.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,10 +41,11 @@
           <a href="inheritance.html" title="How to use Bundle Inheritance to Override parts of a Bundle"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../configuration/pdo_session_storage.html" title="How to use PdoSessionStorage to store Sessions in the Database"
+          <a href="installation.html" title="How to install 3rd party Bundles"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Bundles</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -50,15 +54,15 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="bundle-structure-and-best-practices">
-<span id="index-0"></span><h1>Bundle Structure and Best Practices<a class="headerlink" href="#bundle-structure-and-best-practices" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="how-to-use-best-practices-for-structuring-bundles">
+<span id="index-0"></span><h1>How to use Best Practices for Structuring Bundles<a class="headerlink" href="#how-to-use-best-practices-for-structuring-bundles" title="Permalink to this headline">¶</a></h1>
 <p>A bundle is a directory that has a well-defined structure and can host anything
 from classes to controllers and web resources. Even if bundles are very
 flexible, you should follow some best practices if you want to distribute them.</p>
 <div class="section" id="bundle-name">
 <span id="bundles-naming-conventions"></span><span id="index-1"></span><h2>Bundle Name<a class="headerlink" href="#bundle-name" title="Permalink to this headline">¶</a></h2>
 <p>A bundle is also a PHP namespace. The namespace must follow the technical
-interoperability <a class="reference external" href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-0.md">standards</a> for PHP 5.3 namespaces and class names: it
+interoperability <a class="reference external" href="http://symfony.com/PSR0">standards</a> for PHP 5.3 namespaces and class names: it
 starts with a vendor segment, followed by zero or more category segments, and
 it ends with the namespace short name, which must end with a <tt class="docutils literal"><span class="pre">Bundle</span></tt>
 suffix.</p>
@@ -79,18 +83,18 @@ category namespaces);</li>
 <col width="43%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Namespace</th>
+<tr class="row-odd"><th class="head">Namespace</th>
 <th class="head">Bundle Class Name</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td><tt class="docutils literal"><span class="pre">Acme\Bundle\BlogBundle</span></tt></td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Acme\Bundle\BlogBundle</span></tt></td>
 <td><tt class="docutils literal"><span class="pre">AcmeBlogBundle</span></tt></td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">Acme\Bundle\Social\BlogBundle</span></tt></td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">Acme\Bundle\Social\BlogBundle</span></tt></td>
 <td><tt class="docutils literal"><span class="pre">AcmeSocialBlogBundle</span></tt></td>
 </tr>
-<tr><td><tt class="docutils literal"><span class="pre">Acme\BlogBundle</span></tt></td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">Acme\BlogBundle</span></tt></td>
 <td><tt class="docutils literal"><span class="pre">AcmeBlogBundle</span></tt></td>
 </tr>
 </tbody>
@@ -107,7 +111,7 @@ for instance).</p>
 <p class="first admonition-title">Note</p>
 <p class="last">Symfony2 core Bundles do not prefix the Bundle class with <tt class="docutils literal"><span class="pre">Symfony</span></tt>
 and always add a <tt class="docutils literal"><span class="pre">Bundle</span></tt> subnamespace; for example:
-<tt class="xref py py-class docutils literal"><span class="pre">Symfony\Bundle\FrameworkBundle\FrameworkBundle</span></tt>.</p>
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/FrameworkBundle.html" title="Symfony\Bundle\FrameworkBundle\FrameworkBundle"><span class="pre">FrameworkBundle</span></a></tt>.</p>
 </div>
 <p>Each bundle has an alias, which is the lower-cased short version of the bundle
 name using underscores (<tt class="docutils literal"><span class="pre">acme_hello</span></tt> for <tt class="docutils literal"><span class="pre">AcmeHelloBundle</span></tt>, or
@@ -161,40 +165,46 @@ files are going to be part of the repository.</p>
 <col width="49%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Type</th>
+<tr class="row-odd"><th class="head">Type</th>
 <th class="head">Directory</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>Commands</td>
+<tr class="row-even"><td>Commands</td>
 <td><tt class="docutils literal"><span class="pre">Command/</span></tt></td>
 </tr>
-<tr><td>Controllers</td>
+<tr class="row-odd"><td>Controllers</td>
 <td><tt class="docutils literal"><span class="pre">Controller/</span></tt></td>
 </tr>
-<tr><td>Service Container Extensions</td>
+<tr class="row-even"><td>Service Container Extensions</td>
 <td><tt class="docutils literal"><span class="pre">DependencyInjection/</span></tt></td>
 </tr>
-<tr><td>Event Listeners</td>
+<tr class="row-odd"><td>Event Listeners</td>
 <td><tt class="docutils literal"><span class="pre">EventListener/</span></tt></td>
 </tr>
-<tr><td>Configuration</td>
+<tr class="row-even"><td>Configuration</td>
 <td><tt class="docutils literal"><span class="pre">Resources/config/</span></tt></td>
 </tr>
-<tr><td>Web Resources</td>
+<tr class="row-odd"><td>Web Resources</td>
 <td><tt class="docutils literal"><span class="pre">Resources/public/</span></tt></td>
 </tr>
-<tr><td>Translation files</td>
+<tr class="row-even"><td>Translation files</td>
 <td><tt class="docutils literal"><span class="pre">Resources/translations/</span></tt></td>
 </tr>
-<tr><td>Templates</td>
+<tr class="row-odd"><td>Templates</td>
 <td><tt class="docutils literal"><span class="pre">Resources/views/</span></tt></td>
 </tr>
-<tr><td>Unit and Functional Tests</td>
+<tr class="row-even"><td>Unit and Functional Tests</td>
 <td><tt class="docutils literal"><span class="pre">Tests/</span></tt></td>
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When building a reusable bundle, model classes should be placed in the
+<tt class="docutils literal"><span class="pre">Model</span></tt> namespace. See <a class="reference internal" href="../doctrine/mapping_model_classes.html"><em>How to provide model classes for several Doctrine implementations</em></a> for
+how to handle the mapping with a compiler pass.</p>
+</div>
 </div>
 <div class="section" id="classes">
 <h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
@@ -225,7 +235,7 @@ the <tt class="docutils literal"><span class="pre">Tests/</span></tt> directory.
 a sample application;</li>
 <li>The functional tests should only be used to test the response output and
 some profiling information if you have some;</li>
-<li>The code coverage should at least covers 95% of the code base.</li>
+<li>The tests should cover at least 95% of the code base.</li>
 </ul>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -244,15 +254,15 @@ must be the entry point for the documentation.</p>
 <h2>Controllers<a class="headerlink" href="#controllers" title="Permalink to this headline">¶</a></h2>
 <p>As a best practice, controllers in a bundle that&#8217;s meant to be distributed
 to others must not extend the
-<tt class="xref py py-class docutils literal"><span class="pre">Symfony\Bundle\FrameworkBundle\Controller\Controller</span></tt> base class.
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Controller/Controller.html" title="Symfony\Bundle\FrameworkBundle\Controller\Controller"><span class="pre">Controller</span></a></tt> base class.
 They can implement
-<tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DependencyInjection\ContainerAwareInterface</span></tt> or
-extend <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\DependencyInjection\ContainerAware</span></tt>
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DependencyInjection/ContainerAwareInterface.html" title="Symfony\Component\DependencyInjection\ContainerAwareInterface"><span class="pre">ContainerAwareInterface</span></a></tt> or
+extend <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DependencyInjection/ContainerAware.html" title="Symfony\Component\DependencyInjection\ContainerAware"><span class="pre">ContainerAware</span></a></tt>
 instead.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If you have a look at
-<tt class="xref py py-class docutils literal"><span class="pre">Symfony\Bundle\FrameworkBundle\Controller\Controller</span></tt> methods,
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Controller/Controller.html" title="Symfony\Bundle\FrameworkBundle\Controller\Controller"><span class="pre">Controller</span></a></tt> methods,
 you will see that they are only nice shortcuts to ease the learning curve.</p>
 </div>
 </div>
@@ -299,12 +309,13 @@ parameter name will use a period (<tt class="docutils literal"><span class="pre"
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
-<span class="x">$container-&gt;setParameter(&#39;acme_hello.email.from&#39;, &#39;fabien@example.com&#39;);</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setParameter</span><span class="p">(</span><span class="s1">&#39;acme_hello.email.from&#39;</span><span class="p">,</span> <span class="s1">&#39;fabien@example.com&#39;</span><span class="p">);</span>
 </pre></div>
 </div>
 </li>
-<li><em>INI</em><div class="highlight-ini"><div class="highlight"><pre><span class="k">[parameters]</span>
+<li><em>INI</em><div class="highlight-ini"><div class="highlight"><pre><span class="c">; app/config/config.ini</span>
+<span class="k">[parameters]</span>
 <span class="na">acme_hello.email.from</span> <span class="o">=</span> <span class="s">fabien@example.com</span>
 </pre></div>
 </div>
@@ -338,7 +349,7 @@ alias.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Bundle Structure and Best Practices</a><ul>
+<li><a class="reference internal" href="#">How to use Best Practices for Structuring Bundles</a><ul>
 <li><a class="reference internal" href="#bundle-name">Bundle Name</a></li>
 <li><a class="reference internal" href="#directory-structure">Directory Structure</a></li>
 <li><a class="reference internal" href="#classes">Classes</a></li>
@@ -356,8 +367,8 @@ alias.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../configuration/pdo_session_storage.html"
-                        title="previous chapter">How to use PdoSessionStorage to store Sessions in the Database</a></p>
+  <p class="topless"><a href="installation.html"
+                        title="previous chapter">How to install 3rd party Bundles</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="inheritance.html"
                         title="next chapter">How to use Bundle Inheritance to Override parts of a Bundle</a></p>
@@ -369,7 +380,7 @@ alias.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -393,15 +404,16 @@ alias.</p>
           <a href="inheritance.html" title="How to use Bundle Inheritance to Override parts of a Bundle"
              >next</a> |</li>
         <li class="right" >
-          <a href="../configuration/pdo_session_storage.html" title="How to use PdoSessionStorage to store Sessions in the Database"
+          <a href="installation.html" title="How to install 3rd party Bundles"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Bundles</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

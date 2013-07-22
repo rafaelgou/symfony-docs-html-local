@@ -1,13 +1,16 @@
+.. index::
+   single: Security; "Remember me"
+
 How to add "Remember Me" Login Functionality
 ============================================
 
 Once a user is authenticated, their credentials are typically stored in the
 session. This means that when the session ends they will be logged out and
-have to provide their login details again next time they wish to access the 
-application. You can allow users to choose to stay logged in for longer than 
-the session lasts using a cookie with the ``remember_me`` firewall option. 
-The firewall needs to have a secret key configured, which is used to encrypt 
-the cookie's content. It also has several options with default values which 
+have to provide their login details again next time they wish to access the
+application. You can allow users to choose to stay logged in for longer than
+the session lasts using a cookie with the ``remember_me`` firewall option.
+The firewall needs to have a secret key configured, which is used to encrypt
+the cookie's content. It also has several options with default values which
 are shown here:
 
 .. configuration-block::
@@ -18,8 +21,8 @@ are shown here:
         firewalls:
             main:
                 remember_me:
-                    key:      aSecretKey
-                    lifetime: 3600
+                    key:      "%secret%"
+                    lifetime: 31536000 # 365 days in seconds
                     path:     /
                     domain:   ~ # Defaults to the current domain from $_SERVER
 
@@ -29,10 +32,10 @@ are shown here:
         <config>
             <firewall>
                 <remember-me
-                    key="aSecretKey"
-                    lifetime="3600"
-                    path="/"
-                    domain="" <!-- Defaults to the current domain from $_SERVER -->
+                    key      = "%secret%"
+                    lifetime = "31536000" <!-- 365 days in seconds -->
+                    path     = "/"
+                    domain   = "" <!-- Defaults to the current domain from $_SERVER -->
                 />
             </firewall>
         </config>
@@ -42,12 +45,14 @@ are shown here:
         // app/config/security.php
         $container->loadFromExtension('security', array(
             'firewalls' => array(
-                'main' => array('remember_me' => array(
-                    'key'                     => 'aSecretKey',
-                    'lifetime'                => 3600,
-                    'path'                    => '/',
-                    'domain'                  => '', // Defaults to the current domain from $_SERVER
-                )),
+                'main' => array(
+                    'remember_me' => array(
+                        'key'      => '%secret%',
+                        'lifetime' => 31536000, // 365 days in seconds
+                        'path'     => '/',
+                        'domain'   => '', // Defaults to the current domain from $_SERVER
+                    ),
+                ),
             ),
         ));
 
@@ -82,14 +87,14 @@ might ultimately look like this:
 
     .. code-block:: html+php
 
-        <?php // src/Acme/SecurityBundle/Resources/views/Security/login.html.php ?>
+        <!-- src/Acme/SecurityBundle/Resources/views/Security/login.html.php -->
         <?php if ($error): ?>
             <div><?php echo $error->getMessage() ?></div>
         <?php endif; ?>
 
         <form action="<?php echo $view['router']->generate('login_check') ?>" method="post">
             <label for="username">Username:</label>
-            <input type="text" id="username" 
+            <input type="text" id="username"
                    name="_username" value="<?php echo $last_username ?>" />
 
             <label for="password">Password:</label>
@@ -113,16 +118,16 @@ to access protected resources as if the user had actually authenticated upon
 visiting the site.
 
 In some cases, however, you may want to force the user to actually re-authenticate
-before accessing certain resources. For example, you might allow a "remember me"
-user to see basic account information, but then require them to actually
+before accessing certain resources. For example, you might allow "remember me"
+users to see basic account information, but then require them to actually
 re-authenticate before modifying that information.
 
-The security component provides an easy way to do this. In addition to roles 
+The security component provides an easy way to do this. In addition to roles
 explicitly assigned to them, users are automatically given one of the following
 roles depending on how they are authenticated:
 
-* ``IS_AUTHENTICATED_ANONYMOUSLY`` - automatically assigned to a user who is 
-  in a firewall protected part of the site but who has not actually logged in. 
+* ``IS_AUTHENTICATED_ANONYMOUSLY`` - automatically assigned to a user who is
+  in a firewall protected part of the site but who has not actually logged in.
   This is only possible if anonymous access has been allowed.
 
 * ``IS_AUTHENTICATED_REMEMBERED`` - automatically assigned to a user who
@@ -140,26 +145,26 @@ You can use these to control access beyond the explicitly assigned roles.
     role, then you also have the other two roles. In other words, these roles
     represent three levels of increasing "strength" of authentication.
 
-You can use these additional roles for finer grained control over access to 
-parts of a site. For example, you may want you user to be able to view their 
-account at ``/account`` when authenticated by cookie but to have to provide 
+You can use these additional roles for finer grained control over access to
+parts of a site. For example, you may want your user to be able to view their
+account at ``/account`` when authenticated by cookie but to have to provide
 their login details to be able to edit the account details. You can do this
 by securing specific controller actions using these roles. The edit action
-in the controller could be secured using the service context. 
+in the controller could be secured using the service context.
 
-In the following example, the action is only allowed if the user has the 
+In the following example, the action is only allowed if the user has the
 ``IS_AUTHENTICATED_FULLY`` role.
 
 .. code-block:: php
 
-    use Symfony\Component\Security\Core\Exception\AccessDeniedException
     // ...
+    use Symfony\Component\Security\Core\Exception\AccessDeniedException
 
     public function editAction()
     {
         if (false === $this->get('security.context')->isGranted(
             'IS_AUTHENTICATED_FULLY'
-        )) {
+           )) {
             throw new AccessDeniedException();
         }
 
@@ -186,10 +191,10 @@ which can secure your controller using annotations:
     If you also had an access control in your security configuration that
     required the user to have a ``ROLE_USER`` role in order to access any
     of the account area, then you'd have the following situation:
-    
+
     * If a non-authenticated (or anonymously authenticated user) tries to
       access the account area, the user will be asked to authenticate.
-    
+
     * Once the user has entered his username and password, assuming the
       user receives the ``ROLE_USER`` role per your configuration, the user
       will have the ``IS_AUTHENTICATED_FULLY`` role and be able to access

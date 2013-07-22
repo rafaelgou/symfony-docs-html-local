@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Language &mdash; Symfony2Docs v1 documentation</title>
+    <title>Language &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
     <link rel="next" title="Locale" href="Locale.html" />
     <link rel="prev" title="UniqueEntity" href="UniqueEntity.html" /> 
@@ -40,7 +43,7 @@
         <li class="right" >
           <a href="UniqueEntity.html" title="UniqueEntity"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -60,20 +63,20 @@
 <col width="82%" />
 </colgroup>
 <tbody valign="top">
-<tr><td>Applies to</td>
+<tr class="row-odd"><td>Applies to</td>
 <td><a class="reference internal" href="../../book/validation.html#validation-property-target"><em>property or method</em></a></td>
 </tr>
-<tr><td>Options</td>
+<tr class="row-even"><td>Options</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="#message">message</a></li>
 </ul>
 </td>
 </tr>
-<tr><td>Class</td>
-<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\Language</span></tt></td>
+<tr class="row-odd"><td>Class</td>
+<td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Validator/Constraints/Language.html" title="Symfony\Component\Validator\Constraints\Language"><span class="pre">Language</span></a></tt></td>
 </tr>
-<tr><td>Validator</td>
-<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\LanguageValidator</span></tt></td>
+<tr class="row-even"><td>Validator</td>
+<td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Validator/Constraints/LanguageValidator.html" title="Symfony\Component\Validator\Constraints\LanguageValidator"><span class="pre">LanguageValidator</span></a></tt></td>
 </tr>
 </tbody>
 </table>
@@ -89,18 +92,44 @@
 </pre></div>
 </div>
 </li>
-<li><em>Annotations</em><div class="highlight-php-annotations"><pre>// src/Acme/UserBundle/Entity/User.php
-namespace Acme\UserBundle\Entity;
+<li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/UserBundle/Entity/User.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\UserBundle\Entity</span><span class="p">;</span>
 
-use Symfony\Component\Validator\Constraints as Assert;
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
 
-class User
-{
-    /**
-     * @Assert\Language
-     */
-     protected $preferredLanguage;
-}</pre>
+<span class="k">class</span> <span class="nc">User</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @Assert\Language</span>
+<span class="sd">     */</span>
+     <span class="k">protected</span> <span class="nv">$preferredLanguage</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/UserBundle/Resources/config/validation.xml --&gt;</span>
+<span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\UserBundle\Entity\User&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;preferredLanguage&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Language&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/property&gt;</span>
+<span class="nt">&lt;/class&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/UserBundle/Entity/User.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\UserBundle\Entity</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Mapping\ClassMetadata</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">User</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">loadValidatorMetadata</span><span class="p">(</span><span class="nx">ClassMetadata</span> <span class="nv">$metadata</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$metadata</span><span class="o">-&gt;</span><span class="na">addPropertyConstraint</span><span class="p">(</span><span class="s1">&#39;preferredLanguage&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Assert\Language</span><span class="p">());</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </li>
 </ul>
@@ -148,7 +177,7 @@ class User
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -174,14 +203,14 @@ class User
         <li class="right" >
           <a href="UniqueEntity.html" title="UniqueEntity"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Symfony2 versus Flat PHP &mdash; Symfony2Docs v1 documentation</title>
+    <title>Symfony2 versus Flat PHP &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,8 +25,8 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../index.html" />
-    <link rel="up" title="Book" href="index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Installing and Configuring Symfony" href="installation.html" />
     <link rel="prev" title="Symfony2 and HTTP Fundamentals" href="http_fundamentals.html" /> 
   </head>
@@ -40,8 +43,8 @@
         <li class="right" >
           <a href="http_fundamentals.html" title="Symfony2 and HTTP Fundamentals"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Book</a> &raquo;</li> 
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -70,13 +73,13 @@ To begin, create a single page that displays blog entries that have been
 persisted to the database. Writing in flat PHP is quick and dirty:</p>
 <div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// index.php</span>
-
 <span class="nv">$link</span> <span class="o">=</span> <span class="nb">mysql_connect</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;myuser&#39;</span><span class="p">,</span> <span class="s1">&#39;mypassword&#39;</span><span class="p">);</span>
 <span class="nb">mysql_select_db</span><span class="p">(</span><span class="s1">&#39;blog_db&#39;</span><span class="p">,</span> <span class="nv">$link</span><span class="p">);</span>
 
 <span class="nv">$result</span> <span class="o">=</span> <span class="nb">mysql_query</span><span class="p">(</span><span class="s1">&#39;SELECT id, title FROM post&#39;</span><span class="p">,</span> <span class="nv">$link</span><span class="p">);</span>
 <span class="cp">?&gt;</span>
 
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
         <span class="nt">&lt;title&gt;</span>List of Posts<span class="nt">&lt;/title&gt;</span>
@@ -97,6 +100,7 @@ persisted to the database. Writing in flat PHP is quick and dirty:</p>
 
 <span class="cp">&lt;?php</span>
 <span class="nb">mysql_close</span><span class="p">(</span><span class="nv">$link</span><span class="p">);</span>
+<span class="cp">?&gt;</span>
 </pre></div>
 </div>
 <p>That&#8217;s quick to write, fast to execute, and, as your app grows, impossible
@@ -123,7 +127,6 @@ a library dedicated to database abstraction and mapping.</p>
 the code that prepares the HTML &#8220;presentation&#8221;:</p>
 <div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// index.php</span>
-
 <span class="nv">$link</span> <span class="o">=</span> <span class="nb">mysql_connect</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;myuser&#39;</span><span class="p">,</span> <span class="s1">&#39;mypassword&#39;</span><span class="p">);</span>
 <span class="nb">mysql_select_db</span><span class="p">(</span><span class="s1">&#39;blog_db&#39;</span><span class="p">,</span> <span class="nv">$link</span><span class="p">);</span>
 
@@ -142,7 +145,8 @@ the code that prepares the HTML &#8220;presentation&#8221;:</p>
 </div>
 <p>The HTML code is now stored in a separate file (<tt class="docutils literal"><span class="pre">templates/list.php</span></tt>), which
 is primarily an HTML file that uses a template-like PHP syntax:</p>
-<div class="highlight-html+php"><div class="highlight"><pre><span class="nt">&lt;html&gt;</span>
+<div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
         <span class="nt">&lt;title&gt;</span>List of Posts<span class="nt">&lt;/title&gt;</span>
     <span class="nt">&lt;/head&gt;</span>
@@ -165,7 +169,7 @@ is primarily an HTML file that uses a template-like PHP syntax:</p>
 is known as a &#8220;controller&#8221;. The term <a class="reference internal" href="../glossary.html#term-controller"><em class="xref std std-term">controller</em></a> is a word you&#8217;ll hear
 a lot, regardless of the language or framework you use. It refers simply
 to the area of <em>your</em> code that processes user input and prepares the response.</p>
-<p>In this case, our controller prepares data from the database and then includes
+<p>In this case, the controller prepares data from the database and then includes
 a template to present that data. With the controller isolated, you could
 easily change <em>just</em> the template file if you needed to render the blog
 entries in some other format (e.g. <tt class="docutils literal"><span class="pre">list.json.php</span></tt> for JSON format).</p>
@@ -178,7 +182,6 @@ posts? Refactor the code so that the core behavior and data-access functions
 of the application are isolated in a new file called <tt class="docutils literal"><span class="pre">model.php</span></tt>:</p>
 <div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// model.php</span>
-
 <span class="k">function</span> <span class="nf">open_database_connection</span><span class="p">()</span>
 <span class="p">{</span>
     <span class="nv">$link</span> <span class="o">=</span> <span class="nb">mysql_connect</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">,</span> <span class="s1">&#39;myuser&#39;</span><span class="p">,</span> <span class="s1">&#39;mypassword&#39;</span><span class="p">);</span>
@@ -237,6 +240,7 @@ on different pages.</p>
 <p>The only part of the code that <em>can&#8217;t</em> be reused is the page layout. Fix
 that by creating a new <tt class="docutils literal"><span class="pre">layout.php</span></tt> file:</p>
 <div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- templates/layout.php --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
         <span class="nt">&lt;title&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$title</span> <span class="cp">?&gt;</span><span class="nt">&lt;/title&gt;</span>
@@ -286,7 +290,7 @@ function get_post_by_id($id)
 {
     $link = open_database_connection();
 
-    $id = mysql_real_escape_string($id);
+    $id = intval($id);
     $query = 'SELECT date, title, body FROM post WHERE id = '.$id;
     $result = mysql_query($query);
     $row = mysql_fetch_assoc($result);
@@ -327,7 +331,7 @@ this page introduces even more lingering problems that a framework can solve
 for you. For example, a missing or invalid <tt class="docutils literal"><span class="pre">id</span></tt> query parameter will cause
 the page to crash. It would be better if this caused a 404 page to be rendered,
 but this can&#8217;t really be done easily yet. Worse, had you forgotten to clean
-the <tt class="docutils literal"><span class="pre">id</span></tt> parameter via the <tt class="docutils literal"><span class="pre">mysql_real_escape_string()</span></tt> function, your
+the <tt class="docutils literal"><span class="pre">id</span></tt> parameter via the <tt class="docutils literal"><span class="pre">intval()</span></tt> function, your
 entire database would be at risk for an SQL injection attack.</p>
 <p>Another major problem is that each individual controller file must include
 the <tt class="docutils literal"><span class="pre">model.php</span></tt> file. What if each controller file suddenly needed to include
@@ -377,29 +381,29 @@ on the requested URI:</p>
 
 <span class="c1">// route the request internally</span>
 <span class="nv">$uri</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">];</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$uri</span> <span class="o">==</span> <span class="s1">&#39;/index.php&#39;</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="s1">&#39;/index.php&#39;</span> <span class="o">==</span> <span class="nv">$uri</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">list_action</span><span class="p">();</span>
-<span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nv">$uri</span> <span class="o">==</span> <span class="s1">&#39;/index.php/show&#39;</span> <span class="o">&amp;&amp;</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]))</span> <span class="p">{</span>
+<span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="s1">&#39;/index.php/show&#39;</span> <span class="o">==</span> <span class="nv">$uri</span> <span class="o">&amp;&amp;</span> <span class="nb">isset</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]))</span> <span class="p">{</span>
     <span class="nx">show_action</span><span class="p">(</span><span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]);</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-    <span class="nb">header</span><span class="p">(</span><span class="s1">&#39;Status: 404 Not Found&#39;</span><span class="p">);</span>
+    <span class="nx">header</span><span class="p">(</span><span class="s1">&#39;Status: 404 Not Found&#39;</span><span class="p">);</span>
     <span class="k">echo</span> <span class="s1">&#39;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Page Not Found&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#39;</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>For organization, both controllers (formerly <tt class="docutils literal"><span class="pre">index.php</span></tt> and <tt class="docutils literal"><span class="pre">show.php</span></tt>)
 are now PHP functions and each has been moved into a separate file, <tt class="docutils literal"><span class="pre">controllers.php</span></tt>:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">function list_action()</span>
-<span class="x">{</span>
-<span class="x">    $posts = get_all_posts();</span>
-<span class="x">    require &#39;templates/list.php&#39;;</span>
-<span class="x">}</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">function</span> <span class="nf">list_action</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$posts</span> <span class="o">=</span> <span class="nx">get_all_posts</span><span class="p">();</span>
+    <span class="k">require</span> <span class="s1">&#39;templates/list.php&#39;</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="x">function show_action($id)</span>
-<span class="x">{</span>
-<span class="x">    $post = get_post_by_id($id);</span>
-<span class="x">    require &#39;templates/show.php&#39;;</span>
-<span class="x">}</span>
+<span class="k">function</span> <span class="nf">show_action</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$post</span> <span class="o">=</span> <span class="nx">get_post_by_id</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+    <span class="k">require</span> <span class="s1">&#39;templates/show.php&#39;</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>As a front controller, <tt class="docutils literal"><span class="pre">index.php</span></tt> has taken on an entirely new role, one
@@ -426,40 +430,40 @@ Why should you have to reinvent solutions to all these routine problems?</p>
 </div>
 <div class="section" id="add-a-touch-of-symfony2">
 <h3>Add a Touch of Symfony2<a class="headerlink" href="#add-a-touch-of-symfony2" title="Permalink to this headline">¶</a></h3>
-<p>Symfony2 to the rescue. Before actually using Symfony2, you need to make
-sure PHP knows how to find the Symfony2 classes. This is accomplished via
-an autoloader that Symfony provides. An autoloader is a tool that makes it
-possible to start using PHP classes without explicitly including the file
-containing the class.</p>
-<p>First, <a class="reference external" href="http://symfony.com/download">download symfony</a> and place it into a <tt class="docutils literal"><span class="pre">vendor/symfony/</span></tt> directory.
-Next, create an <tt class="docutils literal"><span class="pre">app/bootstrap.php</span></tt> file. Use it to <tt class="docutils literal"><span class="pre">require</span></tt> the two
-files in the application and to configure the autoloader:</p>
-<div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
-<span class="c1">// bootstrap.php</span>
-<span class="k">require_once</span> <span class="s1">&#39;model.php&#39;</span><span class="p">;</span>
-<span class="k">require_once</span> <span class="s1">&#39;controllers.php&#39;</span><span class="p">;</span>
-<span class="k">require_once</span> <span class="s1">&#39;vendor/symfony/src/Symfony/Component/ClassLoader/UniversalClassLoader.php&#39;</span><span class="p">;</span>
-
-<span class="nv">$loader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Symfony\Component\ClassLoader\UniversalClassLoader</span><span class="p">();</span>
-<span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">registerNamespaces</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;Symfony&#39;</span> <span class="o">=&gt;</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../vendor/symfony/src&#39;</span><span class="p">,</span>
-<span class="p">));</span>
-
-<span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">();</span>
+<p>Symfony2 to the rescue. Before actually using Symfony2, you need to download
+it. This can be done by using Composer, which takes care of downloading the
+correct version and all its dependencies and provides an autoloader. An
+autoloader is a tool that makes it possible to start using PHP classes
+without explicitly including the file containing the class.</p>
+<p>In your root directory, create a <tt class="docutils literal"><span class="pre">composer.json</span></tt> file with the following
+content:</p>
+<div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
+    <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;symfony/symfony&quot;</span><span class="p">:</span> <span class="s2">&quot;2.3.*&quot;</span>
+    <span class="p">},</span>
+    <span class="nt">&quot;autoload&quot;</span><span class="p">:</span> <span class="p">{</span>
+        <span class="nt">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;model.php&quot;</span><span class="p">,</span><span class="s2">&quot;controllers.php&quot;</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
-<p>This tells the autoloader where the <tt class="docutils literal"><span class="pre">Symfony</span></tt> classes are. With this, you
-can start using Symfony classes without using the <tt class="docutils literal"><span class="pre">require</span></tt> statement for
-the files that contain them.</p>
+<p>Next, <a class="reference external" href="http://getcomposer.org/download/">download Composer</a> and then run the following command, which will download Symfony
+into a vendor/ directory:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php composer.phar install
+</pre></div>
+</div>
+<p>Beside downloading your dependencies, Composer generates a <tt class="docutils literal"><span class="pre">vendor/autoload.php</span></tt> file,
+which takes care of autoloading for all the files in the Symfony Framework as well as
+the files mentioned in the autoload section of your <tt class="docutils literal"><span class="pre">composer.json</span></tt>.</p>
 <p>Core to Symfony&#8217;s philosophy is the idea that an application&#8217;s main job is
 to interpret each request and return a response. To this end, Symfony2 provides
-both a <tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\HttpFoundation\Request</span></tt> and a
-<tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\HttpFoundation\Response</span></tt> class. These classes are
+both a <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Request.html" title="Symfony\Component\HttpFoundation\Request"><span class="pre">Request</span></a></tt> and a
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Response.html" title="Symfony\Component\HttpFoundation\Response"><span class="pre">Response</span></a></tt> class. These classes are
 object-oriented representations of the raw HTTP request being processed and
 the HTTP response being returned. Use them to improve the blog:</p>
 <div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
 <span class="c1">// index.php</span>
-<span class="k">require_once</span> <span class="s1">&#39;app/bootstrap.php&#39;</span><span class="p">;</span>
+<span class="k">require_once</span> <span class="s1">&#39;vendor/autoload.php&#39;</span><span class="p">;</span>
 
 <span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
@@ -467,9 +471,9 @@ the HTTP response being returned. Use them to improve the blog:</p>
 <span class="nv">$request</span> <span class="o">=</span> <span class="nx">Request</span><span class="o">::</span><span class="na">createFromGlobals</span><span class="p">();</span>
 
 <span class="nv">$uri</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPathInfo</span><span class="p">();</span>
-<span class="k">if</span> <span class="p">(</span><span class="nv">$uri</span> <span class="o">==</span> <span class="s1">&#39;/&#39;</span><span class="p">)</span> <span class="p">{</span>
+<span class="k">if</span> <span class="p">(</span><span class="s1">&#39;/&#39;</span> <span class="o">==</span> <span class="nv">$uri</span><span class="p">)</span> <span class="p">{</span>
     <span class="nv">$response</span> <span class="o">=</span> <span class="nx">list_action</span><span class="p">();</span>
-<span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nv">$uri</span> <span class="o">==</span> <span class="s1">&#39;/show&#39;</span> <span class="o">&amp;&amp;</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">query</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span> <span class="p">{</span>
+<span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="s1">&#39;/show&#39;</span> <span class="o">==</span> <span class="nv">$uri</span> <span class="o">&amp;&amp;</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">query</span><span class="o">-&gt;</span><span class="na">has</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">))</span> <span class="p">{</span>
     <span class="nv">$response</span> <span class="o">=</span> <span class="nx">show_action</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">query</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">));</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="nv">$html</span> <span class="o">=</span> <span class="s1">&#39;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Page Not Found&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#39;</span><span class="p">;</span>
@@ -483,35 +487,35 @@ the HTTP response being returned. Use them to improve the blog:</p>
 <p>The controllers are now responsible for returning a <tt class="docutils literal"><span class="pre">Response</span></tt> object.
 To make this easier, you can add a new <tt class="docutils literal"><span class="pre">render_template()</span></tt> function, which,
 incidentally, acts quite a bit like the Symfony2 templating engine:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">// controllers.php</span>
-<span class="x">use Symfony\Component\HttpFoundation\Response;</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// controllers.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
 
-<span class="x">function list_action()</span>
-<span class="x">{</span>
-<span class="x">    $posts = get_all_posts();</span>
-<span class="x">    $html = render_template(&#39;templates/list.php&#39;, array(&#39;posts&#39; =&gt; $posts));</span>
+<span class="k">function</span> <span class="nf">list_action</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$posts</span> <span class="o">=</span> <span class="nx">get_all_posts</span><span class="p">();</span>
+    <span class="nv">$html</span> <span class="o">=</span> <span class="nx">render_template</span><span class="p">(</span><span class="s1">&#39;templates/list.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span> <span class="o">=&gt;</span> <span class="nv">$posts</span><span class="p">));</span>
 
-<span class="x">    return new Response($html);</span>
-<span class="x">}</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="nv">$html</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="x">function show_action($id)</span>
-<span class="x">{</span>
-<span class="x">    $post = get_post_by_id($id);</span>
-<span class="x">    $html = render_template(&#39;templates/show.php&#39;, array(&#39;post&#39; =&gt; $post));</span>
+<span class="k">function</span> <span class="nf">show_action</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$post</span> <span class="o">=</span> <span class="nx">get_post_by_id</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+    <span class="nv">$html</span> <span class="o">=</span> <span class="nx">render_template</span><span class="p">(</span><span class="s1">&#39;templates/show.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="nv">$post</span><span class="p">));</span>
 
-<span class="x">    return new Response($html);</span>
-<span class="x">}</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="nv">$html</span><span class="p">);</span>
+<span class="p">}</span>
 
-<span class="x">// helper function to render templates</span>
-<span class="x">function render_template($path, array $args)</span>
-<span class="x">{</span>
-<span class="x">    extract($args);</span>
-<span class="x">    ob_start();</span>
-<span class="x">    require $path;</span>
-<span class="x">    $html = ob_get_clean();</span>
+<span class="c1">// helper function to render templates</span>
+<span class="k">function</span> <span class="nf">render_template</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$args</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nb">extract</span><span class="p">(</span><span class="nv">$args</span><span class="p">);</span>
+    <span class="nb">ob_start</span><span class="p">();</span>
+    <span class="k">require</span> <span class="nv">$path</span><span class="p">;</span>
+    <span class="nv">$html</span> <span class="o">=</span> <span class="nb">ob_get_clean</span><span class="p">();</span>
 
-<span class="x">    return $html;</span>
-<span class="x">}</span>
+    <span class="k">return</span> <span class="nv">$html</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>By bringing in a small part of Symfony2, the application is more flexible and
@@ -528,48 +532,53 @@ will pay dividends as your application grows.</p>
 <div class="section" id="the-sample-application-in-symfony2">
 <h3>The Sample Application in Symfony2<a class="headerlink" href="#the-sample-application-in-symfony2" title="Permalink to this headline">¶</a></h3>
 <p>The blog has come a <em>long</em> way, but it still contains a lot of code for such
-a simple application. Along the way, we&#8217;ve also invented a simple routing
+a simple application. Along the way, you&#8217;ve made a simple routing
 system and a method using <tt class="docutils literal"><span class="pre">ob_start()</span></tt> and <tt class="docutils literal"><span class="pre">ob_get_clean()</span></tt> to render
 templates. If, for some reason, you needed to continue building this &#8220;framework&#8221;
 from scratch, you could at least use Symfony&#8217;s standalone <a class="reference external" href="https://github.com/symfony/Routing">Routing</a> and
 <a class="reference external" href="https://github.com/symfony/Templating">Templating</a> components, which already solve these problems.</p>
 <p>Instead of re-solving common problems, you can let Symfony2 take care of
 them for you. Here&#8217;s the same sample application, now built in Symfony2:</p>
-<div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
-<span class="c1">// src/Acme/BlogBundle/Controller/BlogController.php</span>
+<div class="highlight-python"><pre>// src/Acme/BlogBundle/Controller/BlogController.php
+namespace Acme\BlogBundle\Controller;
 
-<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Controller</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\Controller\Controller</span><span class="p">;</span>
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-<span class="k">class</span> <span class="nc">BlogController</span> <span class="k">extends</span> <span class="nx">Controller</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">listAction</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="nv">$posts</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;doctrine&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getEntityManager</span><span class="p">()</span>
-            <span class="o">-&gt;</span><span class="na">createQuery</span><span class="p">(</span><span class="s1">&#39;SELECT p FROM AcmeBlogBundle:Post p&#39;</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">execute</span><span class="p">();</span>
+class BlogController extends Controller
+{
+    public function listAction()
+    {
+        $posts = $this-&gt;get('doctrine')-&gt;getManager()
+            -&gt;createQuery('SELECT p FROM AcmeBlogBundle:Post p')
+            -&gt;execute();
 
-        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeBlogBundle:Blog:list.html.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span> <span class="o">=&gt;</span> <span class="nv">$posts</span><span class="p">));</span>
-    <span class="p">}</span>
+        return $this-&gt;render(
+            'AcmeBlogBundle:Blog:list.html.php',
+            array('posts' =&gt; $posts)
+        );
+    }
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">showAction</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="nv">$post</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;doctrine&#39;</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">getEntityManager</span><span class="p">()</span>
-            <span class="o">-&gt;</span><span class="na">getRepository</span><span class="p">(</span><span class="s1">&#39;AcmeBlogBundle:Post&#39;</span><span class="p">)</span>
-            <span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+    public function showAction($id)
+    {
+        $post = $this-&gt;get('doctrine')
+            -&gt;getManager()
+            -&gt;getRepository('AcmeBlogBundle:Post')
+            -&gt;find($id)
+        ;
 
-        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$post</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// cause the 404 page not found to be displayed</span>
-            <span class="k">throw</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createNotFoundException</span><span class="p">();</span>
-        <span class="p">}</span>
+        if (!$post) {
+            // cause the 404 page not found to be displayed
+            throw $this-&gt;createNotFoundException();
+        }
 
-        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeBlogBundle:Blog:show.html.php&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="nv">$post</span><span class="p">));</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-</pre></div>
+        return $this-&gt;render(
+            'AcmeBlogBundle:Blog:show.html.php',
+            array('post' =&gt; $post)
+        );
+    }
+}</pre>
 </div>
-<p>The two controllers are still lightweight. Each uses the Doctrine ORM library
+<p>The two controllers are still lightweight. Each uses the <a class="reference internal" href="doctrine.html"><em>Doctrine ORM library</em></a>
 to retrieve objects from the database and the <tt class="docutils literal"><span class="pre">Templating</span></tt> component to
 render a template and return a <tt class="docutils literal"><span class="pre">Response</span></tt> object. The list template is
 now quite a bit simpler:</p>
@@ -582,7 +591,10 @@ now quite a bit simpler:</p>
 <span class="nt">&lt;ul&gt;</span>
     <span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$posts</span> <span class="k">as</span> <span class="nv">$post</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
     <span class="nt">&lt;li&gt;</span>
-        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;blog_show&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">getId</span><span class="p">()))</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span>
+            <span class="s1">&#39;blog_show&#39;</span><span class="p">,</span>
+            <span class="k">array</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">getId</span><span class="p">())</span>
+        <span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;</span>
             <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$post</span><span class="o">-&gt;</span><span class="na">getTitle</span><span class="p">()</span> <span class="cp">?&gt;</span>
         <span class="nt">&lt;/a&gt;</span>
     <span class="nt">&lt;/li&gt;</span>
@@ -592,9 +604,13 @@ now quite a bit simpler:</p>
 </div>
 <p>The layout is nearly identical:</p>
 <div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- app/Resources/views/layout.html.php --&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
-        <span class="nt">&lt;title&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;Default title&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="nt">&lt;/title&gt;</span>
+        <span class="nt">&lt;title&gt;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">(</span>
+            <span class="s1">&#39;title&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Default title&#39;</span>
+        <span class="p">)</span> <span class="cp">?&gt;</span><span class="nt">&lt;/title&gt;</span>
     <span class="nt">&lt;/head&gt;</span>
     <span class="nt">&lt;body&gt;</span>
         <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;slots&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">output</span><span class="p">(</span><span class="s1">&#39;_content&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
@@ -604,7 +620,7 @@ now quite a bit simpler:</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">We&#8217;ll leave the show template as an exercise, as it should be trivial to
+<p class="last">The show template is left as an exercise, as it should be trivial to
 create based on the list template.</p>
 </div>
 <p>When Symfony2&#8217;s engine (called the <tt class="docutils literal"><span class="pre">Kernel</span></tt>) boots up, it needs a map so
@@ -612,11 +628,11 @@ that it knows which controllers to execute based on the request information.
 A routing configuration map provides this information in a readable format:</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/routing.yml</span>
 <span class="l-Scalar-Plain">blog_list</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/blog</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">/blog</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">list</span> <span class="p-Indicator">}</span>
 
 <span class="l-Scalar-Plain">blog_show</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/blog/show/{id}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">/blog/show/{id}</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeBlogBundle</span><span class="p-Indicator">:</span><span class="nv">Blog</span><span class="p-Indicator">:</span><span class="nv">show</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
@@ -624,16 +640,14 @@ A routing configuration map provides this information in a readable format:</p>
 is dead simple. And since it does so little, you&#8217;ll never have to touch
 it once it&#8217;s created (and if you use a Symfony2 distribution, you won&#8217;t
 even need to create it!):</p>
-<div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
-<span class="c1">// web/app.php</span>
-<span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/bootstrap.php&#39;</span><span class="p">;</span>
-<span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/AppKernel.php&#39;</span><span class="p">;</span>
+<div class="highlight-python"><pre>// web/app.php
+require_once __DIR__.'/../app/bootstrap.php';
+require_once __DIR__.'/../app/AppKernel.php';
 
-<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+use Symfony\Component\HttpFoundation\Request;
 
-<span class="nv">$kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AppKernel</span><span class="p">(</span><span class="s1">&#39;prod&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
-<span class="nv">$kernel</span><span class="o">-&gt;</span><span class="na">handle</span><span class="p">(</span><span class="nx">Request</span><span class="o">::</span><span class="na">createFromGlobals</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
-</pre></div>
+$kernel = new AppKernel('prod', false);
+$kernel-&gt;handle(Request::createFromGlobals())-&gt;send();</pre>
 </div>
 <p>The front controller&#8217;s only job is to initialize Symfony2&#8217;s engine (<tt class="docutils literal"><span class="pre">Kernel</span></tt>)
 and pass it a <tt class="docutils literal"><span class="pre">Request</span></tt> object to handle. Symfony2&#8217;s core then uses the
@@ -651,18 +665,18 @@ migrating the blog from flat PHP to Symfony2 has improved life:</p>
 <ul class="simple">
 <li>Your application now has <strong>clear and consistently organized code</strong> (though
 Symfony doesn&#8217;t force you into this). This promotes <strong>reusability</strong> and
-allows for new developers to be productive in your project more quickly.</li>
+allows for new developers to be productive in your project more quickly;</li>
 <li>100% of the code you write is for <em>your</em> application. You <strong>don&#8217;t need
 to develop or maintain low-level utilities</strong> such as <a class="reference internal" href="page_creation.html#autoloading-introduction-sidebar"><em>autoloading</em></a>,
-<a class="reference internal" href="routing.html"><em>routing</em></a>, or rendering <a class="reference internal" href="controller.html"><em>controllers</em></a>.</li>
+<a class="reference internal" href="routing.html"><em>routing</em></a>, or rendering <a class="reference internal" href="controller.html"><em>controllers</em></a>;</li>
 <li>Symfony2 gives you <strong>access to open source tools</strong> such as Doctrine and the
 Templating, Security, Form, Validation and Translation components (to name
-a few).</li>
+a few);</li>
 <li>The application now enjoys <strong>fully-flexible URLs</strong> thanks to the <tt class="docutils literal"><span class="pre">Routing</span></tt>
-component.</li>
+component;</li>
 <li>Symfony2&#8217;s HTTP-centric architecture gives you access to powerful tools
 such as <strong>HTTP caching</strong> powered by <strong>Symfony2&#8217;s internal HTTP cache</strong> or
-more powerful tools such as <a class="reference external" href="http://www.varnish-cache.org">Varnish</a>. This is covered in a later chapter
+more powerful tools such as <a class="reference external" href="https://www.varnish-cache.org/">Varnish</a>. This is covered in a later chapter
 all about <a class="reference internal" href="http_cache.html"><em>caching</em></a>.</li>
 </ul>
 <p>And perhaps best of all, by using Symfony2, you now have access to a whole
@@ -677,8 +691,8 @@ called <a class="reference external" href="http://twig.sensiolabs.org">Twig</a> 
 It means that the sample application could contain even less code! Take,
 for example, the list template written in Twig:</p>
 <div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/BlogBundle/Resources/views/Blog/list.html.twig #}</span>
-
 <span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;::layout.html.twig&quot;</span> <span class="cp">%}</span>
+
 <span class="cp">{%</span> <span class="k">block</span> <span class="nv">title</span> <span class="cp">%}</span>List of Posts<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
 
 <span class="cp">{%</span> <span class="k">block</span> <span class="nv">body</span> <span class="cp">%}</span>
@@ -686,7 +700,7 @@ for example, the list template written in Twig:</p>
     <span class="nt">&lt;ul&gt;</span>
         <span class="cp">{%</span> <span class="k">for</span> <span class="nv">post</span> <span class="k">in</span> <span class="nv">posts</span> <span class="cp">%}</span>
         <span class="nt">&lt;li&gt;</span>
-            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">path</span><span class="o">(</span><span class="s1">&#39;blog_show&#39;</span><span class="o">,</span> <span class="o">{</span> <span class="s1">&#39;id&#39;</span><span class="o">:</span> <span class="nv">post.id</span> <span class="o">})</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">path</span><span class="o">(</span><span class="s1">&#39;blog_show&#39;</span><span class="o">,</span> <span class="o">{</span><span class="s1">&#39;id&#39;</span><span class="o">:</span> <span class="nv">post.id</span><span class="o">})</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;</span>
                 <span class="cp">{{</span> <span class="nv">post.title</span> <span class="cp">}}</span>
             <span class="nt">&lt;/a&gt;</span>
         <span class="nt">&lt;/li&gt;</span>
@@ -697,7 +711,7 @@ for example, the list template written in Twig:</p>
 </div>
 <p>The corresponding <tt class="docutils literal"><span class="pre">layout.html.twig</span></tt> template is also easier to write:</p>
 <div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# app/Resources/views/layout.html.twig #}</span>
-
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
         <span class="nt">&lt;title&gt;</span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">title</span> <span class="cp">%}</span>Default title<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span><span class="nt">&lt;/title&gt;</span>
@@ -709,8 +723,8 @@ for example, the list template written in Twig:</p>
 </pre></div>
 </div>
 <p>Twig is well-supported in Symfony2. And while PHP templates will always
-be supported in Symfony2, we&#8217;ll continue to discuss the many advantages of
-Twig. For more information, see the <a class="reference internal" href="templating.html"><em>templating chapter</em></a>.</p>
+be supported in Symfony2, the many advantages of Twig will continue to
+be discussed. For more information, see the <a class="reference internal" href="templating.html"><em>templating chapter</em></a>.</p>
 </div>
 <div class="section" id="learn-more-from-the-cookbook">
 <h2>Learn more from the Cookbook<a class="headerlink" href="#learn-more-from-the-cookbook" title="Permalink to this headline">¶</a></h2>
@@ -764,7 +778,7 @@ Twig. For more information, see the <a class="reference internal" href="templati
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -790,13 +804,13 @@ Twig. For more information, see the <a class="reference internal" href="templati
         <li class="right" >
           <a href="http_fundamentals.html" title="Symfony2 and HTTP Fundamentals"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="index.html" >Book</a> &raquo;</li> 
+        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>choice Field Type &mdash; Symfony2Docs v1 documentation</title>
+    <title>choice Field Type &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,7 +25,7 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../../index.html" />
     <link rel="up" title="Form Types Reference" href="../types.html" />
     <link rel="next" title="collection Field Type" href="collection.html" />
     <link rel="prev" title="checkbox Field Type" href="checkbox.html" /> 
@@ -40,7 +43,7 @@
         <li class="right" >
           <a href="checkbox.html" title="checkbox Field Type"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" accesskey="U">Form Types Reference</a> &raquo;</li> 
       </ul>
@@ -63,10 +66,10 @@ option.</p>
 <col width="86%" />
 </colgroup>
 <tbody valign="top">
-<tr><td>Rendered as</td>
+<tr class="row-odd"><td>Rendered as</td>
 <td>can be various tags (see below)</td>
 </tr>
-<tr><td>Options</td>
+<tr class="row-even"><td>Options</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="#choices">choices</a></li>
 <li><a class="reference internal" href="#choice-list">choice_list</a></li>
@@ -74,25 +77,30 @@ option.</p>
 <li><a class="reference internal" href="#expanded">expanded</a></li>
 <li><a class="reference internal" href="#preferred-choices">preferred_choices</a></li>
 <li><a class="reference internal" href="#empty-value">empty_value</a></li>
-<li><a class="reference internal" href="#empty-data">empty_data</a></li>
 </ul>
 </td>
 </tr>
-<tr><td>Inherited
+<tr class="row-odd"><td>Inherited
 options</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="#required">required</a></li>
 <li><a class="reference internal" href="#label">label</a></li>
 <li><a class="reference internal" href="#read-only">read_only</a></li>
+<li><a class="reference internal" href="#disabled">disabled</a></li>
 <li><a class="reference internal" href="#error-bubbling">error_bubbling</a></li>
+<li><a class="reference internal" href="#error-mapping">error_mapping</a></li>
+<li><a class="reference internal" href="#mapped">mapped</a></li>
+<li><a class="reference internal" href="#inherit-data">inherit_data</a></li>
+<li><a class="reference internal" href="#by-reference">by_reference</a></li>
+<li><a class="reference internal" href="#empty-data">empty_data</a></li>
 </ul>
 </td>
 </tr>
-<tr><td>Parent type</td>
+<tr class="row-even"><td>Parent type</td>
 <td><a class="reference internal" href="form.html"><em>form</em></a> (if expanded), <tt class="docutils literal"><span class="pre">field</span></tt> otherwise</td>
 </tr>
-<tr><td>Class</td>
-<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Form\Extension\Core\Type\ChoiceType</span></tt></td>
+<tr class="row-odd"><td>Class</td>
+<td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/Extension/Core/Type/ChoiceType.html" title="Symfony\Component\Form\Extension\Core\Type\ChoiceType"><span class="pre">ChoiceType</span></a></tt></td>
 </tr>
 </tbody>
 </table>
@@ -102,23 +110,23 @@ options</td>
 <tt class="docutils literal"><span class="pre">choices</span></tt> option. The key of the array becomes the value that&#8217;s actually
 set on your underlying object (e.g. <tt class="docutils literal"><span class="pre">m</span></tt>), while the value is what the
 user sees on the form (e.g. <tt class="docutils literal"><span class="pre">Male</span></tt>).</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">$builder-&gt;add(&#39;gender&#39;, &#39;choice&#39;, array(</span>
-<span class="x">    &#39;choices&#39;   =&gt; array(&#39;m&#39; =&gt; &#39;Male&#39;, &#39;f&#39; =&gt; &#39;Female&#39;),</span>
-<span class="x">    &#39;required&#39;  =&gt; false,</span>
-<span class="x">));</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;choice&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;choices&#39;</span>   <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;m&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Male&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Female&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;required&#39;</span>  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 <p>By setting <tt class="docutils literal"><span class="pre">multiple</span></tt> to true, you can allow the user to choose multiple
 values. The widget will be rendered as a multiple <tt class="docutils literal"><span class="pre">select</span></tt> tag or a series
 of checkboxes depending on the <tt class="docutils literal"><span class="pre">expanded</span></tt> option:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">$builder-&gt;add(&#39;availability&#39;, &#39;choice&#39;, array(</span>
-<span class="x">    &#39;choices&#39;   =&gt; array(</span>
-<span class="x">        &#39;morning&#39;   =&gt; &#39;Morning&#39;,</span>
-<span class="x">        &#39;afternoon&#39; =&gt; &#39;Afternoon&#39;,</span>
-<span class="x">        &#39;evening&#39;   =&gt; &#39;Evening&#39;,</span>
-<span class="x">    ),</span>
-<span class="x">    &#39;multiple&#39;  =&gt; true,</span>
-<span class="x">));</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;availability&#39;</span><span class="p">,</span> <span class="s1">&#39;choice&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;choices&#39;</span>   <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;morning&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Morning&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;afternoon&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Afternoon&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;evening&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;Evening&#39;</span><span class="p">,</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;multiple&#39;</span>  <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 <p>You can also use the <tt class="docutils literal"><span class="pre">choice_list</span></tt> option, which takes an object that can
@@ -135,25 +143,25 @@ on the <tt class="docutils literal"><span class="pre">expanded</span></tt> and <
 <col width="16%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">element type</th>
+<tr class="row-odd"><th class="head">element type</th>
 <th class="head">expanded</th>
 <th class="head">multiple</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>select tag</td>
+<tr class="row-even"><td>select tag</td>
 <td>false</td>
 <td>false</td>
 </tr>
-<tr><td>select tag (with <tt class="docutils literal"><span class="pre">multiple</span></tt> attribute)</td>
+<tr class="row-odd"><td>select tag (with <tt class="docutils literal"><span class="pre">multiple</span></tt> attribute)</td>
 <td>false</td>
 <td>true</td>
 </tr>
-<tr><td>radio buttons</td>
+<tr class="row-even"><td>radio buttons</td>
 <td>true</td>
 <td>false</td>
 </tr>
-<tr><td>checkboxes</td>
+<tr class="row-odd"><td>checkboxes</td>
 <td>true</td>
 <td>true</td>
 </tr>
@@ -216,7 +224,7 @@ This can be customized when rendering the field:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">widget</span><span class="p">(</span><span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;foo_choices&#39;</span><span class="p">],</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;separator&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;=====&#39;</span><span class="p">))</span> <span class="cp">?&gt;</span><span class="x"></span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">widget</span><span class="p">(</span><span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;foo_choices&#39;</span><span class="p">],</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;separator&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;=====&#39;</span><span class="p">))</span> <span class="cp">?&gt;</span><span class="x"></span>
 </pre></div>
 </div>
 </li>
@@ -226,9 +234,12 @@ This can be customized when rendering the field:</p>
 <div class="section" id="empty-value">
 <h3>empty_value<a class="headerlink" href="#empty-value" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> or <tt class="docutils literal"><span class="pre">Boolean</span></tt></p>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.3: </span>Since Symfony 2.3, empty values are also supported if the <tt class="docutils literal"><span class="pre">expanded</span></tt>
+option is set to true.</p>
 <p>This option determines whether or not a special &#8220;empty&#8221; option (e.g. &#8220;Choose an option&#8221;)
-will appear at the top of a select widget. This option only applies if both
-the <tt class="docutils literal"><span class="pre">expanded</span></tt> and <tt class="docutils literal"><span class="pre">multiple</span></tt> options are set to false.</p>
+will appear at the top of a select widget. This option only applies if the
+<tt class="docutils literal"><span class="pre">multiple</span></tt> option is set to false.</p>
 <ul>
 <li><p class="first">Add an empty value with &#8220;Choose an option&#8221; as the text:</p>
 <div class="highlight-python"><pre>$builder-&gt;add('states', 'choice', array(
@@ -252,29 +263,10 @@ $builder-&gt;add('states', 'choice', array(
 ));</pre>
 </div>
 </div>
-<div class="section" id="empty-data">
-<h3>empty_data<a class="headerlink" href="#empty-data" title="Permalink to this headline">¶</a></h3>
-<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">mixed</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">array()</span></tt> if <tt class="docutils literal"><span class="pre">multiple</span></tt> or <tt class="docutils literal"><span class="pre">expanded</span></tt>, <tt class="docutils literal"><span class="pre">''</span></tt> otherwise</p>
-<p>This option determines what value the field will return when the <tt class="docutils literal"><span class="pre">empty_value</span></tt>
-choice is selected.</p>
-<p>For example, if you want the <tt class="docutils literal"><span class="pre">gender</span></tt> field to be set to <tt class="docutils literal"><span class="pre">null</span></tt> when no
-value is selected, you can do it like this:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">$builder-&gt;add(&#39;gender&#39;, &#39;choice&#39;, array(</span>
-<span class="x">    &#39;choices&#39; =&gt; array(</span>
-<span class="x">        &#39;m&#39; =&gt; &#39;Male&#39;,</span>
-<span class="x">        &#39;f&#39; =&gt; &#39;Female&#39;</span>
-<span class="x">    ),</span>
-<span class="x">    &#39;required&#39;    =&gt; false,</span>
-<span class="x">    &#39;empty_value&#39; =&gt; &#39;Choose your gender&#39;,</span>
-<span class="x">    &#39;empty_data&#39;  =&gt; null</span>
-<span class="x">));</span>
-</pre></div>
-</div>
-</div>
 </div>
 <div class="section" id="inherited-options">
 <h2>Inherited options<a class="headerlink" href="#inherited-options" title="Permalink to this headline">¶</a></h2>
-<p>These options inherit from the <a class="reference internal" href="field.html"><em>field</em></a> type:</p>
+<p>These options inherit from the <a class="reference internal" href="form.html"><em>field</em></a> type:</p>
 <div class="section" id="required">
 <h3>required<a class="headerlink" href="#required" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">true</span></tt></p>
@@ -287,8 +279,8 @@ your validation information.</p>
 <div class="section" id="label">
 <h3>label<a class="headerlink" href="#label" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: The label is &#8220;guessed&#8221; from the field name</p>
-<p>Sets the label that will be used when rendering the field. The label can
-also be directly set inside the template:</p>
+<p>Sets the label that will be used when rendering the field. Setting to false
+will suppress the label. The label can also be directly set inside the template:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">form_label</span><span class="o">(</span><span class="nv">form.name</span><span class="o">,</span> <span class="s1">&#39;Your name&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
 </pre></div>
 </div>
@@ -296,15 +288,143 @@ also be directly set inside the template:</p>
 <div class="section" id="read-only">
 <h3>read_only<a class="headerlink" href="#read-only" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
-<p>If this option is true, the field will be rendered with the <tt class="docutils literal"><span class="pre">disabled</span></tt>
+<p>If this option is true, the field will be rendered with the <tt class="docutils literal"><span class="pre">readonly</span></tt>
 attribute so that the field is not editable.</p>
+</div>
+<div class="section" id="disabled">
+<h3>disabled<a class="headerlink" href="#disabled" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">boolean</span></tt>  <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
+<p>If you don&#8217;t want a user to modify the value of a field, you can set
+the disabled option to true. Any submitted value will be ignored.</p>
 </div>
 <div class="section" id="error-bubbling">
 <h3>error_bubbling<a class="headerlink" href="#error-bubbling" title="Permalink to this headline">¶</a></h3>
-<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt> unless the form is <tt class="docutils literal"><span class="pre">compound</span></tt></p>
 <p>If true, any errors for this field will be passed to the parent field
 or form. For example, if set to true on a normal field, any errors for
 that field will be attached to the main form, not to the specific field.</p>
+</div>
+<div class="section" id="error-mapping">
+<h3>error_mapping<a class="headerlink" href="#error-mapping" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">array</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">empty</span></tt></p>
+<p>This option allows you to modify the target of a validation error.</p>
+<p>Imagine you have a custom method named <tt class="docutils literal"><span class="pre">matchingCityAndZipCode</span></tt> that validates
+whether the city and zip code match. Unfortunately, there is no &#8220;matchingCityAndZipCode&#8221;
+field in your form, so all that Symfony can do is display the error on top
+of the form.</p>
+<p>With customized error mapping, you can do better: map the error to the city
+field so that it displays above it:</p>
+<div class="highlight-python"><pre>public function setDefaultOptions(OptionsResolverInterface $resolver)
+{
+    $resolver-&gt;setDefaults(array(
+        'error_mapping' =&gt; array(
+            'matchingCityAndZipCode' =&gt; 'city',
+        ),
+    ));
+}</pre>
+</div>
+<p>Here are the rules for the left and the right side of the mapping:</p>
+<ul class="simple">
+<li>The left side contains property paths.</li>
+<li>If the violation is generated on a property or method of a class, its path
+is simply &#8220;propertyName&#8221;.</li>
+<li>If the violation is generated on an entry of an <tt class="docutils literal"><span class="pre">array</span></tt> or <tt class="docutils literal"><span class="pre">ArrayAccess</span></tt>
+object, the property path is <tt class="docutils literal"><span class="pre">[indexName]</span></tt>.</li>
+<li>You can construct nested property paths by concatenating them, separating
+properties by dots. For example: <tt class="docutils literal"><span class="pre">addresses[work].matchingCityAndZipCode</span></tt></li>
+<li>The left side of the error mapping also accepts a dot <tt class="docutils literal"><span class="pre">.</span></tt>, which refers
+to the field itself. That means that any error added to the field is added
+to the given nested field instead.</li>
+<li>The right side contains simply the names of fields in the form.</li>
+</ul>
+</div>
+<div class="section" id="mapped">
+<h3>mapped<a class="headerlink" href="#mapped" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">boolean</span></tt></p>
+<p>If you wish the field to be ignored when reading or writing to the object, you
+can set the <tt class="docutils literal"><span class="pre">mapped</span></tt> option to <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
+</div>
+<div class="section" id="inherit-data">
+<h3>inherit_data<a class="headerlink" href="#inherit-data" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.3: </span>This option was known as <tt class="docutils literal"><span class="pre">virtual</span></tt> before Symfony 2.3.</p>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
+<p>This option determines if the form will inherit data form its parent form.
+This can be useful is you have a set of fields that are duplicated across
+multiple forms. See <a class="reference internal" href="../../../cookbook/form/inherit_data_option.html"><em>How to Reduce Code Duplication with &#8220;inherit_data&#8221;</em></a>.</p>
+</div>
+<div class="section" id="by-reference">
+<h3>by_reference<a class="headerlink" href="#by-reference" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">true</span></tt></p>
+<p>In most cases, if you have a <tt class="docutils literal"><span class="pre">name</span></tt> field, then you expect <tt class="docutils literal"><span class="pre">setName</span></tt>
+to be called on the underlying object. In some cases, however, <tt class="docutils literal"><span class="pre">setName</span></tt>
+may <em>not</em> be called. Setting <tt class="docutils literal"><span class="pre">by_reference</span></tt> ensures that the setter is
+called in all cases.</p>
+<p>To explain this further, here&#8217;s a simple example:</p>
+<div class="highlight-python"><pre>$builder = $this-&gt;createFormBuilder($article);
+$builder
+    -&gt;add('title', 'text')
+    -&gt;add(
+        $builder-&gt;create('author', 'form', array('by_reference' =&gt; ?))
+            -&gt;add('name', 'text')
+            -&gt;add('email', 'email')
+    )</pre>
+</div>
+<p>If <tt class="docutils literal"><span class="pre">by_reference</span></tt> is true, the following takes place behind the scenes
+when you call <tt class="docutils literal"><span class="pre">submit</span></tt> (or <tt class="docutils literal"><span class="pre">handleRequest</span></tt>) on the form:</p>
+<div class="highlight-python"><pre>$article-&gt;setTitle('...');
+$article-&gt;getAuthor()-&gt;setName('...');
+$article-&gt;getAuthor()-&gt;setEmail('...');</pre>
+</div>
+<p>Notice that <tt class="docutils literal"><span class="pre">setAuthor</span></tt> is not called. The author is modified by reference.</p>
+<p>If you set <tt class="docutils literal"><span class="pre">by_reference</span></tt> to false, submitting looks like this:</p>
+<div class="highlight-python"><pre>$article-&gt;setTitle('...');
+$author = $article-&gt;getAuthor();
+$author-&gt;setName('...');
+$author-&gt;setEmail('...');
+$article-&gt;setAuthor($author);</pre>
+</div>
+<p>So, all that <tt class="docutils literal"><span class="pre">by_reference=false</span></tt> really does is force the framework to
+call the setter on the parent object.</p>
+<p>Similarly, if you&#8217;re using the <a class="reference internal" href="collection.html"><em>collection</em></a>
+form type where your underlying collection data is an object (like with Doctrine&#8217;s
+<tt class="docutils literal"><span class="pre">ArrayCollection</span></tt>), then <tt class="docutils literal"><span class="pre">by_reference</span></tt> must be set to <tt class="docutils literal"><span class="pre">false</span></tt> if you
+need the setter (e.g. <tt class="docutils literal"><span class="pre">setAuthors</span></tt>) to be called.</p>
+</div>
+<div class="section" id="empty-data">
+<h3>empty_data<a class="headerlink" href="#empty-data" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">mixed</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">array()</span></tt> if <tt class="docutils literal"><span class="pre">multiple</span></tt> or <tt class="docutils literal"><span class="pre">expanded</span></tt>, <tt class="docutils literal"><span class="pre">''</span></tt> otherwise</p>
+<p>This option determines what value the field will return when the <tt class="docutils literal"><span class="pre">empty_value</span></tt>
+choice is selected.</p>
+<p>The true default value of this option depends on the field options:</p>
+<ul class="simple">
+<li>If <tt class="docutils literal"><span class="pre">compound</span></tt> is <tt class="docutils literal"><span class="pre">true</span></tt> and <tt class="docutils literal"><span class="pre">data_class</span></tt> is set, then <tt class="docutils literal"><span class="pre">new</span> <span class="pre">$data_class()</span></tt>;</li>
+<li>If <tt class="docutils literal"><span class="pre">compound</span></tt> is <tt class="docutils literal"><span class="pre">true</span></tt> and no <tt class="docutils literal"><span class="pre">data_class</span></tt> is set, then <tt class="docutils literal"><span class="pre">array()</span></tt>;</li>
+<li>If <tt class="docutils literal"><span class="pre">compound</span></tt> is <tt class="docutils literal"><span class="pre">false</span></tt>, then <tt class="docutils literal"><span class="pre">null</span></tt>.</li>
+</ul>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">The <tt class="docutils literal"><span class="pre">compound</span></tt> option is set to <tt class="docutils literal"><span class="pre">true</span></tt> when the field actually represents
+a collection of fields (e.g. a form of fields).</p>
+</div>
+<p>For example, if you want the <tt class="docutils literal"><span class="pre">gender</span></tt> field to be set to <tt class="docutils literal"><span class="pre">null</span></tt> when no
+value is selected, you can do it like this:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;gender&#39;</span><span class="p">,</span> <span class="s1">&#39;choice&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;choices&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;m&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Male&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;f&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Female&#39;</span>
+    <span class="p">),</span>
+    <span class="s1">&#39;required&#39;</span>    <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="s1">&#39;empty_value&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Choose your gender&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;empty_data&#39;</span>  <span class="o">=&gt;</span> <span class="k">null</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">If you want to set the <tt class="docutils literal"><span class="pre">empty_data</span></tt> option for your entire form class,
+see the cookbook article <a class="reference internal" href="../../../cookbook/form/use_empty_data.html"><em>How to configure Empty Data for a Form Class</em></a></p>
+</div>
 </div>
 </div>
 </div>
@@ -327,14 +447,19 @@ that field will be attached to the main form, not to the specific field.</p>
 <li><a class="reference internal" href="#expanded">expanded</a></li>
 <li><a class="reference internal" href="#preferred-choices">preferred_choices</a></li>
 <li><a class="reference internal" href="#empty-value">empty_value</a></li>
-<li><a class="reference internal" href="#empty-data">empty_data</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#inherited-options">Inherited options</a><ul>
 <li><a class="reference internal" href="#required">required</a></li>
 <li><a class="reference internal" href="#label">label</a></li>
 <li><a class="reference internal" href="#read-only">read_only</a></li>
+<li><a class="reference internal" href="#disabled">disabled</a></li>
 <li><a class="reference internal" href="#error-bubbling">error_bubbling</a></li>
+<li><a class="reference internal" href="#error-mapping">error_mapping</a></li>
+<li><a class="reference internal" href="#mapped">mapped</a></li>
+<li><a class="reference internal" href="#inherit-data">inherit_data</a></li>
+<li><a class="reference internal" href="#by-reference">by_reference</a></li>
+<li><a class="reference internal" href="#empty-data">empty_data</a></li>
 </ul>
 </li>
 </ul>
@@ -355,7 +480,7 @@ that field will be attached to the main form, not to the specific field.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -381,14 +506,14 @@ that field will be attached to the main form, not to the specific field.</p>
         <li class="right" >
           <a href="checkbox.html" title="checkbox Field Type"
              >previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" >Form Types Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Master and Create new Environments &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to Master and Create new Environments &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +25,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to Set External Parameters in the Service Container" href="external_parameters.html" />
-    <link rel="prev" title="How to create a Custom Validation Constraint" href="../validation/custom_constraint.html" /> 
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Configuration" href="index.html" />
+    <link rel="next" title="How to override Symfony’s Default Directory Structure" href="override_dir_structure.html" />
+    <link rel="prev" title="Configuration" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,13 +38,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="external_parameters.html" title="How to Set External Parameters in the Service Container"
+          <a href="override_dir_structure.html" title="How to override Symfony’s Default Directory Structure"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../validation/custom_constraint.html" title="How to create a Custom Validation Constraint"
+          <a href="index.html" title="Configuration"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Configuration</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -68,27 +72,26 @@ a way to execute the same codebase with different configuration. It should
 be no surprise then that each environment loads its own individual configuration
 file. If you&#8217;re using the YAML configuration format, the following files
 are used:</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li>for the <tt class="docutils literal"><span class="pre">dev</span></tt> environment: <tt class="docutils literal"><span class="pre">app/config/config_dev.yml</span></tt></li>
 <li>for the <tt class="docutils literal"><span class="pre">prod</span></tt> environment: <tt class="docutils literal"><span class="pre">app/config/config_prod.yml</span></tt></li>
 <li>for the <tt class="docutils literal"><span class="pre">test</span></tt> environment: <tt class="docutils literal"><span class="pre">app/config/config_test.yml</span></tt></li>
 </ul>
-</div></blockquote>
 <p>This works via a simple standard that&#8217;s used by default inside the <tt class="docutils literal"><span class="pre">AppKernel</span></tt>
 class:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="x">// app/AppKernel.php</span>
-<span class="x">// ...</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/AppKernel.php</span>
 
-<span class="x">class AppKernel extends Kernel</span>
-<span class="x">{</span>
-<span class="x">    // ...</span>
+<span class="c1">// ...</span>
 
-<span class="x">    public function registerContainerConfiguration(LoaderInterface $loader)</span>
-<span class="x">    {</span>
-<span class="x">        $loader-&gt;load(__DIR__.&#39;/config/config_&#39;.$this-&gt;getEnvironment().&#39;.yml&#39;);</span>
-<span class="x">    }</span>
-<span class="x">}</span>
+<span class="k">class</span> <span class="nc">AppKernel</span> <span class="k">extends</span> <span class="nx">Kernel</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">registerContainerConfiguration</span><span class="p">(</span><span class="nx">LoaderInterface</span> <span class="nv">$loader</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">load</span><span class="p">(</span><span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/config/config_&#39;</span><span class="o">.</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getEnvironment</span><span class="p">()</span><span class="o">.</span><span class="s1">&#39;.yml&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>As you can see, when Symfony2 is loaded, it uses the given environment to
@@ -102,7 +105,6 @@ easily and transparently:</p>
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">imports</span><span class="p-Indicator">:</span>
     <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="nv">config.yml</span> <span class="p-Indicator">}</span>
-
 <span class="c1"># ...</span>
 </pre></div>
 </div>
@@ -110,14 +112,12 @@ easily and transparently:</p>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;imports&gt;</span>
     <span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&quot;config.xml&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/imports&gt;</span>
-
 <span class="c">&lt;!-- ... --&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$loader-&gt;import(&#39;config.php&#39;);</span>
-
-<span class="x">// ...</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">import</span><span class="p">(</span><span class="s1">&#39;config.php&#39;</span><span class="p">);</span>
+<span class="c1">// ...</span>
 </pre></div>
 </div>
 </li>
@@ -148,17 +148,17 @@ activated by modifying the default value in the <tt class="docutils literal"><sp
 
 &lt;webprofiler:config
     toolbar="true"
-    # ...
-/&gt;</pre>
+    ... /&gt;</pre>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config_dev.php</span>
-<span class="x">$loader-&gt;import(&#39;config.php&#39;);</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config_dev.php</span>
+<span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">import</span><span class="p">(</span><span class="s1">&#39;config.php&#39;</span><span class="p">);</span>
 
-<span class="x">$container-&gt;loadFromExtension(&#39;web_profiler&#39;, array(</span>
-<span class="x">    &#39;toolbar&#39; =&gt; true,</span>
-<span class="x">    // ..</span>
-<span class="x">));</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;web_profiler&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;toolbar&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+
+    <span class="c1">// ...</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -190,7 +190,7 @@ used by each is explicitly set:</p>
 6
 7
 8
-9</pre></div></td><td class="code"><div class="highlight"><pre><span class="x"> </span><span class="cp">&lt;?php</span>
+9</pre></div></td><td class="code"><div class="highlight"><pre> <span class="o">&lt;?</span><span class="nx">php</span>
 
  <span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/bootstrap_cache.php&#39;</span><span class="p">;</span>
  <span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/AppCache.php&#39;</span><span class="p">;</span>
@@ -218,38 +218,41 @@ key on line 8 of the front controller above. This specifies whether or
 not the application should run in &#8220;debug mode&#8221;. Regardless of the environment,
 a Symfony2 application can be run with debug mode set to <tt class="docutils literal"><span class="pre">true</span></tt> or
 <tt class="docutils literal"><span class="pre">false</span></tt>. This affects many things in the application, such as whether
-or not errors should be displayed or if cache files are dynamically rebuilt
-on each request. Though not a requirement, debug mode is generally set
-to <tt class="docutils literal"><span class="pre">true</span></tt> for the <tt class="docutils literal"><span class="pre">dev</span></tt> and <tt class="docutils literal"><span class="pre">test</span></tt> environments and <tt class="docutils literal"><span class="pre">false</span></tt> for
-the <tt class="docutils literal"><span class="pre">prod</span></tt> environment.</p>
+or not the cache files are dynamically rebuilt on each request. Though not
+a requirement, debug mode is generally set to <tt class="docutils literal"><span class="pre">true</span></tt> for the <tt class="docutils literal"><span class="pre">dev</span></tt> and
+<tt class="docutils literal"><span class="pre">test</span></tt> environments and <tt class="docutils literal"><span class="pre">false</span></tt> for the <tt class="docutils literal"><span class="pre">prod</span></tt> environment.</p>
 <p>Internally, the value of the debug mode becomes the <tt class="docutils literal"><span class="pre">kernel.debug</span></tt>
 parameter used inside the <a class="reference internal" href="../../book/service_container.html"><em>service container</em></a>.
 If you look inside the application configuration file, you&#8217;ll see the
 parameter used, for example, to turn logging on or off when using the
 Doctrine DBAL:</p>
-<div class="last configuration-block">
+<div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><pre>doctrine:
-   dbal:
-       logging:  %kernel.debug%
-       # ...</pre>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">doctrine</span><span class="p-Indicator">:</span>
+   <span class="l-Scalar-Plain">dbal</span><span class="p-Indicator">:</span>
+       <span class="l-Scalar-Plain">logging</span><span class="p-Indicator">:</span>  <span class="s">&quot;%kernel.debug%&quot;</span>
+       <span class="c1"># ...</span>
+</pre></div>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><pre>&lt;doctrine:dbal logging="%kernel.debug%" ... /&gt;</pre>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$container-&gt;loadFromExtension(&#39;doctrine&#39;, array(</span>
-<span class="x">    &#39;dbal&#39; =&gt; array(</span>
-<span class="x">        &#39;logging&#39;  =&gt; &#39;%kernel.debug%&#39;,</span>
-<span class="x">        // ...</span>
-<span class="x">    ),</span>
-<span class="x">    // ...</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;doctrine&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;dbal&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;logging&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;%kernel.debug%&#39;</span><span class="p">,</span>
+        <span class="c1">// ...</span>
+    <span class="p">),</span>
+    <span class="c1">// ...</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
 </ul>
 </div>
+<p class="last">As of Symfony 2.3, showing errors or not no longer depends on the debug
+mode. You&#8217;ll need to enable that in your front controller by calling
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Debug/Debug.html#method_enable" title="Symfony\Component\Debug\Debug::enable()"><span class="pre">enable()</span></a></tt>.</p>
 </div>
 </div>
 <div class="section" id="creating-a-new-environment">
@@ -267,7 +270,6 @@ to record information about your application while benchmarking.</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config_benchmark.yml</span>
-
 <span class="l-Scalar-Plain">imports</span><span class="p-Indicator">:</span>
     <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="nv">config_prod.yml</span> <span class="p-Indicator">}</span>
 
@@ -277,7 +279,6 @@ to record information about your application while benchmarking.</p>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config_benchmark.xml --&gt;</span>
-
 <span class="nt">&lt;imports&gt;</span>
     <span class="nt">&lt;import</span> <span class="na">resource=</span><span class="s">&quot;config_prod.xml&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/imports&gt;</span>
@@ -288,13 +289,12 @@ to record information about your application while benchmarking.</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config_benchmark.php</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config_benchmark.php</span>
+<span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">import</span><span class="p">(</span><span class="s1">&#39;config_prod.php&#39;</span><span class="p">)</span>
 
-<span class="x">$loader-&gt;import(&#39;config_prod.php&#39;)</span>
-
-<span class="x">$container-&gt;loadFromExtension(&#39;framework&#39;, array(</span>
-<span class="x">    &#39;profiler&#39; =&gt; array(&#39;only-exceptions&#39; =&gt; false),</span>
-<span class="x">));</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;profiler&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;only-exceptions&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">),</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -308,7 +308,7 @@ the <tt class="docutils literal"><span class="pre">prod</span></tt> environment,
 <p>Because you&#8217;ll want this environment to be accessible via a browser, you
 should also create a front controller for it. Copy the <tt class="docutils literal"><span class="pre">web/app.php</span></tt> file
 to <tt class="docutils literal"><span class="pre">web/app_benchmark.php</span></tt> and edit the environment to be <tt class="docutils literal"><span class="pre">benchmark</span></tt>:</p>
-<div class="highlight-php"><div class="highlight"><pre><span class="cp">&lt;?php</span>
+<div class="highlight-php"><div class="highlight"><pre><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/bootstrap.php&#39;</span><span class="p">;</span>
 <span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/AppKernel.php&#39;</span><span class="p">;</span>
@@ -331,9 +331,9 @@ about the application or underlying infrastructure. To be sure these environment
 aren&#8217;t accessible, the front controller is usually protected from external
 IP addresses via the following code at the top of the controller:</p>
 <blockquote class="last">
-<div><div class="highlight-php"><div class="highlight"><pre><span class="x">if (!in_array(@$_SERVER[&#39;REMOTE_ADDR&#39;], array(&#39;127.0.0.1&#39;, &#39;::1&#39;))) {</span>
-<span class="x">    die(&#39;You are not allowed to access this file. Check &#39;.basename(__FILE__).&#39; for more information.&#39;);</span>
-<span class="x">}</span>
+<div><div class="highlight-php"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">in_array</span><span class="p">(</span><span class="o">@</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;REMOTE_ADDR&#39;</span><span class="p">],</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;127.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;::1&#39;</span><span class="p">)))</span> <span class="p">{</span>
+    <span class="k">die</span><span class="p">(</span><span class="s1">&#39;You are not allowed to access this file. Check &#39;</span><span class="o">.</span><span class="nb">basename</span><span class="p">(</span><span class="k">__FILE__</span><span class="p">)</span><span class="o">.</span><span class="s1">&#39; for more information.&#39;</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div></blockquote>
@@ -365,6 +365,11 @@ here to see the compiled regular expression logic used to match incoming
 URLs to different routes;</li>
 <li><tt class="docutils literal"><span class="pre">twig/</span></tt> - this directory contains all the cached Twig templates.</li>
 </ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can easily change the directory location and name. For more information
+read the article <a class="reference internal" href="override_dir_structure.html"><em>How to override Symfony&#8217;s Default Directory Structure</em></a>.</p>
+</div>
 </div>
 <div class="section" id="going-further">
 <h2>Going Further<a class="headerlink" href="#going-further" title="Permalink to this headline">¶</a></h2>
@@ -391,11 +396,11 @@ URLs to different routes;</li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../validation/custom_constraint.html"
-                        title="previous chapter">How to create a Custom Validation Constraint</a></p>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Configuration</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="external_parameters.html"
-                        title="next chapter">How to Set External Parameters in the Service Container</a></p>
+  <p class="topless"><a href="override_dir_structure.html"
+                        title="next chapter">How to override Symfony&#8217;s Default Directory Structure</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/configuration/environments.txt"
@@ -404,7 +409,7 @@ URLs to different routes;</li>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -425,18 +430,19 @@ URLs to different routes;</li>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="external_parameters.html" title="How to Set External Parameters in the Service Container"
+          <a href="override_dir_structure.html" title="How to override Symfony’s Default Directory Structure"
              >next</a> |</li>
         <li class="right" >
-          <a href="../validation/custom_constraint.html" title="How to create a Custom Validation Constraint"
+          <a href="index.html" title="Configuration"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Configuration</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

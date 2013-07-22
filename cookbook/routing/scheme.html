@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to force routes to always use HTTPS or HTTP &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to force routes to always use HTTPS or HTTP &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +25,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Routing" href="index.html" />
     <link rel="next" title="How to allow a “/” character in a route parameter" href="slash_in_parameter.html" />
-    <link rel="prev" title="How to define Controllers as Services" href="../controller/service.html" /> 
+    <link rel="prev" title="Routing" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,10 +41,11 @@
           <a href="slash_in_parameter.html" title="How to allow a “/” character in a route parameter"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../controller/service.html" title="How to define Controllers as Services"
+          <a href="index.html" title="Routing"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Routing</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -54,14 +58,13 @@
 <span id="index-0"></span><h1>How to force routes to always use HTTPS or HTTP<a class="headerlink" href="#how-to-force-routes-to-always-use-https-or-http" title="Permalink to this headline">¶</a></h1>
 <p>Sometimes, you want to secure some routes and be sure that they are always
 accessed via the HTTPS protocol. The Routing component allows you to enforce
-the URI scheme via the <tt class="docutils literal"><span class="pre">_scheme</span></tt> requirement:</p>
+the URI scheme via schemes:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">secure</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/secure</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">/secure</span>
     <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeDemoBundle</span><span class="p-Indicator">:</span><span class="nv">Main</span><span class="p-Indicator">:</span><span class="nv">secure</span> <span class="p-Indicator">}</span>
-    <span class="l-Scalar-Plain">requirements</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">_scheme</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">https</span>
+    <span class="l-Scalar-Plain">schemes</span><span class="p-Indicator">:</span>  <span class="p-Indicator">[</span><span class="nv">https</span><span class="p-Indicator">]</span>
 </pre></div>
 </div>
 </li>
@@ -71,25 +74,22 @@ the URI scheme via the <tt class="docutils literal"><span class="pre">_scheme</s
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
     <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;secure&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/secure&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;secure&quot;</span> <span class="na">path=</span><span class="s">&quot;/secure&quot;</span> <span class="na">schemes=</span><span class="s">&quot;https&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeDemoBundle:Main:secure<span class="nt">&lt;/default&gt;</span>
-        <span class="nt">&lt;requirement</span> <span class="na">key=</span><span class="s">&quot;_scheme&quot;</span><span class="nt">&gt;</span>https<span class="nt">&lt;/requirement&gt;</span>
     <span class="nt">&lt;/route&gt;</span>
 <span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">use Symfony\Component\Routing\RouteCollection;</span>
-<span class="x">use Symfony\Component\Routing\Route;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Routing\RouteCollection</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Routing\Route</span><span class="p">;</span>
 
-<span class="x">$collection = new RouteCollection();</span>
-<span class="x">$collection-&gt;add(&#39;secure&#39;, new Route(&#39;/secure&#39;, array(</span>
-<span class="x">    &#39;_controller&#39; =&gt; &#39;AcmeDemoBundle:Main:secure&#39;,</span>
-<span class="x">), array(</span>
-<span class="x">    &#39;_scheme&#39; =&gt; &#39;https&#39;,</span>
-<span class="x">)));</span>
+<span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
+<span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;secure&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/secure&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeDemoBundle:Main:secure&#39;</span><span class="p">,</span>
+<span class="p">),</span> <span class="k">array</span><span class="p">(),</span> <span class="k">array</span><span class="p">(),</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;https&#39;</span><span class="p">)));</span>
 
-<span class="x">return $collection;</span>
+<span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
 </pre></div>
 </div>
 </li>
@@ -98,20 +98,20 @@ the URI scheme via the <tt class="docutils literal"><span class="pre">_scheme</s
 <p>The above configuration forces the <tt class="docutils literal"><span class="pre">secure</span></tt> route to always use HTTPS.</p>
 <p>When generating the <tt class="docutils literal"><span class="pre">secure</span></tt> URL, and if the current scheme is HTTP, Symfony
 will automatically generate an absolute URL with HTTPS as the scheme:</p>
-<div class="highlight-text"><div class="highlight"><pre># If the current scheme is HTTPS
-{{ path(&#39;secure&#39;) }}
-# generates /secure
+<div class="highlight-jinja"><div class="highlight"><pre><span class="c">{# If the current scheme is HTTPS #}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">path</span><span class="o">(</span><span class="s1">&#39;secure&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+<span class="x"># generates /secure</span>
 
-# If the current scheme is HTTP
-{{ path(&#39;secure&#39;) }}
-# generates https://example.com/secure
+<span class="c">{# If the current scheme is HTTP #}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">path</span><span class="o">(</span><span class="s1">&#39;secure&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="x"></span>
+<span class="c">{# generates https://example.com/secure #}</span><span class="x"></span>
 </pre></div>
 </div>
 <p>The requirement is also enforced for incoming requests. If you try to access
 the <tt class="docutils literal"><span class="pre">/secure</span></tt> path with HTTP, you will automatically be redirected to the
 same URL, but with the HTTPS scheme.</p>
-<p>The above example uses <tt class="docutils literal"><span class="pre">https</span></tt> for the <tt class="docutils literal"><span class="pre">_scheme</span></tt>, but you can also force a
-URL to always use <tt class="docutils literal"><span class="pre">http</span></tt>.</p>
+<p>The above example uses <tt class="docutils literal"><span class="pre">https</span></tt> for the scheme, but you can also force a URL
+to always use <tt class="docutils literal"><span class="pre">http</span></tt>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">The Security component provides another way to enforce HTTP or HTTPs via
@@ -128,8 +128,8 @@ you want to secure URLs defined in a third party bundle.</p>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../controller/service.html"
-                        title="previous chapter">How to define Controllers as Services</a></p>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Routing</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="slash_in_parameter.html"
                         title="next chapter">How to allow a &#8220;/&#8221; character in a route parameter</a></p>
@@ -141,7 +141,7 @@ you want to secure URLs defined in a third party bundle.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -165,15 +165,16 @@ you want to secure URLs defined in a third party bundle.</p>
           <a href="slash_in_parameter.html" title="How to allow a “/” character in a route parameter"
              >next</a> |</li>
         <li class="right" >
-          <a href="../controller/service.html" title="How to define Controllers as Services"
+          <a href="index.html" title="Routing"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Routing</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

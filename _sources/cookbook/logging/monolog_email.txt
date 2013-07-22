@@ -1,3 +1,6 @@
+.. index::
+   single: Logging; Emailing errors
+
 How to Configure Monolog to Email Errors
 ========================================
 
@@ -11,7 +14,7 @@ it is broken down.
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/config_prod.yml
         monolog:
             handlers:
                 mail:
@@ -30,6 +33,7 @@ it is broken down.
 
     .. code-block:: xml
 
+        <!-- app/config/config_prod.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -58,6 +62,30 @@ it is broken down.
             </monolog:config>
         </container>
 
+    .. code-block:: php
+
+        // app/config/config_prod.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'mail' => array(
+                    'type'         => 'fingers_crossed',
+                    'action_level' => 'critical',
+                    'handler'      => 'buffered',
+                ),
+                'buffered' => array(
+                    'type'    => 'buffer',
+                    'handler' => 'swift',
+                ),
+                'swift' => array(
+                    'type'       => 'swift_mailer',
+                    'from_email' => 'error@example.com',
+                    'to_email'   => 'error@example.com',
+                    'subject'    => 'An Error Occurred!',
+                    'level'      => 'debug',
+                ),
+            ),
+        ));
+
 The ``mail`` handler is a ``fingers_crossed`` handler which means that
 it is only triggered when the action level, in this case ``critical`` is reached.
 It then logs everything including messages below the action level.  The
@@ -83,7 +111,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: yaml
 
-        # app/config/config.yml
+        # app/config/config_prod.yml
         monolog:
             handlers:
                 main:
@@ -95,7 +123,7 @@ get logged on the server as well as the emails being sent:
                     members: [streamed, buffered]
                 streamed:
                     type:  stream
-                    path:  %kernel.logs_dir%/%kernel.environment%.log
+                    path:  "%kernel.logs_dir%/%kernel.environment%.log"
                     level: debug
                 buffered:
                     type:    buffer
@@ -109,6 +137,7 @@ get logged on the server as well as the emails being sent:
 
     .. code-block:: xml
 
+        <!-- app/config/config_prod.xml -->
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:monolog="http://symfony.com/schema/dic/monolog"
@@ -121,7 +150,7 @@ get logged on the server as well as the emails being sent:
                     type="fingers_crossed"
                     action_level="critical"
                     handler="grouped"
-                />                
+                />
                 <monolog:handler
                     name="grouped"
                     type="group"
@@ -148,6 +177,39 @@ get logged on the server as well as the emails being sent:
                 />
             </monolog:config>
         </container>
+
+    .. code-block:: php
+
+        // app/config/config_prod.php
+        $container->loadFromExtension('monolog', array(
+            'handlers' => array(
+                'main' => array(
+                    'type'         => 'fingers_crossed',
+                    'action_level' => 'critical',
+                    'handler'      => 'grouped',
+                ),
+                'grouped' => array(
+                    'type'    => 'group',
+                    'members' => array('streamed', 'buffered'),
+                ),
+                'streamed'  => array(
+                    'type'  => 'stream',
+                    'path'  => '%kernel.logs_dir%/%kernel.environment%.log',
+                    'level' => 'debug',
+                ),
+                'buffered'    => array(
+                    'type'    => 'buffer',
+                    'handler' => 'swift',
+                ),
+                'swift' => array(
+                    'type'       => 'swift_mailer',
+                    'from_email' => 'error@example.com',
+                    'to_email'   => 'error@example.com',
+                    'subject'    => 'An Error Occurred!',
+                    'level'      => 'debug',
+                ),
+            ),
+        ));
 
 This uses the ``group`` handler to send the messages to the two
 group members, the ``buffered`` and the ``stream`` handlers. The messages will

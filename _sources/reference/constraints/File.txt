@@ -71,7 +71,7 @@ below a certain file size and a valid PDF, add the following:
     .. code-block:: yaml
 
         # src/Acme/BlogBundle/Resources/config/validation.yml
-        Acme\BlogBundle\Entity\Author
+        Acme\BlogBundle\Entity\Author:
             properties:
                 bioFile:
                     - File:
@@ -83,6 +83,8 @@ below a certain file size and a valid PDF, add the following:
     .. code-block:: php-annotations
 
         // src/Acme/BlogBundle/Entity/Author.php
+        namespace Acme\BlogBundle\Entity;
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
@@ -116,18 +118,16 @@ below a certain file size and a valid PDF, add the following:
     .. code-block:: php
 
         // src/Acme/BlogBundle/Entity/Author.php
-        // ...
+        namespace Acme\BlogBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\File;
+        use Symfony\Component\Validator\Constraints as Assert;
 
         class Author
         {
-            // ...
-
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('bioFile', new File(array(
+                $metadata->addPropertyConstraint('bioFile', new Assert\File(array(
                     'maxSize' => '1024k',
                     'mimeTypes' => array(
                         'application/pdf',
@@ -170,6 +170,8 @@ mimeTypes
 If set, the validator will check that the mime type of the underlying file
 is equal to the given mime type (if a string) or exists in the collection
 of given mime types (if an array).
+
+You can find a list of existing mime types on the `IANA website`_
 
 maxSizeMessage
 ~~~~~~~~~~~~~~
@@ -227,3 +229,6 @@ uploadErrorMessage
 The message that is displayed if the uploaded file could not be uploaded
 for some unknown reason, such as the file upload failed or it couldn't be written
 to disk.
+
+
+.. _`IANA website`: http://www.iana.org/assignments/media-types/index.html

@@ -26,9 +26,20 @@ day, and year) or three select boxes (see the `widget_` option).
 |                      | - `months`_                                                                 |
 |                      | - `days`_                                                                   |
 |                      | - `format`_                                                                 |
-|                      | - `pattern`_                                                                |
-|                      | - `data_timezone`_                                                          |
-|                      | - `user_timezone`_                                                          |
+|                      | - `model_timezone`_                                                         |
+|                      | - `view_timezone`_                                                          |
++----------------------+-----------------------------------------------------------------------------+
+| Overridden Options   | - `by_reference`_                                                           |
+|                      | - `error_bubbling`_                                                         |
++----------------------+-----------------------------------------------------------------------------+
+| Inherited            | - `invalid_message`_                                                        |
+| options              | - `invalid_message_parameters`_                                             |
+|                      | - `read_only`_                                                              |
+|                      | - `disabled`_                                                               |
+|                      | - `mapped`_                                                                 |
+|                      | - `inherit_data`_                                                           |
+|                      | - `virtual`_                                                                |
+|                      | - `error_mapping`_                                                          |
 +----------------------+-----------------------------------------------------------------------------+
 | Parent type          | ``field`` (if text), ``form`` otherwise                                     |
 +----------------------+-----------------------------------------------------------------------------+
@@ -78,7 +89,7 @@ Field Options
 empty_value
 ~~~~~~~~~~~
 
-**type**: ``string``|``array``
+**type**: ``string`` or ``array``
 
 If your widget option is set to ``choice``, then this field will be represented
 as a series of ``select`` boxes. The ``empty_value`` option can be used to
@@ -100,10 +111,46 @@ Alternatively, you can specify a string to be displayed for the "blank" value::
 
 .. include:: /reference/forms/types/options/days.rst.inc
 
+.. _reference-forms-type-date-format:
+
 .. include:: /reference/forms/types/options/date_format.rst.inc
 
-.. include:: /reference/forms/types/options/date_pattern.rst.inc
+.. include:: /reference/forms/types/options/model_timezone.rst.inc
 
-.. include:: /reference/forms/types/options/data_timezone.rst.inc
+.. include:: /reference/forms/types/options/view_timezone.rst.inc
 
-.. include:: /reference/forms/types/options/user_timezone.rst.inc
+Overridden Options
+------------------
+
+by_reference
+~~~~~~~~~~~~
+
+**default**: ``false``
+
+The ``DateTime`` classes are treated as immutable objects.
+
+error_bubbling
+~~~~~~~~~~~~~~
+
+**default**: ``false``
+
+Inherited options
+-----------------
+
+These options inherit from the :doc:`field</reference/forms/types/form>` type:
+
+.. include:: /reference/forms/types/options/invalid_message.rst.inc
+
+.. include:: /reference/forms/types/options/invalid_message_parameters.rst.inc
+
+.. include:: /reference/forms/types/options/read_only.rst.inc
+
+.. include:: /reference/forms/types/options/disabled.rst.inc
+
+.. include:: /reference/forms/types/options/mapped.rst.inc
+
+.. include:: /reference/forms/types/options/inherit_data.rst.inc
+
+.. include:: /reference/forms/types/options/virtual.rst.inc
+
+.. include:: /reference/forms/types/options/error_mapping.rst.inc

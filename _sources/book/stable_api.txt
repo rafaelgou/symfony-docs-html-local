@@ -1,3 +1,6 @@
+.. index::
+   single: Stable API
+
 The Symfony2 Stable API
 =======================
 
@@ -19,7 +22,8 @@ everything not tagged explicitly is not part of the stable API.
 
     Any third party bundle should also publish its own stable API.
 
-As of Symfony 2.0, the following components have a public tagged API:
+As of the latest stable release of Symfony, the following components have
+a public tagged API:
 
 * BrowserKit
 * ClassLoader
@@ -28,6 +32,7 @@ As of Symfony 2.0, the following components have a public tagged API:
 * DependencyInjection
 * DomCrawler
 * EventDispatcher
+* Filesystem
 * Finder
 * HttpFoundation
 * HttpKernel

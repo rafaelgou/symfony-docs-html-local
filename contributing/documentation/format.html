@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Documentation Format &mdash; Symfony2Docs v1 documentation</title>
+    <title>Documentation Format &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +25,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
     <link rel="up" title="Contributing Documentation" href="index.html" />
-    <link rel="next" title="Translations" href="translations.html" />
+    <link rel="next" title="Documentation Standards" href="standards.html" />
     <link rel="prev" title="Contributing to the Documentation" href="overview.html" /> 
   </head>
   <body>
@@ -35,12 +38,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="translations.html" title="Translations"
+          <a href="standards.html" title="Documentation Standards"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="overview.html" title="Contributing to the Documentation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Contributing Documentation</a> &raquo;</li> 
       </ul>
@@ -53,15 +56,15 @@
             
   <div class="section" id="documentation-format">
 <h1>Documentation Format<a class="headerlink" href="#documentation-format" title="Permalink to this headline">¶</a></h1>
-<p>The Symfony2 documentation uses <a class="reference external" href="http://docutils.sf.net/rst.html">reStructuredText</a> as its markup language and
-<a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a> for building the output (HTML, PDF, ...).</p>
+<p>The Symfony2 documentation uses <a class="reference external" href="http://docutils.sourceforge.net/rst.html">reStructuredText</a> as its markup language and
+<a class="reference external" href="http://sphinx-doc.org/">Sphinx</a> for building the output (HTML, PDF, ...).</p>
 <div class="section" id="restructuredtext">
 <h2>reStructuredText<a class="headerlink" href="#restructuredtext" title="Permalink to this headline">¶</a></h2>
 <p>reStructuredText &#8220;is an easy-to-read, what-you-see-is-what-you-get plaintext
 markup syntax and parser system&#8221;.</p>
-<p>You can learn more about its syntax by reading existing Symfony2 <a class="reference external" href="http://github.com/symfony/symfony-docs">documents</a>
-or by reading the <a class="reference external" href="http://sphinx.pocoo.org/rest.html">reStructuredText Primer</a> on the Sphinx website.</p>
-<p>If you are familiar with Markdown, be careful as things as sometimes very
+<p>You can learn more about its syntax by reading existing Symfony2 <a class="reference external" href="https://github.com/symfony/symfony-docs">documents</a>
+or by reading the <a class="reference external" href="http://sphinx-doc.org/rest.html">reStructuredText Primer</a> on the Sphinx website.</p>
+<p>If you are familiar with Markdown, be careful as things are sometimes very
 similar but different:</p>
 <ul class="simple">
 <li>Lists starts at the beginning of a line (no indentation is allowed);</li>
@@ -72,7 +75,7 @@ similar but different:</p>
 <h2>Sphinx<a class="headerlink" href="#sphinx" title="Permalink to this headline">¶</a></h2>
 <p>Sphinx is a build system that adds some nice tools to create documentation
 from reStructuredText documents. As such, it adds new directives and
-interpreted text roles to standard reST <a class="reference external" href="http://sphinx.pocoo.org/markup/">markup</a>.</p>
+interpreted text roles to standard reST <a class="reference external" href="http://sphinx-doc.org/markup/">markup</a>.</p>
 <div class="section" id="syntax-highlighting">
 <h3>Syntax Highlighting<a class="headerlink" href="#syntax-highlighting" title="Permalink to this headline">¶</a></h3>
 <p>All code examples uses PHP as the default highlighted language. You can change
@@ -95,7 +98,7 @@ the highlighted pseudo-language:</p>
 </div>
 </div>
 <div class="section" id="configuration-blocks">
-<h3>Configuration Blocks<a class="headerlink" href="#configuration-blocks" title="Permalink to this headline">¶</a></h3>
+<span id="docs-configuration-blocks"></span><h3>Configuration Blocks<a class="headerlink" href="#configuration-blocks" title="Permalink to this headline">¶</a></h3>
 <p>Whenever you show a configuration, you must use the <tt class="docutils literal"><span class="pre">configuration-block</span></tt>
 directive to show the configuration in all supported configuration formats
 (<tt class="docutils literal"><span class="pre">PHP</span></tt>, <tt class="docutils literal"><span class="pre">YAML</span></tt>, and <tt class="docutils literal"><span class="pre">XML</span></tt>)</p>
@@ -125,7 +128,7 @@ directive to show the configuration in all supported configuration formats
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// Configuration in PHP</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// Configuration in PHP</span>
 </pre></div>
 </div>
 </li>
@@ -138,75 +141,115 @@ directive to show the configuration in all supported configuration formats
 <col width="43%" />
 </colgroup>
 <thead valign="bottom">
-<tr><th class="head">Markup format</th>
+<tr class="row-odd"><th class="head">Markup format</th>
 <th class="head">Displayed</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr><td>html</td>
+<tr class="row-even"><td>html</td>
 <td>HTML</td>
 </tr>
-<tr><td>xml</td>
+<tr class="row-odd"><td>xml</td>
 <td>XML</td>
 </tr>
-<tr><td>php</td>
+<tr class="row-even"><td>php</td>
 <td>PHP</td>
 </tr>
-<tr><td>yaml</td>
+<tr class="row-odd"><td>yaml</td>
 <td>YAML</td>
 </tr>
-<tr><td>jinja</td>
+<tr class="row-even"><td>jinja</td>
 <td>Twig</td>
 </tr>
-<tr><td>html+jinja</td>
+<tr class="row-odd"><td>html+jinja</td>
 <td>Twig</td>
 </tr>
-<tr><td>jinja+html</td>
-<td>Twig</td>
-</tr>
-<tr><td>php+html</td>
+<tr class="row-even"><td>html+php</td>
 <td>PHP</td>
 </tr>
-<tr><td>html+php</td>
-<td>PHP</td>
-</tr>
-<tr><td>ini</td>
+<tr class="row-odd"><td>ini</td>
 <td>INI</td>
 </tr>
-<tr><td>php-annotations</td>
+<tr class="row-even"><td>php-annotations</td>
 <td>Annotations</td>
 </tr>
 </tbody>
 </table>
 </div>
+<div class="section" id="adding-links">
+<h3>Adding Links<a class="headerlink" href="#adding-links" title="Permalink to this headline">¶</a></h3>
+<p>To add links to other pages in the documents use the following syntax:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span class="na">:doc:</span><span class="nv">`/path/to/page`</span>
+</pre></div>
+</div>
+<p>Using the path and filename of the page without the extension, for example:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span class="na">:doc:</span><span class="nv">`/book/controller`</span>
+
+<span class="na">:doc:</span><span class="nv">`/components/event_dispatcher/introduction`</span>
+
+<span class="na">:doc:</span><span class="nv">`/cookbook/configuration/environments`</span>
+</pre></div>
+</div>
+<p>The link text will be the main heading of the document linked to. You can
+also specify alternative text for the link:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span class="na">:doc:</span><span class="nv">`Spooling Email&lt;/cookbook/email/spool&gt;`</span>
+</pre></div>
+</div>
+<p>You can also add links to the API documentation:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span class="na">:namespace:</span><span class="nv">`Symfony\\Component\\BrowserKit`</span>
+
+<span class="na">:class:</span><span class="nv">`Symfony\\Component\\Routing\\Matcher\\ApacheUrlMatcher`</span>
+
+<span class="na">:method:</span><span class="nv">`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build`</span>
+</pre></div>
+</div>
+<p>and to the PHP documentation:</p>
+<div class="highlight-rst"><div class="highlight"><pre><span class="na">:phpclass:</span><span class="nv">`SimpleXMLElement`</span>
+
+<span class="na">:phpmethod:</span><span class="nv">`DateTime::createFromFormat`</span>
+
+<span class="na">:phpfunction:</span><span class="nv">`iterator_to_array`</span>
+</pre></div>
+</div>
+</div>
 <div class="section" id="testing-documentation">
 <h3>Testing Documentation<a class="headerlink" href="#testing-documentation" title="Permalink to this headline">¶</a></h3>
 <p>To test documentation before a commit:</p>
-<blockquote>
-<div><ul class="simple">
-<li>Install <a class="reference external" href="http://sphinx.pocoo.org/">Sphinx</a>;</li>
-<li>Run the <a class="reference external" href="http://sphinx.pocoo.org/tutorial.html#setting-up-the-documentation-sources">Sphinx quick setup</a>;</li>
-<li>Install the configuration-block Sphinx extension (see below);</li>
+<ul class="simple">
+<li>Install <a class="reference external" href="http://sphinx-doc.org/">Sphinx</a>;</li>
+<li>Run the <a class="reference external" href="http://sphinx-doc.org/tutorial.html#setting-up-the-documentation-sources">Sphinx quick setup</a>;</li>
+<li>Install the Sphinx extensions (see below);</li>
 <li>Run <tt class="docutils literal"><span class="pre">make</span> <span class="pre">html</span></tt> and view the generated HTML in the <tt class="docutils literal"><span class="pre">build</span></tt> directory.</li>
 </ul>
-</div></blockquote>
 </div>
-<div class="section" id="installing-the-configuration-block-sphinx-extension">
-<h3>Installing the configuration-block Sphinx extension<a class="headerlink" href="#installing-the-configuration-block-sphinx-extension" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<div><ul class="simple">
-<li>Download the extension from the <a class="reference external" href="https://github.com/fabpot/sphinx-php">configuration-block source</a> repository</li>
-<li>Copy the <tt class="docutils literal"><span class="pre">configurationblock.py</span></tt> to the <tt class="docutils literal"><span class="pre">_exts</span></tt> folder under your
-source folder (where <tt class="docutils literal"><span class="pre">conf.py</span></tt> is located)</li>
+<div class="section" id="installing-the-sphinx-extensions">
+<h3>Installing the Sphinx extensions<a class="headerlink" href="#installing-the-sphinx-extensions" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Download the extension from the <a class="reference external" href="https://github.com/fabpot/sphinx-php">source</a> repository</li>
+<li>Copy the <tt class="docutils literal"><span class="pre">sensio</span></tt> directory to the <tt class="docutils literal"><span class="pre">_exts</span></tt> folder under your source
+folder (where <tt class="docutils literal"><span class="pre">conf.py</span></tt> is located)</li>
 <li>Add the following to the <tt class="docutils literal"><span class="pre">conf.py</span></tt> file:</li>
 </ul>
-</div></blockquote>
 <div class="highlight-py"><div class="highlight"><pre><span class="c"># ...</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;_exts&#39;</span><span class="p">))</span>
 
+<span class="c"># adding PhpLexer</span>
+<span class="kn">from</span> <span class="nn">sphinx.highlighting</span> <span class="kn">import</span> <span class="n">lexers</span>
+<span class="kn">from</span> <span class="nn">pygments.lexers.web</span> <span class="kn">import</span> <span class="n">PhpLexer</span>
+
 <span class="c"># ...</span>
-<span class="c"># add configurationblock to the list of extensions</span>
-<span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;configurationblock&#39;</span><span class="p">]</span>
+<span class="c"># add the extensions to the list of extensions</span>
+<span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="s">&#39;sensio.sphinx.refinclude&#39;</span><span class="p">,</span> <span class="s">&#39;sensio.sphinx.configurationblock&#39;</span><span class="p">,</span> <span class="s">&#39;sensio.sphinx.phpcode&#39;</span><span class="p">]</span>
+
+<span class="c"># enable highlighting for PHP code not between ``&lt;?php ... ?&gt;`` by default</span>
+<span class="n">lexers</span><span class="p">[</span><span class="s">&#39;php&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PhpLexer</span><span class="p">(</span><span class="n">startinline</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">lexers</span><span class="p">[</span><span class="s">&#39;php-annotations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PhpLexer</span><span class="p">(</span><span class="n">startinline</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="c"># use PHP as the primary domain</span>
+<span class="n">primary_domain</span> <span class="o">=</span> <span class="s">&#39;php&#39;</span>
+
+<span class="c"># set url for API links</span>
+<span class="n">api_url</span> <span class="o">=</span> <span class="s">&#39;http://api.symfony.com/master/</span><span class="si">%s</span><span class="s">&#39;</span>
 </pre></div>
 </div>
 </div>
@@ -226,8 +269,9 @@ source folder (where <tt class="docutils literal"><span class="pre">conf.py</spa
 <li><a class="reference internal" href="#sphinx">Sphinx</a><ul>
 <li><a class="reference internal" href="#syntax-highlighting">Syntax Highlighting</a></li>
 <li><a class="reference internal" href="#configuration-blocks">Configuration Blocks</a></li>
+<li><a class="reference internal" href="#adding-links">Adding Links</a></li>
 <li><a class="reference internal" href="#testing-documentation">Testing Documentation</a></li>
-<li><a class="reference internal" href="#installing-the-configuration-block-sphinx-extension">Installing the configuration-block Sphinx extension</a></li>
+<li><a class="reference internal" href="#installing-the-sphinx-extensions">Installing the Sphinx extensions</a></li>
 </ul>
 </li>
 </ul>
@@ -238,8 +282,8 @@ source folder (where <tt class="docutils literal"><span class="pre">conf.py</spa
   <p class="topless"><a href="overview.html"
                         title="previous chapter">Contributing to the Documentation</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="translations.html"
-                        title="next chapter">Translations</a></p>
+  <p class="topless"><a href="standards.html"
+                        title="next chapter">Documentation Standards</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/contributing/documentation/format.txt"
@@ -248,7 +292,7 @@ source folder (where <tt class="docutils literal"><span class="pre">conf.py</spa
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -269,19 +313,19 @@ source folder (where <tt class="docutils literal"><span class="pre">conf.py</spa
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="translations.html" title="Translations"
+          <a href="standards.html" title="Documentation Standards"
              >next</a> |</li>
         <li class="right" >
           <a href="overview.html" title="Contributing to the Documentation"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" >Contributing Documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

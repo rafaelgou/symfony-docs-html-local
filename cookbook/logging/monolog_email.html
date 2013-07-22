@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Configure Monolog to Email Errors &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to Configure Monolog to Email Errors &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +25,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to optimize your development Environment for debugging" href="../debugging.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Logging" href="index.html" />
+    <link rel="next" title="How to log Messages to different Files" href="channels_handlers.html" />
     <link rel="prev" title="How to use Monolog to write Logs" href="monolog.html" /> 
   </head>
   <body>
@@ -35,13 +38,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../debugging.html" title="How to optimize your development Environment for debugging"
+          <a href="channels_handlers.html" title="How to log Messages to different Files"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="monolog.html" title="How to use Monolog to write Logs"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Logging</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -51,7 +55,7 @@
           <div class="body">
             
   <div class="section" id="how-to-configure-monolog-to-email-errors">
-<h1>How to Configure Monolog to Email Errors<a class="headerlink" href="#how-to-configure-monolog-to-email-errors" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>How to Configure Monolog to Email Errors<a class="headerlink" href="#how-to-configure-monolog-to-email-errors" title="Permalink to this headline">¶</a></h1>
 <p><a class="reference external" href="https://github.com/Seldaek/monolog">Monolog</a> can be configured to send an email when an error occurs with an
 application. The configuration for this requires a few nested handlers
 in order to avoid receiving too many emails. This configuration looks
@@ -59,7 +63,7 @@ complicated at first but each handler is fairly straight forward when
 it is broken down.</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config_prod.yml</span>
 <span class="l-Scalar-Plain">monolog</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">handlers</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">mail</span><span class="p-Indicator">:</span>
@@ -78,7 +82,8 @@ it is broken down.</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config_prod.xml --&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
     <span class="na">xmlns:monolog=</span><span class="s">&quot;http://symfony.com/schema/dic/monolog&quot;</span>
     <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd</span>
@@ -108,6 +113,30 @@ it is broken down.</p>
 </pre></div>
 </div>
 </li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config_prod.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;monolog&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;handlers&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;mail&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;fingers_crossed&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;action_level&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;critical&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;handler&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;buffered&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="s1">&#39;buffered&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;type&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;buffer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;handler&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;swift&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="s1">&#39;swift&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;swift_mailer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;from_email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;error@example.com&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;to_email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;error@example.com&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;subject&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;An Error Occurred!&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;level&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;debug&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">mail</span></tt> handler is a <tt class="docutils literal"><span class="pre">fingers_crossed</span></tt> handler which means that
@@ -130,32 +159,34 @@ to and from addresses and the subject.</p>
 get logged on the server as well as the emails being sent:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><pre># app/config/config.yml
-monolog:
-    handlers:
-        main:
-            type:         fingers_crossed
-            action_level: critical
-            handler:      grouped
-        grouped:
-            type:    group
-            members: [streamed, buffered]
-        streamed:
-            type:  stream
-            path:  %kernel.logs_dir%/%kernel.environment%.log
-            level: debug
-        buffered:
-            type:    buffer
-            handler: swift
-        swift:
-            type:       swift_mailer
-            from_email: error@example.com
-            to_email:   error@example.com
-            subject:    An Error Occurred!
-            level:      debug</pre>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config_prod.yml</span>
+<span class="l-Scalar-Plain">monolog</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">handlers</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">main</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span>         <span class="l-Scalar-Plain">fingers_crossed</span>
+            <span class="l-Scalar-Plain">action_level</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">critical</span>
+            <span class="l-Scalar-Plain">handler</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">grouped</span>
+        <span class="l-Scalar-Plain">grouped</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span>    <span class="l-Scalar-Plain">group</span>
+            <span class="l-Scalar-Plain">members</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">streamed</span><span class="p-Indicator">,</span> <span class="nv">buffered</span><span class="p-Indicator">]</span>
+        <span class="l-Scalar-Plain">streamed</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">stream</span>
+            <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>  <span class="s">&quot;%kernel.logs_dir%/%kernel.environment%.log&quot;</span>
+            <span class="l-Scalar-Plain">level</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">debug</span>
+        <span class="l-Scalar-Plain">buffered</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span>    <span class="l-Scalar-Plain">buffer</span>
+            <span class="l-Scalar-Plain">handler</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">swift</span>
+        <span class="l-Scalar-Plain">swift</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">type</span><span class="p-Indicator">:</span>       <span class="l-Scalar-Plain">swift_mailer</span>
+            <span class="l-Scalar-Plain">from_email</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">error@example.com</span>
+            <span class="l-Scalar-Plain">to_email</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">error@example.com</span>
+            <span class="l-Scalar-Plain">subject</span><span class="p-Indicator">:</span>    <span class="l-Scalar-Plain">An Error Occurred!</span>
+            <span class="l-Scalar-Plain">level</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">debug</span>
+</pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config_prod.xml --&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
     <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
     <span class="na">xmlns:monolog=</span><span class="s">&quot;http://symfony.com/schema/dic/monolog&quot;</span>
     <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd</span>
@@ -197,6 +228,39 @@ monolog:
 </pre></div>
 </div>
 </li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config_prod.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;monolog&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;handlers&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;main&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;type&#39;</span>         <span class="o">=&gt;</span> <span class="s1">&#39;fingers_crossed&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;action_level&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;critical&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;handler&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;grouped&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="s1">&#39;grouped&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;type&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;group&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;members&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;streamed&#39;</span><span class="p">,</span> <span class="s1">&#39;buffered&#39;</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="s1">&#39;streamed&#39;</span>  <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;type&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;stream&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;path&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;%kernel.logs_dir%/%kernel.environment%.log&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;level&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;debug&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="s1">&#39;buffered&#39;</span>    <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;type&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;buffer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;handler&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;swift&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+        <span class="s1">&#39;swift&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;type&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;swift_mailer&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;from_email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;error@example.com&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;to_email&#39;</span>   <span class="o">=&gt;</span> <span class="s1">&#39;error@example.com&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;subject&#39;</span>    <span class="o">=&gt;</span> <span class="s1">&#39;An Error Occurred!&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;level&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;debug&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </div>
 <p>This uses the <tt class="docutils literal"><span class="pre">group</span></tt> handler to send the messages to the two
@@ -214,8 +278,8 @@ now be both written to the log file and emailed.</p>
   <p class="topless"><a href="monolog.html"
                         title="previous chapter">How to use Monolog to write Logs</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../debugging.html"
-                        title="next chapter">How to optimize your development Environment for debugging</a></p>
+  <p class="topless"><a href="channels_handlers.html"
+                        title="next chapter">How to log Messages to different Files</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/logging/monolog_email.txt"
@@ -224,7 +288,7 @@ now be both written to the log file and emailed.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -245,18 +309,19 @@ now be both written to the log file and emailed.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../debugging.html" title="How to optimize your development Environment for debugging"
+          <a href="channels_handlers.html" title="How to log Messages to different Files"
              >next</a> |</li>
         <li class="right" >
           <a href="monolog.html" title="How to use Monolog to write Logs"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Logging</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

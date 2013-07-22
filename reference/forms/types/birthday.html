@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>birthday Field Type &mdash; Symfony2Docs v1 documentation</title>
+    <title>birthday Field Type &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,9 +25,9 @@
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../../index.html" />
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../../index.html" />
     <link rel="up" title="Form Types Reference" href="../types.html" />
-    <link rel="next" title="checkbox Field Type" href="checkbox.html" />
+    <link rel="next" title="button Field Type" href="button.html" />
     <link rel="prev" title="Form Types Reference" href="../types.html" /> 
   </head>
   <body>
@@ -35,12 +38,12 @@
           <a href="../../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="checkbox.html" title="checkbox Field Type"
+          <a href="button.html" title="button Field Type"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../types.html" title="Form Types Reference"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" accesskey="U">Form Types Reference</a> &raquo;</li> 
       </ul>
@@ -62,46 +65,51 @@ type, but with a more appropriate default for the <a class="reference internal" 
 option defaults to 120 years ago to the current year.</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="15%" />
-<col width="85%" />
+<col width="22%" />
+<col width="78%" />
 </colgroup>
 <tbody valign="top">
-<tr><td>Underlying Data Type</td>
-<td>can be <tt class="docutils literal"><span class="pre">DateTime</span></tt>, <tt class="docutils literal"><span class="pre">string</span></tt>, <tt class="docutils literal"><span class="pre">timestamp</span></tt>, or <tt class="docutils literal"><span class="pre">array</span></tt> (see the <a class="reference internal" href="date.html#form-reference-date-input"><em>input option</em></a>)</td>
+<tr class="row-odd"><td>Underlying Data Type</td>
+<td>can be <tt class="docutils literal"><span class="pre">DateTime</span></tt>, <tt class="docutils literal"><span class="pre">string</span></tt>, <tt class="docutils literal"><span class="pre">timestamp</span></tt>, or <tt class="docutils literal"><span class="pre">array</span></tt>
+(see the <a class="reference internal" href="date.html#form-reference-date-input"><em>input option</em></a>)</td>
 </tr>
-<tr><td>Rendered as</td>
+<tr class="row-even"><td>Rendered as</td>
 <td>can be three select boxes or 1 or 3 text boxes, based on the <a class="reference internal" href="#widget">widget</a> option</td>
 </tr>
-<tr><td>Options</td>
+<tr class="row-odd"><td>Overridden Options</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="#years">years</a></li>
 </ul>
 </td>
 </tr>
-<tr><td>Inherited
-options</td>
+<tr class="row-even"><td>Inherited Options</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="#widget">widget</a></li>
 <li><a class="reference internal" href="#input">input</a></li>
 <li><a class="reference internal" href="#months">months</a></li>
 <li><a class="reference internal" href="#days">days</a></li>
 <li><a class="reference internal" href="#format">format</a></li>
-<li><a class="reference internal" href="#pattern">pattern</a></li>
-<li><a class="reference internal" href="#data-timezone">data_timezone</a></li>
-<li><a class="reference internal" href="#user-timezone">user_timezone</a></li>
+<li><a class="reference internal" href="#model-timezone">model_timezone</a></li>
+<li><a class="reference internal" href="#view-timezone">view_timezone</a></li>
+<li><a class="reference internal" href="#invalid-message">invalid_message</a></li>
+<li><a class="reference internal" href="#invalid-message-parameters">invalid_message_parameters</a></li>
+<li><a class="reference internal" href="#read-only">read_only</a></li>
+<li><a class="reference internal" href="#disabled">disabled</a></li>
+<li><a class="reference internal" href="#mapped">mapped</a></li>
+<li><a class="reference internal" href="#inherit-data">inherit_data</a></li>
 </ul>
 </td>
 </tr>
-<tr><td>Parent type</td>
+<tr class="row-odd"><td>Parent type</td>
 <td><a class="reference internal" href="date.html"><em>date</em></a></td>
 </tr>
-<tr><td>Class</td>
-<td><tt class="xref py py-class docutils literal"><span class="pre">Symfony\Component\Form\Extension\Core\Type\BirthdayType</span></tt></td>
+<tr class="row-even"><td>Class</td>
+<td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/Extension/Core/Type/BirthdayType.html" title="Symfony\Component\Form\Extension\Core\Type\BirthdayType"><span class="pre">BirthdayType</span></a></tt></td>
 </tr>
 </tbody>
 </table>
-<div class="section" id="field-options">
-<h2>Field Options<a class="headerlink" href="#field-options" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overridden-options">
+<h2>Overridden Options<a class="headerlink" href="#overridden-options" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="years">
 <h3>years<a class="headerlink" href="#years" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">array</span></tt> <strong>default</strong>: 120 years ago to the current year</p>
@@ -118,10 +126,10 @@ relevant when the <tt class="docutils literal"><span class="pre">widget</span></
 <p>The basic way in which this field should be rendered. Can be one of the following:</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">choice</span></tt>: renders three select inputs.  The order of the selects is defined
-in the <a class="reference internal" href="#pattern">pattern</a> option.</li>
+in the <a class="reference internal" href="#format">format</a> option.</li>
 <li><tt class="docutils literal"><span class="pre">text</span></tt>: renders a three field input of type text (month, day, year).</li>
-<li><tt class="docutils literal"><span class="pre">single_text</span></tt>: renders a single input of type text. User&#8217;s input is validated
-based on the <a class="reference internal" href="#format">format</a> option.</li>
+<li><tt class="docutils literal"><span class="pre">single_text</span></tt>: renders a single input of type date (text in Symfony 2.0). User&#8217;s
+input is validated based on the <a class="reference internal" href="#format">format</a> option.</li>
 </ul>
 </div>
 <div class="section" id="input">
@@ -137,6 +145,12 @@ your underlying object. Valid values are:</p>
 </ul>
 <p>The value that comes back from the form will also be normalized back into
 this format.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">If <tt class="docutils literal"><span class="pre">timestamp</span></tt> is used, <tt class="docutils literal"><span class="pre">DateType</span></tt> is limited to dates between
+Fri, 13 Dec 1901 20:45:54 GMT and Tue, 19 Jan 2038 03:14:07 GMT on 32bit
+systems. This is due to a <a class="reference external" href="http://php.net/manual/en/function.date.php#refsect1-function.date-changelog">limitation in PHP itself</a>.</p>
+</div>
 </div>
 <div class="section" id="months">
 <h3>months<a class="headerlink" href="#months" title="Permalink to this headline">¶</a></h3>
@@ -158,10 +172,11 @@ when the <tt class="docutils literal"><span class="pre">widget</span></tt> optio
 <p>Option passed to the <tt class="docutils literal"><span class="pre">IntlDateFormatter</span></tt> class, used to transform user input
 into the proper format. This is critical when the <a class="reference internal" href="#widget">widget</a> option is
 set to <tt class="docutils literal"><span class="pre">single_text</span></tt>, and will define how the user will input the data.
-By default, the format is determined based on the current user locale; you
+By default, the format is determined based on the current user locale: meaning
+that <em>the expected format will be different for different users</em>. You
 can override it by passing the format as a string.</p>
 <p>For more information on valid formats, see <a class="reference external" href="http://userguide.icu-project.org/formatparse/datetime#TOC-Date-Time-Format-Syntax">Date/Time Format Syntax</a>. For
-example, to render a single text box that expects the user to end <tt class="docutils literal"><span class="pre">yyyy-MM-dd</span></tt>,
+example, to render a single text box that expects the user to enter <tt class="docutils literal"><span class="pre">yyyy-MM-dd</span></tt>,
 use the following options:</p>
 <div class="highlight-python"><pre>$builder-&gt;add('date_created', 'date', array(
     'widget' =&gt; 'single_text',
@@ -169,33 +184,71 @@ use the following options:</p>
 ));</pre>
 </div>
 </div>
-<div class="section" id="pattern">
-<h3>pattern<a class="headerlink" href="#pattern" title="Permalink to this headline">¶</a></h3>
-<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt></p>
-<p>This option is only relevant when the <a class="reference internal" href="#widget">widget</a> is set to <tt class="docutils literal"><span class="pre">choice</span></tt>.
-The default pattern is based off the <a class="reference internal" href="#format">format</a> option, and tries to
-match the characters <tt class="docutils literal"><span class="pre">M</span></tt>, <tt class="docutils literal"><span class="pre">d</span></tt>, and <tt class="docutils literal"><span class="pre">y</span></tt> in the format pattern. If
-no match is found, the default is the string <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">year</span> <span class="pre">}}-{{</span> <span class="pre">month</span> <span class="pre">}}-{{</span> <span class="pre">day</span> <span class="pre">}}</span></tt>.
-Tokens for this option include:</p>
-<blockquote>
-<div><ul class="simple">
-<li><tt class="docutils literal"><span class="pre">{{</span> <span class="pre">year</span> <span class="pre">}}</span></tt>: Replaced with the <tt class="docutils literal"><span class="pre">year</span></tt> widget</li>
-<li><tt class="docutils literal"><span class="pre">{{</span> <span class="pre">month</span> <span class="pre">}}</span></tt>: Replaced with the <tt class="docutils literal"><span class="pre">month</span></tt> widget</li>
-<li><tt class="docutils literal"><span class="pre">{{</span> <span class="pre">day</span> <span class="pre">}}</span></tt>: Replaced with the <tt class="docutils literal"><span class="pre">day</span></tt> widget</li>
-</ul>
-</div></blockquote>
-</div>
-<div class="section" id="data-timezone">
-<h3>data_timezone<a class="headerlink" href="#data-timezone" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="model-timezone">
+<h3>model_timezone<a class="headerlink" href="#model-timezone" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: system default timezone</p>
 <p>Timezone that the input data is stored in. This must be one of the
 <a class="reference external" href="http://php.net/manual/en/timezones.php">PHP supported timezones</a></p>
 </div>
-<div class="section" id="user-timezone">
-<h3>user_timezone<a class="headerlink" href="#user-timezone" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="view-timezone">
+<h3>view_timezone<a class="headerlink" href="#view-timezone" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: system default timezone</p>
 <p>Timezone for how the data should be shown to the user (and therefore also
 the data that the user submits). This must be one of the <a class="reference external" href="http://php.net/manual/en/timezones.php">PHP supported timezones</a></p>
+<p>These options inherit from the <a class="reference internal" href="form.html"><em>date</em></a> type:</p>
+</div>
+<div class="section" id="invalid-message">
+<h3>invalid_message<a class="headerlink" href="#invalid-message" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">This</span> <span class="pre">value</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">valid</span></tt></p>
+<p>This is the validation error message that&#8217;s used if the data entered into
+this field doesn&#8217;t make sense (i.e. fails validation).</p>
+<p>This might happen, for example, if the user enters a nonsense string into
+a <a class="reference internal" href="time.html"><em>time</em></a> field that cannot be converted
+into a real time or if the user enters a string (e.g. <tt class="docutils literal"><span class="pre">apple</span></tt>) into a
+number field.</p>
+<p>Normal (business logic) validation (such as when setting a minimum length for
+a field) should be set using validation messages with your validation rules
+(<a class="reference internal" href="../../../book/validation.html#book-validation-constraint-configuration"><em>reference</em></a>).</p>
+</div>
+<div class="section" id="invalid-message-parameters">
+<h3>invalid_message_parameters<a class="headerlink" href="#invalid-message-parameters" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">array</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">array()</span></tt></p>
+<p>When setting the <tt class="docutils literal"><span class="pre">invalid_message</span></tt> option, you may need to
+include some variables in the string. This can be done by adding placeholders
+to that option and including the variables in this option:</p>
+<div class="highlight-python"><pre>$builder-&gt;add('some_field', 'some_type', array(
+    // ...
+    'invalid_message'            =&gt; 'You entered an invalid value - it should include %num% letters',
+    'invalid_message_parameters' =&gt; array('%num%' =&gt; 6),
+));</pre>
+</div>
+</div>
+<div class="section" id="read-only">
+<h3>read_only<a class="headerlink" href="#read-only" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
+<p>If this option is true, the field will be rendered with the <tt class="docutils literal"><span class="pre">readonly</span></tt>
+attribute so that the field is not editable.</p>
+</div>
+<div class="section" id="disabled">
+<h3>disabled<a class="headerlink" href="#disabled" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">boolean</span></tt>  <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
+<p>If you don&#8217;t want a user to modify the value of a field, you can set
+the disabled option to true. Any submitted value will be ignored.</p>
+</div>
+<div class="section" id="mapped">
+<h3>mapped<a class="headerlink" href="#mapped" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">boolean</span></tt></p>
+<p>If you wish the field to be ignored when reading or writing to the object, you
+can set the <tt class="docutils literal"><span class="pre">mapped</span></tt> option to <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
+</div>
+<div class="section" id="inherit-data">
+<h3>inherit_data<a class="headerlink" href="#inherit-data" title="Permalink to this headline">¶</a></h3>
+<p class="versionadded">
+<span class="versionmodified">New in version 2.3: </span>This option was known as <tt class="docutils literal"><span class="pre">virtual</span></tt> before Symfony 2.3.</p>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
+<p>This option determines if the form will inherit data form its parent form.
+This can be useful is you have a set of fields that are duplicated across
+multiple forms. See <a class="reference internal" href="../../../cookbook/form/inherit_data_option.html"><em>How to Reduce Code Duplication with &#8220;inherit_data&#8221;</em></a>.</p>
 </div>
 </div>
 </div>
@@ -209,7 +262,7 @@ the data that the user submits). This must be one of the <a class="reference ext
   <h3><a href="../../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">birthday Field Type</a><ul>
-<li><a class="reference internal" href="#field-options">Field Options</a><ul>
+<li><a class="reference internal" href="#overridden-options">Overridden Options</a><ul>
 <li><a class="reference internal" href="#years">years</a></li>
 </ul>
 </li>
@@ -219,9 +272,14 @@ the data that the user submits). This must be one of the <a class="reference ext
 <li><a class="reference internal" href="#months">months</a></li>
 <li><a class="reference internal" href="#days">days</a></li>
 <li><a class="reference internal" href="#format">format</a></li>
-<li><a class="reference internal" href="#pattern">pattern</a></li>
-<li><a class="reference internal" href="#data-timezone">data_timezone</a></li>
-<li><a class="reference internal" href="#user-timezone">user_timezone</a></li>
+<li><a class="reference internal" href="#model-timezone">model_timezone</a></li>
+<li><a class="reference internal" href="#view-timezone">view_timezone</a></li>
+<li><a class="reference internal" href="#invalid-message">invalid_message</a></li>
+<li><a class="reference internal" href="#invalid-message-parameters">invalid_message_parameters</a></li>
+<li><a class="reference internal" href="#read-only">read_only</a></li>
+<li><a class="reference internal" href="#disabled">disabled</a></li>
+<li><a class="reference internal" href="#mapped">mapped</a></li>
+<li><a class="reference internal" href="#inherit-data">inherit_data</a></li>
 </ul>
 </li>
 </ul>
@@ -232,8 +290,8 @@ the data that the user submits). This must be one of the <a class="reference ext
   <p class="topless"><a href="../types.html"
                         title="previous chapter">Form Types Reference</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="checkbox.html"
-                        title="next chapter">checkbox Field Type</a></p>
+  <p class="topless"><a href="button.html"
+                        title="next chapter">button Field Type</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../../_sources/reference/forms/types/birthday.txt"
@@ -242,7 +300,7 @@ the data that the user submits). This must be one of the <a class="reference ext
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -263,19 +321,19 @@ the data that the user submits). This must be one of the <a class="reference ext
           <a href="../../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="checkbox.html" title="checkbox Field Type"
+          <a href="button.html" title="button Field Type"
              >next</a> |</li>
         <li class="right" >
           <a href="../types.html" title="Form Types Reference"
              >previous</a> |</li>
-        <li><a href="../../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
+        <li><a href="../../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
           <li><a href="../../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../types.html" >Form Types Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -3,17 +3,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to expose a Semantic Configuration for a Bundle &mdash; Symfony2Docs v1 documentation</title>
+    <title>How to expose a Semantic Configuration for a Bundle &mdash; Symfony Docs 2.3 documentation</title>
+    
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '1',
+        VERSION:     '2.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -22,10 +25,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony2Docs v1 documentation" href="../../index.html" />
-    <link rel="up" title="Cookbook" href="../index.html" />
-    <link rel="next" title="How to send an Email" href="../email/email.html" />
-    <link rel="prev" title="How to Override any Part of a Bundle" href="override.html" /> 
+    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="up" title="Bundles" href="index.html" />
+    <link rel="next" title="How to simplify configuration of multiple Bundles" href="prepend_extension.html" />
+    <link rel="prev" title="How to remove the AcmeDemoBundle" href="remove.html" /> 
   </head>
   <body>
     <div class="related">
@@ -35,13 +38,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../email/email.html" title="How to send an Email"
+          <a href="prepend_extension.html" title="How to simplify configuration of multiple Bundles"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="override.html" title="How to Override any Part of a Bundle"
+          <a href="remove.html" title="How to remove the AcmeDemoBundle"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" accesskey="U">Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" accesskey="U">Bundles</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -64,7 +68,7 @@ as integration of other related components:</p>
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
     <span class="c1"># ...</span>
-    <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span>            <span class="l-Scalar-Plain">true</span>
+    <span class="l-Scalar-Plain">form</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
 </pre></div>
 </div>
 </li>
@@ -74,11 +78,11 @@ as integration of other related components:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">$container-&gt;loadFromExtension(&#39;framework&#39;, array(</span>
-<span class="x">    // ...</span>
-<span class="x">    &#39;form&#39;            =&gt; true,</span>
-<span class="x">    // ...</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="c1">// ...</span>
+    <span class="s1">&#39;form&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="c1">// ...</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -142,6 +146,8 @@ and its name should be constructed by replacing the <tt class="docutils literal"
 Bundle class name with <tt class="docutils literal"><span class="pre">Extension</span></tt>. For example, the Extension class of
 <tt class="docutils literal"><span class="pre">AcmeHelloBundle</span></tt> would be called <tt class="docutils literal"><span class="pre">AcmeHelloExtension</span></tt>:</p>
 <div class="highlight-python"><pre>// Acme/HelloBundle/DependencyInjection/AcmeHelloExtension.php
+namespace Acme\HelloBundle\DependencyInjection;
+
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -149,7 +155,7 @@ class AcmeHelloExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        // where all of the heavy logic is done
+        // ... where all of the heavy logic is done
     }
 
     public function getXsdValidationBasePath()
@@ -190,14 +196,14 @@ and then lowercasing and underscoring the rest of the name. In other words,
     <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://www.example.com/symfony/schema/ http://www.example.com/symfony/schema/hello-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
    <span class="nt">&lt;acme_hello:config</span> <span class="nt">/&gt;</span>
-   ...
 
+   <span class="c">&lt;!-- ... --&gt;</span>
 <span class="nt">&lt;/container&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;acme_hello&#39;, array());</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;acme_hello&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">());</span>
 </pre></div>
 </div>
 </li>
@@ -246,11 +252,11 @@ converts XML and YAML to an array).</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;acme_hello&#39;, array(</span>
-<span class="x">    &#39;foo&#39; =&gt; &#39;fooValue&#39;,</span>
-<span class="x">    &#39;bar&#39; =&gt; &#39;barValue&#39;,</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;acme_hello&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;foo&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;fooValue&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;bar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;barValue&#39;</span><span class="p">,</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -261,7 +267,7 @@ converts XML and YAML to an array).</p>
     array(
         'foo' =&gt; 'fooValue',
         'bar' =&gt; 'barValue',
-    )
+    ),
 )</pre>
 </div>
 <p>Notice that this is an <em>array of arrays</em>, not just a single flat array of the
@@ -293,7 +299,7 @@ you might just merge them manually:</p>
         $config = array_merge($config, $subConfig);
     }
 
-    // now use the flat $config array
+    // ... now use the flat $config array
 }</pre>
 </div>
 <div class="admonition caution">
@@ -320,9 +326,12 @@ use Symfony\Component\Config\FileLocator;
 
 public function load(array $configs, ContainerBuilder $container)
 {
-    // prepare your $config variable
+    // ... prepare your $config variable
 
-    $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+    $loader = new XmlFileLoader(
+        $container,
+        new FileLocator(__DIR__.'/../Resources/config')
+    );
     $loader-&gt;load('services.xml');
 }</pre>
 </div>
@@ -331,9 +340,12 @@ For example, suppose you only want to load a set of services if an <tt class="do
 option is passed and set to true:</p>
 <div class="highlight-python"><pre>public function load(array $configs, ContainerBuilder $container)
 {
-    // prepare your $config variable
+    // ... prepare your $config variable
 
-    $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+    $loader = new XmlFileLoader(
+        $container,
+        new FileLocator(__DIR__.'/../Resources/config')
+    );
 
     if (isset($config['enabled']) &amp;&amp; $config['enabled']) {
         $loader-&gt;load('services.xml');
@@ -374,16 +386,24 @@ to allow the user to define this <em>type</em> option under a key called <tt cla
 Add the following to the <tt class="docutils literal"><span class="pre">load()</span></tt> method to do this:</p>
 <div class="highlight-python"><pre>public function load(array $configs, ContainerBuilder $container)
 {
-    // prepare your $config variable
+    // ... prepare your $config variable
 
-    $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+    $loader = new XmlFileLoader(
+        $container,
+        new FileLocator(__DIR__.'/../Resources/config')
+    );
     $loader-&gt;load('services.xml');
 
     if (!isset($config['my_type'])) {
-        throw new \InvalidArgumentException('The "my_type" option must be set');
+        throw new \InvalidArgumentException(
+            'The "my_type" option must be set'
+        );
     }
 
-    $container-&gt;setParameter('acme_hello.my_service_type', $config['my_type']);
+    $container-&gt;setParameter(
+        'acme_hello.my_service_type',
+        $config['my_type']
+    );
 }</pre>
 </div>
 <p>Now, the user can effectively configure the service by specifying the <tt class="docutils literal"><span class="pre">my_type</span></tt>
@@ -413,11 +433,11 @@ configuration value:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="x">// app/config/config.php</span>
-<span class="x">$container-&gt;loadFromExtension(&#39;acme_hello&#39;, array(</span>
-<span class="x">    &#39;my_type&#39; =&gt; &#39;foo&#39;,</span>
-<span class="x">    // ...</span>
-<span class="x">));</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;acme_hello&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;my_type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;foo&#39;</span><span class="p">,</span>
+    <span class="o">...</span><span class="p">,</span>
+<span class="p">));</span>
 </pre></div>
 </div>
 </li>
@@ -435,7 +455,6 @@ global parameters available to use:</p>
 <li><tt class="docutils literal"><span class="pre">kernel.root_dir</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">kernel.cache_dir</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">kernel.logs_dir</span></tt></li>
-<li><tt class="docutils literal"><span class="pre">kernel.bundle_dirs</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">kernel.bundles</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">kernel.charset</span></tt></li>
 </ul>
@@ -460,6 +479,70 @@ need to be &#8220;normalized&#8221; to match everything else.</p>
 </div>
 <p>To take advantage of this system, you&#8217;ll create a <tt class="docutils literal"><span class="pre">Configuration</span></tt> class
 and build a tree that defines your configuration in that class:</p>
+<div class="highlight-python"><pre>// src/Acme/HelloBundle/DependencyInjection/Configuration.php
+namespace Acme\HelloBundle\DependencyInjection;
+
+use Symfony\Component\Config\Definition\Builder\TreeBuilder;
+use Symfony\Component\Config\Definition\ConfigurationInterface;
+
+class Configuration implements ConfigurationInterface
+{
+    public function getConfigTreeBuilder()
+    {
+        $treeBuilder = new TreeBuilder();
+        $rootNode = $treeBuilder-&gt;root('acme_hello');
+
+        $rootNode
+            -&gt;children()
+            -&gt;scalarNode('my_type')-&gt;defaultValue('bar')-&gt;end()
+            -&gt;end();
+
+        return $treeBuilder;
+    }
+}</pre>
+</div>
+<p>This is a <em>very</em> simple example, but you can now use this class in your <tt class="docutils literal"><span class="pre">load()</span></tt>
+method to merge your configuration and force validation. If any options other
+than <tt class="docutils literal"><span class="pre">my_type</span></tt> are passed, the user will be notified with an exception
+that an unsupported option was passed:</p>
+<div class="highlight-python"><pre>public function load(array $configs, ContainerBuilder $container)
+{
+    $configuration = new Configuration();
+
+    $config = $this-&gt;processConfiguration($configuration, $configs);
+
+    // ...
+}</pre>
+</div>
+<p>The <tt class="docutils literal"><span class="pre">processConfiguration()</span></tt> method uses the configuration tree you&#8217;ve defined
+in the <tt class="docutils literal"><span class="pre">Configuration</span></tt> class to validate, normalize and merge all of the
+configuration arrays together.</p>
+<p>The <tt class="docutils literal"><span class="pre">Configuration</span></tt> class can be much more complicated than shown here,
+supporting array nodes, &#8220;prototype&#8221; nodes, advanced validation, XML-specific
+normalization and advanced merging. You can read more about this in <a class="reference internal" href="../../components/config/definition.html"><em>the Config Component documentation</em></a>.
+You can also see it action by checking out some of the core Configuration classes,
+such as the one from the <a class="reference external" href="https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php">FrameworkBundle Configuration</a> or the <a class="reference external" href="https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php">TwigBundle Configuration</a>.</p>
+<div class="section" id="modifying-the-configuration-of-another-bundle">
+<h3>Modifying the configuration of another Bundle<a class="headerlink" href="#modifying-the-configuration-of-another-bundle" title="Permalink to this headline">¶</a></h3>
+<p>If you have multiple bundles that depend on each other, it may be useful
+to allow one <tt class="docutils literal"><span class="pre">Extension</span></tt> class to modify the configuration passed to another
+bundle&#8217;s <tt class="docutils literal"><span class="pre">Extension</span></tt> class, as if the end-developer has actually placed that
+configuration in his/her <tt class="docutils literal"><span class="pre">app/config/config.yml</span></tt> file.</p>
+<p>For more details, see <a class="reference internal" href="prepend_extension.html"><em>How to simplify configuration of multiple Bundles</em></a>.</p>
+</div>
+<div class="section" id="default-configuration-dump">
+<h3>Default Configuration Dump<a class="headerlink" href="#default-configuration-dump" title="Permalink to this headline">¶</a></h3>
+<p>The <tt class="docutils literal"><span class="pre">config:dump-reference</span></tt> command allows a bundle&#8217;s default configuration to
+be output to the console in yaml.</p>
+<p>As long as your bundle&#8217;s configuration is located in the standard location
+(<tt class="docutils literal"><span class="pre">YourBundle\DependencyInjection\Configuration</span></tt>) and does not have a
+<tt class="docutils literal"><span class="pre">__construct()</span></tt> it will work automatically.  If you have something
+different, your <tt class="docutils literal"><span class="pre">Extension</span></tt> class must override the
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/DependencyInjection/Extension.html#method_getConfiguration" title="Symfony\Component\HttpKernel\DependencyInjection\Extension::getConfiguration()"><span class="pre">Extension::getConfiguration()</span></a></tt>
+method and return an instance of your
+<tt class="docutils literal"><span class="pre">Configuration</span></tt>.</p>
+<p>Comments and examples can be added to your configuration nodes using the
+<tt class="docutils literal"><span class="pre">-&gt;info()</span></tt> and <tt class="docutils literal"><span class="pre">-&gt;example()</span></tt> methods:</p>
 <div class="highlight-python"><pre>// src/Acme/HelloBundle/DependencyExtension/Configuration.php
 namespace Acme\HelloBundle\DependencyInjection;
 
@@ -475,37 +558,21 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             -&gt;children()
-                -&gt;scalarNode('my_type')-&gt;defaultValue('bar')-&gt;end()
+                -&gt;scalarNode('my_type')
+                    -&gt;defaultValue('bar')
+                    -&gt;info('what my_type configures')
+                    -&gt;example('example setting')
+                -&gt;end()
             -&gt;end()
         ;
 
         return $treeBuilder;
-    }</pre>
-</div>
-<p>This is a <em>very</em> simple example, but you can now use this class in your <tt class="docutils literal"><span class="pre">load()</span></tt>
-method to merge your configuration and force validation. If any options other
-than <tt class="docutils literal"><span class="pre">my_type</span></tt> are passed, the user will be notified with an exception
-that an unsupported option was passed:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Config\Definition\Processor;
-// ...
-
-public function load(array $configs, ContainerBuilder $container)
-{
-    $processor = new Processor();
-    $configuration = new Configuration();
-    $config = $processor-&gt;processConfiguration($configuration, $configs);
-
-    // ...
+    }
 }</pre>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">processConfiguration()</span></tt> method uses the configuration tree you&#8217;ve defined
-in the <tt class="docutils literal"><span class="pre">Configuration</span></tt> class to validate, normalize and merge all of the
-configuration arrays together.</p>
-<p>The <tt class="docutils literal"><span class="pre">Configuration</span></tt> class can be much more complicated than shown here,
-supporting array nodes, &#8220;prototype&#8221; nodes, advanced validation, XML-specific
-normalization and advanced merging. The best way to see this in action is
-to checkout out some of the core Configuration classes, such as the one from
-the <a class="reference external" href="https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/DependencyInjection/Configuration.php">FrameworkBundle Configuration</a> or the <a class="reference external" href="https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/TwigBundle/DependencyInjection/Configuration.php">TwigBundle Configuration</a>.</p>
+<p>This text appears as yaml comments in the output of the <tt class="docutils literal"><span class="pre">config:dump-reference</span></tt>
+command.</p>
+</div>
 </div>
 <div class="section" id="extension-conventions">
 <span id="index-2"></span><h2>Extension Conventions<a class="headerlink" href="#extension-conventions" title="Permalink to this headline">¶</a></h2>
@@ -517,10 +584,11 @@ the <a class="reference external" href="https://github.com/symfony/symfony/blob/
 <li>The extension should provide an XSD schema.</li>
 </ul>
 <p>If you follow these simple conventions, your extensions will be registered
-automatically by Symfony2. If not, override the Bundle
-<a href="#id1"><span class="problematic" id="id2">:method:`Symfony\\Component\\HttpKernel\\Bundle\\Bundle::build`</span></a> method in
-your bundle:</p>
-<div class="highlight-python"><pre>use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
+automatically by Symfony2. If not, override the
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/Bundle/Bundle.html#method_build" title="Symfony\Component\HttpKernel\Bundle\Bundle::build()"><span class="pre">Bundle::build()</span></a></tt>
+method in your bundle:</p>
+<div class="highlight-python"><pre>// ...
+use Acme\HelloBundle\DependencyInjection\UnconventionalExtensionClass;
 
 class AcmeHelloBundle extends Bundle
 {
@@ -561,18 +629,22 @@ standards set out above, so nothing happens automatically.</p>
 <li><a class="reference internal" href="#global-parameters">Global Parameters</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#validation-and-merging-with-a-configuration-class">Validation and Merging with a Configuration Class</a></li>
+<li><a class="reference internal" href="#validation-and-merging-with-a-configuration-class">Validation and Merging with a Configuration Class</a><ul>
+<li><a class="reference internal" href="#modifying-the-configuration-of-another-bundle">Modifying the configuration of another Bundle</a></li>
+<li><a class="reference internal" href="#default-configuration-dump">Default Configuration Dump</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#extension-conventions">Extension Conventions</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="override.html"
-                        title="previous chapter">How to Override any Part of a Bundle</a></p>
+  <p class="topless"><a href="remove.html"
+                        title="previous chapter">How to remove the AcmeDemoBundle</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../email/email.html"
-                        title="next chapter">How to send an Email</a></p>
+  <p class="topless"><a href="prepend_extension.html"
+                        title="next chapter">How to simplify configuration of multiple Bundles</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/bundles/extension.txt"
@@ -581,7 +653,7 @@ standards set out above, so nothing happens automatically.</p>
 <div id="searchbox" style="display: none">
   <h3>Quick search</h3>
     <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" size="18" />
+      <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
       <input type="hidden" name="area" value="default" />
@@ -602,18 +674,19 @@ standards set out above, so nothing happens automatically.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../email/email.html" title="How to send an Email"
+          <a href="prepend_extension.html" title="How to simplify configuration of multiple Bundles"
              >next</a> |</li>
         <li class="right" >
-          <a href="override.html" title="How to Override any Part of a Bundle"
+          <a href="remove.html" title="How to remove the AcmeDemoBundle"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony2Docs v1 documentation</a> &raquo;</li>
-          <li><a href="../index.html" >Cookbook</a> &raquo;</li> 
+        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
+          <li><a href="index.html" >Bundles</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2012, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.0.7.
+        &copy; Copyright 2013, Symfony Team.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

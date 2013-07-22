@@ -5,8 +5,8 @@ The Image constraint works exactly like the :doc:`File</reference/constraints/Fi
 constraint, except that its `mimeTypes`_ and `mimeTypesMessage` options are
 automatically setup to work for image files specifically.
 
-Additionally, as of Symfony 2.1, it has options so you can validate against
-the width and height of the image.
+Additionally it has options so you can validate against the width and height
+of the image.
 
 See the :doc:`File</reference/constraints/File>` constraint for the bulk of
 the documentation on this constraint.
@@ -87,11 +87,11 @@ it is between a certain size, add the following:
         class Author
         {
             /**
-             * @Assert\File(
+             * @Assert\Image(
              *     minWidth = 200,
              *     maxWidth = 400,
              *     minHeight = 200,
-             *     maxHeight = 400,
+             *     maxHeight = 400
              * )
              */
             protected $headshot;
@@ -102,7 +102,7 @@ it is between a certain size, add the following:
         <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
         <class name="Acme\BlogBundle\Entity\Author">
             <property name="headshot">
-                <constraint name="File">
+                <constraint name="Image">
                     <option name="minWidth">200</option>
                     <option name="maxWidth">400</option>
                     <option name="minHeight">200</option>
@@ -117,7 +117,7 @@ it is between a certain size, add the following:
         // ...
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
-        use Symfony\Component\Validator\Constraints\File;
+        use Symfony\Component\Validator\Constraints\Image;
 
         class Author
         {
@@ -125,7 +125,7 @@ it is between a certain size, add the following:
 
             public static function loadValidatorMetadata(ClassMetadata $metadata)
             {
-                $metadata->addPropertyConstraint('headshot', new File(array(
+                $metadata->addPropertyConstraint('headshot', new Image(array(
                     'minWidth' => 200,
                     'maxWidth' => 400,
                     'minHeight' => 200,
@@ -149,13 +149,12 @@ mimeTypes
 
 **type**: ``array`` or ``string`` **default**: ``image/*``
 
+You can find a list of existing image mime types on the `IANA website`_
+
 mimeTypesMessage
 ~~~~~~~~~~~~~~~~
 
 **type**: ``string`` **default**: ``This file is not a valid image``
-
-.. versionadded:: 2.1
-    All of the min/max width/height options are new to Symfony 2.1.
 
 minWidth
 ~~~~~~~~
@@ -225,3 +224,5 @@ minHeightMessage
 **type**: ``string`` **default**: ``The image height is too small ({{ height }}px). Minimum height expected is {{ min_height }}px``
 
 The error message if the height of the image is less than `minHeight`_.
+
+.. _`IANA website`: http://www.iana.org/assignments/media-types/image/index.html
