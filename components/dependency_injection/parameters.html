@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Introduction to Parameters &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Introduction to Parameters &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,8 +23,8 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
-    <link rel="up" title="Dependency Injection" href="index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
+    <link rel="up" title="DependencyInjection" href="index.html" />
     <link rel="next" title="Working with Container Service Definitions" href="definitions.html" />
     <link rel="prev" title="Types of Injection" href="types.html" /> 
   </head>
@@ -43,9 +41,9 @@
         <li class="right" >
           <a href="types.html" title="Types of Injection"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Dependency Injection</a> &raquo;</li> 
+          <li><a href="index.html" accesskey="U">DependencyInjection</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -64,13 +62,23 @@ values that you will want to change more regularly.</p>
 <p>Working with container parameters is straightforward using the container&#8217;s
 accessor methods for parameters. You can check if a parameter has been defined
 in the container with:</p>
-<div class="highlight-python"><pre>$container-&gt;hasParameter('mailer.transport');</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span><span class="o">-&gt;</span><span class="na">hasParameter</span><span class="p">(</span><span class="s1">&#39;mailer.transport&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>You can retrieve a parameter set in the container with:</p>
-<div class="highlight-python"><pre>$container-&gt;getParameter('mailer.transport');</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;mailer.transport&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>and set a parameter in the container with:</p>
-<div class="highlight-python"><pre>$container-&gt;setParameter('mailer.transport', 'sendmail');</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setParameter</span><span class="p">(</span><span class="s1">&#39;mailer.transport&#39;</span><span class="p">,</span> <span class="s1">&#39;sendmail&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p class="last">The used <tt class="docutils literal"><span class="pre">.</span></tt> notation is just a
+<a class="reference internal" href="../../contributing/code/standards.html#service-naming-conventions"><em>Symfony convention</em></a> to make parameters
+easier to read. Parameters are just flat key-value elements, they can&#8217;t be
+organized into a nested array</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -108,7 +116,7 @@ One use for this is to inject the values into your services. This allows
 you to configure different versions of services between applications or multiple
 services based on the same class but configured differently within a single
 application. You could inject the choice of mail transport into the <tt class="docutils literal"><span class="pre">Mailer</span></tt>
-class directly but by making it a parameter. This makes it easier to change
+class directly. But declaring it as a parameter makes it easier to change
 rather than being tied up and hidden with the service definition:</p>
 <div class="configuration-block">
 <ul class="simple">
@@ -146,6 +154,23 @@ rather than being tied up and hidden with the service definition:</p>
 </li>
 </ul>
 </div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p>The values between <tt class="docutils literal"><span class="pre">parameter</span></tt> tags in XML configuration files are not
+trimmed.</p>
+<p>This means that the following configuration sample will have the value
+<tt class="docutils literal"><span class="pre">\n</span>&nbsp;&nbsp;&nbsp; <span class="pre">sendmail\n</span></tt>:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;mailer.transport&quot;</span><span class="nt">&gt;</span>
+    sendmail
+<span class="nt">&lt;/parameter&gt;</span>
+</pre></div>
+</div>
+<p>In some cases (for constants or class names), this could throw errors. In
+order to prevent this, you must always inline your parameters as follow:</p>
+<div class="last highlight-xml"><div class="highlight"><pre><span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;mailer.transport&quot;</span><span class="nt">&gt;</span>sendmail<span class="nt">&lt;/parameter&gt;</span>
+</pre></div>
+</div>
+</div>
 <p>If you were using this elsewhere as well, then you would only need to change
 the parameter value in one place if needed.</p>
 <p>You can also use the parameters in the service definition, for example,
@@ -158,8 +183,8 @@ making the class of a service a parameter:</p>
 
 <span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">mailer</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span>     <span class="s">&#39;%mailer.class%&#39;</span>
-        <span class="l-Scalar-Plain">arguments</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&#39;%mailer.transport%&#39;</span><span class="p-Indicator">]</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span>     <span class="s">&quot;%mailer.class%&quot;</span>
+        <span class="l-Scalar-Plain">arguments</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&quot;%mailer.transport%&quot;</span><span class="p-Indicator">]</span>
 </pre></div>
 </div>
 </li>
@@ -172,7 +197,6 @@ making the class of a service a parameter:</p>
     <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;mailer&quot;</span> <span class="na">class=</span><span class="s">&quot;%mailer.class%&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;argument&gt;</span>%mailer.transport%<span class="nt">&lt;/argument&gt;</span>
     <span class="nt">&lt;/service&gt;</span>
-
 <span class="nt">&lt;/services&gt;</span>
 </pre></div>
 </div>
@@ -204,7 +228,8 @@ be escaped with another percent sign:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><pre>&lt;argument type="string"&gt;http://symfony.com/?foo=%%s&amp;bar=%%d&lt;/argument&gt;</pre>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre>&lt;argument type=&quot;string&quot;&gt;http://symfony.com/?foo=%%s&amp;bar=%%d&lt;/argument&gt;
+</pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="o">-&gt;</span><span class="na">addArgument</span><span class="p">(</span><span class="s1">&#39;http://symfony.com/?foo=%%s&amp;bar=%%d&#39;</span><span class="p">);</span>
@@ -217,9 +242,9 @@ be escaped with another percent sign:</p>
 </div>
 <div class="section" id="array-parameters">
 <span id="component-di-parameters-array"></span><h2>Array Parameters<a class="headerlink" href="#array-parameters" title="Permalink to this headline">¶</a></h2>
-<p>Parameters do not need to be flat strings, they can also be arrays. For the XML
-format, you need to use the <tt class="docutils literal"><span class="pre">type=&quot;collection&quot;</span></tt> attribute for all parameters that are
-arrays.</p>
+<p>Parameters do not need to be flat strings, they can also contain array values.
+For the XML format, you need to use the <tt class="docutils literal"><span class="pre">type=&quot;collection&quot;</span></tt> attribute for
+all parameters that are arrays.</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
@@ -276,7 +301,7 @@ arrays.</p>
 <div class="section" id="constants-as-parameters">
 <span id="component-di-parameters-constants"></span><h2>Constants as Parameters<a class="headerlink" href="#constants-as-parameters" title="Permalink to this headline">¶</a></h2>
 <p>The container also has support for setting PHP constants as parameters. To
-take advantage of this feature, map the name of your constant  to a parameter
+take advantage of this feature, map the name of your constant to a parameter
 key, and define the type as <tt class="docutils literal"><span class="pre">constant</span></tt>.</p>
 <div class="configuration-block">
 <ul class="simple">
@@ -302,7 +327,7 @@ key, and define the type as <tt class="docutils literal"><span class="pre">const
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p>This does not works for Yaml configuration. If you&#8217;re using Yaml, you can
+<p>This does not work for YAML configuration. If you&#8217;re using YAML, you can
 import an XML file to take advantage of this functionality:</p>
 <div class="last configuration-block">
 <ul class="simple">
@@ -313,6 +338,102 @@ import an XML file to take advantage of this functionality:</p>
 </div>
 </li>
 </ul>
+</div>
+</div>
+</div>
+<div class="section" id="php-keywords-in-xml">
+<h2>PHP Keywords in XML<a class="headerlink" href="#php-keywords-in-xml" title="Permalink to this headline">¶</a></h2>
+<p>By default, <tt class="docutils literal"><span class="pre">true</span></tt>, <tt class="docutils literal"><span class="pre">false</span></tt> and <tt class="docutils literal"><span class="pre">null</span></tt> in XML are converted to the PHP
+keywords (respectively <tt class="docutils literal"><span class="pre">true</span></tt>, <tt class="docutils literal"><span class="pre">false</span></tt> and <tt class="docutils literal"><span class="pre">null</span></tt>):</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;parameters&gt;</span>
+    <span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;mailer.send_all_in_once&quot;</span><span class="nt">&gt;</span>false<span class="nt">&lt;/parameter&gt;</span>
+<span class="nt">&lt;/parameters&gt;</span>
+
+<span class="c">&lt;!-- after parsing</span>
+<span class="c">$container-&gt;getParameter(&#39;mailer.send_all_in_once&#39;); // returns false</span>
+<span class="c">--&gt;</span>
+</pre></div>
+</div>
+<p>To disable this behavior, use the <tt class="docutils literal"><span class="pre">string</span></tt> type:</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;parameters&gt;</span>
+    <span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;mailer.some_parameter&quot;</span> <span class="na">type=</span><span class="s">&quot;string&quot;</span><span class="nt">&gt;</span>true<span class="nt">&lt;/parameter&gt;</span>
+<span class="nt">&lt;/parameters&gt;</span>
+
+<span class="c">&lt;!-- after parsing</span>
+<span class="c">$container-&gt;getParameter(&#39;mailer.some_parameter&#39;); // returns &quot;true&quot;</span>
+<span class="c">--&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is not available for YAML and PHP, because they already have built-in
+support for the PHP keywords.</p>
+</div>
+</div>
+<div class="section" id="syntax-for-referencing-services">
+<h2>Syntax for Referencing Services<a class="headerlink" href="#syntax-for-referencing-services" title="Permalink to this headline">¶</a></h2>
+<p>You can of course also reference services, which looks a bit different in
+each format. You can configure the behavior if the referenced service does
+not exist. By default, an exception is thrown when a non-existent service
+is referenced.</p>
+<div class="section" id="yaml">
+<h3>YAML<a class="headerlink" href="#yaml" title="Permalink to this headline">¶</a></h3>
+<p>Start the string with  <tt class="docutils literal"><span class="pre">&#64;</span></tt> or <tt class="docutils literal"><span class="pre">&#64;?</span></tt> to reference a service in YAML.</p>
+<ul class="simple">
+<li><tt class="docutils literal"><span class="pre">&#64;mailer</span></tt> references the <tt class="docutils literal"><span class="pre">mailer</span></tt> service. If the service does not
+exist, an exception will be thrown;</li>
+<li><tt class="docutils literal"><span class="pre">&#64;?mailer</span></tt> references the <tt class="docutils literal"><span class="pre">mailer</span></tt> service. If the service does not
+exist, it will be ignored;</li>
+</ul>
+<div class="highlight-yaml"><div class="highlight"><pre>parameters:
+    # if &#39;my_mailer&#39; service isn&#39;t defined, an exception will be raised
+    foo: @my_mailer
+
+    # if &#39;my_logger&#39; service isn&#39;t defined, &#39;bar&#39; will be null
+    bar: @?my_logger
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Use <tt class="docutils literal"><span class="pre">&#64;&#64;</span></tt> to escape the <tt class="docutils literal"><span class="pre">&#64;</span></tt> symbol in YAML. <tt class="docutils literal"><span class="pre">&#64;&#64;mailer</span></tt> will be
+converted into the string <tt class="docutils literal"><span class="pre">&quot;&#64;mailer&quot;</span></tt> instead of referencing the
+<tt class="docutils literal"><span class="pre">mailer</span></tt> service.</p>
+</div>
+</div>
+<div class="section" id="xml">
+<h3>XML<a class="headerlink" href="#xml" title="Permalink to this headline">¶</a></h3>
+<p>In XML, use the <tt class="docutils literal"><span class="pre">service</span></tt> type. The behavior if the service does not exist
+can be specified using the <tt class="docutils literal"><span class="pre">on-invalid</span></tt> argument. By default, an exception
+is thrown. Valid values for <tt class="docutils literal"><span class="pre">on-invalid</span></tt> are <tt class="docutils literal"><span class="pre">null</span></tt> (uses <tt class="docutils literal"><span class="pre">null</span></tt> in place
+of the missing service) or <tt class="docutils literal"><span class="pre">ignored</span></tt> (very similar, except if used on a
+method call, the method call is removed).</p>
+<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;parameters&gt;</span>
+    <span class="c">&lt;!-- if &#39;my_mailer&#39; service isn&#39;t defined, an exception will be raised --&gt;</span>
+    <span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;foo&quot;</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;my_mailer&quot;</span> <span class="nt">/&gt;</span>
+
+    <span class="c">&lt;!-- if &#39;my_logger&#39; service isn&#39;t defined, &#39;bar&#39; will be null --&gt;</span>
+    <span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;bar&quot;</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;my_logger&quot;</span> <span class="na">on-invalid=</span><span class="s">&quot;null&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/parameters&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="php">
+<h3>PHP<a class="headerlink" href="#php" title="Permalink to this headline">¶</a></h3>
+<p>In PHP, you can use the
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DependencyInjection/Reference.html" title="Symfony\Component\DependencyInjection\Reference"><span class="pre">Reference</span></a></tt> class to reference
+a service. The invalid behavior is configured using the second constructor
+argument and constants from
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DependencyInjection/ContainerInterface.html" title="Symfony\Component\DependencyInjection\ContainerInterface"><span class="pre">ContainerInterface</span></a></tt>.</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\Reference</span><span class="p">;</span>
+
+<span class="c1">// if &#39;my_mailer&#39; service isn&#39;t defined, an exception will be raised</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setParameter</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Reference</span><span class="p">(</span><span class="s1">&#39;my_mailer&#39;</span><span class="p">));</span>
+
+<span class="c1">// if &#39;my_logger&#39; service isn&#39;t defined, &#39;bar&#39; will be null</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setParameter</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Reference</span><span class="p">(</span><span class="s1">&#39;my_logger&#39;</span><span class="p">,</span>
+    <span class="nx">ContainerInterface</span><span class="o">::</span><span class="na">NULL_ON_INVALID_REFERENCE</span>
+<span class="p">));</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -331,6 +452,13 @@ import an XML file to take advantage of this functionality:</p>
 <li><a class="reference internal" href="#parameters-in-configuration-files">Parameters in Configuration Files</a></li>
 <li><a class="reference internal" href="#array-parameters">Array Parameters</a></li>
 <li><a class="reference internal" href="#constants-as-parameters">Constants as Parameters</a></li>
+<li><a class="reference internal" href="#php-keywords-in-xml">PHP Keywords in XML</a></li>
+<li><a class="reference internal" href="#syntax-for-referencing-services">Syntax for Referencing Services</a><ul>
+<li><a class="reference internal" href="#yaml">YAML</a></li>
+<li><a class="reference internal" href="#xml">XML</a></li>
+<li><a class="reference internal" href="#php">PHP</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -375,14 +503,14 @@ import an XML file to take advantage of this functionality:</p>
         <li class="right" >
           <a href="types.html" title="Types of Injection"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
-          <li><a href="index.html" >Dependency Injection</a> &raquo;</li> 
+          <li><a href="index.html" >DependencyInjection</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Trusting Proxies &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Trusting Proxies &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
-    <link rel="up" title="HTTP Foundation" href="index.html" />
-    <link rel="next" title="HTTP Kernel" href="../http_kernel/index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
+    <link rel="up" title="HttpFoundation" href="index.html" />
+    <link rel="next" title="HttpKernel" href="../http_kernel/index.html" />
     <link rel="prev" title="Integrating with Legacy Sessions" href="session_php_bridge.html" /> 
   </head>
   <body>
@@ -38,14 +36,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../http_kernel/index.html" title="HTTP Kernel"
+          <a href="../http_kernel/index.html" title="HttpKernel"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="session_php_bridge.html" title="Integrating with Legacy Sessions"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">HTTP Foundation</a> &raquo;</li> 
+          <li><a href="index.html" accesskey="U">HttpFoundation</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -64,16 +62,20 @@ stored in a <tt class="docutils literal"><span class="pre">X-Forwarded-Host</spa
 <p>Since HTTP headers can be spoofed, Symfony2 does <em>not</em> trust these proxy
 headers by default. If you are behind a proxy, you should manually whitelist
 your proxy.</p>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3: </span>CIDR notation support was introduced, so you can whitelist whole
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
 subnets (e.g. <tt class="docutils literal"><span class="pre">10.0.0.0/8</span></tt>, <tt class="docutils literal"><span class="pre">fc00::/7</span></tt>).</p>
+</div>
 <div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
 
-<span class="nv">$request</span> <span class="o">=</span> <span class="nx">Request</span><span class="o">::</span><span class="na">createFromGlobals</span><span class="p">();</span>
-
 <span class="c1">// only trust proxy headers coming from this IP addresses</span>
-<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">setTrustedProxies</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;192.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;10.0.0.0/8&#39;</span><span class="p">));</span>
+<span class="nx">Request</span><span class="o">::</span><span class="na">setTrustedProxies</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;192.0.0.1&#39;</span><span class="p">,</span> <span class="s1">&#39;10.0.0.0/8&#39;</span><span class="p">));</span>
 </pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">When using Symfony&#8217;s internal reverse proxy (<tt class="docutils literal"><span class="pre">AppCache.php</span></tt>) make sure to add
+<tt class="docutils literal"><span class="pre">127.0.0.1</span></tt> to the list of trusted proxies.</p>
 </div>
 <div class="section" id="configuring-header-names">
 <h2>Configuring Header Names<a class="headerlink" href="#configuring-header-names" title="Permalink to this headline">¶</a></h2>
@@ -86,19 +88,21 @@ subnets (e.g. <tt class="docutils literal"><span class="pre">10.0.0.0/8</span></
 </ul>
 <p>If your reverse proxy uses a different header name for any of these, you
 can configure that header name via <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Request.html#method_setTrustedHeaderName" title="Symfony\Component\HttpFoundation\Request::setTrustedHeaderName()"><span class="pre">setTrustedHeaderName()</span></a></tt>:</p>
-<div class="highlight-python"><pre>$request-&gt;setTrustedHeaderName(Request::HEADER_CLIENT_IP, 'X-Proxy-For');
-$request-&gt;setTrustedHeaderName(Request::HEADER_CLIENT_HOST, 'X-Proxy-Host');
-$request-&gt;setTrustedHeaderName(Request::HEADER_CLIENT_PORT, 'X-Proxy-Port');
-$request-&gt;setTrustedHeaderName(Request::HEADER_CLIENT_PROTO, 'X-Proxy-Proto');</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nx">Request</span><span class="o">::</span><span class="na">setTrustedHeaderName</span><span class="p">(</span><span class="nx">Request</span><span class="o">::</span><span class="na">HEADER_CLIENT_IP</span><span class="p">,</span> <span class="s1">&#39;X-Proxy-For&#39;</span><span class="p">);</span>
+<span class="nx">Request</span><span class="o">::</span><span class="na">setTrustedHeaderName</span><span class="p">(</span><span class="nx">Request</span><span class="o">::</span><span class="na">HEADER_CLIENT_HOST</span><span class="p">,</span> <span class="s1">&#39;X-Proxy-Host&#39;</span><span class="p">);</span>
+<span class="nx">Request</span><span class="o">::</span><span class="na">setTrustedHeaderName</span><span class="p">(</span><span class="nx">Request</span><span class="o">::</span><span class="na">HEADER_CLIENT_PORT</span><span class="p">,</span> <span class="s1">&#39;X-Proxy-Port&#39;</span><span class="p">);</span>
+<span class="nx">Request</span><span class="o">::</span><span class="na">setTrustedHeaderName</span><span class="p">(</span><span class="nx">Request</span><span class="o">::</span><span class="na">HEADER_CLIENT_PROTO</span><span class="p">,</span> <span class="s1">&#39;X-Proxy-Proto&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="not-trusting-certain-headers">
-<h2>Not trusting certain Headers<a class="headerlink" href="#not-trusting-certain-headers" title="Permalink to this headline">¶</a></h2>
+<h2>Not Trusting certain Headers<a class="headerlink" href="#not-trusting-certain-headers" title="Permalink to this headline">¶</a></h2>
 <p>By default, if you whitelist your proxy&#8217;s IP address, then all four headers
 listed above are trusted. If you need to trust some of these headers but
 not others, you can do that as well:</p>
-<div class="highlight-python"><pre>// disables trusting the ``X-Forwarded-Proto`` header, the default header is used
-$request-&gt;setTrustedHeaderName(Request::HEADER_CLIENT_PROTO, '');</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// disables trusting the ``X-Forwarded-Proto`` header, the default header is used</span>
+<span class="nx">Request</span><span class="o">::</span><span class="na">setTrustedHeaderName</span><span class="p">(</span><span class="nx">Request</span><span class="o">::</span><span class="na">HEADER_CLIENT_PROTO</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -113,7 +117,7 @@ $request-&gt;setTrustedHeaderName(Request::HEADER_CLIENT_PROTO, '');</pre>
   <ul>
 <li><a class="reference internal" href="#">Trusting Proxies</a><ul>
 <li><a class="reference internal" href="#configuring-header-names">Configuring Header Names</a></li>
-<li><a class="reference internal" href="#not-trusting-certain-headers">Not trusting certain Headers</a></li>
+<li><a class="reference internal" href="#not-trusting-certain-headers">Not Trusting certain Headers</a></li>
 </ul>
 </li>
 </ul>
@@ -123,7 +127,7 @@ $request-&gt;setTrustedHeaderName(Request::HEADER_CLIENT_PROTO, '');</pre>
                         title="previous chapter">Integrating with Legacy Sessions</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../http_kernel/index.html"
-                        title="next chapter">HTTP Kernel</a></p>
+                        title="next chapter">HttpKernel</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/components/http_foundation/trusting_proxies.txt"
@@ -153,19 +157,19 @@ $request-&gt;setTrustedHeaderName(Request::HEADER_CLIENT_PROTO, '');</pre>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../http_kernel/index.html" title="HTTP Kernel"
+          <a href="../http_kernel/index.html" title="HttpKernel"
              >next</a> |</li>
         <li class="right" >
           <a href="session_php_bridge.html" title="Integrating with Legacy Sessions"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
-          <li><a href="index.html" >HTTP Foundation</a> &raquo;</li> 
+          <li><a href="index.html" >HttpFoundation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

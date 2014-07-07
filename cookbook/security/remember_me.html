@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to add “Remember Me” Login Functionality &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to add “Remember Me” Login Functionality &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Security" href="index.html" />
-    <link rel="next" title="How to implement your own Voter to blacklist IP Addresses" href="voters.html" />
+    <link rel="next" title="How to Impersonate a User" href="impersonating_user.html" />
     <link rel="prev" title="How to load Security Users from the Database (the Entity Provider)" href="entity_provider.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="voters.html" title="How to implement your own Voter to blacklist IP Addresses"
+          <a href="impersonating_user.html" title="How to Impersonate a User"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="entity_provider.html" title="How to load Security Users from the Database (the Entity Provider)"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Security</a> &raquo;</li> 
       </ul>
@@ -77,17 +75,18 @@ are shown here:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><pre>&lt;!-- app/config/security.xml --&gt;
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre>&lt;!-- app/config/security.xml --&gt;
 &lt;config&gt;
     &lt;firewall&gt;
         &lt;remember-me
-            key      = "%secret%"
-            lifetime = "31536000" &lt;!-- 365 days in seconds --&gt;
-            path     = "/"
-            domain   = "" &lt;!-- Defaults to the current domain from $_SERVER --&gt;
+            key      = &quot;%secret%&quot;
+            lifetime = &quot;31536000&quot; &lt;!-- 365 days in seconds --&gt;
+            path     = &quot;/&quot;
+            domain   = &quot;&quot; &lt;!-- Defaults to the current domain from $_SERVER --&gt;
         /&gt;
     &lt;/firewall&gt;
-&lt;/config&gt;</pre>
+&lt;/config&gt;
+</pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/security.php</span>
@@ -113,7 +112,7 @@ remember me functionality, as it will not always be appropriate. The usual
 way of doing this is to add a checkbox to the login form. By giving the checkbox
 the name <tt class="docutils literal"><span class="pre">_remember_me</span></tt>, the cookie will automatically be set when the checkbox
 is checked and the user successfully logs in. So, your specific login form
-might ultimately look like this:</p>
+might ultimately looks like this:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/SecurityBundle/Resources/views/Security/login.html.twig #}</span>
@@ -163,7 +162,7 @@ might ultimately look like this:</p>
 the cookie remains valid.</p>
 <div class="section" id="forcing-the-user-to-re-authenticate-before-accessing-certain-resources">
 <h2>Forcing the User to Re-authenticate before accessing certain Resources<a class="headerlink" href="#forcing-the-user-to-re-authenticate-before-accessing-certain-resources" title="Permalink to this headline">¶</a></h2>
-<p>When the user returns to your site, he/she is authenticated automatically based
+<p>When the user returns to your site, they are authenticated automatically based
 on the information stored in the remember me cookie. This allows the user
 to access protected resources as if the user had actually authenticated upon
 visiting the site.</p>
@@ -171,7 +170,7 @@ visiting the site.</p>
 before accessing certain resources. For example, you might allow &#8220;remember me&#8221;
 users to see basic account information, but then require them to actually
 re-authenticate before modifying that information.</p>
-<p>The security component provides an easy way to do this. In addition to roles
+<p>The Security component provides an easy way to do this. In addition to roles
 explicitly assigned to them, users are automatically given one of the following
 roles depending on how they are authenticated:</p>
 <ul class="simple">
@@ -235,15 +234,15 @@ of the account area, then you&#8217;d have the following situation:</p>
 <ul class="last simple">
 <li>If a non-authenticated (or anonymously authenticated user) tries to
 access the account area, the user will be asked to authenticate.</li>
-<li>Once the user has entered his username and password, assuming the
+<li>Once the user has entered their username and password, assuming the
 user receives the <tt class="docutils literal"><span class="pre">ROLE_USER</span></tt> role per your configuration, the user
 will have the <tt class="docutils literal"><span class="pre">IS_AUTHENTICATED_FULLY</span></tt> role and be able to access
 any page in the account section, including the <tt class="docutils literal"><span class="pre">editAction</span></tt> controller.</li>
-<li>If the user&#8217;s session ends, when the user returns to the site, he will
+<li>If the user&#8217;s session ends, when the user returns to the site, they will
 be able to access every account page - except for the edit page - without
-being forced to re-authenticate. However, when he tries to access the
-<tt class="docutils literal"><span class="pre">editAction</span></tt> controller, he will be forced to re-authenticate, since
-he is not, yet, fully authenticated.</li>
+being forced to re-authenticate. However, when they try to access the
+<tt class="docutils literal"><span class="pre">editAction</span></tt> controller, they will be forced to re-authenticate, since
+they are not, yet, fully authenticated.</li>
 </ul>
 </div>
 <p>For more information on securing services or methods in this way,
@@ -269,8 +268,8 @@ see <a class="reference internal" href="securing_services.html"><em>How to secur
   <p class="topless"><a href="entity_provider.html"
                         title="previous chapter">How to load Security Users from the Database (the Entity Provider)</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="voters.html"
-                        title="next chapter">How to implement your own Voter to blacklist IP Addresses</a></p>
+  <p class="topless"><a href="impersonating_user.html"
+                        title="next chapter">How to Impersonate a User</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/security/remember_me.txt"
@@ -300,19 +299,19 @@ see <a class="reference internal" href="securing_services.html"><em>How to secur
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="voters.html" title="How to implement your own Voter to blacklist IP Addresses"
+          <a href="impersonating_user.html" title="How to Impersonate a User"
              >next</a> |</li>
         <li class="right" >
           <a href="entity_provider.html" title="How to load Security Users from the Database (the Entity Provider)"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Security</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

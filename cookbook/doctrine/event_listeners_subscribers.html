@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Register Event Listeners and Subscribers &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to Register Event Listeners and Subscribers &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Doctrine" href="index.html" />
     <link rel="next" title="How to use Doctrine’s DBAL Layer" href="dbal.html" />
     <link rel="prev" title="How to use Doctrine Extensions: Timestampable, Sluggable, Translatable, etc." href="common_extensions.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="common_extensions.html" title="How to use Doctrine Extensions: Timestampable, Sluggable, Translatable, etc."
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Doctrine</a> &raquo;</li> 
       </ul>
@@ -170,25 +168,26 @@ managers that use this connection.</p>
 <p>In the previous example, a service <tt class="docutils literal"><span class="pre">my.listener</span></tt> was configured as a Doctrine
 listener on the event <tt class="docutils literal"><span class="pre">postPersist</span></tt>. The class behind that service must have
 a <tt class="docutils literal"><span class="pre">postPersist</span></tt> method, which will be called when the event is dispatched:</p>
-<div class="highlight-python"><pre>// src/Acme/SearchBundle/EventListener/SearchIndexer.php
-namespace Acme\SearchBundle\EventListener;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/SearchBundle/EventListener/SearchIndexer.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\SearchBundle\EventListener</span><span class="p">;</span>
 
-use Doctrine\ORM\Event\LifecycleEventArgs;
-use Acme\StoreBundle\Entity\Product;
+<span class="k">use</span> <span class="nx">Doctrine\ORM\Event\LifecycleEventArgs</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Acme\StoreBundle\Entity\Product</span><span class="p">;</span>
 
-class SearchIndexer
-{
-    public function postPersist(LifecycleEventArgs $args)
-    {
-        $entity = $args-&gt;getEntity();
-        $entityManager = $args-&gt;getEntityManager();
+<span class="k">class</span> <span class="nc">SearchIndexer</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">postPersist</span><span class="p">(</span><span class="nx">LifecycleEventArgs</span> <span class="nv">$args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$entity</span> <span class="o">=</span> <span class="nv">$args</span><span class="o">-&gt;</span><span class="na">getEntity</span><span class="p">();</span>
+        <span class="nv">$entityManager</span> <span class="o">=</span> <span class="nv">$args</span><span class="o">-&gt;</span><span class="na">getEntityManager</span><span class="p">();</span>
 
-        // perhaps you only want to act on some "Product" entity
-        if ($entity instanceof Product) {
-            // ... do something with the Product
-        }
-    }
-}</pre>
+        <span class="c1">// perhaps you only want to act on some &quot;Product&quot; entity</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$entity</span> <span class="nx">instanceof</span> <span class="nx">Product</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// ... do something with the Product</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>In each event, you have access to a <tt class="docutils literal"><span class="pre">LifecycleEventArgs</span></tt> object, which
 gives you access to both the entity object of the event and the entity manager
@@ -198,50 +197,57 @@ entities in your application. So, if you&#8217;re interested in only handling a
 specific type of entity (e.g. a <tt class="docutils literal"><span class="pre">Product</span></tt> entity but not a <tt class="docutils literal"><span class="pre">BlogPost</span></tt>
 entity), you should check for the entity&#8217;s class type in your method
 (as shown above).</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">In Doctrine 2.4, a feature called Entity Listeners was introduced.
+It is a lifecycle listener class used for an entity. You can read
+about it in <a class="reference external" href="http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/events.html#entity-listeners">the Doctrine Documentation</a>.</p>
+</div>
 </div>
 <div class="section" id="creating-the-subscriber-class">
 <h2>Creating the Subscriber Class<a class="headerlink" href="#creating-the-subscriber-class" title="Permalink to this headline">¶</a></h2>
-<p>A doctrine event subscriber must implement the <tt class="docutils literal"><span class="pre">Doctrine\Common\EventSubscriber</span></tt>
+<p>A Doctrine event subscriber must implement the <tt class="docutils literal"><span class="pre">Doctrine\Common\EventSubscriber</span></tt>
 interface and have an event method for each event it subscribes to:</p>
-<div class="highlight-python"><pre>// src/Acme/SearchBundle/EventListener/SearchIndexerSubscriber.php
-namespace Acme\SearchBundle\EventListener;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/SearchBundle/EventListener/SearchIndexerSubscriber.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\SearchBundle\EventListener</span><span class="p">;</span>
 
-use Doctrine\Common\EventSubscriber;
-use Doctrine\ORM\Event\LifecycleEventArgs;
-// for doctrine 2.4: Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use Acme\StoreBundle\Entity\Product;
+<span class="k">use</span> <span class="nx">Doctrine\Common\EventSubscriber</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Doctrine\ORM\Event\LifecycleEventArgs</span><span class="p">;</span>
+<span class="c1">// for Doctrine 2.4: Doctrine\Common\Persistence\Event\LifecycleEventArgs;</span>
+<span class="k">use</span> <span class="nx">Acme\StoreBundle\Entity\Product</span><span class="p">;</span>
 
-class SearchIndexerSubscriber implements EventSubscriber
-{
-    public function getSubscribedEvents()
-    {
-        return array(
-            'postPersist',
-            'postUpdate',
-        );
-    }
+<span class="k">class</span> <span class="nc">SearchIndexerSubscriber</span> <span class="k">implements</span> <span class="nx">EventSubscriber</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getSubscribedEvents</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;postPersist&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;postUpdate&#39;</span><span class="p">,</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
 
-    public function postUpdate(LifecycleEventArgs $args)
-    {
-        $this-&gt;index($args);
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">postUpdate</span><span class="p">(</span><span class="nx">LifecycleEventArgs</span> <span class="nv">$args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">index</span><span class="p">(</span><span class="nv">$args</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    public function postPersist(LifecycleEventArgs $args)
-    {
-        $this-&gt;index($args);
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">postPersist</span><span class="p">(</span><span class="nx">LifecycleEventArgs</span> <span class="nv">$args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">index</span><span class="p">(</span><span class="nv">$args</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    public function index(LifecycleEventArgs $args)
-    {
-        $entity = $args-&gt;getEntity();
-        $entityManager = $args-&gt;getEntityManager();
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">(</span><span class="nx">LifecycleEventArgs</span> <span class="nv">$args</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$entity</span> <span class="o">=</span> <span class="nv">$args</span><span class="o">-&gt;</span><span class="na">getEntity</span><span class="p">();</span>
+        <span class="nv">$entityManager</span> <span class="o">=</span> <span class="nv">$args</span><span class="o">-&gt;</span><span class="na">getEntityManager</span><span class="p">();</span>
 
-        // perhaps you only want to act on some "Product" entity
-        if ($entity instanceof Product) {
-            // ... do something with the Product
-        }
-    }
-}</pre>
+        <span class="c1">// perhaps you only want to act on some &quot;Product&quot; entity</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$entity</span> <span class="nx">instanceof</span> <span class="nx">Product</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// ... do something with the Product</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -311,14 +317,14 @@ with the same name as each subscribed event, just as when using an event listene
         <li class="right" >
           <a href="common_extensions.html" title="How to use Doctrine Extensions: Timestampable, Sluggable, Translatable, etc."
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Doctrine</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

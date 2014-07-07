@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Dependency Injection Tags &mdash; Symfony Docs 2.3 documentation</title>
+    <title>The Dependency Injection Tags &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +23,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../index.html" />
     <link rel="up" title="Reference Documents" href="index.html" />
-    <link rel="next" title="Requirements for running Symfony2" href="requirements.html" />
-    <link rel="prev" title="Valid" href="constraints/Valid.html" /> 
+    <link rel="next" title="Requirements for Running Symfony2" href="requirements.html" />
+    <link rel="prev" title="Symfony2 Twig Extensions" href="twig_reference.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,12 +36,12 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="requirements.html" title="Requirements for running Symfony2"
+          <a href="requirements.html" title="Requirements for Running Symfony2"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="constraints/Valid.html" title="Valid"
+          <a href="twig_reference.html" title="Symfony2 Twig Extensions"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Reference Documents</a> &raquo;</li> 
       </ul>
     </div>  
@@ -68,10 +66,12 @@ may also be tags in other bundles you use that aren&#8217;t listed here.</p>
 <col width="32%" />
 <col width="68%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Tag Name</td>
-<td>Usage</td>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Tag Name</th>
+<th class="head">Usage</th>
 </tr>
+</thead>
+<tbody valign="top">
 <tr class="row-even"><td><a class="reference internal" href="#assetic-asset">assetic.asset</a></td>
 <td>Register an asset to the current asset manager</td>
 </tr>
@@ -88,90 +88,93 @@ may also be tags in other bundles you use that aren&#8217;t listed here.</p>
 <td>Adds a resource to the current asset manager</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#assetic-templating-php">assetic.templating.php</a></td>
-<td>Remove this service if php templating is disabled</td>
+<td>Remove this service if PHP templating is disabled</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#assetic-templating-twig">assetic.templating.twig</a></td>
-<td>Remove this service if twig templating is disabled</td>
+<td>Remove this service if Twig templating is disabled</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#data-collector">data_collector</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#console-command">console.command</a></td>
+<td>Add a command</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#data-collector">data_collector</a></td>
 <td>Create a class that collects custom data for the profiler</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#doctrine-event-listener">doctrine.event_listener</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#doctrine-event-listener">doctrine.event_listener</a></td>
 <td>Add a Doctrine event listener</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#doctrine-event-subscriber">doctrine.event_subscriber</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#doctrine-event-subscriber">doctrine.event_subscriber</a></td>
 <td>Add a Doctrine event subscriber</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#form-type">form.type</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#form-type">form.type</a></td>
 <td>Create a custom form field type</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#form-type-extension">form.type_extension</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#form-type-extension">form.type_extension</a></td>
 <td>Create a custom &#8220;form extension&#8221;</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#form-type-guesser">form.type_guesser</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#form-type-guesser">form.type_guesser</a></td>
 <td>Add your own logic for &#8220;form type guessing&#8221;</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#kernel-cache-clearer">kernel.cache_clearer</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#kernel-cache-clearer">kernel.cache_clearer</a></td>
 <td>Register your service to be called during the cache clearing process</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#kernel-cache-warmer">kernel.cache_warmer</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#kernel-cache-warmer">kernel.cache_warmer</a></td>
 <td>Register your service to be called during the cache warming process</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#kernel-event-listener">kernel.event_listener</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#kernel-event-listener">kernel.event_listener</a></td>
 <td>Listen to different events/hooks in Symfony</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#kernel-event-subscriber">kernel.event_subscriber</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#kernel-event-subscriber">kernel.event_subscriber</a></td>
 <td>To subscribe to a set of different events/hooks in Symfony</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#kernel-fragment-renderer">kernel.fragment_renderer</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#kernel-fragment-renderer">kernel.fragment_renderer</a></td>
 <td>Add new HTTP content rendering strategies</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#monolog-logger">monolog.logger</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#monolog-logger">monolog.logger</a></td>
 <td>Logging with a custom logging channel</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#monolog-processor">monolog.processor</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#monolog-processor">monolog.processor</a></td>
 <td>Add a custom processor for logging</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#routing-loader">routing.loader</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#routing-loader">routing.loader</a></td>
 <td>Register a custom service that loads routes</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#security-voter">security.voter</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#security-voter">security.voter</a></td>
 <td>Add a custom voter to Symfony&#8217;s authorization logic</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#security-remember-me-aware">security.remember_me_aware</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#security-remember-me-aware">security.remember_me_aware</a></td>
 <td>To allow remember me authentication</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#serializer-encoder">serializer.encoder</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#serializer-encoder">serializer.encoder</a></td>
 <td>Register a new encoder in the <tt class="docutils literal"><span class="pre">serializer</span></tt> service</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#serializer-normalizer">serializer.normalizer</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#serializer-normalizer">serializer.normalizer</a></td>
 <td>Register a new normalizer in the <tt class="docutils literal"><span class="pre">serializer</span></tt> service</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#swiftmailer-plugin">swiftmailer.plugin</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#swiftmailer-default-plugin">swiftmailer.default.plugin</a></td>
 <td>Register a custom SwiftMailer Plugin</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#templating-helper">templating.helper</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#templating-helper">templating.helper</a></td>
 <td>Make your service available in PHP templates</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#translation-loader">translation.loader</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#translation-loader">translation.loader</a></td>
 <td>Register a custom service that loads translations</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#translation-extractor">translation.extractor</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#translation-extractor">translation.extractor</a></td>
 <td>Register a custom service that extracts translation messages from a file</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#translation-dumper">translation.dumper</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#translation-dumper">translation.dumper</a></td>
 <td>Register a custom service that dumps translation messages</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#twig-extension">twig.extension</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#twig-extension">twig.extension</a></td>
 <td>Register a custom Twig Extension</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#twig-loader">twig.loader</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#twig-loader">twig.loader</a></td>
 <td>Register a custom service that loads Twig templates</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#validator-constraint-validator">validator.constraint_validator</a></td>
+<tr class="row-odd"><td><a class="reference internal" href="#validator-constraint-validator">validator.constraint_validator</a></td>
 <td>Create your own custom validation constraint</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#validator-initializer">validator.initializer</a></td>
+<tr class="row-even"><td><a class="reference internal" href="#validator-initializer">validator.initializer</a></td>
 <td>Register a service that initializes objects before validation</td>
 </tr>
 </tbody>
@@ -187,19 +190,20 @@ may also be tags in other bundles you use that aren&#8217;t listed here.</p>
 Its <tt class="docutils literal"><span class="pre">process($asset)</span></tt> method is called for each asset after asset creation.
 You can modify an asset or even return a new one.</p>
 <p>In order to add a new worker, first create a class:</p>
-<div class="highlight-python"><pre>use Assetic\Asset\AssetInterface;
-use Assetic\Factory\Worker\WorkerInterface;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Assetic\Asset\AssetInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Assetic\Factory\Worker\WorkerInterface</span><span class="p">;</span>
 
-class MyWorker implements WorkerInterface
-{
-    public function process(AssetInterface $asset)
-    {
-        // ... change $asset or return a new one
-    }
+<span class="k">class</span> <span class="nc">MyWorker</span> <span class="k">implements</span> <span class="nx">WorkerInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">process</span><span class="p">(</span><span class="nx">AssetInterface</span> <span class="nv">$asset</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// ... change $asset or return a new one</span>
+    <span class="p">}</span>
 
-}</pre>
+<span class="p">}</span>
+</pre></div>
 </div>
-<p>And then add register it as a tagged service:</p>
+<p>And then register it as a tagged service:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
@@ -210,9 +214,10 @@ class MyWorker implements WorkerInterface
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><pre>&lt;service id="acme.my_worker" class="MyWorker&gt;
-    &lt;tag name="assetic.factory_worker" /&gt;
-&lt;/service&gt;</pre>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre>&lt;service id=&quot;acme.my_worker&quot; class=&quot;MyWorker&gt;
+    &lt;tag name=&quot;assetic.factory_worker&quot; /&gt;
+&lt;/service&gt;
+</pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span>
@@ -231,21 +236,22 @@ class MyWorker implements WorkerInterface
 <p>AsseticBundle uses this tag to register common filters. You can also use
 this tag to register your own filters.</p>
 <p>First, you need to create a filter:</p>
-<div class="highlight-python"><pre>use Assetic\Asset\AssetInterface;
-use Assetic\Filter\FilterInterface;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Assetic\Asset\AssetInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Assetic\Filter\FilterInterface</span><span class="p">;</span>
 
-class MyFilter implements FilterInterface
-{
-    public function filterLoad(AssetInterface $asset)
-    {
-        $asset-&gt;setContent('alert("yo");' . $asset-&gt;getContent());
-    }
+<span class="k">class</span> <span class="nc">MyFilter</span> <span class="k">implements</span> <span class="nx">FilterInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">filterLoad</span><span class="p">(</span><span class="nx">AssetInterface</span> <span class="nv">$asset</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$asset</span><span class="o">-&gt;</span><span class="na">setContent</span><span class="p">(</span><span class="s1">&#39;alert(&quot;yo&quot;);&#39;</span> <span class="o">.</span> <span class="nv">$asset</span><span class="o">-&gt;</span><span class="na">getContent</span><span class="p">());</span>
+    <span class="p">}</span>
 
-    public function filterDump(AssetInterface $asset)
-    {
-        // ...
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">filterDump</span><span class="p">(</span><span class="nx">AssetInterface</span> <span class="nv">$asset</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Second, define a service:</p>
 <div class="configuration-block">
@@ -294,26 +300,36 @@ configuration key.</p>
 <p>A Formula loader is a class implementing
 <tt class="docutils literal"><span class="pre">Assetic\\Factory\Loader\\FormulaLoaderInterface</span></tt> interface. This class
 is responsible for loading assets from a particular kind of resources (for
-instance, twig template). Assetic ships loaders for php and twig templates.</p>
+instance, twig template). Assetic ships loaders for PHP and Twig templates.</p>
 <p>An <tt class="docutils literal"><span class="pre">alias</span></tt> attribute defines the name of the loader.</p>
 </div>
 <div class="section" id="assetic-formula-resource">
 <h2>assetic.formula_resource<a class="headerlink" href="#assetic-formula-resource" title="Permalink to this headline">¶</a></h2>
 <p><strong>Purpose</strong>: Adds a resource to the current asset manager</p>
-<p>A resource is something formulae can be loaded from. For instance, twig
+<p>A resource is something formulae can be loaded from. For instance, Twig
 templates are resources.</p>
 </div>
 <div class="section" id="assetic-templating-php">
 <h2>assetic.templating.php<a class="headerlink" href="#assetic-templating-php" title="Permalink to this headline">¶</a></h2>
-<p><strong>Purpose</strong>: Remove this service if php templating is disabled</p>
+<p><strong>Purpose</strong>: Remove this service if PHP templating is disabled</p>
 <p>The tagged service will be removed from the container if the
 <tt class="docutils literal"><span class="pre">framework.templating.engines</span></tt> config section does not contain php.</p>
 </div>
 <div class="section" id="assetic-templating-twig">
 <h2>assetic.templating.twig<a class="headerlink" href="#assetic-templating-twig" title="Permalink to this headline">¶</a></h2>
-<p><strong>Purpose</strong>: Remove this service if twig templating is disabled</p>
+<p><strong>Purpose</strong>: Remove this service if Twig templating is disabled</p>
 <p>The tagged service will be removed from the container if
-<tt class="docutils literal"><span class="pre">framework.templating.engines</span></tt> config section does not contain twig.</p>
+<tt class="docutils literal"><span class="pre">framework.templating.engines</span></tt> config section does not contain <tt class="docutils literal"><span class="pre">twig</span></tt>.</p>
+</div>
+<div class="section" id="console-command">
+<h2>console.command<a class="headerlink" href="#console-command" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.4: </span>Support for registering commands in the service container was introduced in
+Symfony 2.4.</p>
+</div>
+<p><strong>Purpose</strong>: Add a command to the application</p>
+<p>For details on registering your own commands in the service container, read
+<a class="reference internal" href="../cookbook/console/console_command.html#cookbook-console-dic"><em>the cookbook article</em></a>.</p>
 </div>
 <div class="section" id="data-collector">
 <h2>data_collector<a class="headerlink" href="#data-collector" title="Permalink to this headline">¶</a></h2>
@@ -351,19 +367,20 @@ a form type extension, first create a class that implements the
 For simplicity, you&#8217;ll often extend an
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/AbstractTypeExtension.html" title="Symfony\Component\Form\AbstractTypeExtension"><span class="pre">AbstractTypeExtension</span></a></tt> class instead of
 the interface directly:</p>
-<div class="highlight-python"><pre>// src/Acme/MainBundle/Form/Type/MyFormTypeExtension.php
-namespace Acme\MainBundle\Form\Type;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/MainBundle/Form/Type/MyFormTypeExtension.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\MainBundle\Form\Type</span><span class="p">;</span>
 
-use Symfony\Component\Form\AbstractTypeExtension;
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractTypeExtension</span><span class="p">;</span>
 
-class MyFormTypeExtension extends AbstractTypeExtension
-{
-    // ... fill in whatever methods you want to override
-    // like buildForm(), buildView(), finishView(), setDefaultOptions()
-}</pre>
+<span class="k">class</span> <span class="nc">MyFormTypeExtension</span> <span class="k">extends</span> <span class="nx">AbstractTypeExtension</span>
+<span class="p">{</span>
+    <span class="c1">// ... fill in whatever methods you want to override</span>
+    <span class="c1">// like buildForm(), buildView(), finishView(), setDefaultOptions()</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>In order for Symfony to know about your form extension and use it, give it
-the <cite>form.type_extension</cite> tag:</p>
+the <tt class="docutils literal"><span class="pre">form.type_extension</span></tt> tag:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
@@ -394,16 +411,17 @@ be applied to. For example, to apply the extension to any form/field, use the
 &#8220;form&#8221; value.</p>
 </div>
 <div class="section" id="form-type-guesser">
-<h2>form.type_guesser<a class="headerlink" href="#form-type-guesser" title="Permalink to this headline">¶</a></h2>
+<span id="reference-dic-type-guesser"></span><h2>form.type_guesser<a class="headerlink" href="#form-type-guesser" title="Permalink to this headline">¶</a></h2>
 <p><strong>Purpose</strong>: Add your own logic for &#8220;form type guessing&#8221;</p>
 <p>This tag allows you to add your own logic to the <a class="reference internal" href="../book/forms.html#book-forms-field-guessing"><em>Form Guessing</em></a>
 process. By default, form guessing is done by &#8220;guessers&#8221; based on the validation
-metadata and Doctrine metadata (if you&#8217;re using Doctrine).</p>
-<p>To add your own form type guesser, create a class that implements the
-<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/FormTypeGuesserInterface.html" title="Symfony\Component\Form\FormTypeGuesserInterface"><span class="pre">FormTypeGuesserInterface</span></a></tt> interface. Next,
-tag its service definition with <tt class="docutils literal"><span class="pre">form.type_guesser</span></tt> (it has no options).</p>
-<p>To see an example of how this class might look, see the <tt class="docutils literal"><span class="pre">ValidatorTypeGuesser</span></tt>
-class in the <tt class="docutils literal"><span class="pre">Form</span></tt> component.</p>
+metadata and Doctrine metadata (if you&#8217;re using Doctrine) or Propel metadata
+(if you&#8217;re using Propel).</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">For information on how to create your own type guesser, see
+<a class="reference internal" href="../components/form/type_guesser.html"><em>Creating a custom Type Guesser</em></a>.</p>
+</div>
 </div>
 <div class="section" id="kernel-cache-clearer">
 <h2>kernel.cache_clearer<a class="headerlink" href="#kernel-cache-clearer" title="Permalink to this headline">¶</a></h2>
@@ -413,21 +431,22 @@ bundle caches files, you should add custom cache clearer for clearing those
 files during the cache clearing process.</p>
 <p>In order to register your custom cache clearer, first you must create a
 service class:</p>
-<div class="highlight-python"><pre>// src/Acme/MainBundle/Cache/MyClearer.php
-namespace Acme\MainBundle\Cache;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/MainBundle/Cache/MyClearer.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\MainBundle\Cache</span><span class="p">;</span>
 
-use Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface;
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpKernel\CacheClearer\CacheClearerInterface</span><span class="p">;</span>
 
-class MyClearer implements CacheClearerInterface
-{
-    public function clear($cacheDir)
-    {
-        // clear your cache
-    }
+<span class="k">class</span> <span class="nc">MyClearer</span> <span class="k">implements</span> <span class="nx">CacheClearerInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">clear</span><span class="p">(</span><span class="nv">$cacheDir</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// clear your cache</span>
+    <span class="p">}</span>
 
-}</pre>
+<span class="p">}</span>
+</pre></div>
 </div>
-<p>Then register this class and tag it with <tt class="docutils literal"><span class="pre">kernel.cache:clearer</span></tt>:</p>
+<p>Then register this class and tag it with <tt class="docutils literal"><span class="pre">kernel.cache_clearer</span></tt>:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
@@ -458,34 +477,37 @@ class MyClearer implements CacheClearerInterface
 <h2>kernel.cache_warmer<a class="headerlink" href="#kernel-cache-warmer" title="Permalink to this headline">¶</a></h2>
 <p><strong>Purpose</strong>: Register your service to be called during the cache warming process</p>
 <p>Cache warming occurs whenever you run the <tt class="docutils literal"><span class="pre">cache:warmup</span></tt> or <tt class="docutils literal"><span class="pre">cache:clear</span></tt>
-task (unless you pass <tt class="docutils literal"><span class="pre">--no-warmup</span></tt> to <tt class="docutils literal"><span class="pre">cache:clear</span></tt>). The purpose is
+task (unless you pass <tt class="docutils literal"><span class="pre">--no-warmup</span></tt> to <tt class="docutils literal"><span class="pre">cache:clear</span></tt>). It is also run when
+handling the request, if it wasn&#8217;t done by one of the commands yet. The purpose is
 to initialize any cache that will be needed by the application and prevent
 the first user from any significant &#8220;cache hit&#8221; where the cache is generated
 dynamically.</p>
 <p>To register your own cache warmer, first create a service that implements
 the <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/CacheWarmer/CacheWarmerInterface.html" title="Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface"><span class="pre">CacheWarmerInterface</span></a></tt> interface:</p>
-<div class="highlight-python"><pre>// src/Acme/MainBundle/Cache/MyCustomWarmer.php
-namespace Acme\MainBundle\Cache;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/MainBundle/Cache/MyCustomWarmer.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\MainBundle\Cache</span><span class="p">;</span>
 
-use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface</span><span class="p">;</span>
 
-class MyCustomWarmer implements CacheWarmerInterface
-{
-    public function warmUp($cacheDir)
-    {
-        // do some sort of operations to "warm" your cache
-    }
+<span class="k">class</span> <span class="nc">MyCustomWarmer</span> <span class="k">implements</span> <span class="nx">CacheWarmerInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">warmUp</span><span class="p">(</span><span class="nv">$cacheDir</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// ... do some sort of operations to &quot;warm&quot; your cache</span>
+    <span class="p">}</span>
 
-    public function isOptional()
-    {
-        return true;
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">isOptional</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">isOptional</span></tt> method should return true if it&#8217;s possible to use the
-application without calling this cache warmer. In Symfony 2.0, optional warmers
-are always executed anyways, so this function has no real effect.</p>
-<p>To register your warmer with Symfony, give it the kernel.cache_warmer tag:</p>
+application without calling this cache warmer. In Symfony, optional warmers
+are always executed by default (you can change this by using the
+<tt class="docutils literal"><span class="pre">--no-optional-warmers</span></tt> option when executing the command).</p>
+<p>To register your warmer with Symfony, give it the <tt class="docutils literal"><span class="pre">kernel.cache_warmer</span></tt> tag:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
@@ -511,9 +533,36 @@ are always executed anyways, so this function has no real effect.</p>
 </li>
 </ul>
 </div>
-<p>The <tt class="docutils literal"><span class="pre">priority</span></tt> value is optional, and defaults to 0. This value can be
-from -255 to 255, and the warmers will be executed in the order of their
-priority.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <tt class="docutils literal"><span class="pre">priority</span></tt> value is optional, and defaults to 0.
+The higher the priority, the sooner it gets executed.</p>
+</div>
+<div class="section" id="core-cache-warmers">
+<h3>Core Cache Warmers<a class="headerlink" href="#core-cache-warmers" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="89%" />
+<col width="11%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Cache Warmer Class Name</th>
+<th class="head">Priority</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/CacheWarmer/TemplatePathsCacheWarmer.html" title="Symfony\Bundle\FrameworkBundle\CacheWarmer\TemplatePathsCacheWarmer"><span class="pre">TemplatePathsCacheWarmer</span></a></tt></td>
+<td>20</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/CacheWarmer/RouterCacheWarmer.html" title="Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer"><span class="pre">RouterCacheWarmer</span></a></tt></td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/TwigBundle/CacheWarmer/TemplateCacheCacheWarmer.html" title="Symfony\Bundle\TwigBundle\CacheWarmer\TemplateCacheCacheWarmer"><span class="pre">TemplateCacheCacheWarmer</span></a></tt></td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="section" id="kernel-event-listener">
 <span id="dic-tags-kernel-event-listener"></span><h2>kernel.event_listener<a class="headerlink" href="#kernel-event-listener" title="Permalink to this headline">¶</a></h2>
@@ -532,7 +581,7 @@ core Symfony listeners and their priorities.</p>
 <p class="first admonition-title">Note</p>
 <p class="last">All listeners listed here may not be listening depending on your environment,
 settings and bundles. Additionally, third-party bundles will bring in
-additional listener not listed here.</p>
+additional listeners not listed here.</p>
 </div>
 <div class="section" id="kernel-request">
 <h4>kernel.request<a class="headerlink" href="#kernel-request" title="Permalink to this headline">¶</a></h4>
@@ -541,10 +590,12 @@ additional listener not listed here.</p>
 <col width="89%" />
 <col width="11%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Listener Class Name</td>
-<td>Priority</td>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Listener Class Name</th>
+<th class="head">Priority</th>
 </tr>
+</thead>
+<tbody valign="top">
 <tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/EventListener/ProfilerListener.html" title="Symfony\Component\HttpKernel\EventListener\ProfilerListener"><span class="pre">ProfilerListener</span></a></tt></td>
 <td>1024</td>
 </tr>
@@ -573,10 +624,12 @@ additional listener not listed here.</p>
 <col width="90%" />
 <col width="10%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Listener Class Name</td>
-<td>Priority</td>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Listener Class Name</th>
+<th class="head">Priority</th>
 </tr>
+</thead>
+<tbody valign="top">
 <tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/DataCollector/RequestDataCollector.html" title="Symfony\Bundle\FrameworkBundle\DataCollector\RequestDataCollector"><span class="pre">RequestDataCollector</span></a></tt></td>
 <td>0</td>
 </tr>
@@ -590,10 +643,12 @@ additional listener not listed here.</p>
 <col width="90%" />
 <col width="10%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Listener Class Name</td>
-<td>Priority</td>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Listener Class Name</th>
+<th class="head">Priority</th>
 </tr>
+</thead>
+<tbody valign="top">
 <tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/EventListener/EsiListener.html" title="Symfony\Component\HttpKernel\EventListener\EsiListener"><span class="pre">EsiListener</span></a></tt></td>
 <td>0</td>
 </tr>
@@ -625,10 +680,12 @@ additional listener not listed here.</p>
 <col width="90%" />
 <col width="10%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Listener Class Name</td>
-<td>Priority</td>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Listener Class Name</th>
+<th class="head">Priority</th>
 </tr>
+</thead>
+<tbody valign="top">
 <tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/EventListener/ProfilerListener.html" title="Symfony\Component\HttpKernel\EventListener\ProfilerListener"><span class="pre">ProfilerListener</span></a></tt></td>
 <td>0</td>
 </tr>
@@ -645,10 +702,12 @@ additional listener not listed here.</p>
 <col width="90%" />
 <col width="10%" />
 </colgroup>
-<tbody valign="top">
-<tr class="row-odd"><td>Listener Class Name</td>
-<td>Priority</td>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Listener Class Name</th>
+<th class="head">Priority</th>
 </tr>
+</thead>
+<tbody valign="top">
 <tr class="row-even"><td><tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/SwiftmailerBundle/EventListener/EmailSenderListener.html" title="Symfony\Bundle\SwiftmailerBundle\EventListener\EmailSenderListener"><span class="pre">EmailSenderListener</span></a></tt></td>
 <td>0</td>
 </tr>
@@ -700,7 +759,7 @@ parameter for this tag to work correctly.</p>
 </div>
 <div class="section" id="kernel-fragment-renderer">
 <h2>kernel.fragment_renderer<a class="headerlink" href="#kernel-fragment-renderer" title="Permalink to this headline">¶</a></h2>
-<p><strong>Purpose</strong>: Add a new HTTP content rendering strategy.</p>
+<p><strong>Purpose</strong>: Add a new HTTP content rendering strategy</p>
 <p>To add a new rendering strategy - in addition to the core strategies like
 <tt class="docutils literal"><span class="pre">EsiFragmentRenderer</span></tt> - create a class that implements
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/Fragment/FragmentRendererInterface.html" title="Symfony\Component\HttpKernel\Fragment\FragmentRendererInterface"><span class="pre">FragmentRendererInterface</span></a></tt>,
@@ -738,10 +797,11 @@ channel when injecting the logger in a service.</p>
 </li>
 </ul>
 </div>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">This works only when the logger service is a constructor argument,
-not when it is injected through a setter.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">If you use MonologBundle 2.4 or higher, you can configure custom channels
+in the configuration and retrieve the corresponding logger service from
+the service container directly (see <a class="reference internal" href="../cookbook/logging/channels_handlers.html#cookbook-monolog-channels-config"><em>Configure Additional Channels without Tagged Services</em></a>).</p>
 </div>
 </div>
 <div class="section" id="monolog-processor">
@@ -751,8 +811,8 @@ not when it is injected through a setter.</p>
 extra data in the records. A processor receives the record as an argument and
 must return it after adding some extra data in the <tt class="docutils literal"><span class="pre">extra</span></tt> attribute of
 the record.</p>
-<p>Let&#8217;s see how you can use the built-in <tt class="docutils literal"><span class="pre">IntrospectionProcessor</span></tt> to add
-the file, the line, the class and the method where the logger was triggered.</p>
+<p>The built-in <tt class="docutils literal"><span class="pre">IntrospectionProcessor</span></tt> can be used to add the file, the line,
+the class and the method where the logger was triggered.</p>
 <p>You can add a processor globally:</p>
 <div class="configuration-block">
 <ul class="simple">
@@ -909,12 +969,18 @@ and <tt class="docutils literal"><a class="reference external" href="http://api.
 and <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Serializer/Normalizer/DenormalizerInterface.html" title="Symfony\Component\Serializer\Normalizer\DenormalizerInterface"><span class="pre">DenormalizerInterface</span></a></tt>.</p>
 <p>For more details, see <a class="reference internal" href="../cookbook/serializer.html"><em>How to use the Serializer</em></a>.</p>
 </div>
-<div class="section" id="swiftmailer-plugin">
-<h2>swiftmailer.plugin<a class="headerlink" href="#swiftmailer-plugin" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="swiftmailer-default-plugin">
+<h2>swiftmailer.default.plugin<a class="headerlink" href="#swiftmailer-default-plugin" title="Permalink to this headline">¶</a></h2>
 <p><strong>Purpose</strong>: Register a custom SwiftMailer Plugin</p>
 <p>If you&#8217;re using a custom SwiftMailer plugin (or want to create one), you can
 register it with SwiftMailer by creating a service for your plugin and tagging
-it with <tt class="docutils literal"><span class="pre">swiftmailer.plugin</span></tt> (it has no options).</p>
+it with <tt class="docutils literal"><span class="pre">swiftmailer.default.plugin</span></tt> (it has no options).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><tt class="docutils literal"><span class="pre">default</span></tt> in this tag is the name of the mailer. If you have multiple
+mailers configured or have changed the default mailer name for some reason,
+you should change it to the name of your mailer in order to use this tag.</p>
+</div>
 <p>A SwiftMailer plugin must implement the <tt class="docutils literal"><span class="pre">Swift_Events_EventListener</span></tt> interface.
 For more information on plugins, see <a class="reference external" href="http://swiftmailer.org/docs/plugins.html">SwiftMailer&#8217;s Plugin Documentation</a>.</p>
 <p>Several SwiftMailer plugins are core to Symfony and can be activated via
@@ -954,31 +1020,32 @@ templates):</p>
 </div>
 </div>
 <div class="section" id="translation-loader">
-<h2>translation.loader<a class="headerlink" href="#translation-loader" title="Permalink to this headline">¶</a></h2>
+<span id="dic-tags-translation-loader"></span><h2>translation.loader<a class="headerlink" href="#translation-loader" title="Permalink to this headline">¶</a></h2>
 <p><strong>Purpose</strong>: To register a custom service that loads translations</p>
-<p>By default, translations are loaded form the filesystem in a variety of different
+<p>By default, translations are loaded from the filesystem in a variety of different
 formats (YAML, XLIFF, PHP, etc). If you need to load translations from some
 other source, first create a class that implements the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Translation/Loader/LoaderInterface.html" title="Symfony\Component\Translation\Loader\LoaderInterface"><span class="pre">LoaderInterface</span></a></tt> interface:</p>
-<div class="highlight-python"><pre>// src/Acme/MainBundle/Translation/MyCustomLoader.php
-namespace Acme\MainBundle\Translation;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/MainBundle/Translation/MyCustomLoader.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\MainBundle\Translation</span><span class="p">;</span>
 
-use Symfony\Component\Translation\Loader\LoaderInterface;
-use Symfony\Component\Translation\MessageCatalogue;
+<span class="k">use</span> <span class="nx">Symfony\Component\Translation\Loader\LoaderInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Translation\MessageCatalogue</span><span class="p">;</span>
 
-class MyCustomLoader implements LoaderInterface
-{
-    public function load($resource, $locale, $domain = 'messages')
-    {
-        $catalogue = new MessageCatalogue($locale);
+<span class="k">class</span> <span class="nc">MyCustomLoader</span> <span class="k">implements</span> <span class="nx">LoaderInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">load</span><span class="p">(</span><span class="nv">$resource</span><span class="p">,</span> <span class="nv">$locale</span><span class="p">,</span> <span class="nv">$domain</span> <span class="o">=</span> <span class="s1">&#39;messages&#39;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$catalogue</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MessageCatalogue</span><span class="p">(</span><span class="nv">$locale</span><span class="p">);</span>
 
-        // some how load up some translations from the "resource"
-        // then set them into the catalogue
-        $catalogue-&gt;set('hello.world', 'Hello World!', $domain);
+        <span class="c1">// some how load up some translations from the &quot;resource&quot;</span>
+        <span class="c1">// then set them into the catalogue</span>
+        <span class="nv">$catalogue</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;hello.world&#39;</span><span class="p">,</span> <span class="s1">&#39;Hello World!&#39;</span><span class="p">,</span> <span class="nv">$domain</span><span class="p">);</span>
 
-        return $catalogue;
-    }
-}</pre>
+        <span class="k">return</span> <span class="nv">$catalogue</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Your custom loader&#8217;s <tt class="docutils literal"><span class="pre">load</span></tt> method is responsible for returning a
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Translation/MessageCatalogue.html" title="Symfony\Component\Translation\MessageCatalogue"><span class="pre">MessageCatalogue</span></a></tt>.</p>
@@ -1024,43 +1091,42 @@ the <tt class="docutils literal"><span class="pre">load</span></tt> method on yo
 <div class="section" id="translation-extractor">
 <h2>translation.extractor<a class="headerlink" href="#translation-extractor" title="Permalink to this headline">¶</a></h2>
 <p><strong>Purpose</strong>: To register a custom service that extracts messages from a file</p>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.1: </span>The ability to add message extractors is new in Symfony 2.1.</p>
 <p>When executing the <tt class="docutils literal"><span class="pre">translation:update</span></tt> command, it uses extractors to
 extract translation messages from a file. By default, the Symfony2 framework
-has a <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bridge/TwigBridge/Translation/TwigExtractor.html" title="Symfony\Bridge\TwigBridge\Translation\TwigExtractor"><span class="pre">TwigExtractor</span></a></tt> and a
+has a <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bridge/Twig/Translation/TwigExtractor.html" title="Symfony\Bridge\Twig\Translation\TwigExtractor"><span class="pre">TwigExtractor</span></a></tt> and a
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Translation/PhpExtractor.html" title="Symfony\Bundle\FrameworkBundle\Translation\PhpExtractor"><span class="pre">PhpExtractor</span></a></tt>, which
 help to find and extract translation keys from Twig templates and PHP files.</p>
 <p>You can create your own extractor by creating a class that implements
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Translation/Extractor/ExtractorInterface.html" title="Symfony\Component\Translation\Extractor\ExtractorInterface"><span class="pre">ExtractorInterface</span></a></tt> and
 tagging the service with <tt class="docutils literal"><span class="pre">translation.extractor</span></tt>. The tag has one required
 option: <tt class="docutils literal"><span class="pre">alias</span></tt>, which defines the name of the extractor:</p>
-<div class="highlight-python"><pre>// src/Acme/DemoBundle/Translation/FooExtractor.php
-namespace Acme\DemoBundle\Translation;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/Translation/FooExtractor.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\DemoBundle\Translation</span><span class="p">;</span>
 
-use Symfony\Component\Translation\Extractor\ExtractorInterface;
-use Symfony\Component\Translation\MessageCatalogue;
+<span class="k">use</span> <span class="nx">Symfony\Component\Translation\Extractor\ExtractorInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Translation\MessageCatalogue</span><span class="p">;</span>
 
-class FooExtractor implements ExtractorInterface
-{
-    protected $prefix;
+<span class="k">class</span> <span class="nc">FooExtractor</span> <span class="k">implements</span> <span class="nx">ExtractorInterface</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$prefix</span><span class="p">;</span>
 
-    /**
-     * Extracts translation messages from a template directory to the catalogue.
-     */
-    public function extract($directory, MessageCatalogue $catalogue)
-    {
-        // ...
-    }
+    <span class="sd">/**</span>
+<span class="sd">     * Extracts translation messages from a template directory to the catalogue.</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">extract</span><span class="p">(</span><span class="nv">$directory</span><span class="p">,</span> <span class="nx">MessageCatalogue</span> <span class="nv">$catalogue</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// ...</span>
+    <span class="p">}</span>
 
-    /**
-     * Sets the prefix that should be used for new found messages.
-     */
-    public function setPrefix($prefix)
-    {
-        $this-&gt;prefix = $prefix;
-    }
-}</pre>
+    <span class="sd">/**</span>
+<span class="sd">     * Sets the prefix that should be used for new found messages.</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setPrefix</span><span class="p">(</span><span class="nv">$prefix</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">prefix</span> <span class="o">=</span> <span class="nv">$prefix</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <div class="configuration-block">
 <ul class="simple">
@@ -1093,8 +1159,6 @@ class FooExtractor implements ExtractorInterface
 <div class="section" id="translation-dumper">
 <h2>translation.dumper<a class="headerlink" href="#translation-dumper" title="Permalink to this headline">¶</a></h2>
 <p><strong>Purpose</strong>: To register a custom service that dumps messages to a file</p>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.1: </span>The ability to add message dumpers is new in Symfony 2.1.</p>
 <p>After an <a class="reference external" href="translation.extractor">Extractor</a> has extracted all messages from
 the templates, the dumpers are executed to dump the messages to a translation
 file in a specific format.</p>
@@ -1174,7 +1238,7 @@ configuration, and tag it with <tt class="docutils literal"><span class="pre">tw
 </div>
 <p>For information on how to create the actual Twig Extension class, see
 <a class="reference external" href="http://twig.sensiolabs.org/doc/advanced.html#creating-an-extension">Twig&#8217;s documentation</a> on the topic or read the cookbook article:
-<a class="reference internal" href="../cookbook/templating/twig_extension.html"><em>How to write a custom Twig Extension</em></a></p>
+<a class="reference internal" href="../cookbook/templating/twig_extension.html"><em>How to write a custom Twig Extension</em></a>.</p>
 <p>Before writing your own extensions, have a look at the
 <a class="reference external" href="https://github.com/fabpot/Twig-extensions">Twig official extension repository</a> which already includes several
 useful extensions. For example <tt class="docutils literal"><span class="pre">Intl</span></tt> and its <tt class="docutils literal"><span class="pre">localizeddate</span></tt> filter
@@ -1277,6 +1341,7 @@ Then, tag it with the <tt class="docutils literal"><span class="pre">validator.i
 <li><a class="reference internal" href="#assetic-formula-resource">assetic.formula_resource</a></li>
 <li><a class="reference internal" href="#assetic-templating-php">assetic.templating.php</a></li>
 <li><a class="reference internal" href="#assetic-templating-twig">assetic.templating.twig</a></li>
+<li><a class="reference internal" href="#console-command">console.command</a></li>
 <li><a class="reference internal" href="#data-collector">data_collector</a></li>
 <li><a class="reference internal" href="#doctrine-event-listener">doctrine.event_listener</a></li>
 <li><a class="reference internal" href="#doctrine-event-subscriber">doctrine.event_subscriber</a></li>
@@ -1284,7 +1349,10 @@ Then, tag it with the <tt class="docutils literal"><span class="pre">validator.i
 <li><a class="reference internal" href="#form-type-extension">form.type_extension</a></li>
 <li><a class="reference internal" href="#form-type-guesser">form.type_guesser</a></li>
 <li><a class="reference internal" href="#kernel-cache-clearer">kernel.cache_clearer</a></li>
-<li><a class="reference internal" href="#kernel-cache-warmer">kernel.cache_warmer</a></li>
+<li><a class="reference internal" href="#kernel-cache-warmer">kernel.cache_warmer</a><ul>
+<li><a class="reference internal" href="#core-cache-warmers">Core Cache Warmers</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#kernel-event-listener">kernel.event_listener</a><ul>
 <li><a class="reference internal" href="#core-event-listener-reference">Core Event Listener Reference</a><ul>
 <li><a class="reference internal" href="#kernel-request">kernel.request</a></li>
@@ -1305,7 +1373,7 @@ Then, tag it with the <tt class="docutils literal"><span class="pre">validator.i
 <li><a class="reference internal" href="#security-voter">security.voter</a></li>
 <li><a class="reference internal" href="#serializer-encoder">serializer.encoder</a></li>
 <li><a class="reference internal" href="#serializer-normalizer">serializer.normalizer</a></li>
-<li><a class="reference internal" href="#swiftmailer-plugin">swiftmailer.plugin</a></li>
+<li><a class="reference internal" href="#swiftmailer-default-plugin">swiftmailer.default.plugin</a></li>
 <li><a class="reference internal" href="#templating-helper">templating.helper</a></li>
 <li><a class="reference internal" href="#translation-loader">translation.loader</a></li>
 <li><a class="reference internal" href="#translation-extractor">translation.extractor</a></li>
@@ -1319,11 +1387,11 @@ Then, tag it with the <tt class="docutils literal"><span class="pre">validator.i
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="constraints/Valid.html"
-                        title="previous chapter">Valid</a></p>
+  <p class="topless"><a href="twig_reference.html"
+                        title="previous chapter">Symfony2 Twig Extensions</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="requirements.html"
-                        title="next chapter">Requirements for running Symfony2</a></p>
+                        title="next chapter">Requirements for Running Symfony2</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/reference/dic_tags.txt"
@@ -1353,18 +1421,18 @@ Then, tag it with the <tt class="docutils literal"><span class="pre">validator.i
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="requirements.html" title="Requirements for running Symfony2"
+          <a href="requirements.html" title="Requirements for Running Symfony2"
              >next</a> |</li>
         <li class="right" >
-          <a href="constraints/Valid.html" title="Valid"
+          <a href="twig_reference.html" title="Symfony2 Twig Extensions"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" >Reference Documents</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

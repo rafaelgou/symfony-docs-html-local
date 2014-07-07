@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to customize a Method Behavior without using Inheritance &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to customize a Method Behavior without using Inheritance &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Event Dispatcher" href="index.html" />
-    <link rel="next" title="Request" href="../request/index.html" />
+    <link rel="next" title="Expressions" href="../expression/index.html" />
     <link rel="prev" title="How to extend a Class without using Inheritance" href="class_extension.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../request/index.html" title="Request"
+          <a href="../expression/index.html" title="Expressions"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="class_extension.html" title="How to extend a Class without using Inheritance"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Event Dispatcher</a> &raquo;</li> 
       </ul>
@@ -61,30 +59,31 @@
 <p>If you want to do something just before, or just after a method is called, you
 can dispatch an event respectively at the beginning or at the end of the
 method:</p>
-<div class="highlight-python"><pre>class Foo
-{
-    // ...
+<div class="highlight-php"><div class="highlight"><pre><span class="k">class</span> <span class="nc">Foo</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
 
-    public function send($foo, $bar)
-    {
-        // do something before the method
-        $event = new FilterBeforeSendEvent($foo, $bar);
-        $this-&gt;dispatcher-&gt;dispatch('foo.pre_send', $event);
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">send</span><span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// do something before the method</span>
+        <span class="nv">$event</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FilterBeforeSendEvent</span><span class="p">(</span><span class="nv">$foo</span><span class="p">,</span> <span class="nv">$bar</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dispatcher</span><span class="o">-&gt;</span><span class="na">dispatch</span><span class="p">(</span><span class="s1">&#39;foo.pre_send&#39;</span><span class="p">,</span> <span class="nv">$event</span><span class="p">);</span>
 
-        // get $foo and $bar from the event, they may have been modified
-        $foo = $event-&gt;getFoo();
-        $bar = $event-&gt;getBar();
+        <span class="c1">// get $foo and $bar from the event, they may have been modified</span>
+        <span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$event</span><span class="o">-&gt;</span><span class="na">getFoo</span><span class="p">();</span>
+        <span class="nv">$bar</span> <span class="o">=</span> <span class="nv">$event</span><span class="o">-&gt;</span><span class="na">getBar</span><span class="p">();</span>
 
-        // the real method implementation is here
-        $ret = ...;
+        <span class="c1">// the real method implementation is here</span>
+        <span class="nv">$ret</span> <span class="o">=</span> <span class="o">...</span><span class="p">;</span>
 
-        // do something after the method
-        $event = new FilterSendReturnValue($ret);
-        $this-&gt;dispatcher-&gt;dispatch('foo.post_send', $event);
+        <span class="c1">// do something after the method</span>
+        <span class="nv">$event</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FilterSendReturnValue</span><span class="p">(</span><span class="nv">$ret</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dispatcher</span><span class="o">-&gt;</span><span class="na">dispatch</span><span class="p">(</span><span class="s1">&#39;foo.post_send&#39;</span><span class="p">,</span> <span class="nv">$event</span><span class="p">);</span>
 
-        return $event-&gt;getReturnValue();
-    }
-}</pre>
+        <span class="k">return</span> <span class="nv">$event</span><span class="o">-&gt;</span><span class="na">getReturnValue</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>In this example, two events are thrown: <tt class="docutils literal"><span class="pre">foo.pre_send</span></tt>, before the method is
 executed, and <tt class="docutils literal"><span class="pre">foo.post_send</span></tt> after the method is executed. Each uses a
@@ -124,8 +123,8 @@ method, one listener might look like this:</p>
   <p class="topless"><a href="class_extension.html"
                         title="previous chapter">How to extend a Class without using Inheritance</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../request/index.html"
-                        title="next chapter">Request</a></p>
+  <p class="topless"><a href="../expression/index.html"
+                        title="next chapter">Expressions</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/event_dispatcher/method_behavior.txt"
@@ -155,19 +154,19 @@ method, one listener might look like this:</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../request/index.html" title="Request"
+          <a href="../expression/index.html" title="Expressions"
              >next</a> |</li>
         <li class="right" >
           <a href="class_extension.html" title="How to extend a Class without using Inheritance"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Event Dispatcher</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

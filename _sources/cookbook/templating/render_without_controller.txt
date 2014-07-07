@@ -22,7 +22,7 @@ can do this without creating a controller:
             path: /privacy
             defaults:
                 _controller: FrameworkBundle:Template:template
-                template: 'AcmeBundle:Static:privacy.html.twig'
+                template:    'AcmeBundle:Static:privacy.html.twig'
 
     .. code-block:: xml
 
@@ -77,10 +77,6 @@ this is probably only useful if you'd like to cache this page partial (see
 Caching the static Template
 ---------------------------
 
-.. versionadded:: 2.2
-    The ability to cache templates rendered via ``FrameworkBundle:Template:template``
-    is new in Symfony 2.2.
-
 Since templates that are rendered in this way are typically static, it might
 make sense to cache them. Fortunately, this is easy! By configuring a few
 other variables in your route, you can control exactly how your page is cached:
@@ -92,10 +88,10 @@ other variables in your route, you can control exactly how your page is cached:
         acme_privacy:
             path: /privacy
             defaults:
-                _controller: FrameworkBundle:Template:template
-                template: 'AcmeBundle:Static:privacy.html.twig'
-                maxAge: 86400
-                sharedMaxAge: 86400
+                _controller:  FrameworkBundle:Template:template
+                template:     'AcmeBundle:Static:privacy.html.twig'
+                maxAge:       86400
+                sharedAge:    86400
 
     .. code-block:: xml
 
@@ -109,7 +105,7 @@ other variables in your route, you can control exactly how your page is cached:
                 <default key="_controller">FrameworkBundle:Template:template</default>
                 <default key="template">AcmeBundle:Static:privacy.html.twig</default>
                 <default key="maxAge">86400</default>
-                <default key="sharedMaxAge">86400</default>
+                <default key="sharedAge">86400</default>
             </route>
         </routes>
 
@@ -123,15 +119,15 @@ other variables in your route, you can control exactly how your page is cached:
             '_controller'  => 'FrameworkBundle:Template:template',
             'template'     => 'AcmeBundle:Static:privacy.html.twig',
             'maxAge'       => 86400,
-            'sharedMaxAge' => 86400,
+            'sharedAge' => 86400,
         )));
 
         return $collection;
 
-The ``maxAge`` and ``sharedMaxAge`` values are used to modify the Response
+The ``maxAge`` and ``sharedAge`` values are used to modify the Response
 object created in the controller. For more information on caching, see
 :doc:`/book/http_cache`.
 
 There is also a ``private`` variable (not shown here). By default, the Response
-will be made public, as long as ``maxAge`` or ``sharedMaxAge`` are passed.
+will be made public, as long as ``maxAge`` or ``sharedAge`` are passed.
 If set to ``true``, the Response will be marked as private.

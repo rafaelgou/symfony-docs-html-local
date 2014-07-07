@@ -1,9 +1,12 @@
 .. index::
-   single: Doctrine; ORM configuration reference
-   single: Configuration reference; Doctrine ORM
+    single: Doctrine; ORM configuration reference
+    single: Configuration reference; Doctrine ORM
 
-Doctrine Configuration Reference
-================================
+DoctrineBundle Configuration ("doctrine")
+=========================================
+
+Full default configuration
+--------------------------
 
 .. configuration-block::
 
@@ -170,6 +173,7 @@ Doctrine Configuration Reference
 
     .. code-block:: xml
 
+        <?xml version="1.0" encoding="UTF-8" ?>
         <container xmlns="http://symfony.com/schema/dic/services"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xmlns:doctrine="http://symfony.com/schema/dic/doctrine"
@@ -207,9 +211,9 @@ Doctrine Configuration Reference
                         <doctrine:metadata-cache-driver type="memcache" host="localhost" port="11211" instance-class="Memcache" class="Doctrine\Common\Cache\MemcacheCache" />
                         <doctrine:mapping name="AcmeHelloBundle" />
                         <doctrine:dql>
-                            <doctrine:string-function name="test_string>Acme\HelloBundle\DQL\StringFunction</doctrine:string-function>
-                            <doctrine:numeric-function name="test_numeric>Acme\HelloBundle\DQL\NumericFunction</doctrine:numeric-function>
-                            <doctrine:datetime-function name="test_datetime>Acme\HelloBundle\DQL\DatetimeFunction</doctrine:datetime-function>
+                            <doctrine:string-function name="test_string">Acme\HelloBundle\DQL\StringFunction</doctrine:string-function>
+                            <doctrine:numeric-function name="test_numeric">Acme\HelloBundle\DQL\NumericFunction</doctrine:numeric-function>
+                            <doctrine:datetime-function name="test_datetime">Acme\HelloBundle\DQL\DatetimeFunction</doctrine:datetime-function>
                         </doctrine:dql>
                     </doctrine:entity-manager>
                     <doctrine:entity-manager name="em2" connection="conn2" metadata-cache-driver="apc">
@@ -251,7 +255,7 @@ certain classes, but those are for very advanced use-cases only.
 Caching Drivers
 ~~~~~~~~~~~~~~~
 
-For the caching drivers you can specify the values "array", "apc", "memcache", "memcached", 
+For the caching drivers you can specify the values "array", "apc", "memcache", "memcached",
 "xcache" or "service".
 
 The following example shows an overview of the caching configurations:
@@ -404,6 +408,6 @@ which is the first one defined or the one configured via the
 ``default_connection`` parameter.
 
 Each connection is also accessible via the ``doctrine.dbal.[name]_connection``
-service where ``[name]`` if the name of the connection.
+service where ``[name]`` is the name of the connection.
 
 .. _DBAL documentation: http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/configuration.html

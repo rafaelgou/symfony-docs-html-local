@@ -17,7 +17,7 @@ register the mappings for your model classes.
     just to get the auto mapping, use the compiler pass.
 
 .. versionadded:: 2.3
-    The base mapping compiler pass was added in Symfony 2.3. The Doctrine bundles
+    The base mapping compiler pass was introduced in Symfony 2.3. The Doctrine bundles
     support it from DoctrineBundle >= 1.2.1, MongoDBBundle >= 3.0.0,
     PHPCRBundle >= 1.0.0-alpha2 and the (unversioned) CouchDBBundle supports the
     compiler pass since the `CouchDB Mapping Compiler Pass pull request`_
@@ -107,7 +107,7 @@ Annotations, XML, Yaml, PHP and StaticPHP. The arguments are:
   to specify the name of the default manager. The first parameter found is
   used and the mappings are registered with that manager;
 * an optional container parameter name that will be used by the compiler
-  pass to determine if this Doctrine type is used at all (this is relevant if
+  pass to determine if this Doctrine type is used at all. This is relevant if
   your user has more than one type of Doctrine bundle installed, but your
   bundle is only used with one type of Doctrine.
 
@@ -141,7 +141,7 @@ Annotations, XML, Yaml, PHP and StaticPHP. The arguments are:
     Now place your mapping file into ``/Resources/config/doctrine-base`` with the
     fully qualified class name, separated by ``.`` instead of ``\``, for example
     ``Other.Namespace.Model.Name.orm.xml``. You may not mix the two as otherwise
-    the SymfonyFileLocator will get confused.
+    the ``SymfonyFileLocator`` will get confused.
 
     Adjust accordingly for the other Doctrine implementations.
 

@@ -2,10 +2,10 @@ Isbn
 ====
 
 .. versionadded:: 2.3
-    The Isbn constraint was added in Symfony 2.3.
+    The Isbn constraint was introduced in Symfony 2.3.
 
-This constraint validates that an ISBN (International Standard Book Numbers)
-number is either a valid ISBN-10, a valid ISBN-13 or both.
+This constraint validates that an `International Standard Book Number (ISBN)`_
+is either a valid ISBN-10, a valid ISBN-13 or both.
 
 +----------------+----------------------------------------------------------------------+
 | Applies to     | :ref:`property or method<validation-property-target>`                |
@@ -31,8 +31,8 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: yaml
 
-        # src/Acme/BookcaseBunlde/Resources/config/validation.yml
-        Acme\BookcaseBunlde\Entity\Book:
+        # src/Acme/BookcaseBundle/Resources/config/validation.yml
+        Acme\BookcaseBundle\Entity\Book:
             properties:
                 isbn:
                     - Isbn:
@@ -42,7 +42,7 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: php-annotations
 
-        // src/Acme/BookcaseBunlde/Entity/Book.php
+        // src/Acme/BookcaseBundle/Entity/Book.php
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Book
@@ -59,8 +59,8 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: xml
 
-        <!-- src/Acme/BookcaseBunlde/Resources/config/validation.xml -->
-        <class name="Acme\BookcaseBunlde\Entity\Book">
+        <!-- src/Acme/BookcaseBundle/Resources/config/validation.xml -->
+        <class name="Acme\BookcaseBundle\Entity\Book">
             <property name="isbn">
                 <constraint name="Isbn">
                     <option name="isbn10">true</option>
@@ -72,8 +72,8 @@ on an  object that will contain a ISBN number.
 
     .. code-block:: php
 
-        // src/Acme/BookcaseBunlde/Entity/Book.php
-        namespace Acme\BookcaseBunlde\Entity;
+        // src/Acme/BookcaseBundle/Entity/Book.php
+        namespace Acme\BookcaseBundle\Entity;
 
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
@@ -98,7 +98,7 @@ Available Options
 isbn10
 ~~~~~~
 
-**type**: ``boolean`` [:ref:`default option<validation-default-option>`]
+**type**: ``boolean``
 
 If this required option is set to ``true`` the constraint will check if the
 code is a valid ISBN-10 code.
@@ -106,7 +106,7 @@ code is a valid ISBN-10 code.
 isbn13
 ~~~~~~
 
-**type**: ``boolean`` [:ref:`default option<validation-default-option>`]
+**type**: ``boolean``
 
 If this required option is set to ``true`` the constraint will check if the
 code is a valid ISBN-13 code.
@@ -134,3 +134,5 @@ bothIsbnMessage
 
 The message that will be shown if both the `isbn10`_ and `isbn13`_ options
 are true and the given value does not pass the ISBN-13 nor the ISBN-13 check.
+
+.. _`International Standard Book Number (ISBN)`: http://en.wikipedia.org/wiki/Isbn

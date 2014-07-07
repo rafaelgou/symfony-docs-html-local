@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to customize your Form Login &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to customize your Form Login &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +23,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Security" href="index.html" />
     <link rel="next" title="How to secure any Service or Method in your Application" href="securing_services.html" />
-    <link rel="prev" title="How to force HTTPS or HTTP for Different URLs" href="force_https.html" /> 
+    <link rel="prev" title="How to Restrict Firewalls to a Specific Request" href="firewall_restriction.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,9 +39,9 @@
           <a href="securing_services.html" title="How to secure any Service or Method in your Application"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="force_https.html" title="How to force HTTPS or HTTP for Different URLs"
+          <a href="firewall_restriction.html" title="How to Restrict Firewalls to a Specific Request"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Security</a> &raquo;</li> 
       </ul>
@@ -63,7 +61,7 @@ configuration is shown in the next section.</p>
 <div class="section" id="form-login-configuration-reference">
 <h2>Form Login Configuration Reference<a class="headerlink" href="#form-login-configuration-reference" title="Permalink to this headline">¶</a></h2>
 <p>To see the full form login configuration reference, see
-<a class="reference internal" href="../../reference/configuration/security.html"><em>Security Configuration Reference</em></a>. Some of the more interesting options
+<a class="reference internal" href="../../reference/configuration/security.html"><em>SecurityBundle Configuration (&#8220;security&#8221;)</em></a>. Some of the more interesting options
 are explained below.</p>
 </div>
 <div class="section" id="redirecting-after-success">
@@ -72,7 +70,7 @@ are explained below.</p>
 the various config options. By default the form will redirect to the URL the
 user requested (i.e. the URL which triggered the login form being shown).
 For example, if the user requested <tt class="docutils literal"><span class="pre">http://www.example.com/admin/post/18/edit</span></tt>,
-then after she successfully logs in, she will eventually be sent back to
+then after they successfully log in, they will eventually be sent back to
 <tt class="docutils literal"><span class="pre">http://www.example.com/admin/post/18/edit</span></tt>.
 This is done by storing the requested URL in the session.
 If no URL is present in the session (perhaps the user went
@@ -81,8 +79,8 @@ which is  <tt class="docutils literal"><span class="pre">/</span></tt> (i.e. the
 in several ways.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">As mentioned, by default the user is redirected back to the page he originally
-requested. Sometimes, this can cause problems, like if a background AJAX
+<p class="last">As mentioned, by default the user is redirected back to the page originally
+requested. Sometimes, this can cause problems, like if a background Ajax
 request &#8220;appears&#8221; to be the last visited URL, causing the user to be
 redirected there. For information on controlling this behavior, see
 <a class="reference internal" href="target_path.html"><em>How to change the Default Target Path Behavior</em></a>.</p>
@@ -394,8 +392,8 @@ back to the login form itself. You can set this to a different route (e.g.
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="force_https.html"
-                        title="previous chapter">How to force HTTPS or HTTP for Different URLs</a></p>
+  <p class="topless"><a href="firewall_restriction.html"
+                        title="previous chapter">How to Restrict Firewalls to a Specific Request</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="securing_services.html"
                         title="next chapter">How to secure any Service or Method in your Application</a></p>
@@ -431,16 +429,16 @@ back to the login form itself. You can set this to a different route (e.g.
           <a href="securing_services.html" title="How to secure any Service or Method in your Application"
              >next</a> |</li>
         <li class="right" >
-          <a href="force_https.html" title="How to force HTTPS or HTTP for Different URLs"
+          <a href="firewall_restriction.html" title="How to Restrict Firewalls to a Specific Request"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Security</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

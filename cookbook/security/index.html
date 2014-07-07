@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Security &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Security &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +23,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="The Cookbook" href="../index.html" />
     <link rel="next" title="How to load Security Users from the Database (the Entity Provider)" href="entity_provider.html" />
-    <link rel="prev" title="How to customize the Bootstrap Process before running Tests" href="../testing/bootstrap.html" /> 
+    <link rel="prev" title="Redirect URLs with a Trailing Slash" href="../routing/redirect_trailing_slash.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,9 +39,9 @@
           <a href="entity_provider.html" title="How to load Security Users from the Database (the Entity Provider)"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="../testing/bootstrap.html" title="How to customize the Bootstrap Process before running Tests"
+          <a href="../routing/redirect_trailing_slash.html" title="Redirect URLs with a Trailing Slash"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">The Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -64,17 +62,27 @@
 <li class="toctree-l2"><a class="reference internal" href="entity_provider.html#forbid-inactive-users">Forbid Inactive Users</a></li>
 <li class="toctree-l2"><a class="reference internal" href="entity_provider.html#authenticating-someone-with-a-custom-entity-provider">Authenticating Someone with a Custom Entity Provider</a></li>
 <li class="toctree-l2"><a class="reference internal" href="entity_provider.html#managing-roles-in-the-database">Managing Roles in the Database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="entity_provider.html#understanding-serialize-and-how-a-user-is-saved-in-the-session">Understanding serialize and how a User is Saved in the Session</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="remember_me.html">How to add &#8220;Remember Me&#8221; Login Functionality</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="remember_me.html#forcing-the-user-to-re-authenticate-before-accessing-certain-resources">Forcing the User to Re-authenticate before accessing certain Resources</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="impersonating_user.html">How to Impersonate a User</a></li>
 <li class="toctree-l1"><a class="reference internal" href="voters.html">How to implement your own Voter to blacklist IP Addresses</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="voters.html#the-voter-interface">The Voter Interface</a></li>
 <li class="toctree-l2"><a class="reference internal" href="voters.html#creating-a-custom-voter">Creating a Custom Voter</a></li>
 <li class="toctree-l2"><a class="reference internal" href="voters.html#declaring-the-voter-as-a-service">Declaring the Voter as a Service</a></li>
 <li class="toctree-l2"><a class="reference internal" href="voters.html#changing-the-access-decision-strategy">Changing the Access Decision Strategy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="voters_data_permission.html">How to Use Voters to Check User Permissions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="voters_data_permission.html#how-symfony-uses-voters">How Symfony Uses Voters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="voters_data_permission.html#the-voter-interface">The Voter Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="voters_data_permission.html#creating-the-custom-voter">Creating the Custom Voter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="voters_data_permission.html#declaring-the-voter-as-a-service">Declaring the Voter as a Service</a></li>
+<li class="toctree-l2"><a class="reference internal" href="voters_data_permission.html#how-to-use-the-voter-in-a-controller">How to Use the Voter in a Controller</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="acl.html">How to use Access Control Lists (ACLs)</a><ul>
@@ -93,6 +101,19 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="force_https.html">How to force HTTPS or HTTP for Different URLs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firewall_restriction.html">How to Restrict Firewalls to a Specific Request</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="firewall_restriction.html#restricting-by-pattern">Restricting by Pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firewall_restriction.html#restricting-by-host">Restricting by Host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firewall_restriction.html#restricting-by-http-methods">Restricting by HTTP Methods</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="host_restriction.html">How to Restrict Firewalls to a Specific Host</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firewall_restriction.html">How to Restrict Firewalls to a Specific Request</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="firewall_restriction.html#restricting-by-pattern">Restricting by Pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firewall_restriction.html#restricting-by-host">Restricting by Host</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firewall_restriction.html#restricting-by-http-methods">Restricting by HTTP Methods</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="form_login.html">How to customize your Form Login</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="form_login.html#form-login-configuration-reference">Form Login Configuration Reference</a></li>
 <li class="toctree-l2"><a class="reference internal" href="form_login.html#redirecting-after-success">Redirecting after Success</a></li>
@@ -109,6 +130,20 @@
 <li class="toctree-l2"><a class="reference internal" href="custom_provider.html#modify-security-yml">Modify <tt class="docutils literal"><span class="pre">security.yml</span></tt></a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="custom_password_authenticator.html">How to Create a Custom Form Password Authenticator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="custom_password_authenticator.html#the-password-authenticator">The Password Authenticator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_password_authenticator.html#how-it-works">How it Works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="custom_password_authenticator.html#configuration">Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_key_authentication.html">How to Authenticate Users with API Keys</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_key_authentication.html#the-api-key-authenticator">The API Key Authenticator</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_key_authentication.html#handling-authentication-failure">Handling Authentication Failure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_key_authentication.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_key_authentication.html#storing-authentication-in-the-session">Storing Authentication in the Session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_key_authentication.html#only-authenticating-for-certain-urls">Only Authenticating for Certain URLs</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="custom_authentication_provider.html">How to create a custom Authentication Provider</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="custom_authentication_provider.html#meet-wsse">Meet WSSE</a></li>
 <li class="toctree-l2"><a class="reference internal" href="custom_authentication_provider.html#the-token">The Token</a></li>
@@ -119,7 +154,17 @@
 <li class="toctree-l2"><a class="reference internal" href="custom_authentication_provider.html#a-little-extra">A Little Extra</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="pre_authenticated.html">Using pre Authenticated Security Firewalls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pre_authenticated.html#x-509-client-certificate-authentication">X.509 Client Certificate Authentication</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="target_path.html">How to change the Default Target Path Behavior</a></li>
+<li class="toctree-l1"><a class="reference internal" href="csrf_in_login_form.html">Using CSRF Protection in the Login Form</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="csrf_in_login_form.html#configuring-csrf-protection">Configuring CSRF Protection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="csrf_in_login_form.html#rendering-the-csrf-field">Rendering the CSRF field</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="named_encoders.html">How to Choose the Password Encoder Algorithm Dynamically</a></li>
 </ul>
 </div>
 </div>
@@ -131,8 +176,8 @@
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="../testing/bootstrap.html"
-                        title="previous chapter">How to customize the Bootstrap Process before running Tests</a></p>
+  <p class="topless"><a href="../routing/redirect_trailing_slash.html"
+                        title="previous chapter">Redirect URLs with a Trailing Slash</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="entity_provider.html"
                         title="next chapter">How to load Security Users from the Database (the Entity Provider)</a></p>
@@ -168,15 +213,15 @@
           <a href="entity_provider.html" title="How to load Security Users from the Database (the Entity Provider)"
              >next</a> |</li>
         <li class="right" >
-          <a href="../testing/bootstrap.html" title="How to customize the Bootstrap Process before running Tests"
+          <a href="../routing/redirect_trailing_slash.html" title="Redirect URLs with a Trailing Slash"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to enable logging in Console Commands &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to enable logging in Console Commands &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Console" href="index.html" />
-    <link rel="next" title="How to optimize your development Environment for debugging" href="../debugging.html" />
+    <link rel="next" title="How to Define Commands as Services" href="commands_as_services.html" />
     <link rel="prev" title="How to generate URLs and send Emails from the Console" href="sending_emails.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../debugging.html" title="How to optimize your development Environment for debugging"
+          <a href="commands_as_services.html" title="How to Define Commands as Services"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="sending_emails.html" title="How to generate URLs and send Emails from the Console"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Console</a> &raquo;</li> 
       </ul>
@@ -77,223 +75,258 @@ some existing setup for aggregating and analyzing Symfony logs.</p>
 <p>This one is really simple. When you create a console command within the full
 framework as described in &#8220;<a class="reference internal" href="console_command.html"><em>How to create a Console Command</em></a>&#8221;, your command
 extends <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Command/ContainerAwareCommand.html" title="Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand"><span class="pre">ContainerAwareCommand</span></a></tt>.
-This means that you  can simply access the standard logger service through the
+This means that you can simply access the standard logger service through the
 container and use it to do the logging:</p>
-<div class="highlight-python"><pre>// src/Acme/DemoBundle/Command/GreetCommand.php
-namespace Acme\DemoBundle\Command;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/Command/GreetCommand.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\DemoBundle\Command</span><span class="p">;</span>
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Console\Input\InputArgument</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Console\Input\InputInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Console\Input\InputOption</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Console\Output\OutputInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Psr\Log\LoggerInterface</span><span class="p">;</span>
 
-class GreetCommand extends ContainerAwareCommand
-{
-    // ...
+<span class="k">class</span> <span class="nc">GreetCommand</span> <span class="k">extends</span> <span class="nx">ContainerAwareCommand</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        /** @var $logger LoggerInterface */
-        $logger = $this-&gt;getContainer()-&gt;get('logger');
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">execute</span><span class="p">(</span><span class="nx">InputInterface</span> <span class="nv">$input</span><span class="p">,</span> <span class="nx">OutputInterface</span> <span class="nv">$output</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="sd">/** @var $logger LoggerInterface */</span>
+        <span class="nv">$logger</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getContainer</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
 
-        $name = $input-&gt;getArgument('name');
-        if ($name) {
-            $text = 'Hello '.$name;
-        } else {
-            $text = 'Hello';
-        }
+        <span class="nv">$name</span> <span class="o">=</span> <span class="nv">$input</span><span class="o">-&gt;</span><span class="na">getArgument</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$name</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$text</span> <span class="o">=</span> <span class="s1">&#39;Hello &#39;</span><span class="o">.</span><span class="nv">$name</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nv">$text</span> <span class="o">=</span> <span class="s1">&#39;Hello&#39;</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        if ($input-&gt;getOption('yell')) {
-            $text = strtoupper($text);
-            $logger-&gt;warn('Yelled: '.$text);
-        }
-        else {
-            $logger-&gt;info('Greeted: '.$text);
-        }
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$input</span><span class="o">-&gt;</span><span class="na">getOption</span><span class="p">(</span><span class="s1">&#39;yell&#39;</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$text</span> <span class="o">=</span> <span class="nx">strtoupper</span><span class="p">(</span><span class="nv">$text</span><span class="p">);</span>
+            <span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">warning</span><span class="p">(</span><span class="s1">&#39;Yelled: &#39;</span><span class="o">.</span><span class="nv">$text</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">info</span><span class="p">(</span><span class="s1">&#39;Greeted: &#39;</span><span class="o">.</span><span class="nv">$text</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        $output-&gt;writeln($text);
-    }
-}</pre>
+        <span class="nv">$output</span><span class="o">-&gt;</span><span class="na">writeln</span><span class="p">(</span><span class="nv">$text</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Depending on the environment in which you run your command (and your logging
 setup), you should see the logged entries in <tt class="docutils literal"><span class="pre">app/logs/dev.log</span></tt> or <tt class="docutils literal"><span class="pre">app/logs/prod.log</span></tt>.</p>
 </div>
 <div class="section" id="enabling-automatic-exceptions-logging">
 <h2>Enabling automatic Exceptions logging<a class="headerlink" href="#enabling-automatic-exceptions-logging" title="Permalink to this headline">¶</a></h2>
-<p>To get your console application to automatically log uncaught exceptions
-for all of your commands, you&#8217;ll need to do a little bit more work.</p>
-<p>First, create a new sub-class of <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Console/Application.html" title="Symfony\Bundle\FrameworkBundle\Console\Application"><span class="pre">Application</span></a></tt>
-and override its <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Console/Application.html#method_run" title="Symfony\Bundle\FrameworkBundle\Console\Application::run()"><span class="pre">run()</span></a></tt>
-method, where exception handling should happen:</p>
-<div class="admonition caution">
-<p class="first admonition-title">Caution</p>
-<p class="last">Due to the nature of the core <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Console/Application.html" title="Symfony\Component\Console\Application"><span class="pre">Application</span></a></tt>
-class, much of the <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Console/Application.html#method_run" title="Symfony\Bundle\FrameworkBundle\Console\Application::run()"><span class="pre">run</span></a></tt>
-method has to be duplicated and even a private property <tt class="docutils literal"><span class="pre">originalAutoExit</span></tt>
-re-implemented. This serves as an example of what you <em>could</em> do in your
-code, though there is a high risk that something may break when upgrading
-to future versions of Symfony.</p>
+<p>To get your console application to automatically log uncaught exceptions for
+all of your commands, you can use <a class="reference internal" href="../../components/console/events.html"><em>console events</em></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>Console events were introduced in Symfony 2.3.</p>
 </div>
-<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/Console/Application.php</span>
-<span class="k">namespace</span> <span class="nx">Acme\DemoBundle\Console</span><span class="p">;</span>
+<p>First configure a listener for console exception events in the service container:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/services.yml</span>
+<span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">kernel.listener.command_dispatch</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Acme\DemoBundle\EventListener\ConsoleExceptionListener</span>
+        <span class="l-Scalar-Plain">arguments</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">logger</span><span class="p-Indicator">:</span> <span class="s">&quot;@logger&quot;</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">kernel.event_listener</span><span class="p-Indicator">,</span> <span class="nv">event</span><span class="p-Indicator">:</span> <span class="nv">console.exception</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/services.xml --&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+           <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+           <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\Console\Application</span> <span class="k">as</span> <span class="nx">BaseApplication</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Symfony\Component\Console\Input\InputInterface</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Symfony\Component\Console\Output\OutputInterface</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Symfony\Component\Console\Output\ConsoleOutputInterface</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Symfony\Component\HttpKernel\Log\LoggerInterface</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Symfony\Component\HttpKernel\KernelInterface</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Symfony\Component\Console\Output\ConsoleOutput</span><span class="p">;</span>
-<span class="k">use</span> <span class="nx">Symfony\Component\Console\Input\ArgvInput</span><span class="p">;</span>
+    <span class="nt">&lt;parameters&gt;</span>
+        <span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;console_exception_listener.class&quot;</span><span class="nt">&gt;</span>Acme\DemoBundle\EventListener\ConsoleExceptionListener<span class="nt">&lt;/parameter&gt;</span>
+    <span class="nt">&lt;/parameters&gt;</span>
 
-<span class="k">class</span> <span class="nc">Application</span> <span class="k">extends</span> <span class="nx">BaseApplication</span>
+    <span class="nt">&lt;services&gt;</span>
+        <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;kernel.listener.command_dispatch&quot;</span> <span class="na">class=</span><span class="s">&quot;%console_exception_listener.class%&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;argument</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;logger&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;kernel.event_listener&quot;</span> <span class="na">event=</span><span class="s">&quot;console.exception&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/service&gt;</span>
+    <span class="nt">&lt;/services&gt;</span>
+<span class="nt">&lt;/container&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/services.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\Definition</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\Reference</span><span class="p">;</span>
+
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setParameter</span><span class="p">(</span>
+    <span class="s1">&#39;console_exception_listener.class&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Acme\DemoBundle\EventListener\ConsoleExceptionListener&#39;</span>
+<span class="p">);</span>
+<span class="nv">$definitionConsoleExceptionListener</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Definition</span><span class="p">(</span>
+    <span class="s1">&#39;%console_exception_listener.class%&#39;</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="k">new</span> <span class="nx">Reference</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">))</span>
+<span class="p">);</span>
+<span class="nv">$definitionConsoleExceptionListener</span><span class="o">-&gt;</span><span class="na">addTag</span><span class="p">(</span>
+    <span class="s1">&#39;kernel.event_listener&#39;</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;event&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;console.exception&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setDefinition</span><span class="p">(</span>
+    <span class="s1">&#39;kernel.listener.command_dispatch&#39;</span><span class="p">,</span>
+    <span class="nv">$definitionConsoleExceptionListener</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>Then implement the actual listener:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/EventListener/ConsoleExceptionListener.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\DemoBundle\EventListener</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Symfony\Component\Console\Event\ConsoleExceptionEvent</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Psr\Log\LoggerInterface</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">ConsoleExceptionListener</span>
 <span class="p">{</span>
-    <span class="k">private</span> <span class="nv">$originalAutoExit</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$logger</span><span class="p">;</span>
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">KernelInterface</span> <span class="nv">$kernel</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">LoggerInterface</span> <span class="nv">$logger</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="k">parent</span><span class="o">::</span><span class="na">__construct</span><span class="p">(</span><span class="nv">$kernel</span><span class="p">);</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">originalAutoExit</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">logger</span> <span class="o">=</span> <span class="nv">$logger</span><span class="p">;</span>
     <span class="p">}</span>
 
-    <span class="sd">/**</span>
-<span class="sd">     * Runs the current application.</span>
-<span class="sd">     *</span>
-<span class="sd">     * @param InputInterface  $input  An Input instance</span>
-<span class="sd">     * @param OutputInterface $output An Output instance</span>
-<span class="sd">     *</span>
-<span class="sd">     * @return integer 0 if everything went fine, or an error code</span>
-<span class="sd">     *</span>
-<span class="sd">     * @throws \Exception When doRun returns Exception</span>
-<span class="sd">     *</span>
-<span class="sd">     * @api</span>
-<span class="sd">     */</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">run</span><span class="p">(</span><span class="nx">InputInterface</span> <span class="nv">$input</span> <span class="o">=</span> <span class="k">null</span><span class="p">,</span> <span class="nx">OutputInterface</span> <span class="nv">$output</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">onConsoleException</span><span class="p">(</span><span class="nx">ConsoleExceptionEvent</span> <span class="nv">$event</span><span class="p">)</span>
     <span class="p">{</span>
-        <span class="c1">// make the parent method throw exceptions, so you can log it</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">setCatchExceptions</span><span class="p">(</span><span class="k">false</span><span class="p">);</span>
+        <span class="nv">$command</span> <span class="o">=</span> <span class="nv">$event</span><span class="o">-&gt;</span><span class="na">getCommand</span><span class="p">();</span>
+        <span class="nv">$exception</span> <span class="o">=</span> <span class="nv">$event</span><span class="o">-&gt;</span><span class="na">getException</span><span class="p">();</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="k">null</span> <span class="o">===</span> <span class="nv">$input</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nv">$input</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ArgvInput</span><span class="p">();</span>
-        <span class="p">}</span>
+        <span class="nv">$message</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span>
+            <span class="s1">&#39;%s: %s (uncaught exception) at %s line %s while running console command `%s`&#39;</span><span class="p">,</span>
+            <span class="nb">get_class</span><span class="p">(</span><span class="nv">$exception</span><span class="p">),</span>
+            <span class="nv">$exception</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">(),</span>
+            <span class="nv">$exception</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(),</span>
+            <span class="nv">$exception</span><span class="o">-&gt;</span><span class="na">getLine</span><span class="p">(),</span>
+            <span class="nv">$command</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">()</span>
+        <span class="p">);</span>
 
-        <span class="k">if</span> <span class="p">(</span><span class="k">null</span> <span class="o">===</span> <span class="nv">$output</span><span class="p">)</span> <span class="p">{</span>
-            <span class="nv">$output</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">ConsoleOutput</span><span class="p">();</span>
-        <span class="p">}</span>
-
-        <span class="k">try</span> <span class="p">{</span>
-            <span class="nv">$statusCode</span> <span class="o">=</span> <span class="k">parent</span><span class="o">::</span><span class="na">run</span><span class="p">(</span><span class="nv">$input</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">\Exception</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
-
-            <span class="sd">/** @var $logger LoggerInterface */</span>
-            <span class="nv">$logger</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getKernel</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getContainer</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">);</span>
-
-            <span class="nv">$message</span> <span class="o">=</span> <span class="nb">sprintf</span><span class="p">(</span>
-                <span class="s1">&#39;%s: %s (uncaught exception) at %s line %s while running console command `%s`&#39;</span><span class="p">,</span>
-                <span class="nb">get_class</span><span class="p">(</span><span class="nv">$e</span><span class="p">),</span>
-                <span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getMessage</span><span class="p">(),</span>
-                <span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getFile</span><span class="p">(),</span>
-                <span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getLine</span><span class="p">(),</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getCommandName</span><span class="p">(</span><span class="nv">$input</span><span class="p">)</span>
-            <span class="p">);</span>
-            <span class="nv">$logger</span><span class="o">-&gt;</span><span class="na">crit</span><span class="p">(</span><span class="nv">$message</span><span class="p">);</span>
-
-            <span class="k">if</span> <span class="p">(</span><span class="nv">$output</span> <span class="nx">instanceof</span> <span class="nx">ConsoleOutputInterface</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">renderException</span><span class="p">(</span><span class="nv">$e</span><span class="p">,</span> <span class="nv">$output</span><span class="o">-&gt;</span><span class="na">getErrorOutput</span><span class="p">());</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">renderException</span><span class="p">(</span><span class="nv">$e</span><span class="p">,</span> <span class="nv">$output</span><span class="p">);</span>
-            <span class="p">}</span>
-            <span class="nv">$statusCode</span> <span class="o">=</span> <span class="nv">$e</span><span class="o">-&gt;</span><span class="na">getCode</span><span class="p">();</span>
-
-            <span class="nv">$statusCode</span> <span class="o">=</span> <span class="nb">is_numeric</span><span class="p">(</span><span class="nv">$statusCode</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nv">$statusCode</span> <span class="o">?</span> <span class="nv">$statusCode</span> <span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
-        <span class="p">}</span>
-
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">originalAutoExit</span><span class="p">)</span> <span class="p">{</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nv">$statusCode</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">)</span> <span class="p">{</span>
-                <span class="nv">$statusCode</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span>
-            <span class="p">}</span>
-            <span class="c1">// @codeCoverageIgnoreStart</span>
-            <span class="k">exit</span><span class="p">(</span><span class="nv">$statusCode</span><span class="p">);</span>
-            <span class="c1">// @codeCoverageIgnoreEnd</span>
-        <span class="p">}</span>
-
-        <span class="k">return</span> <span class="nv">$statusCode</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">logger</span><span class="o">-&gt;</span><span class="na">error</span><span class="p">(</span><span class="nv">$message</span><span class="p">);</span>
     <span class="p">}</span>
-
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">setAutoExit</span><span class="p">(</span><span class="nv">$bool</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// parent property is private, so we need to intercept it in a setter</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">originalAutoExit</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Boolean</span><span class="p">)</span> <span class="nv">$bool</span><span class="p">;</span>
-        <span class="k">parent</span><span class="o">::</span><span class="na">setAutoExit</span><span class="p">(</span><span class="nv">$bool</span><span class="p">);</span>
-    <span class="p">}</span>
-
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>In the code above, you disable exception catching so the parent <tt class="docutils literal"><span class="pre">run</span></tt> method
-will throw all exceptions. When an exception is caught, you simple log it by
-accessing the <tt class="docutils literal"><span class="pre">logger</span></tt> service from the service container and then handle
-the rest of the logic in the same way that the parent <tt class="docutils literal"><span class="pre">run</span></tt> method does
-(specifically, since the parent <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Console/Application.html#method_run" title="Symfony\Bundle\FrameworkBundle\Console\Application::run()"><span class="pre">run</span></a></tt>
-method will not handle exceptions rendering and status code handling when
-<tt class="docutils literal"><span class="pre">catchExceptions</span></tt> is set to false, it has to be done in the overridden
-method).</p>
-<p>For the extended Application class to work properly with in console shell mode,
-you have to do a small trick to intercept the <tt class="docutils literal"><span class="pre">autoExit</span></tt> setter and store the
-setting in a different property, since the parent property is private.</p>
-<p>Now to be able to use your extended <tt class="docutils literal"><span class="pre">Application</span></tt> class you need to adjust
-the <tt class="docutils literal"><span class="pre">app/console</span></tt> script to use the new class instead of the default:</p>
-<div class="highlight-python"><pre>// app/console
-
-// ...
-// replace the following line:
-// use Symfony\Bundle\FrameworkBundle\Console\Application;
-use Acme\DemoBundle\Console\Application;
-
-// ...</pre>
-</div>
-<p>That&#8217;s it! Thanks to autoloader, your class will now be used instead of original
-one.</p>
+<p>In the code above, when any command throws an exception, the listener will
+receive an event. You can simply log it by passing the logger service via the
+service configuration. Your method receives a
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Console/Event/ConsoleExceptionEvent.html" title="Symfony\Component\Console\Event\ConsoleExceptionEvent"><span class="pre">ConsoleExceptionEvent</span></a></tt> object,
+which has methods to get information about the event and the exception.</p>
 </div>
 <div class="section" id="logging-non-0-exit-statuses">
 <h2>Logging non-0 exit statuses<a class="headerlink" href="#logging-non-0-exit-statuses" title="Permalink to this headline">¶</a></h2>
 <p>The logging capabilities of the console can be further extended by logging
 non-0 exit statuses. This way you will know if a command had any errors, even
 if no exceptions were thrown.</p>
-<p>In order to do that, you&#8217;d have to modify the <tt class="docutils literal"><span class="pre">run()</span></tt> method of your extended
-<tt class="docutils literal"><span class="pre">Application</span></tt> class in the following way:</p>
-<div class="highlight-python"><pre>public function run(InputInterface $input = null, OutputInterface $output = null)
-{
-    // make the parent method throw exceptions, so you can log it
-    $this-&gt;setCatchExceptions(false);
+<p>First configure a listener for console terminate events in the service container:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/services.yml</span>
+<span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">kernel.listener.command_dispatch</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Acme\DemoBundle\EventListener\ConsoleTerminateListener</span>
+        <span class="l-Scalar-Plain">arguments</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">logger</span><span class="p-Indicator">:</span> <span class="s">&quot;@logger&quot;</span>
+        <span class="l-Scalar-Plain">tags</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">name</span><span class="p-Indicator">:</span> <span class="nv">kernel.event_listener</span><span class="p-Indicator">,</span> <span class="nv">event</span><span class="p-Indicator">:</span> <span class="nv">console.terminate</span> <span class="p-Indicator">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/services.xml --&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+           <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+           <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-    // store the autoExit value before resetting it - you'll need it later
-    $autoExit = $this-&gt;originalAutoExit;
-    $this-&gt;setAutoExit(false);
+    <span class="nt">&lt;parameters&gt;</span>
+        <span class="nt">&lt;parameter</span> <span class="na">key=</span><span class="s">&quot;console_terminate_listener.class&quot;</span><span class="nt">&gt;</span>Acme\DemoBundle\EventListener\ConsoleExceptionListener<span class="nt">&lt;/parameter&gt;</span>
+    <span class="nt">&lt;/parameters&gt;</span>
 
-    // ...
+    <span class="nt">&lt;services&gt;</span>
+        <span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;kernel.listener.command_dispatch&quot;</span> <span class="na">class=</span><span class="s">&quot;%console_terminate_listener.class%&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;argument</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;logger&quot;</span><span class="nt">/&gt;</span>
+            <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;kernel.event_listener&quot;</span> <span class="na">event=</span><span class="s">&quot;console.terminate&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/service&gt;</span>
+    <span class="nt">&lt;/services&gt;</span>
+<span class="nt">&lt;/container&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/services.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\Definition</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\Reference</span><span class="p">;</span>
 
-    if ($autoExit) {
-        if ($statusCode &gt; 255) {
-            $statusCode = 255;
-        }
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setParameter</span><span class="p">(</span>
+    <span class="s1">&#39;console_terminate_listener.class&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;Acme\DemoBundle\EventListener\ConsoleExceptionListener&#39;</span>
+<span class="p">);</span>
+<span class="nv">$definitionConsoleExceptionListener</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Definition</span><span class="p">(</span>
+    <span class="s1">&#39;%console_terminate_listener.class%&#39;</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="k">new</span> <span class="nx">Reference</span><span class="p">(</span><span class="s1">&#39;logger&#39;</span><span class="p">))</span>
+<span class="p">);</span>
+<span class="nv">$definitionConsoleExceptionListener</span><span class="o">-&gt;</span><span class="na">addTag</span><span class="p">(</span>
+    <span class="s1">&#39;kernel.event_listener&#39;</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;event&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;console.terminate&#39;</span><span class="p">)</span>
+<span class="p">);</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">setDefinition</span><span class="p">(</span>
+    <span class="s1">&#39;kernel.listener.command_dispatch&#39;</span><span class="p">,</span>
+    <span class="nv">$definitionConsoleExceptionListener</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>Then implement the actual listener:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/EventListener/ConsoleExceptionListener.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\DemoBundle\EventListener</span><span class="p">;</span>
 
-        // log non-0 exit codes along with command name
-        if ($statusCode !== 0) {
-            /** @var $logger LoggerInterface */
-            $logger = $this-&gt;getKernel()-&gt;getContainer()-&gt;get('logger');
-            $logger-&gt;warn(sprintf('Command `%s` exited with status code %d', $this-&gt;getCommandName($input), $statusCode));
-        }
+<span class="k">use</span> <span class="nx">Symfony\Component\Console\Event\ConsoleTerminateEvent</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Psr\Log\LoggerInterface</span><span class="p">;</span>
 
-        // @codeCoverageIgnoreStart
-        exit($statusCode);
-        // @codeCoverageIgnoreEnd
-    }
+<span class="k">class</span> <span class="nc">ConsoleTerminateListener</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$logger</span><span class="p">;</span>
 
-    return $statusCode;
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">LoggerInterface</span> <span class="nv">$logger</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">logger</span> <span class="o">=</span> <span class="nv">$logger</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">onConsoleTerminate</span><span class="p">(</span><span class="nx">ConsoleTerminateEvent</span> <span class="nv">$event</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$statusCode</span> <span class="o">=</span> <span class="nv">$event</span><span class="o">-&gt;</span><span class="na">getExitCode</span><span class="p">();</span>
+        <span class="nv">$command</span> <span class="o">=</span> <span class="nv">$event</span><span class="o">-&gt;</span><span class="na">getCommand</span><span class="p">();</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$statusCode</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$statusCode</span> <span class="o">&gt;</span> <span class="mi">255</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$statusCode</span> <span class="o">=</span> <span class="mi">255</span><span class="p">;</span>
+            <span class="nv">$event</span><span class="o">-&gt;</span><span class="na">setExitCode</span><span class="p">(</span><span class="nv">$statusCode</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">logger</span><span class="o">-&gt;</span><span class="na">warning</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span>
+            <span class="s1">&#39;Command `%s` exited with status code %d&#39;</span><span class="p">,</span>
+            <span class="nv">$command</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">(),</span>
+            <span class="nv">$statusCode</span>
+        <span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -318,8 +351,8 @@ if no exceptions were thrown.</p>
   <p class="topless"><a href="sending_emails.html"
                         title="previous chapter">How to generate URLs and send Emails from the Console</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../debugging.html"
-                        title="next chapter">How to optimize your development Environment for debugging</a></p>
+  <p class="topless"><a href="commands_as_services.html"
+                        title="next chapter">How to Define Commands as Services</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/console/logging.txt"
@@ -349,19 +382,19 @@ if no exceptions were thrown.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../debugging.html" title="How to optimize your development Environment for debugging"
+          <a href="commands_as_services.html" title="How to Define Commands as Services"
              >next</a> |</li>
         <li class="right" >
           <a href="sending_emails.html" title="How to generate URLs and send Emails from the Console"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Console</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

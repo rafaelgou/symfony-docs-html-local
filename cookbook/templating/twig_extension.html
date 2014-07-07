@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to write a custom Twig Extension &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to write a custom Twig Extension &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Templating" href="index.html" />
     <link rel="next" title="How to render a Template without a custom Controller" href="render_without_controller.html" />
     <link rel="prev" title="How to use PHP instead of Twig for Templates" href="PHP.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="PHP.html" title="How to use PHP instead of Twig for Templates"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Templating</a> &raquo;</li> 
       </ul>
@@ -78,31 +76,32 @@ Twig 1.12. If you are using an older version, please read
 </div>
 <p>To get your custom functionality you must first create a Twig Extension class.
 As an example you&#8217;ll create a price filter to format a given number into price:</p>
-<div class="highlight-python"><pre>// src/Acme/DemoBundle/Twig/AcmeExtension.php
-namespace Acme\DemoBundle\Twig;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/Twig/AcmeExtension.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\DemoBundle\Twig</span><span class="p">;</span>
 
-class AcmeExtension extends \Twig_Extension
-{
-    public function getFilters()
-    {
-        return array(
-            new \Twig_SimpleFilter('price', array($this, 'priceFilter')),
-        );
-    }
+<span class="k">class</span> <span class="nc">AcmeExtension</span> <span class="k">extends</span> <span class="nx">\Twig_Extension</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getFilters</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+            <span class="k">new</span> <span class="nx">\Twig_SimpleFilter</span><span class="p">(</span><span class="s1">&#39;price&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="nv">$this</span><span class="p">,</span> <span class="s1">&#39;priceFilter&#39;</span><span class="p">)),</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
 
-    public function priceFilter($number, $decimals = 0, $decPoint = '.', $thousandsSep = ',')
-    {
-        $price = number_format($number, $decimals, $decPoint, $thousandsSep);
-        $price = '$'.$price;
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">priceFilter</span><span class="p">(</span><span class="nv">$number</span><span class="p">,</span> <span class="nv">$decimals</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nv">$decPoint</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="nv">$thousandsSep</span> <span class="o">=</span> <span class="s1">&#39;,&#39;</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$price</span> <span class="o">=</span> <span class="nb">number_format</span><span class="p">(</span><span class="nv">$number</span><span class="p">,</span> <span class="nv">$decimals</span><span class="p">,</span> <span class="nv">$decPoint</span><span class="p">,</span> <span class="nv">$thousandsSep</span><span class="p">);</span>
+        <span class="nv">$price</span> <span class="o">=</span> <span class="s1">&#39;$&#39;</span><span class="o">.</span><span class="nv">$price</span><span class="p">;</span>
 
-        return $price;
-    }
+        <span class="k">return</span> <span class="nv">$price</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function getName()
-    {
-        return 'acme_extension';
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;acme_extension&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -150,7 +149,7 @@ class AcmeExtension extends \Twig_Extension
 there&#8217;s a higher chance that you&#8217;ll get a <strong>CircularReferenceException</strong>
 or a <strong>ScopeWideningInjectionException</strong> if any services
 (or your Twig Extension in this case) are dependent on the request service.
-For more information take a look at <a class="reference internal" href="../service_container/scopes.html"><em>How to work with Scopes</em></a>.</p>
+For more information take a look at <a class="reference internal" href="../service_container/scopes.html"><em>How to Work with Scopes</em></a>.</p>
 </div>
 </div>
 <div class="section" id="using-the-custom-extension">
@@ -230,14 +229,14 @@ For more information take a look at <a class="reference internal" href="../servi
         <li class="right" >
           <a href="PHP.html" title="How to use PHP instead of Twig for Templates"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Templating</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

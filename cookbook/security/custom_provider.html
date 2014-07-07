@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to create a custom User Provider &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to create a custom User Provider &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Security" href="index.html" />
-    <link rel="next" title="How to create a custom Authentication Provider" href="custom_authentication_provider.html" />
+    <link rel="next" title="How to Create a Custom Form Password Authenticator" href="custom_password_authenticator.html" />
     <link rel="prev" title="How to secure any Service or Method in your Application" href="securing_services.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="custom_authentication_provider.html" title="How to create a custom Authentication Provider"
+          <a href="custom_password_authenticator.html" title="How to Create a Custom Form Password Authenticator"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="securing_services.html" title="How to secure any Service or Method in your Application"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Security</a> &raquo;</li> 
       </ul>
@@ -82,73 +80,74 @@ It may also be useful to implement the
 which defines a method to check if the user is equal to the current user. This
 interface requires an <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/User/EquatableInterface.html#method_isEqualTo" title="Symfony\Component\Security\Core\User\EquatableInterface::isEqualTo()"><span class="pre">isEqualTo()</span></a></tt>
 method.</p>
-<p>Let&#8217;s see this in action:</p>
-<div class="highlight-python"><pre>// src/Acme/WebserviceUserBundle/Security/User/WebserviceUser.php
-namespace Acme\WebserviceUserBundle\Security\User;
+<p>This is how your <tt class="docutils literal"><span class="pre">WebserviceUser</span></tt> class looks in action:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/WebserviceUserBundle/Security/User/WebserviceUser.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\WebserviceUserBundle\Security\User</span><span class="p">;</span>
 
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\User\EquatableInterface;
+<span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\User\UserInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\User\EquatableInterface</span><span class="p">;</span>
 
-class WebserviceUser implements UserInterface, EquatableInterface
-{
-    private $username;
-    private $password;
-    private $salt;
-    private $roles;
+<span class="k">class</span> <span class="nc">WebserviceUser</span> <span class="k">implements</span> <span class="nx">UserInterface</span><span class="p">,</span> <span class="nx">EquatableInterface</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$username</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$password</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$salt</span><span class="p">;</span>
+    <span class="k">private</span> <span class="nv">$roles</span><span class="p">;</span>
 
-    public function __construct($username, $password, $salt, array $roles)
-    {
-        $this-&gt;username = $username;
-        $this-&gt;password = $password;
-        $this-&gt;salt = $salt;
-        $this-&gt;roles = $roles;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nv">$username</span><span class="p">,</span> <span class="nv">$password</span><span class="p">,</span> <span class="nv">$salt</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$roles</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">username</span> <span class="o">=</span> <span class="nv">$username</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">password</span> <span class="o">=</span> <span class="nv">$password</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">salt</span> <span class="o">=</span> <span class="nv">$salt</span><span class="p">;</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">roles</span> <span class="o">=</span> <span class="nv">$roles</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function getRoles()
-    {
-        return $this-&gt;roles;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getRoles</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">roles</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function getPassword()
-    {
-        return $this-&gt;password;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getPassword</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">password</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function getSalt()
-    {
-        return $this-&gt;salt;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getSalt</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">salt</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function getUsername()
-    {
-        return $this-&gt;username;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getUsername</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">username</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function eraseCredentials()
-    {
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">eraseCredentials</span><span class="p">()</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
 
-    public function isEqualTo(UserInterface $user)
-    {
-        if (!$user instanceof WebserviceUser) {
-            return false;
-        }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">isEqualTo</span><span class="p">(</span><span class="nx">UserInterface</span> <span class="nv">$user</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$user</span> <span class="nx">instanceof</span> <span class="nx">WebserviceUser</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        if ($this-&gt;password !== $user-&gt;getPassword()) {
-            return false;
-        }
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">password</span> <span class="o">!==</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">getPassword</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        if ($this-&gt;getSalt() !== $user-&gt;getSalt()) {
-            return false;
-        }
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getSalt</span><span class="p">()</span> <span class="o">!==</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">getSalt</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        if ($this-&gt;username !== $user-&gt;getUsername()) {
-            return false;
-        }
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">username</span> <span class="o">!==</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">getUsername</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+        <span class="p">}</span>
 
-        return true;
-    }
-}</pre>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>If you have more information about your users - like a &#8220;first name&#8221; - then
 you can add a <tt class="docutils literal"><span class="pre">firstName</span></tt> field to hold that data.</p>
@@ -164,47 +163,52 @@ which requires three methods to be defined: <tt class="docutils literal"><span c
 <tt class="docutils literal"><span class="pre">refreshUser(UserInterface</span> <span class="pre">$user)</span></tt>, and <tt class="docutils literal"><span class="pre">supportsClass($class)</span></tt>. For
 more details, see <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/User/UserProviderInterface.html" title="Symfony\Component\Security\Core\User\UserProviderInterface"><span class="pre">UserProviderInterface</span></a></tt>.</p>
 <p>Here&#8217;s an example of how this might look:</p>
-<div class="highlight-python"><pre>// src/Acme/WebserviceUserBundle/Security/User/WebserviceUserProvider.php
-namespace Acme\WebserviceUserBundle\Security\User;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/WebserviceUserBundle/Security/User/WebserviceUserProvider.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\WebserviceUserBundle\Security\User</span><span class="p">;</span>
 
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
-use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+<span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\User\UserProviderInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\User\UserInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\Exception\UsernameNotFoundException</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\Exception\UnsupportedUserException</span><span class="p">;</span>
 
-class WebserviceUserProvider implements UserProviderInterface
-{
-    public function loadUserByUsername($username)
-    {
-        // make a call to your webservice here
-        $userData = ...
-        // pretend it returns an array on success, false if there is no user
+<span class="k">class</span> <span class="nc">WebserviceUserProvider</span> <span class="k">implements</span> <span class="nx">UserProviderInterface</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">loadUserByUsername</span><span class="p">(</span><span class="nv">$username</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// make a call to your webservice here</span>
+        <span class="nv">$userData</span> <span class="o">=</span> <span class="o">...</span>
+        <span class="c1">// pretend it returns an array on success, false if there is no user</span>
 
-        if ($userData) {
-            $password = '...';
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$userData</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$password</span> <span class="o">=</span> <span class="s1">&#39;...&#39;</span><span class="p">;</span>
 
-            // ...
+            <span class="c1">// ...</span>
 
-            return new WebserviceUser($username, $password, $salt, $roles);
-        }
+            <span class="k">return</span> <span class="k">new</span> <span class="nx">WebserviceUser</span><span class="p">(</span><span class="nv">$username</span><span class="p">,</span> <span class="nv">$password</span><span class="p">,</span> <span class="nv">$salt</span><span class="p">,</span> <span class="nv">$roles</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
-    }
+        <span class="k">throw</span> <span class="k">new</span> <span class="nx">UsernameNotFoundException</span><span class="p">(</span>
+            <span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;Username &quot;%s&quot; does not exist.&#39;</span><span class="p">,</span> <span class="nv">$username</span><span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
 
-    public function refreshUser(UserInterface $user)
-    {
-        if (!$user instanceof WebserviceUser) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
-        }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">refreshUser</span><span class="p">(</span><span class="nx">UserInterface</span> <span class="nv">$user</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$user</span> <span class="nx">instanceof</span> <span class="nx">WebserviceUser</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nx">UnsupportedUserException</span><span class="p">(</span>
+                <span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;Instances of &quot;%s&quot; are not supported.&#39;</span><span class="p">,</span> <span class="nb">get_class</span><span class="p">(</span><span class="nv">$user</span><span class="p">))</span>
+            <span class="p">);</span>
+        <span class="p">}</span>
 
-        return $this-&gt;loadUserByUsername($user-&gt;getUsername());
-    }
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">loadUserByUsername</span><span class="p">(</span><span class="nv">$user</span><span class="o">-&gt;</span><span class="na">getUsername</span><span class="p">());</span>
+    <span class="p">}</span>
 
-    public function supportsClass($class)
-    {
-        return $class === 'Acme\WebserviceUserBundle\Security\User\WebserviceUser';
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">supportsClass</span><span class="p">(</span><span class="nv">$class</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$class</span> <span class="o">===</span> <span class="s1">&#39;Acme\WebserviceUserBundle\Security\User\WebserviceUser&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="create-a-service-for-the-user-provider">
@@ -263,7 +267,7 @@ to the list of providers in the &#8220;security&#8221; section. Choose a name fo
 (e.g. &#8220;webservice&#8221;) and mention the id of the service you just defined.</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">// app/config/security.yml</span>
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/security.yml</span>
 <span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">providers</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">webservice</span><span class="p-Indicator">:</span>
@@ -323,7 +327,7 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
 </div>
 <p>The value here should correspond with however the passwords were originally
 encoded when creating your users (however those users were created). When
-a user submits her password, the password is appended to the salt value and
+a user submits their password, the salt value is appended to the password and
 then encoded using this algorithm before being compared to the hashed password
 returned by your <tt class="docutils literal"><span class="pre">getPassword()</span></tt> method. Additionally, depending on your
 options, the password may be encoded multiple times and encoded to base64.</p>
@@ -407,8 +411,8 @@ To prevent this, configure it in your configuration file:</p>
   <p class="topless"><a href="securing_services.html"
                         title="previous chapter">How to secure any Service or Method in your Application</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="custom_authentication_provider.html"
-                        title="next chapter">How to create a custom Authentication Provider</a></p>
+  <p class="topless"><a href="custom_password_authenticator.html"
+                        title="next chapter">How to Create a Custom Form Password Authenticator</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/security/custom_provider.txt"
@@ -438,19 +442,19 @@ To prevent this, configure it in your configuration file:</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="custom_authentication_provider.html" title="How to create a custom Authentication Provider"
+          <a href="custom_password_authenticator.html" title="How to Create a Custom Form Password Authenticator"
              >next</a> |</li>
         <li class="right" >
           <a href="securing_services.html" title="How to secure any Service or Method in your Application"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Security</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

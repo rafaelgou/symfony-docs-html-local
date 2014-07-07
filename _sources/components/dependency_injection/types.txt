@@ -1,5 +1,5 @@
 ﻿.. index::
-   single: Dependency Injection; Injection types
+   single: DependencyInjection; Injection types
 
 Types of Injection
 ==================
@@ -184,7 +184,7 @@ Another possibility is just setting public fields of the class directly::
             my_mailer:
                 # ...
             newsletter_manager:
-                class:     NewsletterManager
+                class: NewsletterManager
                 properties:
                     mailer: "@my_mailer"
 

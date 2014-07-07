@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to test that an Email is sent in a functional Test &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to test that an Email is sent in a functional Test &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Email" href="index.html" />
-    <link rel="next" title="Testing" href="../testing/index.html" />
+    <link rel="next" title="Event Dispatcher" href="../event_dispatcher/index.html" />
     <link rel="prev" title="How to Spool Emails" href="spool.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../testing/index.html" title="Testing"
+          <a href="../event_dispatcher/index.html" title="Event Dispatcher"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="spool.html" title="How to Spool Emails"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Email</a> &raquo;</li> 
       </ul>
@@ -57,23 +55,24 @@
   <div class="section" id="how-to-test-that-an-email-is-sent-in-a-functional-test">
 <span id="index-0"></span><h1>How to test that an Email is sent in a functional Test<a class="headerlink" href="#how-to-test-that-an-email-is-sent-in-a-functional-test" title="Permalink to this headline">¶</a></h1>
 <p>Sending e-mails with Symfony2 is pretty straightforward thanks to the
-<tt class="docutils literal"><span class="pre">SwiftmailerBundle</span></tt>, which leverages the power of the <a class="reference external" href="http://swiftmailer.org/">Swiftmailer</a> library.</p>
+SwiftmailerBundle, which leverages the power of the <a class="reference external" href="http://swiftmailer.org/">Swift Mailer</a> library.</p>
 <p>To functionally test that an email was sent, and even assert the email subject,
 content or any other headers, you can use <a class="reference internal" href="../../book/internals.html#internals-profiler"><em>the Symfony2 Profiler</em></a>.</p>
 <p>Start with an easy controller action that sends an e-mail:</p>
-<div class="highlight-python"><pre>public function sendEmailAction($name)
-{
-    $message = \Swift_Message::newInstance()
-        -&gt;setSubject('Hello Email')
-        -&gt;setFrom('send@example.com')
-        -&gt;setTo('recipient@example.com')
-        -&gt;setBody('You should see me from the profiler!')
-    ;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="k">function</span> <span class="nf">sendEmailAction</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$message</span> <span class="o">=</span> <span class="nx">\Swift_Message</span><span class="o">::</span><span class="na">newInstance</span><span class="p">()</span>
+        <span class="o">-&gt;</span><span class="na">setSubject</span><span class="p">(</span><span class="s1">&#39;Hello Email&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">setFrom</span><span class="p">(</span><span class="s1">&#39;send@example.com&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">setTo</span><span class="p">(</span><span class="s1">&#39;recipient@example.com&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">setBody</span><span class="p">(</span><span class="s1">&#39;You should see me from the profiler!&#39;</span><span class="p">)</span>
+    <span class="p">;</span>
 
-    $this-&gt;get('mailer')-&gt;send($message);
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;mailer&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">(</span><span class="nv">$message</span><span class="p">);</span>
 
-    return $this-&gt;render(...);
-}</pre>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="o">...</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -81,39 +80,40 @@ content or any other headers, you can use <a class="reference internal" href="..
 </div>
 <p>In your functional test, use the <tt class="docutils literal"><span class="pre">swiftmailer</span></tt> collector on the profiler
 to get information about the messages send on the previous request:</p>
-<div class="highlight-python"><pre>// src/Acme/DemoBundle/Tests/Controller/MailControllerTest.php
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/Tests/Controller/MailControllerTest.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\Test\WebTestCase</span><span class="p">;</span>
 
-class MailControllerTest extends WebTestCase
-{
-    public function testMailIsSentAndContentIsOk()
-    {
-        $client = static::createClient();
+<span class="k">class</span> <span class="nc">MailControllerTest</span> <span class="k">extends</span> <span class="nx">WebTestCase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testMailIsSentAndContentIsOk</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$client</span> <span class="o">=</span> <span class="k">static</span><span class="o">::</span><span class="na">createClient</span><span class="p">();</span>
 
-        // Enable the profiler for the next request (it does nothing if the profiler is not available)
-        $client-&gt;enableProfiler();
+        <span class="c1">// Enable the profiler for the next request (it does nothing if the profiler is not available)</span>
+        <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">enableProfiler</span><span class="p">();</span>
 
-        $crawler = $client-&gt;request('POST', '/path/to/above/action');
+        <span class="nv">$crawler</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">request</span><span class="p">(</span><span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;/path/to/above/action&#39;</span><span class="p">);</span>
 
-        $mailCollector = $client-&gt;getProfile()-&gt;getCollector('swiftmailer');
+        <span class="nv">$mailCollector</span> <span class="o">=</span> <span class="nv">$client</span><span class="o">-&gt;</span><span class="na">getProfile</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCollector</span><span class="p">(</span><span class="s1">&#39;swiftmailer&#39;</span><span class="p">);</span>
 
-        // Check that an e-mail was sent
-        $this-&gt;assertEquals(1, $mailCollector-&gt;getMessageCount());
+        <span class="c1">// Check that an e-mail was sent</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nv">$mailCollector</span><span class="o">-&gt;</span><span class="na">getMessageCount</span><span class="p">());</span>
 
-        $collectedMessages = $mailCollector-&gt;getMessages();
-        $message = $collectedMessages[0];
+        <span class="nv">$collectedMessages</span> <span class="o">=</span> <span class="nv">$mailCollector</span><span class="o">-&gt;</span><span class="na">getMessages</span><span class="p">();</span>
+        <span class="nv">$message</span> <span class="o">=</span> <span class="nv">$collectedMessages</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
 
-        // Asserting e-mail data
-        $this-&gt;assertInstanceOf('Swift_Message', $message);
-        $this-&gt;assertEquals('Hello Email', $message-&gt;getSubject());
-        $this-&gt;assertEquals('send@example.com', key($message-&gt;getFrom()));
-        $this-&gt;assertEquals('recipient@example.com', key($message-&gt;getTo()));
-        $this-&gt;assertEquals(
-            'You should see me from the profiler!',
-            $message-&gt;getBody()
-        );
-    }
-}</pre>
+        <span class="c1">// Asserting e-mail data</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertInstanceOf</span><span class="p">(</span><span class="s1">&#39;Swift_Message&#39;</span><span class="p">,</span> <span class="nv">$message</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;Hello Email&#39;</span><span class="p">,</span> <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getSubject</span><span class="p">());</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;send@example.com&#39;</span><span class="p">,</span> <span class="nb">key</span><span class="p">(</span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getFrom</span><span class="p">()));</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;recipient@example.com&#39;</span><span class="p">,</span> <span class="nb">key</span><span class="p">(</span><span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getTo</span><span class="p">()));</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span>
+            <span class="s1">&#39;You should see me from the profiler!&#39;</span><span class="p">,</span>
+            <span class="nv">$message</span><span class="o">-&gt;</span><span class="na">getBody</span><span class="p">()</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 
@@ -127,8 +127,8 @@ class MailControllerTest extends WebTestCase
   <p class="topless"><a href="spool.html"
                         title="previous chapter">How to Spool Emails</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../testing/index.html"
-                        title="next chapter">Testing</a></p>
+  <p class="topless"><a href="../event_dispatcher/index.html"
+                        title="next chapter">Event Dispatcher</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/email/testing.txt"
@@ -158,19 +158,19 @@ class MailControllerTest extends WebTestCase
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../testing/index.html" title="Testing"
+          <a href="../event_dispatcher/index.html" title="Event Dispatcher"
              >next</a> |</li>
         <li class="right" >
           <a href="spool.html" title="How to Spool Emails"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Email</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

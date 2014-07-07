@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Type &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Type &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
     <link rel="next" title="Email" href="Email.html" />
     <link rel="prev" title="False" href="False.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="False.html" title="False"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -113,14 +111,20 @@ to validate this.</p>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/config/validation.xml --&gt;</span>
-<span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;age&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Type&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span><span class="nt">&gt;</span>integer<span class="nt">&lt;/option&gt;</span>
-            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;message&quot;</span><span class="nt">&gt;</span>The value {{ value }} is not a valid {{ type }}.<span class="nt">&lt;/option&gt;</span>
-        <span class="nt">&lt;/constraint&gt;</span>
-    <span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;/class&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;age&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Type&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;type&quot;</span><span class="nt">&gt;</span>integer<span class="nt">&lt;/option&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;message&quot;</span><span class="nt">&gt;</span>The value {{ value }} is not a valid {{ type }}.<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;/constraint&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;/class&gt;</span>
+<span class="nt">&lt;/constraint-mapping&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -154,26 +158,42 @@ to validate this.</p>
 <p>This required option is the fully qualified class name or one of the PHP datatypes
 as determined by PHP&#8217;s <tt class="docutils literal"><span class="pre">is_</span></tt> functions.</p>
 <ul class="simple">
-<li><a class="reference external" href="http://php.net/is_array">array</a></li>
-<li><a class="reference external" href="http://php.net/is_bool">bool</a></li>
-<li><a class="reference external" href="http://php.net/is_callable">callable</a></li>
-<li><a class="reference external" href="http://php.net/is_float">float</a></li>
-<li><a class="reference external" href="http://php.net/is_double">double</a></li>
-<li><a class="reference external" href="http://php.net/is_int">int</a></li>
-<li><a class="reference external" href="http://php.net/is_integer">integer</a></li>
-<li><a class="reference external" href="http://php.net/is_long">long</a></li>
-<li><a class="reference external" href="http://php.net/is_null">null</a></li>
-<li><a class="reference external" href="http://php.net/is_numeric">numeric</a></li>
-<li><a class="reference external" href="http://php.net/is_object">object</a></li>
-<li><a class="reference external" href="http://php.net/is_real">real</a></li>
-<li><a class="reference external" href="http://php.net/is_resource">resource</a></li>
-<li><a class="reference external" href="http://php.net/is_scalar">scalar</a></li>
-<li><a class="reference external" href="http://php.net/is_string">string</a></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-array.php" title="is_array"><span class="pre">array</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-bool.php" title="is_bool"><span class="pre">bool</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-callable.php" title="is_callable"><span class="pre">callable</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-float.php" title="is_float"><span class="pre">float</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-double.php" title="is_double"><span class="pre">double</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-int.php" title="is_int"><span class="pre">int</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-integer.php" title="is_integer"><span class="pre">integer</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-long.php" title="is_long"><span class="pre">long</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-null.php" title="is_null"><span class="pre">null</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-numeric.php" title="is_numeric"><span class="pre">numeric</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-object.php" title="is_object"><span class="pre">object</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-real.php" title="is_real"><span class="pre">real</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-resource.php" title="is_resource"><span class="pre">resource</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-scalar.php" title="is_scalar"><span class="pre">scalar</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.is-string.php" title="is_string"><span class="pre">string</span></a></tt></li>
 </ul>
+<p>Also, you can use <tt class="docutils literal"><span class="pre">ctype_</span></tt> functions from corresponding <a class="reference external" href="http://php.net/book.ctype.php">built-in PHP extension</a>.
+Consider <a class="reference external" href="http://php.net/ref.ctype.php">a list of ctype functions</a>:</p>
+<ul class="simple">
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.ctype-alnum.php" title="ctype_alnum"><span class="pre">alnum</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.ctype-alpha.php" title="ctype_alpha"><span class="pre">alpha</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.ctype-cntrl.php" title="ctype_cntrl"><span class="pre">cntrl</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.ctype-digit.php" title="ctype_digit"><span class="pre">digit</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.ctype-graph.php" title="ctype_graph"><span class="pre">graph</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.ctype-lower.php" title="ctype_lower"><span class="pre">lower</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.ctype-print.php" title="ctype_print"><span class="pre">print</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.ctype-punct.php" title="ctype_punct"><span class="pre">punct</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.ctype-space.php" title="ctype_space"><span class="pre">space</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.ctype-upper.php" title="ctype_upper"><span class="pre">upper</span></a></tt></li>
+<li><tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.ctype-xdigit.php" title="ctype_xdigit"><span class="pre">xdigit</span></a></tt></li>
+</ul>
+<p>Make sure that the proper <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.setlocale.php" title="setlocale"><span class="pre">locale</span></a></tt> is set before using one of these.</p>
 </div>
 <div class="section" id="message">
 <h3>message<a class="headerlink" href="#message" title="Permalink to this headline">¶</a></h3>
-<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">This</span> <span class="pre">value</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">of</span> <span class="pre">type</span> <span class="pre">{{</span> <span class="pre">type</span> <span class="pre">}}</span></tt></p>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">This</span> <span class="pre">value</span> <span class="pre">should</span> <span class="pre">be</span> <span class="pre">of</span> <span class="pre">type</span> <span class="pre">{{</span> <span class="pre">type</span> <span class="pre">}}.</span></tt></p>
 <p>The message if the underlying data is not of the given type.</p>
 </div>
 </div>
@@ -238,14 +258,14 @@ as determined by PHP&#8217;s <tt class="docutils literal"><span class="pre">is_<
         <li class="right" >
           <a href="False.html" title="False"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

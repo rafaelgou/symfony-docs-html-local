@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Create and store a Symfony2 Project in Subversion &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to Create and store a Symfony2 Project in Subversion &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +23,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Workflow" href="index.html" />
-    <link rel="next" title="Controller" href="../controller/index.html" />
-    <link rel="prev" title="How to Create and store a Symfony2 Project in git" href="new_project_git.html" /> 
+    <link rel="next" title="The Components" href="../../components/index.html" />
+    <link rel="prev" title="How to Create and store a Symfony2 Project in Git" href="new_project_git.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../controller/index.html" title="Controller"
+          <a href="../../components/index.html" title="The Components"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="new_project_git.html" title="How to Create and store a Symfony2 Project in git"
+          <a href="new_project_git.html" title="How to Create and store a Symfony2 Project in Git"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Workflow</a> &raquo;</li> 
       </ul>
@@ -59,14 +57,14 @@
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">This entry is specifically about Subversion, and based on principles found
-in <a class="reference internal" href="new_project_git.html"><em>How to Create and store a Symfony2 Project in git</em></a>.</p>
+in <a class="reference internal" href="new_project_git.html"><em>How to Create and store a Symfony2 Project in Git</em></a>.</p>
 </div>
 <p>Once you&#8217;ve read through <a class="reference internal" href="../../book/page_creation.html"><em>Creating Pages in Symfony2</em></a> and become familiar with
 using Symfony, you&#8217;ll no-doubt be ready to start your own project. The
-preferred method to manage Symfony2 projects is using <a class="reference external" href="http://git-scm.com/">git</a> but some prefer
+preferred method to manage Symfony2 projects is using <a class="reference external" href="http://git-scm.com/">Git</a> but some prefer
 to use <a class="reference external" href="http://subversion.apache.org/">Subversion</a> which is totally fine!. In this cookbook article, you&#8217;ll
-learn how to manage your project using <a class="reference external" href="http://subversion.apache.org/">svn</a> in a similar manner you
-would do with <a class="reference external" href="http://git-scm.com/">git</a>.</p>
+learn how to manage your project using <a class="reference external" href="http://subversion.apache.org/">SVN</a> in a similar manner you
+would do with <a class="reference external" href="http://git-scm.com/">Git</a>.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">This is <strong>a</strong> method to tracking your Symfony2 project in a Subversion
@@ -85,7 +83,7 @@ widespread standard structure:</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">Most subversion hosting should follow this standard practice. This
+<p class="last">Most Subversion hosting should follow this standard practice. This
 is the recommended layout in <a class="reference external" href="http://svnbook.red-bean.com/">Version Control with Subversion</a> and the
 layout used by most free hosting (see <a class="reference internal" href="#svn-hosting"><em>Subversion hosting solutions</em></a>).</p>
 </div>
@@ -100,22 +98,22 @@ layout used by most free hosting (see <a class="reference internal" href="#svn-h
 your new project structure, config files, etc. Rename it to whatever you
 like.</p>
 </li>
-<li><p class="first">Checkout the Subversion repository that will host this project. Let&#8217;s say it
-is hosted on <a class="reference external" href="http://code.google.com/hosting/">Google code</a> and called <tt class="docutils literal"><span class="pre">myproject</span></tt>:</p>
+<li><p class="first">Checkout the Subversion repository that will host this project. Suppose
+it is hosted on <a class="reference external" href="http://code.google.com/hosting/">Google code</a> and called <tt class="docutils literal"><span class="pre">myproject</span></tt>:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>svn checkout http://myproject.googlecode.com/svn/trunk myproject
 </pre></div>
 </div>
 </li>
-<li><p class="first">Copy the Symfony2 project files in the subversion folder:</p>
+<li><p class="first">Copy the Symfony2 project files in the Subversion folder:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>mv Symfony/* myproject/
 </pre></div>
 </div>
 </li>
-<li><p class="first">Let&#8217;s now set the ignore rules. Not everything <em>should</em> be stored in your
-subversion repository. Some files (like the cache) are generated and
-others (like the database configuration) are meant to be customized
-on each machine. This makes use of the <tt class="docutils literal"><span class="pre">svn:ignore</span></tt> property, so that
-specific files can be ignored.</p>
+<li><p class="first">Now, set the ignore rules. Not everything <em>should</em> be stored in your Subversion
+repository. Some files (like the cache) are generated and others (like
+the database configuration) are meant to be customized on each machine.
+This makes use of the <tt class="docutils literal"><span class="pre">svn:ignore</span></tt> property, so that specific files can
+be ignored.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span><span class="nb">cd </span>myproject/
 <span class="nv">$ </span>svn add --depth<span class="o">=</span>empty app app/cache app/logs app/config web
 
@@ -145,12 +143,12 @@ the project, copy this file to <tt class="docutils literal"><span class="pre">pa
 developing.</p>
 </li>
 <li><p class="first">Finally, download all of the third-party vendor libraries by
-executing composer. For details, see <a class="reference internal" href="../../book/installation.html#installation-updating-vendors"><em>Updating Vendors</em></a>.</p>
+executing Composer. For details, see <a class="reference internal" href="../../book/installation.html#installation-updating-vendors"><em>Updating Vendors</em></a>.</p>
 </li>
 </ol>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">If you rely on any &#8220;dev&#8221; versions, then git may be used to install
+<p class="last">If you rely on any &#8220;dev&#8221; versions, then Git may be used to install
 those libraries, since there is no archive available for download.</p>
 </div>
 <p>At this point, you have a fully-functional Symfony2 project stored in your
@@ -166,7 +164,7 @@ remove the sample code, follow the instructions in the
 </div>
 </div>
 <div class="section" id="managing-vendor-libraries-with-composer-json">
-<h2>Managing Vendor Libraries with composer.json<a class="headerlink" href="#managing-vendor-libraries-with-composer-json" title="Permalink to this headline">¶</a></h2>
+<h2>Managing Vendor Libraries with <tt class="docutils literal"><span class="pre">composer.json</span></tt><a class="headerlink" href="#managing-vendor-libraries-with-composer-json" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="how-does-it-work">
 <h3>How does it work?<a class="headerlink" href="#how-does-it-work" title="Permalink to this headline">¶</a></h3>
 <p>Every Symfony project uses a group of third-party &#8220;vendor&#8221; libraries. One
@@ -188,12 +186,13 @@ To upgrade your libraries to new versions, run <tt class="docutils literal"><spa
 <p class="first admonition-title">Tip</p>
 <p>If you want to add a new package to your application, modify the <tt class="docutils literal"><span class="pre">composer.json</span></tt>
 file:</p>
-<div class="highlight-json"><pre>{
-    "require": {
+<div class="highlight-json"><div class="highlight"><pre>{
+    &quot;require&quot;: {
         ...
-        "doctrine/doctrine-fixtures-bundle": "@dev"
+        &quot;doctrine/doctrine-fixtures-bundle&quot;: &quot;@dev&quot;
     }
-}</pre>
+}
+</pre></div>
 </div>
 <p>and then execute the <tt class="docutils literal"><span class="pre">update</span></tt> command for this specific package, i.e.:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php composer.phar update doctrine/doctrine-fixtures-bundle
@@ -213,7 +212,7 @@ in the repository), any other developer can use the project, run <tt class="docu
 and download the exact same set of vendor libraries. This means that you&#8217;re
 controlling exactly what each vendor library looks like, without needing to
 actually commit them to <em>your</em> repository.</p>
-<p>So, whenever a developer uses your project, he/she should run the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt>
+<p>So, whenever a developer uses your project, they should run the <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt>
 script to ensure that all of the needed vendor libraries are downloaded.</p>
 <div class="sidebar">
 <p class="first sidebar-title">Upgrading Symfony</p>
@@ -229,7 +228,7 @@ your custom entries).</p>
 </div>
 <div class="section" id="subversion-hosting-solutions">
 <span id="svn-hosting"></span><h2>Subversion hosting solutions<a class="headerlink" href="#subversion-hosting-solutions" title="Permalink to this headline">¶</a></h2>
-<p>The biggest difference between <a class="reference external" href="http://git-scm.com/">git</a> and <a class="reference external" href="http://subversion.apache.org/">svn</a> is that Subversion <em>needs</em> a
+<p>The biggest difference between <a class="reference external" href="http://git-scm.com/">Git</a> and <a class="reference external" href="http://subversion.apache.org/">SVN</a> is that Subversion <em>needs</em> a
 central repository to work. You then have several solutions:</p>
 <ul class="simple">
 <li>Self hosting: create your own repository and access it either through the
@@ -237,7 +236,7 @@ filesystem or the network. To help in this task you can read <a class="reference
 with Subversion</a>.</li>
 <li>Third party hosting: there are a lot of serious free hosting solutions
 available like <a class="reference external" href="https://github.com/">GitHub</a>, <a class="reference external" href="http://code.google.com/hosting/">Google code</a>, <a class="reference external" href="http://sourceforge.net/">SourceForge</a> or <a class="reference external" href="http://gna.org/">Gna</a>. Some of them offer
-git hosting as well.</li>
+Git hosting as well.</li>
 </ul>
 </div>
 </div>
@@ -253,7 +252,7 @@ git hosting as well.</li>
 <li><a class="reference internal" href="#">How to Create and store a Symfony2 Project in Subversion</a><ul>
 <li><a class="reference internal" href="#the-subversion-repository">The Subversion Repository</a></li>
 <li><a class="reference internal" href="#initial-project-setup">Initial Project Setup</a></li>
-<li><a class="reference internal" href="#managing-vendor-libraries-with-composer-json">Managing Vendor Libraries with composer.json</a><ul>
+<li><a class="reference internal" href="#managing-vendor-libraries-with-composer-json">Managing Vendor Libraries with <tt class="docutils literal"><span class="pre">composer.json</span></tt></a><ul>
 <li><a class="reference internal" href="#how-does-it-work">How does it work?</a></li>
 </ul>
 </li>
@@ -264,10 +263,10 @@ git hosting as well.</li>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="new_project_git.html"
-                        title="previous chapter">How to Create and store a Symfony2 Project in git</a></p>
+                        title="previous chapter">How to Create and store a Symfony2 Project in Git</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../controller/index.html"
-                        title="next chapter">Controller</a></p>
+  <p class="topless"><a href="../../components/index.html"
+                        title="next chapter">The Components</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/workflow/new_project_svn.txt"
@@ -297,19 +296,19 @@ git hosting as well.</li>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../controller/index.html" title="Controller"
+          <a href="../../components/index.html" title="The Components"
              >next</a> |</li>
         <li class="right" >
-          <a href="new_project_git.html" title="How to Create and store a Symfony2 Project in git"
+          <a href="new_project_git.html" title="How to Create and store a Symfony2 Project in Git"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Workflow</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,5 +1,5 @@
 ﻿.. index::
-   single: Dependency Injection; Tags
+   single: DependencyInjection; Tags
 
 Working with Tagged Services
 ============================
@@ -27,7 +27,7 @@ To begin with, define the ``TransportChain`` class::
             $this->transports = array();
         }
 
-        public function addTransport(\Swift_Transport  $transport)
+        public function addTransport(\Swift_Transport $transport)
         {
             $this->transports[] = $transport;
         }
@@ -64,7 +64,7 @@ Then, define the chain as a service:
 
         $container->setDefinition('acme_mailer.transport_chain', new Definition('%acme_mailer.transport_chain.class%'));
 
-Define Services with a Custom Tag
+Define Services with a custom Tag
 ---------------------------------
 
 Now you might want several of the ``\Swift_Transport`` classes to be instantiated
@@ -172,11 +172,11 @@ run when the container is compiled::
     stack framework. See :doc:`/cookbook/service_container/compiler_passes`
     for more details.
 
-Adding additional attributes on Tags
+Adding additional Attributes on Tags
 ------------------------------------
 
 Sometimes you need additional information about each service that's tagged with your tag.
-For example, you might want to add an alias to each TransportChain.
+For example, you might want to add an alias to each member of the transport chain.
 
 To begin with, change the ``TransportChain`` class::
 
@@ -198,9 +198,6 @@ To begin with, change the ``TransportChain`` class::
         {
             if (array_key_exists($alias, $this->transports)) {
                return $this->transports[$alias];
-            }
-            else {
-               return;
             }
         }
     }
@@ -237,6 +234,18 @@ To answer this, change the service declaration:
         <service id="acme_mailer.transport.sendmail" class="\Swift_SendmailTransport">
             <tag name="acme_mailer.transport" alias="bar" />
         </service>
+
+    .. code-block:: php
+
+        use Symfony\Component\DependencyInjection\Definition;
+
+        $definitionSmtp = new Definition('\Swift_SmtpTransport', array('%mailer_host%'));
+        $definitionSmtp->addTag('acme_mailer.transport', array('alias' => 'foo'));
+        $container->setDefinition('acme_mailer.transport.smtp', $definitionSmtp);
+
+        $definitionSendmail = new Definition('\Swift_SendmailTransport');
+        $definitionSendmail->addTag('acme_mailer.transport', array('alias' => 'bar'));
+        $container->setDefinition('acme_mailer.transport.sendmail', $definitionSendmail);
 
 Notice that you've added a generic ``alias`` key to the tag. To actually
 use this, update the compiler::

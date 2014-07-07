@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Configure Monolog to Email Errors &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to Configure Monolog to Email Errors &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Logging" href="index.html" />
-    <link rel="next" title="How to log Messages to different Files" href="channels_handlers.html" />
+    <link rel="next" title="How to Configure Monolog to Display Console Messages" href="monolog_console.html" />
     <link rel="prev" title="How to use Monolog to write Logs" href="monolog.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="channels_handlers.html" title="How to log Messages to different Files"
+          <a href="monolog_console.html" title="How to Configure Monolog to Display Console Messages"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="monolog.html" title="How to use Monolog to write Logs"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Logging</a> &raquo;</li> 
       </ul>
@@ -141,7 +139,7 @@ it is broken down.</p>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">mail</span></tt> handler is a <tt class="docutils literal"><span class="pre">fingers_crossed</span></tt> handler which means that
 it is only triggered when the action level, in this case <tt class="docutils literal"><span class="pre">critical</span></tt> is reached.
-It then logs everything including messages below the action level.  The
+It then logs everything including messages below the action level. The
 <tt class="docutils literal"><span class="pre">critical</span></tt> level is only triggered for 5xx HTTP code errors. The <tt class="docutils literal"><span class="pre">handler</span></tt>
 setting means that the output is then passed onto the <tt class="docutils literal"><span class="pre">buffered</span></tt> handler.</p>
 <div class="admonition tip">
@@ -278,8 +276,8 @@ now be both written to the log file and emailed.</p>
   <p class="topless"><a href="monolog.html"
                         title="previous chapter">How to use Monolog to write Logs</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="channels_handlers.html"
-                        title="next chapter">How to log Messages to different Files</a></p>
+  <p class="topless"><a href="monolog_console.html"
+                        title="next chapter">How to Configure Monolog to Display Console Messages</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/logging/monolog_email.txt"
@@ -309,19 +307,19 @@ now be both written to the log file and emailed.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="channels_handlers.html" title="How to log Messages to different Files"
+          <a href="monolog_console.html" title="How to Configure Monolog to Display Console Messages"
              >next</a> |</li>
         <li class="right" >
           <a href="monolog.html" title="How to use Monolog to write Logs"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Logging</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

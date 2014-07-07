@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Release Process &mdash; Symfony Docs 2.3 documentation</title>
+    <title>The Release Process &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Community" href="index.html" />
-    <link rel="next" title="IRC Meetings" href="irc.html" />
+    <link rel="next" title="Other Resources" href="other.html" />
     <link rel="prev" title="Community" href="index.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="irc.html" title="IRC Meetings"
+          <a href="other.html" title="Other Resources"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Community"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Community</a> &raquo;</li> 
       </ul>
@@ -58,8 +56,14 @@
 <h1>The Release Process<a class="headerlink" href="#the-release-process" title="Permalink to this headline">¶</a></h1>
 <p>This document explains the Symfony release process (Symfony being the code
 hosted on the main <tt class="docutils literal"><span class="pre">symfony/symfony</span></tt> <a class="reference external" href="https://github.com/symfony/symfony">Git repository</a>).</p>
-<p>Symfony manages its releases through a <em>time-based model</em>; a new Symfony
-release comes out every <em>six months</em>: one in <em>May</em> and one in <em>November</em>.</p>
+<p>Symfony manages its releases through a <em>time-based model</em>; a new Symfony minor
+version comes out every <em>six months</em>: one in <em>May</em> and one in <em>November</em>.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">The meaning of &#8220;minor&#8221; comes from the <a class="reference external" href="http://semver.org/">Semantic Versioning</a> strategy.</p>
+</div>
+<p>Each minor version sticks to the same very well-defined process where we start
+with a development period, followed by a maintenance period.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">This release process has been adopted as of Symfony 2.2, and all the
@@ -68,7 +72,7 @@ release comes out every <em>six months</em>: one in <em>May</em> and one in <em>
 </div>
 <div class="section" id="development">
 <span id="contributing-release-development"></span><h2>Development<a class="headerlink" href="#development" title="Permalink to this headline">¶</a></h2>
-<p>The six-months period is divided into two phases:</p>
+<p>The full development period lasts six months and is divided into two phases:</p>
 <ul class="simple">
 <li><em>Development</em>: <em>Four months</em> to add new features and to enhance existing
 ones;</li>
@@ -82,8 +86,8 @@ final release.</p>
 </div>
 <div class="section" id="maintenance">
 <span id="contributing-release-maintenance"></span><h2>Maintenance<a class="headerlink" href="#maintenance" title="Permalink to this headline">¶</a></h2>
-<p>Each Symfony version is maintained for a fixed period of time, depending on
-the type of the release. We have two maintenance periods:</p>
+<p>Each Symfony minor version is maintained for a fixed period of time, depending
+on the type of the release. We have two maintenance periods:</p>
 <ul class="simple">
 <li><em>Bug fixes and security fixes</em>: During this period, all issues can be fixed.
 The end of this period is referenced as being the <em>end of maintenance</em> of a
@@ -92,15 +96,15 @@ release.</li>
 be fixed. The end of this period is referenced as being the <em>end of
 life</em> of a release.</li>
 </ul>
-<div class="section" id="standard-releases">
-<h3>Standard Releases<a class="headerlink" href="#standard-releases" title="Permalink to this headline">¶</a></h3>
-<p>A standard release is maintained for an <em>eight month</em> period for bug fixes,
-and for a <em>fourteen month</em> period for security issue fixes.</p>
+<div class="section" id="standard-versions">
+<h3>Standard Versions<a class="headerlink" href="#standard-versions" title="Permalink to this headline">¶</a></h3>
+<p>A standard minor version is maintained for an <em>eight month</em> period for bug
+fixes, and for a <em>fourteen month</em> period for security issue fixes.</p>
 </div>
-<div class="section" id="long-term-support-releases">
-<h3>Long Term Support Releases<a class="headerlink" href="#long-term-support-releases" title="Permalink to this headline">¶</a></h3>
-<p>Every two years, a new Long Term Support Release (aka LTS release) is
-published. Each LTS release is supported for a <em>three year</em> period for bug
+<div class="section" id="long-term-support-versions">
+<h3>Long Term Support Versions<a class="headerlink" href="#long-term-support-versions" title="Permalink to this headline">¶</a></h3>
+<p>Every two years, a new Long Term Support Version (aka LTS version) is
+published. Each LTS version is supported for a <em>three year</em> period for bug
 fixes, and for a <em>four year</em> period for security issue fixes.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -192,16 +196,25 @@ also be bought from <a class="reference external" href="http://sensiolabs.com/">
 use the online <a class="reference external" href="http://symfony.com/roadmap">timeline calculator</a>. You can also get all data as a JSON
 string via a URL like <cite>http://symfony.com/roadmap.json?version=2.x</cite>.</p>
 </div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p class="last">Whenever an important event related to Symfony versions happens (a version
+reaches end of maintenance or a new patch version is released for
+instance), you can automatically receive an email notification if you
+subscribed on the <a class="reference external" href="http://symfony.com/roadmap">roadmap notification</a> page.</p>
 </div>
-<div class="section" id="backward-compatibility">
-<h2>Backward Compatibility<a class="headerlink" href="#backward-compatibility" title="Permalink to this headline">¶</a></h2>
-<p>After the release of Symfony 2.3, backward compatibility will be kept at all
-cost. If it is not possible, the feature, the enhancement, or the bug fix will
-be scheduled for the next major version: Symfony 3.0.</p>
+</div>
+<div class="section" id="backwards-compatibility">
+<h2>Backwards Compatibility<a class="headerlink" href="#backwards-compatibility" title="Permalink to this headline">¶</a></h2>
+<p>Our <a class="reference internal" href="../code/bc.html"><em>Backwards Compatibility Promise</em></a> is very
+strict and allows developers to upgrade with confidence from one minor version
+of Symfony to the next one.</p>
+<p>Whenever keeping backward compatibility is not possible, the feature, the
+enhancement or the bug fix will be scheduled for the next major version.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The work on Symfony 3.0 will start whenever enough major features breaking
-backward compatibility are waiting on the todo-list.</p>
+<p class="last">The work on a new major version of Symfony starts whenever enough major
+features breaking backward compatibility are waiting on the todo-list.</p>
 </div>
 </div>
 <div class="section" id="deprecations">
@@ -234,10 +247,9 @@ features to be postponed to the next version without having to wait too long
 for the next cycle.</p>
 <p>The dual maintenance mode was adopted to make every Symfony user happy. Fast
 movers, who want to work with the latest and the greatest, use the standard
-releases: a new version is published every six months, and there is a two
-months period to upgrade. Companies wanting more stability use the LTS
-releases: a new version is published every two years and there is a year to
-upgrade.</p>
+version: a new version is published every six months, and there is a two months
+period to upgrade. Companies wanting more stability use the LTS versions: a new
+version is published every two years and there is a year to upgrade.</p>
 </div>
 </div>
 
@@ -252,12 +264,12 @@ upgrade.</p>
 <li><a class="reference internal" href="#">The Release Process</a><ul>
 <li><a class="reference internal" href="#development">Development</a></li>
 <li><a class="reference internal" href="#maintenance">Maintenance</a><ul>
-<li><a class="reference internal" href="#standard-releases">Standard Releases</a></li>
-<li><a class="reference internal" href="#long-term-support-releases">Long Term Support Releases</a></li>
+<li><a class="reference internal" href="#standard-versions">Standard Versions</a></li>
+<li><a class="reference internal" href="#long-term-support-versions">Long Term Support Versions</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#schedule">Schedule</a></li>
-<li><a class="reference internal" href="#backward-compatibility">Backward Compatibility</a></li>
+<li><a class="reference internal" href="#backwards-compatibility">Backwards Compatibility</a></li>
 <li><a class="reference internal" href="#deprecations">Deprecations</a></li>
 <li><a class="reference internal" href="#rationale">Rationale</a></li>
 </ul>
@@ -268,8 +280,8 @@ upgrade.</p>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Community</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="irc.html"
-                        title="next chapter">IRC Meetings</a></p>
+  <p class="topless"><a href="other.html"
+                        title="next chapter">Other Resources</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/contributing/community/releases.txt"
@@ -299,19 +311,19 @@ upgrade.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="irc.html" title="IRC Meetings"
+          <a href="other.html" title="Other Resources"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Community"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" >Community</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

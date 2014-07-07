@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Contributing to the Documentation &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Contributing to the Documentation &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Contributing Documentation" href="index.html" />
     <link rel="next" title="Documentation Format" href="format.html" />
     <link rel="prev" title="Contributing Documentation" href="index.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="index.html" title="Contributing Documentation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Contributing Documentation</a> &raquo;</li> 
       </ul>
@@ -76,15 +74,15 @@ then clone your fork:</p>
 <p>Consistent with Symfony&#8217;s source code, the documentation repository is split into
 multiple branches, corresponding to the different versions of Symfony itself.
 The <tt class="docutils literal"><span class="pre">master</span></tt> branch holds the documentation for the development branch of the code.</p>
-<p>Unless you&#8217;re documenting a feature that was introduced <em>after</em> Symfony 2.2
-(e.g. in Symfony 2.3), your changes should always be based on the 2.2 branch.
-To do this checkout the 2.2 branch before the next step:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git checkout 2.2
+<p>Unless you&#8217;re documenting a feature that was introduced <em>after</em> Symfony 2.3
+(e.g. in Symfony 2.4), your changes should always be based on the 2.3 branch.
+To do this checkout the 2.3 branch before the next step:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>git checkout 2.3
 </pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">Your base branch (e.g. 2.2) will become the &#8220;Applies to&#8221; in the <a class="reference internal" href="#doc-contributing-pr-format"><em>Pull Request Format</em></a>
+<p class="last">Your base branch (e.g. 2.3) will become the &#8220;Applies to&#8221; in the <a class="reference internal" href="#doc-contributing-pr-format"><em>Pull Request Format</em></a>
 that you&#8217;ll use later.</p>
 </div>
 <p>Next, create a dedicated branch for your changes (for organization):</p>
@@ -97,14 +95,14 @@ you&#8217;re done, push this branch to <em>your</em> GitHub fork and initiate a 
 <h3>Creating a Pull Request<a class="headerlink" href="#creating-a-pull-request" title="Permalink to this headline">¶</a></h3>
 <p>Following the example, the pull request will default to be between your
 <tt class="docutils literal"><span class="pre">improving_foo_and_bar</span></tt> branch and the <tt class="docutils literal"><span class="pre">symfony-docs</span></tt> <tt class="docutils literal"><span class="pre">master</span></tt> branch.</p>
-<img alt="../../_images/docs-pull-request.png" class="align-center" src="../../_images/docs-pull-request.png" />
-<p>If you have made your changes based on the 2.2 branch then you need to change
-the base branch to be 2.2 on the preview page:</p>
+<p>If you have made your changes based on the 2.3 branch then you need to change
+the base branch to be 2.3 on the preview page by clicking the <tt class="docutils literal"><span class="pre">edit</span></tt> button
+on the top left:</p>
 <img alt="../../_images/docs-pull-request-change-base.png" class="align-center" src="../../_images/docs-pull-request-change-base.png" />
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">All changes made to a branch (e.g. 2.2) will be merged up to each &#8220;newer&#8221;
-branch (e.g. 2.3, master, etc) for the next release on a weekly basis.</p>
+<p class="last">All changes made to a branch (e.g. 2.3) will be merged up to each &#8220;newer&#8221;
+branch (e.g. 2.4, master, etc) for the next release on a weekly basis.</p>
 </div>
 <p>GitHub covers the topic of <a class="reference external" href="https://help.github.com/articles/using-pull-requests">pull requests</a> in detail.</p>
 <div class="admonition note">
@@ -162,7 +160,7 @@ night at 3AM when the server rebuilds the documentation).</p>
 Symfony2, you should precede your description of the change with a <tt class="docutils literal"><span class="pre">..</span> <span class="pre">versionadded::</span> <span class="pre">2.X</span></tt>
 tag and a short description:</p>
 <div class="highlight-text"><div class="highlight"><pre>.. versionadded:: 2.3
-    The ``askHiddenResponse`` method was added in Symfony 2.3.
+    The ``askHiddenResponse`` method was introduced in Symfony 2.3.
 
 You can also ask a question and hide the response. This is particularly...
 </pre></div>
@@ -207,7 +205,7 @@ about in the <a class="reference internal" href="../community/releases.html"><em
 <p>To keep up with the release process, the documentation team makes several
 changes to the documentation at various parts of the lifecycle.</p>
 <div class="section" id="when-a-release-reaches-end-of-maintenance">
-<h3>When a Release reaches &#8220;end of maintenance&#8221;<a class="headerlink" href="#when-a-release-reaches-end-of-maintenance" title="Permalink to this headline">¶</a></h3>
+<h3>When a Release Reaches &#8220;End of Maintenance&#8221;<a class="headerlink" href="#when-a-release-reaches-end-of-maintenance" title="Permalink to this headline">¶</a></h3>
 <p>Every release will eventually reach its &#8220;end of maintenance&#8221;. For details,
 see <a class="reference internal" href="../community/releases.html#contributing-release-maintenance"><em>Maintenance</em></a>.</p>
 <p>When a release reaches its end of maintenance, the following items are done.
@@ -218,7 +216,7 @@ except for security updates, which are merged until the release reaches
 its &#8220;end of life&#8221;.</li>
 <li>All branches still under maintenance (e.g. 2.2 and higher) are updated
 to reflect that pull requests should start from the now-oldest maintained
-version (e.g. 2.2).</li>
+version (e.g. 2.2) - including the details in the README file.</li>
 <li>Remove all <tt class="docutils literal"><span class="pre">versionadded</span></tt> directives - and any other notes related to features
 changing or being new - for the version (e.g. 2.1) from the master branch.
 The result is that the next release (which is the first that comes entirely
@@ -227,7 +225,7 @@ the old version (e.g. 2.1).</li>
 </ul>
 </div>
 <div class="section" id="when-a-new-branch-is-created-for-a-release">
-<h3>When a new Branch is created for a Release<a class="headerlink" href="#when-a-new-branch-is-created-for-a-release" title="Permalink to this headline">¶</a></h3>
+<h3>When a new Branch is Created for a Release<a class="headerlink" href="#when-a-new-branch-is-created-for-a-release" title="Permalink to this headline">¶</a></h3>
 <p>During the <a class="reference internal" href="../community/releases.html#contributing-release-development"><em>stabilization phase</em></a>, a
 new branch on the documentation is created. For example, if version 2.3 were
 being stabilized, then a new 2.3 branch would be created for it. When this
@@ -260,8 +258,8 @@ use for installation. As an example, see the changes made in <a class="reference
 <li><a class="reference internal" href="#reporting-an-issue">Reporting an Issue</a></li>
 <li><a class="reference internal" href="#translating">Translating</a></li>
 <li><a class="reference internal" href="#managing-releases">Managing Releases</a><ul>
-<li><a class="reference internal" href="#when-a-release-reaches-end-of-maintenance">When a Release reaches &#8220;end of maintenance&#8221;</a></li>
-<li><a class="reference internal" href="#when-a-new-branch-is-created-for-a-release">When a new Branch is created for a Release</a></li>
+<li><a class="reference internal" href="#when-a-release-reaches-end-of-maintenance">When a Release Reaches &#8220;End of Maintenance&#8221;</a></li>
+<li><a class="reference internal" href="#when-a-new-branch-is-created-for-a-release">When a new Branch is Created for a Release</a></li>
 </ul>
 </li>
 </ul>
@@ -308,14 +306,14 @@ use for installation. As an example, see the changes made in <a class="reference
         <li class="right" >
           <a href="index.html" title="Contributing Documentation"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" >Contributing Documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

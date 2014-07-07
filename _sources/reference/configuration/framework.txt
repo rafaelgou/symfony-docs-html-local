@@ -1,5 +1,5 @@
 .. index::
-   single: Configuration reference; Framework
+    single: Configuration reference; Framework
 
 FrameworkBundle Configuration ("framework")
 ===========================================
@@ -7,7 +7,7 @@ FrameworkBundle Configuration ("framework")
 This reference document is a work in progress. It should be accurate, but
 all options are not yet fully covered.
 
-The ``FrameworkBundle`` contains most of the "base" framework functionality
+The FrameworkBundle contains most of the "base" framework functionality
 and can be configured under the ``framework`` key in your application configuration.
 This includes settings related to sessions, translation, forms, validation,
 routing and more.
@@ -20,11 +20,14 @@ Configuration
 * `ide`_
 * `test`_
 * `trusted_proxies`_
-* `form`_
-    * enabled
 * `csrf_protection`_
     * enabled
-    * field_name
+    * field_name (deprecated)
+* `form`_
+    * enabled
+    * csrf_protection
+        * enabled
+        * field_name
 * `session`_
     * `name`_
     * `cookie_lifetime`_
@@ -44,7 +47,7 @@ Configuration
     * `assets_version_format`_
 * `profiler`_
     * `collect`_
-    * :ref:`enabled<profiler.enabled>`
+    * :ref:`enabled <profiler.enabled>`
 
 secret
 ~~~~~~
@@ -62,7 +65,7 @@ http_method_override
 ~~~~~~~~~~~~~~~~~~~~
 
 .. versionadded:: 2.3
-    The ``http_method_override`` option is new in Symfony 2.3.
+    The ``http_method_override`` option was introduced in Symfony 2.3.
 
 **type**: ``Boolean`` **default**: ``true``
 
@@ -82,25 +85,48 @@ If you're using an IDE like TextMate or Mac Vim, then Symfony can turn all
 of the file paths in an exception message into a link, which will open that
 file in your IDE.
 
-If you use TextMate or Mac Vim, you can simply use one of the following built-in
-values:
+Symfony contains preconfigured urls for some popular IDEs, you can set them
+using the following keys:
 
 * ``textmate``
 * ``macvim``
+* ``emacs``
+* ``sublime``
 
-You can also specify a custom file link string. If you do this, all percentage
-signs (``%``) must be doubled to escape that character. For example, the
-full TextMate string would look like this:
+.. versionadded:: 2.3.14
+    The ``emacs`` and ``sublime`` editors were introduced in Symfony 2.3.14.
 
-.. code-block:: yaml
+You can also specify a custom url string. If you do this, all percentage
+signs (``%``) must be doubled to escape that character. For example, if you
+have installed `PhpStormOpener`_ and use PHPstorm, you will do something like:
 
-    framework:
-        ide:  "txmt://open?url=file://%%f&line=%%l"
+.. configuration-block::
+
+    .. code-block:: yaml
+
+        framework:
+            ide: "pstorm://%%f:%%l"
+            
+    .. code-block:: xml
+    
+        <?xml version="1.0" charset="UTF-8" ?>
+        <container xmlns="http://symfony.com/schema/dic/service"
+            xmlns:framework="http://symfony.com/schema/dic/symfony">
+            
+            <framework:config ide="pstorm://%%f:%%l" />
+            
+        </container>
+        
+    .. code-block:: php
+    
+        $container->loadFromExtension('framework', array(
+            'ide' => 'pstorm://%%f:%%l',
+        ));
 
 Of course, since every developer uses a different IDE, it's better to set
 this on a system level. This can be done by setting the ``xdebug.file_link_format``
-PHP.ini value to the file link string. If this configuration value is set, then
-the ``ide`` option does not need to be specified.
+in the ``php.ini`` configuration to the url string. If this configuration value
+is set, then the ``ide`` option will be ignored.
 
 .. _reference-framework-test:
 
@@ -114,6 +140,8 @@ services related to testing your application (e.g. ``test.client``) are loaded.
 This setting should be present in your ``test`` environment (usually via
 ``app/config/config_test.yml``). For more information, see :doc:`/book/testing`.
 
+.. _reference-framework-trusted-proxies:
+
 trusted_proxies
 ~~~~~~~~~~~~~~~
 
@@ -123,7 +151,7 @@ Configures the IP addresses that should be trusted as proxies. For more details,
 see :doc:`/components/http_foundation/trusting_proxies`.
 
 .. versionadded:: 2.3
-    CIDR notation support was introduced, so you can whitelist whole
+    CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
     subnets (e.g. ``10.0.0.0/8``, ``fc00::/7``).
 
 .. configuration-block::
@@ -167,10 +195,12 @@ name which is defined in the ``php.ini`` with the ``session.name`` directive.
 cookie_lifetime
 ...............
 
-**type**: ``integer`` **default**: ``0``
+**type**: ``integer`` **default**: ``null``
 
-This determines the lifetime of the session - in seconds. By default it will use
-``0``, which means the cookie is valid for the length of the browser session.
+This determines the lifetime of the session - in seconds. It will use ``null`` by
+default, which means ``session.cookie_lifetime`` value from ``php.ini`` will be used.
+Setting this value to ``0`` means the cookie is valid for the length of the browser
+session.
 
 cookie_path
 ...........
@@ -200,7 +230,7 @@ cookie_httponly
 
 **type**: ``Boolean`` **default**: ``false``
 
-This determines whether cookies should only accessible through the HTTP protocol.
+This determines whether cookies should only be accessible through the HTTP protocol.
 This means that the cookie won't be accessible by scripting languages, such
 as JavaScript. This setting can effectively help to reduce identity theft
 through XSS attacks.
@@ -225,7 +255,7 @@ See `gc_probability`_.
 gc_maxlifetime
 ..............
 
-**type**: ``integer`` **default**: ``14400``
+**type**: ``integer`` **default**: ``1440``
 
 This determines the number of seconds after which data will be seen as "garbage"
 and potentially cleaned up. Garbage collection may occur during session start
@@ -362,6 +392,10 @@ Now, the same asset will be rendered as ``/images/logo.png?v2`` If you use
 this feature, you **must** manually increment the ``assets_version`` value
 before each deployment so that the query parameters change.
 
+It's also possible to set the version value on an asset-by-asset basis (instead
+of using the global version - e.g. ``v2`` - set here). See
+:ref:`Versioning by Asset <book-templating-version-by-asset>` for details.
+
 You can also control how the query string works via the `assets_version_format`_
 option.
 
@@ -403,11 +437,6 @@ would be ``/images/logo.png?version=5``.
 profiler
 ~~~~~~~~
 
-.. versionadded:: 2.2
-    The ``enabled`` option was added in Symfony 2.2. Previously, the profiler
-    could only be disabled by omitting the ``framework.profiler`` configuration
-    entirely.
-
 .. _profiler.enabled:
 
 enabled
@@ -418,10 +447,10 @@ enabled
 The profiler can be disabled by setting this key to ``false``.
 
 .. versionadded:: 2.3
-
-    The ``collect`` option is new in Symfony 2.3. Previously, when ``profiler.enabled``
-    was false, the profiler *was* actually enabled, but the collectors were
-    disabled. Now the profiler and collectors can be controller independently.
+    The ``collect`` option was introduced in Symfony 2.3. Previously, when
+    ``profiler.enabled`` was ``false``, the profiler *was* actually enabled,
+    but the collectors were disabled. Now, the profiler and the collectors
+    can be controlled independently.
 
 collect
 .......
@@ -435,7 +464,7 @@ and activate the data collectors by hand::
 
     $profiler->enable();
 
-Full Default Configuration
+Full default Configuration
 --------------------------
 
 .. configuration-block::
@@ -450,12 +479,16 @@ Full Default Configuration
             test:                 ~
             default_locale:       en
 
+            csrf_protection:
+                enabled:              false
+                field_name:           _token # Deprecated since 2.4, to be removed in 3.0. Use form.csrf_protection.field_name instead
+
             # form configuration
             form:
                 enabled:              false
-            csrf_protection:
-                enabled:              false
-                field_name:           _token
+                csrf_protection:
+                    enabled:          true
+                    field_name:       ~
 
             # esi configuration
             esi:
@@ -563,3 +596,4 @@ Full Default Configuration
                 debug:                %kernel.debug%
 
 .. _`protocol-relative`: http://tools.ietf.org/html/rfc3986#section-4.2
+.. _`PhpStormOpener`: https://github.com/pinepain/PhpStormOpener

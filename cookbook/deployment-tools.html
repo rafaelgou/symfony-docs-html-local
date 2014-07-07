@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to deploy a Symfony2 application &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to deploy a Symfony2 application &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +23,10 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../index.html" />
     <link rel="up" title="The Cookbook" href="index.html" />
-    <link rel="next" title="The Components" href="../components/index.html" />
-    <link rel="prev" title="How Symfony2 differs from symfony1" href="symfony1.html" /> 
+    <link rel="next" title="Doctrine" href="doctrine/index.html" />
+    <link rel="prev" title="How to optimize your development Environment for debugging" href="debugging.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,12 +36,12 @@
           <a href="../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../components/index.html" title="The Components"
+          <a href="doctrine/index.html" title="Doctrine"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="symfony1.html" title="How Symfony2 differs from symfony1"
+          <a href="debugging.html" title="How to optimize your development Environment for debugging"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Cookbook</a> &raquo;</li> 
       </ul>
     </div>  
@@ -83,7 +81,7 @@ be done before uploading);</li>
 <div class="section" id="id1">
 <h2>How to deploy a Symfony2 application<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <p>There are several ways you can deploy a Symfony2 application.</p>
-<p>Let&#8217;s start with a few basic deployment strategies and build up from there.</p>
+<p>Start with a few basic deployment strategies and build up from there.</p>
 <div class="section" id="basic-file-transfer">
 <h3>Basic File Transfer<a class="headerlink" href="#basic-file-transfer" title="Permalink to this headline">¶</a></h3>
 <p>The most basic way of deploying an application is copying the files manually
@@ -93,7 +91,7 @@ to take some manual steps after transferring the files (see <a class="reference 
 </div>
 <div class="section" id="using-source-control">
 <h3>Using Source Control<a class="headerlink" href="#using-source-control" title="Permalink to this headline">¶</a></h3>
-<p>If you&#8217;re using source control (e.g. git or svn), you can simplify by having
+<p>If you&#8217;re using source control (e.g. Git or SVN), you can simplify by having
 your live installation also be a copy of your repository. When you&#8217;re ready
 to upgrade it is as simple as fetching the latest updates from your source
 control system.</p>
@@ -124,14 +122,16 @@ set it up manually (or via some build process) on your server(s).</p>
 <p>Your vendors can be updated before transferring your source code (i.e.
 update the <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory, then transfer that with your source
 code) or afterwards on the server. Either way, just update your vendors
-as your normally do:</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php composer.phar install --optimize-autoloader
+as you normally do:</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php composer.phar install --no-dev --optimize-autoloader
 </pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">The <tt class="docutils literal"><span class="pre">--optimize-autoloader</span></tt> flag makes Composer&#8217;s autoloader more
-performant by building a &#8220;class map&#8221;.</p>
+performant by building a &#8220;class map&#8221;. The <tt class="docutils literal"><span class="pre">--no-dev</span></tt> flag
+ensures that development packages are not installed in the production
+environment.</p>
 </div>
 </div>
 <div class="section" id="c-clear-your-symfony-cache">
@@ -241,11 +241,11 @@ One provider with confirmed Symfony2 support is <a class="reference external" hr
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="symfony1.html"
-                        title="previous chapter">How Symfony2 differs from symfony1</a></p>
+  <p class="topless"><a href="debugging.html"
+                        title="previous chapter">How to optimize your development Environment for debugging</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../components/index.html"
-                        title="next chapter">The Components</a></p>
+  <p class="topless"><a href="doctrine/index.html"
+                        title="next chapter">Doctrine</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../_sources/cookbook/deployment-tools.txt"
@@ -275,18 +275,18 @@ One provider with confirmed Symfony2 support is <a class="reference external" hr
           <a href="../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../components/index.html" title="The Components"
+          <a href="doctrine/index.html" title="Doctrine"
              >next</a> |</li>
         <li class="right" >
-          <a href="symfony1.html" title="How Symfony2 differs from symfony1"
+          <a href="debugging.html" title="How to optimize your development Environment for debugging"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" >The Cookbook</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Intl Component &mdash; Symfony Docs 2.3 documentation</title>
+    <title>The Intl Component &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../index.html" />
     <link rel="up" title="The Components" href="index.html" />
     <link rel="next" title="The OptionsResolver Component" href="options_resolver.html" />
     <link rel="prev" title="The HttpKernel Component" href="http_kernel/introduction.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="http_kernel/introduction.html" title="The HttpKernel Component"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Components</a> &raquo;</li> 
       </ul>
     </div>  
@@ -58,8 +56,10 @@
 <blockquote>
 <div>A PHP replacement layer for the C <a class="reference external" href="http://www.php.net/manual/en/book.intl.php">intl extension</a> that also provides
 access to the localization data of the <a class="reference external" href="http://site.icu-project.org/">ICU library</a>.</div></blockquote>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3.</span></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>The Intl component was introduced in Symfony 2.3. In earlier versions of Symfony,
+you should use the Locale component instead.</p>
+</div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
 <p class="last">The replacement layer is limited to the locale &#8220;en&#8221;. If you want to use
@@ -96,20 +96,22 @@ replace the intl classes:</p>
 </ul>
 <p>Composer automatically exposes these classes in the global namespace.</p>
 <p>If you don&#8217;t use Composer but the
-<a class="reference internal" href="class_loader.html"><em>Symfony ClassLoader component</em></a>, you need to
-expose them manually by adding the following lines to your autoload code:</p>
-<div class="highlight-python"><pre>if (!function_exists('intl_is_failure')) {
-    require '/path/to/Icu/Resources/stubs/functions.php';
+<a class="reference internal" href="class_loader/introduction.html"><em>Symfony ClassLoader component</em></a>,
+you need to expose them manually by adding the following lines to your autoload
+code:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nb">function_exists</span><span class="p">(</span><span class="s1">&#39;intl_is_failure&#39;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">require</span> <span class="s1">&#39;/path/to/Icu/Resources/stubs/functions.php&#39;</span><span class="p">;</span>
 
-    $loader-&gt;registerPrefixFallback('/path/to/Icu/Resources/stubs');
-}</pre>
+    <span class="nv">$loader</span><span class="o">-&gt;</span><span class="na">registerPrefixFallback</span><span class="p">(</span><span class="s1">&#39;/path/to/Icu/Resources/stubs&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <div class="sidebar">
 <p class="first sidebar-title">ICU and Deployment Problems</p>
 <p>The intl extension internally uses the <a class="reference external" href="http://site.icu-project.org/">ICU library</a> to obtain localization
 data such as number formats in different languages, country names and more.
 To make this data accessible to userland PHP libraries, Symfony2 ships a copy
-in the <a class="reference external" href="https://packagist.org/packages/symfony/icu">ICU component</a>.</p>
+in the <a class="reference external" href="https://packagist.org/packages/symfony/icu">Icu component</a>.</p>
 <p>Depending on the ICU version compiled with your intl extension, a matching
 version of that component needs to be installed. It sounds complicated,
 but usually Composer does this for you automatically:</p>
@@ -120,7 +122,7 @@ but usually Composer does this for you automatically:</p>
 </ul>
 <p>These versions are important when you deploy your application to a <strong>server with
 a lower ICU version</strong> than your development machines, because deployment will
-fail if</p>
+fail if:</p>
 <ul class="simple">
 <li>the development machines are compiled with ICU 4.4 or higher, but the
 server is compiled with a lower ICU version than 4.4;</li>
@@ -129,7 +131,7 @@ the server.</li>
 </ul>
 <p>For example, consider that your development machines ship ICU 4.8 and the server
 ICU 4.2. When you run <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">update</span></tt> on the development machine, version
-1.2.* of the ICU component will be installed. But after deploying the
+1.2.* of the Icu component will be installed. But after deploying the
 application, <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt> will fail with the following error:</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php composer.phar install
 Loading composer repositories with package information
@@ -142,7 +144,7 @@ Your requirements could not be resolved to an installable <span class="nb">set <
       system, make sure to have the extension providing it.
 </pre></div>
 </div>
-<p>The error tells you that the requested version of the ICU component, version
+<p>The error tells you that the requested version of the Icu component, version
 1.2, is not compatible with PHP&#8217;s ICU version 4.2.</p>
 <p>One solution to this problem is to run <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">update</span></tt> instead of
 <tt class="docutils literal"><span class="pre">php</span> <span class="pre">composer.phar</span> <span class="pre">install</span></tt>. It is highly recommended <strong>not</strong> to do this. The
@@ -154,10 +156,11 @@ production server. First, determine the ICU version on the server:</p>
 ICU <span class="nv">version</span> <span class="o">=</span>&gt; 4.2.1
 </pre></div>
 </div>
-<p>Then fix the ICU component in your composer.json file to a matching version:</p>
-<div class="highlight-json"><pre>"require: {
-    "symfony/icu": "1.1.*"
-}</pre>
+<p>Then fix the Icu component in your <tt class="docutils literal"><span class="pre">composer.json</span></tt> file to a matching version:</p>
+<div class="highlight-json"><div class="highlight"><pre>&quot;require: {
+    &quot;symfony/icu&quot;: &quot;1.1.*&quot;
+}
+</pre></div>
 </div>
 <p>Set the version to</p>
 <ul class="simple">
@@ -192,20 +195,21 @@ writes an array or an array-like object to a plain-text resource bundle. The
 resulting .txt file can be converted to a binary .res file with the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Intl/ResourceBundle/Compiler/BundleCompiler.html" title="Symfony\Component\Intl\ResourceBundle\Compiler\BundleCompiler"><span class="pre">BundleCompiler</span></a></tt>
 class:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Intl\ResourceBundle\Writer\TextBundleWriter;
-use Symfony\Component\Intl\ResourceBundle\Compiler\BundleCompiler;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Intl\ResourceBundle\Writer\TextBundleWriter</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Intl\ResourceBundle\Compiler\BundleCompiler</span><span class="p">;</span>
 
-$writer = new TextBundleWriter();
-$writer-&gt;write('/path/to/bundle', 'en', array(
-    'Data' =&gt; array(
-        'entry1',
-        'entry2',
-        // ...
-    ),
-));
+<span class="nv">$writer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TextBundleWriter</span><span class="p">();</span>
+<span class="nv">$writer</span><span class="o">-&gt;</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;/path/to/bundle&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;Data&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;entry1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;entry2&#39;</span><span class="p">,</span>
+        <span class="c1">// ...</span>
+    <span class="p">),</span>
+<span class="p">));</span>
 
-$compiler = new BundleCompiler();
-$compiler-&gt;compile('/path/to/bundle', '/path/to/binary/bundle');</pre>
+<span class="nv">$compiler</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BundleCompiler</span><span class="p">();</span>
+<span class="nv">$compiler</span><span class="o">-&gt;</span><span class="na">compile</span><span class="p">(</span><span class="s1">&#39;/path/to/bundle&#39;</span><span class="p">,</span> <span class="s1">&#39;/path/to/binary/bundle&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>The command &#8220;genrb&#8221; must be available for the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Intl/ResourceBundle/Compiler/BundleCompiler.html" title="Symfony\Component\Intl\ResourceBundle\Compiler\BundleCompiler"><span class="pre">BundleCompiler</span></a></tt> to
@@ -218,16 +222,17 @@ constructor.</p>
 <h3>PhpBundleWriter<a class="headerlink" href="#phpbundlewriter" title="Permalink to this headline">¶</a></h3>
 <p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Intl/ResourceBundle/Writer/PhpBundleWriter.html" title="Symfony\Component\Intl\ResourceBundle\Writer\PhpBundleWriter"><span class="pre">PhpBundleWriter</span></a></tt>
 writes an array or an array-like object to a .php resource bundle:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Intl\ResourceBundle\Writer\PhpBundleWriter;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Intl\ResourceBundle\Writer\PhpBundleWriter</span><span class="p">;</span>
 
-$writer = new PhpBundleWriter();
-$writer-&gt;write('/path/to/bundle', 'en', array(
-    'Data' =&gt; array(
-        'entry1',
-        'entry2',
-        // ...
-    ),
-));</pre>
+<span class="nv">$writer</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PhpBundleWriter</span><span class="p">();</span>
+<span class="nv">$writer</span><span class="o">-&gt;</span><span class="na">write</span><span class="p">(</span><span class="s1">&#39;/path/to/bundle&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;Data&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;entry1&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;entry2&#39;</span><span class="p">,</span>
+        <span class="c1">// ...</span>
+    <span class="p">),</span>
+<span class="p">));</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="binarybundlereader">
@@ -235,12 +240,13 @@ $writer-&gt;write('/path/to/bundle', 'en', array(
 <p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Intl/ResourceBundle/Reader/BinaryBundleReader.html" title="Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader"><span class="pre">BinaryBundleReader</span></a></tt>
 reads binary resource bundle files and returns an array or an array-like object.
 This class currently only works with the <a class="reference external" href="http://www.php.net/manual/en/book.intl.php">intl extension</a> installed:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader</span><span class="p">;</span>
 
-$reader = new BinaryBundleReader();
-$data = $reader-&gt;read('/path/to/bundle', 'en');
+<span class="nv">$reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BinaryBundleReader</span><span class="p">();</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$reader</span><span class="o">-&gt;</span><span class="na">read</span><span class="p">(</span><span class="s1">&#39;/path/to/bundle&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">);</span>
 
-echo $data['Data']['entry1'];</pre>
+<span class="k">echo</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;Data&#39;</span><span class="p">][</span><span class="s1">&#39;entry1&#39;</span><span class="p">];</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="phpbundlereader">
@@ -248,12 +254,13 @@ echo $data['Data']['entry1'];</pre>
 <p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Intl/ResourceBundle/Reader/PhpBundleReader.html" title="Symfony\Component\Intl\ResourceBundle\Reader\PhpBundleReader"><span class="pre">PhpBundleReader</span></a></tt>
 reads resource bundles from .php files and returns an array or an array-like
 object:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Intl\ResourceBundle\Reader\PhpBundleReader;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Intl\ResourceBundle\Reader\PhpBundleReader</span><span class="p">;</span>
 
-$reader = new PhpBundleReader();
-$data = $reader-&gt;read('/path/to/bundle', 'en');
+<span class="nv">$reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PhpBundleReader</span><span class="p">();</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$reader</span><span class="o">-&gt;</span><span class="na">read</span><span class="p">(</span><span class="s1">&#39;/path/to/bundle&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">);</span>
 
-echo $data['Data']['entry1'];</pre>
+<span class="k">echo</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;Data&#39;</span><span class="p">][</span><span class="s1">&#39;entry1&#39;</span><span class="p">];</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="bufferedbundlereader">
@@ -261,19 +268,20 @@ echo $data['Data']['entry1'];</pre>
 <p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Intl/ResourceBundle/Reader/BufferedBundleReader.html" title="Symfony\Component\Intl\ResourceBundle\Reader\BufferedBundleReader"><span class="pre">BufferedBundleReader</span></a></tt>
 wraps another reader, but keeps the last N reads in a buffer, where N is a
 buffer size passed to the constructor:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader;
-use Symfony\Component\Intl\ResourceBundle\Reader\BufferedBundleReader;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Intl\ResourceBundle\Reader\BufferedBundleReader</span><span class="p">;</span>
 
-$reader = new BufferedBundleReader(new BinaryBundleReader(), 10);
+<span class="nv">$reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">BufferedBundleReader</span><span class="p">(</span><span class="k">new</span> <span class="nx">BinaryBundleReader</span><span class="p">(),</span> <span class="mi">10</span><span class="p">);</span>
 
-// actually reads the file
-$data = $reader-&gt;read('/path/to/bundle', 'en');
+<span class="c1">// actually reads the file</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$reader</span><span class="o">-&gt;</span><span class="na">read</span><span class="p">(</span><span class="s1">&#39;/path/to/bundle&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">);</span>
 
-// returns data from the buffer
-$data = $reader-&gt;read('/path/to/bundle', 'en');
+<span class="c1">// returns data from the buffer</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$reader</span><span class="o">-&gt;</span><span class="na">read</span><span class="p">(</span><span class="s1">&#39;/path/to/bundle&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">);</span>
 
-// actually reads the file
-$data = $reader-&gt;read('/path/to/bundle', 'fr');</pre>
+<span class="c1">// actually reads the file</span>
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$reader</span><span class="o">-&gt;</span><span class="na">read</span><span class="p">(</span><span class="s1">&#39;/path/to/bundle&#39;</span><span class="p">,</span> <span class="s1">&#39;fr&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="structuredbundlereader">
@@ -284,18 +292,19 @@ wraps another reader and offers a
 method for reading an entry of the resource bundle without having to worry
 whether array keys are set or not. If a path cannot be resolved, <tt class="docutils literal"><span class="pre">null</span></tt> is
 returned:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader;
-use Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReader;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Intl\ResourceBundle\Reader\BinaryBundleReader</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReader</span><span class="p">;</span>
 
-$reader = new StructuredBundleReader(new BinaryBundleReader());
+<span class="nv">$reader</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">StructuredBundleReader</span><span class="p">(</span><span class="k">new</span> <span class="nx">BinaryBundleReader</span><span class="p">());</span>
 
-$data = $reader-&gt;read('/path/to/bundle', 'en');
+<span class="nv">$data</span> <span class="o">=</span> <span class="nv">$reader</span><span class="o">-&gt;</span><span class="na">read</span><span class="p">(</span><span class="s1">&#39;/path/to/bundle&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">);</span>
 
-// Produces an error if the key "Data" does not exist
-echo $data['Data']['entry1'];
+<span class="c1">// Produces an error if the key &quot;Data&quot; does not exist</span>
+<span class="k">echo</span> <span class="nv">$data</span><span class="p">[</span><span class="s1">&#39;Data&#39;</span><span class="p">][</span><span class="s1">&#39;entry1&#39;</span><span class="p">];</span>
 
-// Returns null if the key "Data" does not exist
-echo $reader-&gt;readEntry('/path/to/bundle', 'en', array('Data', 'entry1'));</pre>
+<span class="c1">// Returns null if the key &quot;Data&quot; does not exist</span>
+<span class="k">echo</span> <span class="nv">$reader</span><span class="o">-&gt;</span><span class="na">readEntry</span><span class="p">(</span><span class="s1">&#39;/path/to/bundle&#39;</span><span class="p">,</span> <span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span> <span class="s1">&#39;entry1&#39;</span><span class="p">));</span>
+</pre></div>
 </div>
 <p>Additionally, the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Intl/ResourceBundle/Reader/StructuredBundleReaderInterface.html#method_readEntry" title="Symfony\Component\Intl\ResourceBundle\Reader\StructuredBundleReaderInterface::readEntry()"><span class="pre">readEntry()</span></a></tt>
@@ -305,7 +314,13 @@ from the fallback locale if it cannot be found in the more specific locale. For
 multi-valued entries (arrays), the values of the more specific and the fallback
 locale will be merged. In order to suppress this behavior, the last parameter
 <tt class="docutils literal"><span class="pre">$fallback</span></tt> can be set to <tt class="docutils literal"><span class="pre">false</span></tt>:</p>
-<div class="highlight-python"><pre>echo $reader-&gt;readEntry('/path/to/bundle', 'en', array('Data', 'entry1'), false);</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">echo</span> <span class="nv">$reader</span><span class="o">-&gt;</span><span class="na">readEntry</span><span class="p">(</span>
+    <span class="s1">&#39;/path/to/bundle&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;en&#39;</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Data&#39;</span><span class="p">,</span> <span class="s1">&#39;entry1&#39;</span><span class="p">),</span>
+    <span class="k">false</span>
+<span class="p">);</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -325,91 +340,98 @@ data is supported:</p>
 <h3>Language and Script Names<a class="headerlink" href="#language-and-script-names" title="Permalink to this headline">¶</a></h3>
 <p>The translations of language and script names can be found in the language
 bundle:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Intl\Intl;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Intl\Intl</span><span class="p">;</span>
 
-\Locale::setDefault('en');
+<span class="nx">\Locale</span><span class="o">::</span><span class="na">setDefault</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">);</span>
 
-$languages = Intl::getLanguageBundle()-&gt;getLanguageNames();
-// =&gt; array('ab' =&gt; 'Abkhazian', ...)
+<span class="nv">$languages</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getLanguageBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLanguageNames</span><span class="p">();</span>
+<span class="c1">// =&gt; array(&#39;ab&#39; =&gt; &#39;Abkhazian&#39;, ...)</span>
 
-$language = Intl::getLanguageBundle()-&gt;getLanguageName('de');
-// =&gt; 'German'
+<span class="nv">$language</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getLanguageBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLanguageName</span><span class="p">(</span><span class="s1">&#39;de&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; &#39;German&#39;</span>
 
-$language = Intl::getLanguageBundle()-&gt;getLanguageName('de', 'AT');
-// =&gt; 'Austrian German'
+<span class="nv">$language</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getLanguageBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLanguageName</span><span class="p">(</span><span class="s1">&#39;de&#39;</span><span class="p">,</span> <span class="s1">&#39;AT&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; &#39;Austrian German&#39;</span>
 
-$scripts = Intl::getLanguageBundle()-&gt;getScriptNames();
-// =&gt; array('Arab' =&gt; 'Arabic', ...)
+<span class="nv">$scripts</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getLanguageBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getScriptNames</span><span class="p">();</span>
+<span class="c1">// =&gt; array(&#39;Arab&#39; =&gt; &#39;Arabic&#39;, ...)</span>
 
-$script = Intl::getLanguageBundle()-&gt;getScriptName('Hans');
-// =&gt; 'Simplified'</pre>
+<span class="nv">$script</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getLanguageBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getScriptName</span><span class="p">(</span><span class="s1">&#39;Hans&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; &#39;Simplified&#39;</span>
+</pre></div>
 </div>
 <p>All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale:</p>
-<div class="highlight-python"><pre>$languages = Intl::getLanguageBundle()-&gt;getLanguageNames('de');
-// =&gt; array('ab' =&gt; 'Abchasisch', ...)</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$languages</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getLanguageBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLanguageNames</span><span class="p">(</span><span class="s1">&#39;de&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; array(&#39;ab&#39; =&gt; &#39;Abchasisch&#39;, ...)</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="country-names">
 <h3>Country Names<a class="headerlink" href="#country-names" title="Permalink to this headline">¶</a></h3>
 <p>The translations of country names can be found in the region bundle:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Intl\Intl;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Intl\Intl</span><span class="p">;</span>
 
-\Locale::setDefault('en');
+<span class="nx">\Locale</span><span class="o">::</span><span class="na">setDefault</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">);</span>
 
-$countries = Intl::getRegionBundle()-&gt;getCountryNames();
-// =&gt; array('AF' =&gt; 'Afghanistan', ...)
+<span class="nv">$countries</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getRegionBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCountryNames</span><span class="p">();</span>
+<span class="c1">// =&gt; array(&#39;AF&#39; =&gt; &#39;Afghanistan&#39;, ...)</span>
 
-$country = Intl::getRegionBundle()-&gt;getCountryName('GB');
-// =&gt; 'United Kingdom'</pre>
+<span class="nv">$country</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getRegionBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCountryName</span><span class="p">(</span><span class="s1">&#39;GB&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; &#39;United Kingdom&#39;</span>
+</pre></div>
 </div>
 <p>All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale:</p>
-<div class="highlight-python"><pre>$countries = Intl::getRegionBundle()-&gt;getCountryNames('de');
-// =&gt; array('AF' =&gt; 'Afghanistan', ...)</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$countries</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getRegionBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCountryNames</span><span class="p">(</span><span class="s1">&#39;de&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; array(&#39;AF&#39; =&gt; &#39;Afghanistan&#39;, ...)</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="locales">
 <h3>Locales<a class="headerlink" href="#locales" title="Permalink to this headline">¶</a></h3>
 <p>The translations of locale names can be found in the locale bundle:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Intl\Intl;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Intl\Intl</span><span class="p">;</span>
 
-\Locale::setDefault('en');
+<span class="nx">\Locale</span><span class="o">::</span><span class="na">setDefault</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">);</span>
 
-$locales = Intl::getLocaleBundle()-&gt;getLocaleNames();
-// =&gt; array('af' =&gt; 'Afrikaans', ...)
+<span class="nv">$locales</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getLocaleBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLocaleNames</span><span class="p">();</span>
+<span class="c1">// =&gt; array(&#39;af&#39; =&gt; &#39;Afrikaans&#39;, ...)</span>
 
-$locale = Intl::getLocaleBundle()-&gt;getLocaleName('zh_Hans_MO');
-// =&gt; 'Chinese (Simplified, Macau SAR China)'</pre>
+<span class="nv">$locale</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getLocaleBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLocaleName</span><span class="p">(</span><span class="s1">&#39;zh_Hans_MO&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; &#39;Chinese (Simplified, Macau SAR China)&#39;</span>
+</pre></div>
 </div>
 <p>All methods accept the translation locale as the last, optional parameter,
 which defaults to the current default locale:</p>
-<div class="highlight-python"><pre>$locales = Intl::getLocaleBundle()-&gt;getLocaleNames('de');
-// =&gt; array('af' =&gt; 'Afrikaans', ...)</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$locales</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getLocaleBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getLocaleNames</span><span class="p">(</span><span class="s1">&#39;de&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; array(&#39;af&#39; =&gt; &#39;Afrikaans&#39;, ...)</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="currencies">
 <h3>Currencies<a class="headerlink" href="#currencies" title="Permalink to this headline">¶</a></h3>
 <p>The translations of currency names and other currency-related information can
 be found in the currency bundle:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Intl\Intl;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Intl\Intl</span><span class="p">;</span>
 
-\Locale::setDefault('en');
+<span class="nx">\Locale</span><span class="o">::</span><span class="na">setDefault</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">);</span>
 
-$currencies = Intl::getCurrencyBundle()-&gt;getCurrencyNames();
-// =&gt; array('AFN' =&gt; 'Afghan Afghani', ...)
+<span class="nv">$currencies</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getCurrencyBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCurrencyNames</span><span class="p">();</span>
+<span class="c1">// =&gt; array(&#39;AFN&#39; =&gt; &#39;Afghan Afghani&#39;, ...)</span>
 
-$currency = Intl::getCurrencyBundle()-&gt;getCurrencyName('INR');
-// =&gt; 'Indian Rupee'
+<span class="nv">$currency</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getCurrencyBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCurrencyName</span><span class="p">(</span><span class="s1">&#39;INR&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; &#39;Indian Rupee&#39;</span>
 
-$symbol = Intl::getCurrencyBundle()-&gt;getCurrencySymbol('INR');
-// =&gt; '₹'
+<span class="nv">$symbol</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getCurrencyBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCurrencySymbol</span><span class="p">(</span><span class="s1">&#39;INR&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; &#39;₹&#39;</span>
 
-$fractionDigits = Intl::getCurrencyBundle()-&gt;getFractionDigits('INR');
-// =&gt; 2
+<span class="nv">$fractionDigits</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getCurrencyBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getFractionDigits</span><span class="p">(</span><span class="s1">&#39;INR&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; 2</span>
 
-$roundingIncrement = Intl::getCurrencyBundle()-&gt;getRoundingIncrement('INR');
-// =&gt; 0</pre>
+<span class="nv">$roundingIncrement</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getCurrencyBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getRoundingIncrement</span><span class="p">(</span><span class="s1">&#39;INR&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; 0</span>
+</pre></div>
 </div>
 <p>All methods (except for
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Intl/ResourceBundle/CurrencyBundleInterface.html#method_getFractionDigits" title="Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface::getFractionDigits()"><span class="pre">getFractionDigits()</span></a></tt>
@@ -417,8 +439,9 @@ and
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Intl/ResourceBundle/CurrencyBundleInterface.html#method_getRoundingIncrement" title="Symfony\Component\Intl\ResourceBundle\CurrencyBundleInterface::getRoundingIncrement()"><span class="pre">getRoundingIncrement()</span></a></tt>)
 accept the translation locale as the last, optional parameter, which defaults
 to the current default locale:</p>
-<div class="highlight-python"><pre>$currencies = Intl::getCurrencyBundle()-&gt;getCurrencyNames('de');
-// =&gt; array('AFN' =&gt; 'Afghanische Afghani', ...)</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$currencies</span> <span class="o">=</span> <span class="nx">Intl</span><span class="o">::</span><span class="na">getCurrencyBundle</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getCurrencyNames</span><span class="p">(</span><span class="s1">&#39;de&#39;</span><span class="p">);</span>
+<span class="c1">// =&gt; array(&#39;AFN&#39; =&gt; &#39;Afghanische Afghani&#39;, ...)</span>
+</pre></div>
 </div>
 <p>That&#8217;s all you need to know for now. Have fun coding!</p>
 </div>
@@ -495,13 +518,13 @@ to the current default locale:</p>
         <li class="right" >
           <a href="http_kernel/introduction.html" title="The HttpKernel Component"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" >The Components</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

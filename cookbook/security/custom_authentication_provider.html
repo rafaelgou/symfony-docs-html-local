@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to create a custom Authentication Provider &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to create a custom Authentication Provider &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +23,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Security" href="index.html" />
-    <link rel="next" title="How to change the Default Target Path Behavior" href="target_path.html" />
-    <link rel="prev" title="How to create a custom User Provider" href="custom_provider.html" /> 
+    <link rel="next" title="Using pre Authenticated Security Firewalls" href="pre_authenticated.html" />
+    <link rel="prev" title="How to Authenticate Users with API Keys" href="api_key_authentication.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="target_path.html" title="How to change the Default Target Path Behavior"
+          <a href="pre_authenticated.html" title="Using pre Authenticated Security Firewalls"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="custom_provider.html" title="How to create a custom User Provider"
+          <a href="api_key_authentication.html" title="How to Authenticate Users with API Keys"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Security</a> &raquo;</li> 
       </ul>
@@ -56,6 +54,16 @@
             
   <div class="section" id="how-to-create-a-custom-authentication-provider">
 <span id="index-0"></span><h1>How to create a custom Authentication Provider<a class="headerlink" href="#how-to-create-a-custom-authentication-provider" title="Permalink to this headline">¶</a></h1>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>Creating a custom authentication system is hard, and this entry will walk
+you through that process. But depending on your needs, you may be able
+to solve your problem in a simpler way using these documents:</p>
+<ul class="last simple">
+<li><a class="reference internal" href="custom_password_authenticator.html"><em>How to Create a Custom Form Password Authenticator</em></a></li>
+<li><a class="reference internal" href="api_key_authentication.html"><em>How to Authenticate Users with API Keys</em></a></li>
+</ul>
+</div>
 <p>If you have read the chapter on <a class="reference internal" href="../../book/security.html"><em>Security</em></a>, you understand the
 distinction Symfony2 makes between authentication and authorization in the
 implementation of security. This chapter discusses the core classes involved
@@ -124,7 +132,7 @@ provider.</p>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The <tt class="docutils literal"><span class="pre">WsseUserToken</span></tt> class extends the security component&#8217;s
+<p class="last">The <tt class="docutils literal"><span class="pre">WsseUserToken</span></tt> class extends the Security component&#8217;s
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/Authentication/Token/AbstractToken.html" title="Symfony\Component\Security\Core\Authentication\Token\AbstractToken"><span class="pre">AbstractToken</span></a></tt>
 class, which provides basic token functionality. Implement the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/Authentication/Token/TokenInterface.html" title="Symfony\Component\Security\Core\Authentication\Token\TokenInterface"><span class="pre">TokenInterface</span></a></tt>
@@ -187,25 +195,26 @@ set an authenticated token in the security context if successful.</p>
             <span class="c1">// ... you might log something here</span>
 
             <span class="c1">// To deny the authentication clear the token. This will redirect to the login page.</span>
-            <span class="c1">// $this-&gt;securityContext-&gt;setToken(null);</span>
+            <span class="c1">// Make sure to only clear your token, not those of other authentication listeners.</span>
+            <span class="c1">// $token = $this-&gt;securityContext-&gt;getToken();</span>
+            <span class="c1">// if ($token instanceof WsseUserToken &amp;&amp; $this-&gt;providerKey === $token-&gt;getProviderKey()) {</span>
+            <span class="c1">//     $this-&gt;securityContext-&gt;setToken(null);</span>
+            <span class="c1">// }</span>
             <span class="c1">// return;</span>
-
-            <span class="c1">// Deny authentication with a &#39;403 Forbidden&#39; HTTP response</span>
-            <span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">();</span>
-            <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">403</span><span class="p">);</span>
-            <span class="nv">$event</span><span class="o">-&gt;</span><span class="na">setResponse</span><span class="p">(</span><span class="nv">$response</span><span class="p">);</span>
-
         <span class="p">}</span>
 
         <span class="c1">// By default deny authorization</span>
         <span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">();</span>
-        <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="mi">403</span><span class="p">);</span>
+        <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="nx">Response</span><span class="o">::</span><span class="na">HTTP_FORBIDDEN</span><span class="p">);</span>
         <span class="nv">$event</span><span class="o">-&gt;</span><span class="na">setResponse</span><span class="p">(</span><span class="nv">$response</span><span class="p">);</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>This listener checks the request for the expected <cite>X-WSSE</cite> header, matches
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.4: </span>Support for HTTP status code constants was introduced in Symfony 2.4.</p>
+</div>
+<p>This listener checks the request for the expected <tt class="docutils literal"><span class="pre">X-WSSE</span></tt> header, matches
 the value returned for the expected WSSE information, creates a token using
 that information, and passes the token on to the authentication manager. If
 the proper information is not provided, or the authentication manager throws
@@ -217,9 +226,16 @@ a 403 Response is returned.</p>
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Http/Firewall/AbstractAuthenticationListener.html" title="Symfony\Component\Security\Http\Firewall\AbstractAuthenticationListener"><span class="pre">AbstractAuthenticationListener</span></a></tt>
 class, is a very useful base class which provides commonly needed functionality
 for security extensions. This includes maintaining the token in the session,
-providing success / failure handlers, login form urls, and more. As WSSE
+providing success / failure handlers, login form URLs, and more. As WSSE
 does not require maintaining authentication sessions or login forms, it
 won&#8217;t be used for this example.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Returning prematurely from the listener is relevant only if you want to chain
+authentication providers (for example to allow anonymous users). If you want
+to forbid access to anonymous users and have a nice 403 error, you should set
+the status code of the response before returning.</p>
 </div>
 </div>
 <div class="section" id="the-authentication-provider">
@@ -263,6 +279,12 @@ the <tt class="docutils literal"><span class="pre">PasswordDigest</span></tt> he
         <span class="k">throw</span> <span class="k">new</span> <span class="nx">AuthenticationException</span><span class="p">(</span><span class="s1">&#39;The WSSE authentication failed.&#39;</span><span class="p">);</span>
     <span class="p">}</span>
 
+    <span class="sd">/**</span>
+<span class="sd">     * This function is specific to Wsse authentication and is only used to help this example</span>
+<span class="sd">     *</span>
+<span class="sd">     * For more information specific to the logic here, see</span>
+<span class="sd">     * https://github.com/symfony/symfony-docs/pull/3134#issuecomment-27699129</span>
+<span class="sd">     */</span>
     <span class="k">protected</span> <span class="k">function</span> <span class="nf">validateDigest</span><span class="p">(</span><span class="nv">$digest</span><span class="p">,</span> <span class="nv">$nonce</span><span class="p">,</span> <span class="nv">$created</span><span class="p">,</span> <span class="nv">$secret</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="c1">// Check created time is not in the future</span>
@@ -275,7 +297,8 @@ the <tt class="docutils literal"><span class="pre">PasswordDigest</span></tt> he
             <span class="k">return</span> <span class="k">false</span><span class="p">;</span>
         <span class="p">}</span>
 
-        <span class="c1">// Validate nonce is unique within 5 minutes</span>
+        <span class="c1">// Validate that the nonce is *not* used in the last 5 minutes</span>
+        <span class="c1">// if it has, this could be a replay attack</span>
         <span class="k">if</span> <span class="p">(</span><span class="nb">file_exists</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cacheDir</span><span class="o">.</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="nv">$nonce</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">cacheDir</span><span class="o">.</span><span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="nv">$nonce</span><span class="p">)</span> <span class="o">+</span> <span class="mi">300</span> <span class="o">&gt;</span> <span class="nb">time</span><span class="p">())</span> <span class="p">{</span>
             <span class="k">throw</span> <span class="k">new</span> <span class="nx">NonceExpiredException</span><span class="p">(</span><span class="s1">&#39;Previously used nonce detected&#39;</span><span class="p">);</span>
         <span class="p">}</span>
@@ -310,9 +333,9 @@ authentication manager will then move to the next provider in the list.</p>
 <div class="section" id="the-factory">
 <h2>The Factory<a class="headerlink" href="#the-factory" title="Permalink to this headline">¶</a></h2>
 <p>You have created a custom token, custom listener, and custom provider. Now
-you need to tie them all together. How do you make your provider available
-to your security configuration? The answer is by using a <tt class="docutils literal"><span class="pre">factory</span></tt>. A factory
-is where you hook into the security component, telling it the name of your
+you need to tie them all together. How do you make a unique provider available
+for every firewall? The answer is by using a <em>factory</em>. A factory
+is where you hook into the Security component, telling it the name of your
 provider and any configuration options available for it. First, you must
 create a class which implements
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/SecurityBundle/DependencyInjection/Security/Factory/SecurityFactoryInterface.html" title="Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface"><span class="pre">SecurityFactoryInterface</span></a></tt>.</p>
@@ -365,7 +388,7 @@ to the DI container for the appropriate security context;</li>
 <li><tt class="docutils literal"><span class="pre">getPosition</span></tt> method, which must be of type <tt class="docutils literal"><span class="pre">pre_auth</span></tt>, <tt class="docutils literal"><span class="pre">form</span></tt>, <tt class="docutils literal"><span class="pre">http</span></tt>,
 and <tt class="docutils literal"><span class="pre">remember_me</span></tt> and defines the position at which the provider is called;</li>
 <li><tt class="docutils literal"><span class="pre">getKey</span></tt> method which defines the configuration key used to reference
-the provider;</li>
+the provider in the firewall configuration;</li>
 <li><tt class="docutils literal"><span class="pre">addConfiguration</span></tt> method, which is used to define the configuration
 options underneath the configuration key in your security configuration.
 Setting configuration options are explained later in this chapter.</li>
@@ -402,11 +425,11 @@ to service ids that do not exist yet: <tt class="docutils literal"><span class="
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/DemoBundle/Resources/config/services.yml</span>
 <span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">wsse.security.authentication.provider</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">Acme\DemoBundle\Security\Authentication\Provider\WsseProvider</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Acme\DemoBundle\Security\Authentication\Provider\WsseProvider</span>
         <span class="l-Scalar-Plain">arguments</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&quot;&quot;</span><span class="p-Indicator">,</span> <span class="s">&quot;%kernel.cache_dir%/security/nonces&quot;</span><span class="p-Indicator">]</span>
 
     <span class="l-Scalar-Plain">wsse.security.authentication.listener</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">Acme\DemoBundle\Security\Firewall\WsseListener</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Acme\DemoBundle\Security\Firewall\WsseListener</span>
         <span class="l-Scalar-Plain">arguments</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&quot;@security.context&quot;</span><span class="p-Indicator">,</span> <span class="s">&quot;@security.authentication.manager&quot;</span><span class="p-Indicator">]</span>
 </pre></div>
 </div>
@@ -487,12 +510,14 @@ factory in your bundle class:</p>
     <span class="l-Scalar-Plain">firewalls</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">wsse_secured</span><span class="p-Indicator">:</span>
             <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/api/.*</span>
+            <span class="l-Scalar-Plain">stateless</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
             <span class="l-Scalar-Plain">wsse</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">true</span>
 </pre></div>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;config&gt;</span>
     <span class="nt">&lt;firewall</span> <span class="na">name=</span><span class="s">&quot;wsse_secured&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/api/.*&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;stateless</span> <span class="nt">/&gt;</span>
         <span class="nt">&lt;wsse</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;/firewall&gt;</span>
 <span class="nt">&lt;/config&gt;</span>
@@ -503,6 +528,7 @@ factory in your bundle class:</p>
     <span class="s1">&#39;firewalls&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
         <span class="s1">&#39;wsse_secured&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
             <span class="s1">&#39;pattern&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/api/.*&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;stateless&#39;</span>    <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="s1">&#39;wsse&#39;</span>    <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
         <span class="p">),</span>
     <span class="p">),</span>
@@ -512,7 +538,7 @@ factory in your bundle class:</p>
 </li>
 </ul>
 </div>
-<p>Congratulations!  You have written your very own custom security authentication
+<p>Congratulations! You have written your very own custom security authentication
 provider!</p>
 </div>
 <div class="section" id="a-little-extra">
@@ -543,7 +569,7 @@ the <tt class="docutils literal"><span class="pre">addConfiguration</span></tt> 
 </pre></div>
 </div>
 <p>Now, in the <tt class="docutils literal"><span class="pre">create</span></tt> method of the factory, the <tt class="docutils literal"><span class="pre">$config</span></tt> argument will
-contain a &#8216;lifetime&#8217; key, set to 5 minutes (300 seconds) unless otherwise
+contain a <tt class="docutils literal"><span class="pre">lifetime</span></tt> key, set to 5 minutes (300 seconds) unless otherwise
 set in the configuration. Pass this argument to your authentication provider
 in order to put it to use.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="k">class</span> <span class="nc">WsseFactory</span> <span class="k">implements</span> <span class="nx">SecurityFactoryInterface</span>
@@ -572,7 +598,7 @@ need to accept a third constructor argument - the lifetime - which it
 should use instead of the hard-coded 300 seconds. These two steps are
 not shown here.</p>
 </div>
-<p>The lifetime of each wsse request is now configurable, and can be
+<p>The lifetime of each WSSE request is now configurable, and can be
 set to any desirable value per firewall.</p>
 <div class="configuration-block">
 <ul class="simple">
@@ -580,6 +606,7 @@ set to any desirable value per firewall.</p>
     <span class="l-Scalar-Plain">firewalls</span><span class="p-Indicator">:</span>
         <span class="l-Scalar-Plain">wsse_secured</span><span class="p-Indicator">:</span>
             <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>   <span class="l-Scalar-Plain">/api/.*</span>
+            <span class="l-Scalar-Plain">stateless</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
             <span class="l-Scalar-Plain">wsse</span><span class="p-Indicator">:</span>      <span class="p-Indicator">{</span> <span class="nv">lifetime</span><span class="p-Indicator">:</span> <span class="nv">30</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
@@ -588,6 +615,7 @@ set to any desirable value per firewall.</p>
     <span class="nt">&lt;firewall</span> <span class="na">name=</span><span class="s">&quot;wsse_secured&quot;</span>
         <span class="na">pattern=</span><span class="s">&quot;/api/.*&quot;</span>
     <span class="nt">&gt;</span>
+        <span class="nt">&lt;stateless</span> <span class="nt">/&gt;</span>
         <span class="nt">&lt;wsse</span> <span class="na">lifetime=</span><span class="s">&quot;30&quot;</span> <span class="nt">/&gt;</span>
     <span class="nt">&lt;/firewall&gt;</span>
 <span class="nt">&lt;/config&gt;</span>
@@ -598,6 +626,7 @@ set to any desirable value per firewall.</p>
     <span class="s1">&#39;firewalls&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
         <span class="s1">&#39;wsse_secured&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
             <span class="s1">&#39;pattern&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/api/.*&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;stateless&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
             <span class="s1">&#39;wsse&#39;</span>    <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
                 <span class="s1">&#39;lifetime&#39;</span> <span class="o">=&gt;</span> <span class="mi">30</span><span class="p">,</span>
             <span class="p">),</span>
@@ -639,11 +668,11 @@ in the factory and consumed or passed to the other classes in the container.</p>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="custom_provider.html"
-                        title="previous chapter">How to create a custom User Provider</a></p>
+  <p class="topless"><a href="api_key_authentication.html"
+                        title="previous chapter">How to Authenticate Users with API Keys</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="target_path.html"
-                        title="next chapter">How to change the Default Target Path Behavior</a></p>
+  <p class="topless"><a href="pre_authenticated.html"
+                        title="next chapter">Using pre Authenticated Security Firewalls</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/security/custom_authentication_provider.txt"
@@ -673,19 +702,19 @@ in the factory and consumed or passed to the other classes in the container.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="target_path.html" title="How to change the Default Target Path Behavior"
+          <a href="pre_authenticated.html" title="Using pre Authenticated Security Firewalls"
              >next</a> |</li>
         <li class="right" >
-          <a href="custom_provider.html" title="How to create a custom User Provider"
+          <a href="api_key_authentication.html" title="How to Authenticate Users with API Keys"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Security</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

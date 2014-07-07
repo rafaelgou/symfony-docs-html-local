@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Authorization &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Authorization &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Security" href="index.html" />
     <link rel="next" title="The Serializer Component" href="../serializer.html" />
     <link rel="prev" title="Authentication" href="authentication.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="authentication.html" title="Authentication"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Security</a> &raquo;</li> 
       </ul>
@@ -56,7 +54,7 @@
             
   <div class="section" id="authorization">
 <span id="index-0"></span><h1>Authorization<a class="headerlink" href="#authorization" title="Permalink to this headline">¶</a></h1>
-<p>When any of the authentication providers (see <a class="reference internal" href="authentication.html#authentication-providers"><em>Authentication providers</em></a>)
+<p>When any of the authentication providers (see <a class="reference internal" href="authentication.html#authentication-providers"><em>Authentication Providers</em></a>)
 has verified the still-unauthenticated token, an authenticated token will
 be returned. The authentication listener should set this token directly
 in the <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/SecurityContextInterface.html" title="Symfony\Component\Security\Core\SecurityContextInterface"><span class="pre">SecurityContextInterface</span></a></tt>
@@ -85,14 +83,14 @@ method may be used to retrieve the roles of the current user (e.g.
 </li>
 <li><dl class="first docutils">
 <dt>An object (optional)</dt>
-<dd><p class="first last">Any object on which for which access control needs to be checked, like
+<dd><p class="first last">Any object for which access control needs to be checked, like
 an article or a comment object.</p>
 </dd>
 </dl>
 </li>
 </ul>
 <div class="section" id="access-decision-manager">
-<h2>Access Decision Manager<a class="headerlink" href="#access-decision-manager" title="Permalink to this headline">¶</a></h2>
+<span id="components-security-access-decision-manager"></span><h2>Access Decision Manager<a class="headerlink" href="#access-decision-manager" title="Permalink to this headline">¶</a></h2>
 <p>Since deciding whether or not a user is authorized to perform a certain
 action can be a complicated process, the standard <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/Authorization/AccessDecisionManager.html" title="Symfony\Component\Security\Core\Authorization\AccessDecisionManager"><span class="pre">AccessDecisionManager</span></a></tt>
 itself depends on multiple voters, and makes a final verdict based on all
@@ -140,6 +138,11 @@ recognizes several strategies:</p>
 <span class="p">);</span>
 </pre></div>
 </div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">You can change the default strategy in the
+<a class="reference internal" href="../../cookbook/security/voters.html#security-voters-change-strategy"><em>configuration</em></a>.</p>
+</div>
 </div>
 <div class="section" id="voters">
 <h2>Voters<a class="headerlink" href="#voters" title="Permalink to this headline">¶</a></h2>
@@ -171,7 +174,7 @@ or <tt class="docutils literal"><span class="pre">VoterInterface::ACCESS_ABSTAIN
 </dl>
 </li>
 </ul>
-<p>The security component contains some standard voters which cover many use
+<p>The Security component contains some standard voters which cover many use
 cases:</p>
 <div class="section" id="authenticatedvoter">
 <h3>AuthenticatedVoter<a class="headerlink" href="#authenticatedvoter" title="Permalink to this headline">¶</a></h3>
@@ -206,11 +209,12 @@ supports attributes starting with <tt class="docutils literal"><span class="pre"
 when the required <tt class="docutils literal"><span class="pre">ROLE_*</span></tt> attributes can all be found in the array of
 roles returned by the token&#8217;s <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/Authentication/Token/TokenInterface.html#method_getRoles" title="Symfony\Component\Security\Core\Authentication\Token\TokenInterface::getRoles()"><span class="pre">getRoles()</span></a></tt>
 method:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Security\Core\Authorization\Voter\RoleVoter;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\Authorization\Voter\RoleVoter</span><span class="p">;</span>
 
-$roleVoter = new RoleVoter('ROLE_');
+<span class="nv">$roleVoter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RoleVoter</span><span class="p">(</span><span class="s1">&#39;ROLE_&#39;</span><span class="p">);</span>
 
-$roleVoter-&gt;vote($token, $object, 'ROLE_ADMIN');</pre>
+<span class="nv">$roleVoter</span><span class="o">-&gt;</span><span class="na">vote</span><span class="p">(</span><span class="nv">$token</span><span class="p">,</span> <span class="nv">$object</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;ROLE_ADMIN&#39;</span><span class="p">));</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="rolehierarchyvoter">
@@ -223,16 +227,17 @@ hierarchy of roles. For instance, a <tt class="docutils literal"><span class="pr
 user to have the <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt> role, it grants access to users who in fact
 have the <tt class="docutils literal"><span class="pre">ROLE_ADMIN</span></tt> role, but also to users having the <tt class="docutils literal"><span class="pre">ROLE_SUPER_ADMIN</span></tt>
 role:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter;
-use Symfony\Component\Security\Core\Role\RoleHierarchy;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\Authorization\Voter\RoleHierarchyVoter</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\Role\RoleHierarchy</span><span class="p">;</span>
 
-$hierarchy = array(
-    'ROLE_SUPER_ADMIN' =&gt; array('ROLE_ADMIN', 'ROLE_USER'),
-);
+<span class="nv">$hierarchy</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;ROLE_SUPER_ADMIN&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;ROLE_ADMIN&#39;</span><span class="p">,</span> <span class="s1">&#39;ROLE_USER&#39;</span><span class="p">),</span>
+<span class="p">);</span>
 
-$roleHierarchy = new RoleHierarchy($hierarchy);
+<span class="nv">$roleHierarchy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RoleHierarchy</span><span class="p">(</span><span class="nv">$hierarchy</span><span class="p">);</span>
 
-$roleHierarchyVoter = new RoleHierarchyVoter($roleHierarchy);</pre>
+<span class="nv">$roleHierarchyVoter</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RoleHierarchyVoter</span><span class="p">(</span><span class="nv">$roleHierarchy</span><span class="p">);</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -249,12 +254,13 @@ which means they should also have a <tt class="docutils literal"><a class="refer
 method that returns a string representation of the role itself. The default
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/Role/Role.html" title="Symfony\Component\Security\Core\Role\Role"><span class="pre">Role</span></a></tt> simply returns its
 first constructor argument:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Security\Core\Role\Role;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\Role\Role</span><span class="p">;</span>
 
-$role = new Role('ROLE_ADMIN');
+<span class="nv">$role</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Role</span><span class="p">(</span><span class="s1">&#39;ROLE_ADMIN&#39;</span><span class="p">);</span>
 
-// will echo 'ROLE_ADMIN'
-echo $role-&gt;getRole();</pre>
+<span class="c1">// will echo &#39;ROLE_ADMIN&#39;</span>
+<span class="k">echo</span> <span class="nv">$role</span><span class="o">-&gt;</span><span class="na">getRole</span><span class="p">();</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -264,52 +270,54 @@ automatically converted from strings to these simple <tt class="docutils literal
 </div>
 </div>
 <div class="section" id="using-the-decision-manager">
-<h2>Using the decision manager<a class="headerlink" href="#using-the-decision-manager" title="Permalink to this headline">¶</a></h2>
+<h2>Using the Decision Manager<a class="headerlink" href="#using-the-decision-manager" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="the-access-listener">
 <h3>The Access Listener<a class="headerlink" href="#the-access-listener" title="Permalink to this headline">¶</a></h3>
 <p>The access decision manager can be used at any point in a request to decide whether
 or not the current user is entitled to access a given resource. One optional,
 but useful, method for restricting access based on a URL pattern is the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Http/Firewall/AccessListener.html" title="Symfony\Component\Security\Http\Firewall\AccessListener"><span class="pre">AccessListener</span></a></tt>,
-which is one of the firewall listeners (see <a class="reference internal" href="firewall.html#firewall-listeners"><em>Firewall listeners</em></a>) that
+which is one of the firewall listeners (see <a class="reference internal" href="firewall.html#firewall-listeners"><em>Firewall Listeners</em></a>) that
 is triggered for each request matching the firewall map (see <a class="reference internal" href="firewall.html#firewall"><em>A Firewall for HTTP Requests</em></a>).</p>
 <p>It uses an access map (which should be an instance of <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Http/AccessMapInterface.html" title="Symfony\Component\Security\Http\AccessMapInterface"><span class="pre">AccessMapInterface</span></a></tt>)
 which contains request matchers and a corresponding set of attributes that
 are required for the current user to get access to the application:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Security\Http\AccessMap;
-use Symfony\Component\HttpFoundation\RequestMatcher;
-use Symfony\Component\Security\Http\Firewall\AccessListener;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Security\Http\AccessMap</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\RequestMatcher</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Security\Http\Firewall\AccessListener</span><span class="p">;</span>
 
-$accessMap = new AccessMap();
-$requestMatcher = new RequestMatcher('^/admin');
-$accessMap-&gt;add($requestMatcher, array('ROLE_ADMIN'));
+<span class="nv">$accessMap</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AccessMap</span><span class="p">();</span>
+<span class="nv">$requestMatcher</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RequestMatcher</span><span class="p">(</span><span class="s1">&#39;^/admin&#39;</span><span class="p">);</span>
+<span class="nv">$accessMap</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="nv">$requestMatcher</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;ROLE_ADMIN&#39;</span><span class="p">));</span>
 
-$accessListener = new AccessListener(
-    $securityContext,
-    $accessDecisionManager,
-    $accessMap,
-    $authenticationManager
-);</pre>
+<span class="nv">$accessListener</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AccessListener</span><span class="p">(</span>
+    <span class="nv">$securityContext</span><span class="p">,</span>
+    <span class="nv">$accessDecisionManager</span><span class="p">,</span>
+    <span class="nv">$accessMap</span><span class="p">,</span>
+    <span class="nv">$authenticationManager</span>
+<span class="p">);</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="security-context">
-<h3>Security context<a class="headerlink" href="#security-context" title="Permalink to this headline">¶</a></h3>
+<h3>Security Context<a class="headerlink" href="#security-context" title="Permalink to this headline">¶</a></h3>
 <p>The access decision manager is also available to other parts of the application
 via the <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/SecurityContext.html#method_isGranted" title="Symfony\Component\Security\Core\SecurityContext::isGranted()"><span class="pre">isGranted()</span></a></tt>
 method of the <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Security/Core/SecurityContext.html" title="Symfony\Component\Security\Core\SecurityContext"><span class="pre">SecurityContext</span></a></tt>.
 A call to this method will directly delegate the question to the access
 decision manager:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Security\SecurityContext;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Security\SecurityContext</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Security\Core\Exception\AccessDeniedException</span><span class="p">;</span>
 
-$securityContext = new SecurityContext(
-    $authenticationManager,
-    $accessDecisionManager
-);
+<span class="nv">$securityContext</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">SecurityContext</span><span class="p">(</span>
+    <span class="nv">$authenticationManager</span><span class="p">,</span>
+    <span class="nv">$accessDecisionManager</span>
+<span class="p">);</span>
 
-if (!$securityContext-&gt;isGranted('ROLE_ADMIN')) {
-    throw new AccessDeniedException();
-}</pre>
+<span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$securityContext</span><span class="o">-&gt;</span><span class="na">isGranted</span><span class="p">(</span><span class="s1">&#39;ROLE_ADMIN&#39;</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">throw</span> <span class="k">new</span> <span class="nx">AccessDeniedException</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -332,9 +340,9 @@ if (!$securityContext-&gt;isGranted('ROLE_ADMIN')) {
 </ul>
 </li>
 <li><a class="reference internal" href="#roles">Roles</a></li>
-<li><a class="reference internal" href="#using-the-decision-manager">Using the decision manager</a><ul>
+<li><a class="reference internal" href="#using-the-decision-manager">Using the Decision Manager</a><ul>
 <li><a class="reference internal" href="#the-access-listener">The Access Listener</a></li>
-<li><a class="reference internal" href="#security-context">Security context</a></li>
+<li><a class="reference internal" href="#security-context">Security Context</a></li>
 </ul>
 </li>
 </ul>
@@ -381,14 +389,14 @@ if (!$securityContext-&gt;isGranted('ROLE_ADMIN')) {
         <li class="right" >
           <a href="authentication.html" title="Authentication"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
           <li><a href="index.html" >Security</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

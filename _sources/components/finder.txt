@@ -5,7 +5,7 @@
 The Finder Component
 ====================
 
-   The Finder Component finds files and directories via an intuitive fluent
+   The Finder component finds files and directories via an intuitive fluent
    interface.
 
 Installation
@@ -13,8 +13,8 @@ Installation
 
 You can install the component in 2 different ways:
 
-* Use the official Git repository (https://github.com/symfony/Finder);
-* :doc:`Install it via Composer </components/using_components>` (``symfony/finder`` on `Packagist`_).
+* :doc:`Install it via Composer </components/using_components>` (``symfony/finder`` on `Packagist`_);
+* Use the official Git repository (https://github.com/symfony/Finder).
 
 Usage
 -----
@@ -82,9 +82,6 @@ Search in several locations by chaining calls to
 
     $finder->files()->in(__DIR__)->in('/elsewhere');
 
-.. versionadded:: 2.2
-   Wildcard support was added in version 2.2.
-
 Use wildcard characters to search in the directories matching a pattern::
 
     $finder->in('src/Symfony/*/*/Resources');
@@ -97,8 +94,8 @@ Exclude directories from matching with the
     $finder->in(__DIR__)->exclude('ruby');
 
 .. versionadded:: 2.3
-   The :method:`Symfony\\Component\\Finder\\Finder::ignoreUnreadableDirs``
-   method was added in Symfony 2.3.
+   The :method:`Symfony\\Component\\Finder\\Finder::ignoreUnreadableDirs`
+   method was introduced in Symfony 2.3.
 
 It's also possible to ignore directories that you don't have permission to read::
 
@@ -206,9 +203,6 @@ The ``notContains()`` method excludes files containing given pattern::
 Path
 ~~~~
 
-.. versionadded:: 2.2
-   The ``path()`` and ``notPath()`` methods were added in version 2.2.
-
 Restrict files and directories by path with the
 :method:`Symfony\\Component\\Finder\\Finder::path` method::
 
@@ -260,8 +254,8 @@ Restrict files by last modified dates with the
 
     $finder->date('since yesterday');
 
-The comparison operator can be any of the following: ``>``, ``>=``, ``<``, '<=',
-'=='. You can also use ``since`` or ``after`` as an alias for ``>``, and
+The comparison operator can be any of the following: ``>``, ``>=``, ``<``, ``<=``,
+``==``. You can also use ``since`` or ``after`` as an alias for ``>``, and
 ``until`` or ``before`` as an alias for ``<``.
 
 The target value can be any date supported by the `strtotime`_ function.
@@ -295,7 +289,7 @@ it is called with the file as a :class:`Symfony\\Component\\Finder\\SplFileInfo`
 instance. The file is excluded from the result set if the Closure returns
 ``false``.
 
-Reading contents of returned files
+Reading Contents of Returned Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The contents of returned files can be read with

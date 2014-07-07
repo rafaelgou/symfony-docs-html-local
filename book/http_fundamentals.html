@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Symfony2 and HTTP Fundamentals &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Symfony2 and HTTP Fundamentals &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Symfony2 versus Flat PHP" href="from_flat_php_to_symfony2.html" />
     <link rel="prev" title="The Book" href="index.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="index.html" title="The Book"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -83,7 +81,7 @@ understand simple text requests, and return simple text responses.</p>
 it or not, HTTP is something you use everyday. With Symfony2, you&#8217;ll learn
 how to master it.</p>
 <div class="section" id="step1-the-client-sends-a-request">
-<span id="index-1"></span><h3>Step1: The Client sends a Request<a class="headerlink" href="#step1-the-client-sends-a-request" title="Permalink to this headline">¶</a></h3>
+<span id="index-1"></span><h3>Step1: The Client Sends a Request<a class="headerlink" href="#step1-the-client-sends-a-request" title="Permalink to this headline">¶</a></h3>
 <p>Every conversation on the web starts with a <em>request</em>. The request is a text
 message created by a client (e.g. a browser, an iPhone app, etc) in a
 special format known as HTTP. The client sends that request to a server,
@@ -145,7 +143,7 @@ make the request (<tt class="docutils literal"><span class="pre">User-Agent</spa
 on Wikipedia&#8217;s <a class="reference external" href="http://en.wikipedia.org/wiki/List_of_HTTP_header_fields">List of HTTP header fields</a> article.</p>
 </div>
 <div class="section" id="step-2-the-server-returns-a-response">
-<h3>Step 2: The Server returns a Response<a class="headerlink" href="#step-2-the-server-returns-a-response" title="Permalink to this headline">¶</a></h3>
+<h3>Step 2: The Server Returns a Response<a class="headerlink" href="#step-2-the-server-returns-a-response" title="Permalink to this headline">¶</a></h3>
 <p>Once a server has received the request, it knows exactly which resource the
 client needs (via the URI) and what the client wants to do with that resource
 (via the method). For example, in the case of a GET request, the server
@@ -205,12 +203,13 @@ while browsing is the <a class="reference external" href="https://addons.mozilla
 <span id="index-2"></span><h2>Requests and Responses in PHP<a class="headerlink" href="#requests-and-responses-in-php" title="Permalink to this headline">¶</a></h2>
 <p>So how do you interact with the &#8220;request&#8221; and create a &#8220;response&#8221; when using
 PHP? In reality, PHP abstracts you a bit from the whole process:</p>
-<div class="highlight-python"><pre>$uri = $_SERVER['REQUEST_URI'];
-$foo = $_GET['foo'];
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$uri</span> <span class="o">=</span> <span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;REQUEST_URI&#39;</span><span class="p">];</span>
+<span class="nv">$foo</span> <span class="o">=</span> <span class="nv">$_GET</span><span class="p">[</span><span class="s1">&#39;foo&#39;</span><span class="p">];</span>
 
-header('Content-type: text/html');
-echo 'The URI requested is: '.$uri;
-echo 'The value of the "foo" parameter is: '.$foo;</pre>
+<span class="nx">header</span><span class="p">(</span><span class="s1">&#39;Content-type: text/html&#39;</span><span class="p">);</span>
+<span class="k">echo</span> <span class="s1">&#39;The URI requested is: &#39;</span><span class="o">.</span><span class="nv">$uri</span><span class="p">;</span>
+<span class="k">echo</span> <span class="s1">&#39;The value of the &quot;foo&quot; parameter is: &#39;</span><span class="o">.</span><span class="nv">$foo</span><span class="p">;</span>
+</pre></div>
 </div>
 <p>As strange as it sounds, this small application is in fact taking information
 from the HTTP request and using it to create an HTTP response. Instead of
@@ -237,39 +236,40 @@ allow you to interact with the HTTP request and response in an easier way.
 The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Request.html" title="Symfony\Component\HttpFoundation\Request"><span class="pre">Request</span></a></tt> class is a simple
 object-oriented representation of the HTTP request message. With it, you
 have all the request information at your fingertips:</p>
-<div class="highlight-python"><pre>use Symfony\Component\HttpFoundation\Request;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
 
-$request = Request::createFromGlobals();
+<span class="nv">$request</span> <span class="o">=</span> <span class="nx">Request</span><span class="o">::</span><span class="na">createFromGlobals</span><span class="p">();</span>
 
-// the URI being requested (e.g. /about) minus any query parameters
-$request-&gt;getPathInfo();
+<span class="c1">// the URI being requested (e.g. /about) minus any query parameters</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPathInfo</span><span class="p">();</span>
 
-// retrieve GET and POST variables respectively
-$request-&gt;query-&gt;get('foo');
-$request-&gt;request-&gt;get('bar', 'default value if bar does not exist');
+<span class="c1">// retrieve GET and POST variables respectively</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">query</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;default value if bar does not exist&#39;</span><span class="p">);</span>
 
-// retrieve SERVER variables
-$request-&gt;server-&gt;get('HTTP_HOST');
+<span class="c1">// retrieve SERVER variables</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">server</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;HTTP_HOST&#39;</span><span class="p">);</span>
 
-// retrieves an instance of UploadedFile identified by foo
-$request-&gt;files-&gt;get('foo');
+<span class="c1">// retrieves an instance of UploadedFile identified by foo</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">files</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
 
-// retrieve a COOKIE value
-$request-&gt;cookies-&gt;get('PHPSESSID');
+<span class="c1">// retrieve a COOKIE value</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">cookies</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;PHPSESSID&#39;</span><span class="p">);</span>
 
-// retrieve an HTTP request header, with normalized, lowercase keys
-$request-&gt;headers-&gt;get('host');
-$request-&gt;headers-&gt;get('content_type');
+<span class="c1">// retrieve an HTTP request header, with normalized, lowercase keys</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">headers</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;host&#39;</span><span class="p">);</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">headers</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;content_type&#39;</span><span class="p">);</span>
 
-$request-&gt;getMethod();          // GET, POST, PUT, DELETE, HEAD
-$request-&gt;getLanguages();       // an array of languages the client accepts</pre>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">();</span>          <span class="c1">// GET, POST, PUT, DELETE, HEAD</span>
+<span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getLanguages</span><span class="p">();</span>       <span class="c1">// an array of languages the client accepts</span>
+</pre></div>
 </div>
 <p>As a bonus, the <tt class="docutils literal"><span class="pre">Request</span></tt> class does a lot of work in the background that
 you&#8217;ll never need to worry about. For example, the <tt class="docutils literal"><span class="pre">isSecure()</span></tt> method
 checks the <em>three</em> different values in PHP that can indicate whether or not
-the user is connecting via a secured connection (i.e. <tt class="docutils literal"><span class="pre">https</span></tt>).</p>
+the user is connecting via a secured connection (i.e. HTTPS).</p>
 <div class="sidebar">
-<p class="first sidebar-title">ParameterBags and Request attributes</p>
+<p class="first sidebar-title">ParameterBags and Request Attributes</p>
 <p>As seen above, the <tt class="docutils literal"><span class="pre">$_GET</span></tt> and <tt class="docutils literal"><span class="pre">$_POST</span></tt> variables are accessible via
 the public <tt class="docutils literal"><span class="pre">query</span></tt> and <tt class="docutils literal"><span class="pre">request</span></tt> properties respectively. Each of
 these objects is a <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/ParameterBag.html" title="Symfony\Component\HttpFoundation\ParameterBag"><span class="pre">ParameterBag</span></a></tt>
@@ -290,15 +290,19 @@ prepare and store context-specific information about the request.</p>
 <p>Symfony also provides a <tt class="docutils literal"><span class="pre">Response</span></tt> class: a simple PHP representation of
 an HTTP response message. This allows your application to use an object-oriented
 interface to construct the response that needs to be returned to the client:</p>
-<div class="highlight-python"><pre>use Symfony\Component\HttpFoundation\Response;
-$response = new Response();
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">();</span>
 
-$response-&gt;setContent('&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello world!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;');
-$response-&gt;setStatusCode(200);
-$response-&gt;headers-&gt;set('Content-Type', 'text/html');
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setContent</span><span class="p">(</span><span class="s1">&#39;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Hello world!&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#39;</span><span class="p">);</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="nx">Response</span><span class="o">::</span><span class="na">HTTP_OK</span><span class="p">);</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">headers</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;Content-Type&#39;</span><span class="p">,</span> <span class="s1">&#39;text/html&#39;</span><span class="p">);</span>
 
-// prints the HTTP headers followed by the content
-$response-&gt;send();</pre>
+<span class="c1">// prints the HTTP headers followed by the content</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.4: </span>Support for HTTP status code constants was introduced in Symfony 2.4.</p>
 </div>
 <p>If Symfony offered nothing else, you would already have a toolkit for easily
 accessing request information and an object-oriented interface for creating
@@ -308,7 +312,7 @@ and create the appropriate response based on your application logic</em>.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">The <tt class="docutils literal"><span class="pre">Request</span></tt> and <tt class="docutils literal"><span class="pre">Response</span></tt> classes are part of a standalone component
-included with Symfony called <tt class="docutils literal"><span class="pre">HttpFoundation</span></tt>. This component can be
+included with Symfony called HttpFoundation. This component can be
 used entirely independently of Symfony and also provides classes for handling
 sessions and file uploads.</p>
 </div>
@@ -375,20 +379,22 @@ Almost all modern web apps do this - including apps like WordPress.</p>
 executed and what the content to return should be. To figure this out, you&#8217;ll
 need to check the incoming URI and execute different parts of your code depending
 on that value. This can get ugly quickly:</p>
-<div class="highlight-python"><pre>// index.php
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-$request = Request::createFromGlobals();
-$path = $request-&gt;getPathInfo(); // the URI path being requested
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// index.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
 
-if (in_array($path, array('', '/'))) {
-    $response = new Response('Welcome to the homepage.');
-} elseif ($path == '/contact') {
-    $response = new Response('Contact us');
-} else {
-    $response = new Response('Page not found.', 404);
-}
-$response-&gt;send();</pre>
+<span class="nv">$request</span> <span class="o">=</span> <span class="nx">Request</span><span class="o">::</span><span class="na">createFromGlobals</span><span class="p">();</span>
+<span class="nv">$path</span> <span class="o">=</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getPathInfo</span><span class="p">();</span> <span class="c1">// the URI path being requested</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="nb">in_array</span><span class="p">(</span><span class="nv">$path</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;/&#39;</span><span class="p">)))</span> <span class="p">{</span>
+    <span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="s1">&#39;Welcome to the homepage.&#39;</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">elseif</span> <span class="p">(</span><span class="nv">$path</span> <span class="o">==</span> <span class="s1">&#39;/contact&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="s1">&#39;Contact us&#39;</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="s1">&#39;Page not found.&#39;</span><span class="p">,</span> <span class="nx">Response</span><span class="o">::</span><span class="na">HTTP_NOT_FOUND</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+</pre></div>
 </div>
 <p>Solving this problem can be difficult. Fortunately it&#8217;s <em>exactly</em> what Symfony
 is designed to do.</p>
@@ -431,9 +437,16 @@ by adding an entry for <tt class="docutils literal"><span class="pre">/contact</
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;contact&quot;</span> <span class="na">path=</span><span class="s">&quot;/contact&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeBlogBundle:Main:contact<span class="nt">&lt;/default&gt;</span>
-<span class="nt">&lt;/route&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;contact&quot;</span> <span class="na">path=</span><span class="s">&quot;/contact&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeDemoBundle:Main:contact<span class="nt">&lt;/default&gt;</span>
+    <span class="nt">&lt;/route&gt;</span>
+<span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -443,7 +456,7 @@ by adding an entry for <tt class="docutils literal"><span class="pre">/contact</
 
 <span class="nv">$collection</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">RouteCollection</span><span class="p">();</span>
 <span class="nv">$collection</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;contact&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Route</span><span class="p">(</span><span class="s1">&#39;/contact&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeBlogBundle:Main:contact&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;_controller&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;AcmeDemoBundle:Main:contact&#39;</span><span class="p">,</span>
 <span class="p">)));</span>
 
 <span class="k">return</span> <span class="nv">$collection</span><span class="p">;</span>
@@ -454,7 +467,7 @@ by adding an entry for <tt class="docutils literal"><span class="pre">/contact</
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">This example uses <tt class="xref doc docutils literal"><span class="pre">YAML</span></tt> to define the routing
+<p class="last">This example uses <a class="reference internal" href="../components/yaml/yaml_format.html"><em>YAML</em></a> to define the routing
 configuration. Routing configuration can also be written in other formats
 such as XML or PHP.</p>
 </div>
@@ -462,22 +475,23 @@ such as XML or PHP.</p>
 specified controller is executed. As you&#8217;ll learn in the <a class="reference internal" href="routing.html"><em>routing chapter</em></a>,
 the <tt class="docutils literal"><span class="pre">AcmeDemoBundle:Main:contact</span></tt> string is a short syntax that points to a
 specific PHP method <tt class="docutils literal"><span class="pre">contactAction</span></tt> inside a class called <tt class="docutils literal"><span class="pre">MainController</span></tt>:</p>
-<div class="highlight-python"><pre>// src/Acme/DemoBundle/Controller/MainController.php
-namespace Acme\DemoBundle\Controller;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/Controller/MainController.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\DemoBundle\Controller</span><span class="p">;</span>
 
-use Symfony\Component\HttpFoundation\Response;
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
 
-class MainController
-{
-    public function contactAction()
-    {
-        return new Response('&lt;h1&gt;Contact us!&lt;/h1&gt;');
-    }
-}</pre>
+<span class="k">class</span> <span class="nc">MainController</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">contactAction</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="s1">&#39;&lt;h1&gt;Contact us!&lt;/h1&gt;&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>In this very simple example, the controller simply creates a
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Response.html" title="Symfony\Component\HttpFoundation\Response"><span class="pre">Response</span></a></tt> object with the HTML
-&#8220;<tt class="docutils literal"><span class="pre">&lt;h1&gt;Contact</span> <span class="pre">us!&lt;/h1&gt;&quot;</span></tt>. In the <a class="reference internal" href="controller.html"><em>controller chapter</em></a>,
+<tt class="docutils literal"><span class="pre">&lt;h1&gt;Contact</span> <span class="pre">us!&lt;/h1&gt;</span></tt>. In the <a class="reference internal" href="controller.html"><em>controller chapter</em></a>,
 you&#8217;ll learn how a controller can render templates, allowing your &#8220;presentation&#8221;
 code (i.e. anything that actually writes out HTML) to live in a separate
 template file. This frees up the controller to worry only about the hard
@@ -513,17 +527,17 @@ about how that request should be handled (e.g. execute the <tt class="docutils l
 method);</li>
 <li><a class="reference external" href="https://github.com/symfony/Form">Form</a> - A full-featured and flexible framework for creating forms and
 handling form submissions;</li>
-<li><a class="reference external" href="https://github.com/symfony/Validator">Validator</a> A system for creating rules about data and then validating
+<li><a class="reference external" href="https://github.com/symfony/Validator">Validator</a> - A system for creating rules about data and then validating
 whether or not user-submitted data follows those rules;</li>
-<li><a class="reference internal" href="../components/class_loader.html"><em>ClassLoader</em></a> An autoloading library that allows
+<li><a class="reference internal" href="../components/class_loader/introduction.html"><em>ClassLoader</em></a> - An autoloading library that allows
 PHP classes to be used without needing to manually <tt class="docutils literal"><span class="pre">require</span></tt> the files
 containing those classes;</li>
-<li><a class="reference internal" href="../components/templating.html"><em>Templating</em></a> A toolkit for rendering templates,
-handling template inheritance (i.e. a template is decorated with a layout)
-and performing other common template tasks;</li>
+<li><a class="reference internal" href="../components/templating/introduction.html"><em>Templating</em></a> - A toolkit for rendering
+templates, handling template inheritance (i.e. a template is decorated with
+a layout) and performing other common template tasks;</li>
 <li><a class="reference external" href="https://github.com/symfony/Security">Security</a> - A powerful library for handling all types of security inside
 an application;</li>
-<li><a class="reference external" href="https://github.com/symfony/Translation">Translation</a> A framework for translating strings in your application.</li>
+<li><a class="reference external" href="https://github.com/symfony/Translation">Translation</a> - A framework for translating strings in your application.</li>
 </ul>
 <p>Each and every one of these components is decoupled and can be used in <em>any</em>
 PHP project, regardless of whether or not you use the Symfony2 framework.
@@ -535,7 +549,7 @@ Every part is made to be used if needed and replaced when necessary.</p>
 a PHP library that accomplishes two distinct tasks:</p>
 <ol class="arabic simple">
 <li>Provides a selection of components (i.e. the Symfony2 Components) and
-third-party libraries (e.g. <a class="reference external" href="http://swiftmailer.org/">Swiftmailer</a> for sending emails);</li>
+third-party libraries (e.g. <a class="reference external" href="http://swiftmailer.org/">Swift Mailer</a> for sending emails);</li>
 <li>Provides sensible configuration and a &#8220;glue&#8221; library that ties all of these
 pieces together.</li>
 </ol>
@@ -561,8 +575,8 @@ sensible defaults. For more advanced users, the sky is the limit.</p>
   <ul>
 <li><a class="reference internal" href="#">Symfony2 and HTTP Fundamentals</a><ul>
 <li><a class="reference internal" href="#http-is-simple">HTTP is Simple</a><ul>
-<li><a class="reference internal" href="#step1-the-client-sends-a-request">Step1: The Client sends a Request</a></li>
-<li><a class="reference internal" href="#step-2-the-server-returns-a-response">Step 2: The Server returns a Response</a></li>
+<li><a class="reference internal" href="#step1-the-client-sends-a-request">Step1: The Client Sends a Request</a></li>
+<li><a class="reference internal" href="#step-2-the-server-returns-a-response">Step 2: The Server Returns a Response</a></li>
 <li><a class="reference internal" href="#requests-responses-and-web-development">Requests, Responses and Web Development</a></li>
 </ul>
 </li>
@@ -624,13 +638,13 @@ sensible defaults. For more advanced users, the sky is the limit.</p>
         <li class="right" >
           <a href="index.html" title="The Book"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

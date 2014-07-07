@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Advanced Container Configuration &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Advanced Container Configuration &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,10 +23,10 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
-    <link rel="up" title="Dependency Injection" href="index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
+    <link rel="up" title="DependencyInjection" href="index.html" />
     <link rel="next" title="Lazy Services" href="lazy_services.html" />
-    <link rel="prev" title="Managing Common Dependencies with Parent Services" href="parentservices.html" /> 
+    <link rel="prev" title="Managing common Dependencies with parent Services" href="parentservices.html" /> 
   </head>
   <body>
     <div class="related">
@@ -41,11 +39,11 @@
           <a href="lazy_services.html" title="Lazy Services"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="parentservices.html" title="Managing Common Dependencies with Parent Services"
+          <a href="parentservices.html" title="Managing common Dependencies with parent Services"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Dependency Injection</a> &raquo;</li> 
+          <li><a href="index.html" accesskey="U">DependencyInjection</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -62,12 +60,13 @@
 within your application code. These services are called <tt class="docutils literal"><span class="pre">public</span></tt>. For example,
 the <tt class="docutils literal"><span class="pre">doctrine</span></tt> service registered with the container when using the DoctrineBundle
 is a public service as you can access it via:</p>
-<div class="highlight-python"><pre>$doctrine = $container-&gt;get('doctrine');</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$doctrine</span> <span class="o">=</span> <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;doctrine&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>However, there are use-cases when you don&#8217;t want a service to be public. This
 is common when a service is only defined because it could be used as an
 argument for another service.</p>
-<div class="admonition note">
+<div class="admonition note" id="inlined-private-services">
 <p class="first admonition-title">Note</p>
 <p class="last">If you use a private service as an argument to only one other service,
 this will result in an inlined instantiation (e.g. <tt class="docutils literal"><span class="pre">new</span> <span class="pre">PrivateFooBar()</span></tt>)
@@ -98,7 +97,8 @@ directly from your code.</p>
 </ul>
 </div>
 <p>Now that the service is private, you <em>cannot</em> call:</p>
-<div class="highlight-python"><pre>$container-&gt;get('foo');</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>However, if a service has been marked as private, you can still alias it (see
 below) to access this service (via the alias).</p>
@@ -112,7 +112,7 @@ below) to access this service (via the alias).</p>
 <p>Synthetic services are services that are injected into the container instead
 of being created by the container.</p>
 <p>For example, if you&#8217;re using the <a class="reference internal" href="../http_kernel/introduction.html"><em>HttpKernel</em></a>
-component with the DependencyInjection component, then the the <tt class="docutils literal"><span class="pre">request</span></tt>
+component with the DependencyInjection component, then the <tt class="docutils literal"><span class="pre">request</span></tt>
 service is injected in the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/DependencyInjection/ContainerAwareHttpKernel.html#method_handle" title="Symfony\Component\HttpKernel\DependencyInjection\ContainerAwareHttpKernel::handle()"><span class="pre">ContainerAwareHttpKernel::handle()</span></a></tt>
 method when entering the request <a class="reference internal" href="../../cookbook/service_container/scopes.html"><em>scope</em></a>.
@@ -148,8 +148,9 @@ to configure how a service is created by the container. As the service isn&#8217
 created by the container, these options are omitted.</p>
 <p>Now, you can inject the class by using
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/DependencyInjection/Container.html#method_set" title="Symfony\Component\DependencyInjection\Container::set()"><span class="pre">Container::set</span></a></tt>:</p>
-<div class="highlight-python"><pre>// ...
-$container-&gt;set('request', new MyRequest(...));</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// ...</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">set</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">MyRequest</span><span class="p">(</span><span class="o">...</span><span class="p">));</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="aliasing">
@@ -184,11 +185,22 @@ services.</p>
 </div>
 <p>This means that when using the container directly, you can access the <tt class="docutils literal"><span class="pre">foo</span></tt>
 service by asking for the <tt class="docutils literal"><span class="pre">bar</span></tt> service like this:</p>
-<div class="highlight-python"><pre>$container-&gt;get('bar'); // Would return the foo service</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span> <span class="c1">// Would return the foo service</span>
+</pre></div>
+</div>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>In YAML, you can also use a shortcut to alias a service:</p>
+<div class="last highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
+   <span class="l-Scalar-Plain">foo</span><span class="p-Indicator">:</span>
+     <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Example\Foo</span>
+   <span class="l-Scalar-Plain">bar</span><span class="p-Indicator">:</span> <span class="s">&quot;@foo&quot;</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="requiring-files">
-<h2>Requiring files<a class="headerlink" href="#requiring-files" title="Permalink to this headline">¶</a></h2>
+<h2>Requiring Files<a class="headerlink" href="#requiring-files" title="Permalink to this headline">¶</a></h2>
 <p>There might be use cases when you need to include another file just before
 the service itself gets loaded. To do so, you can use the <tt class="docutils literal"><span class="pre">file</span></tt> directive.</p>
 <div class="configuration-block">
@@ -214,8 +226,99 @@ the service itself gets loaded. To do so, you can use the <tt class="docutils li
 </li>
 </ul>
 </div>
-<p>Notice that Symfony will internally call the PHP function require_once
+<p>Notice that Symfony will internally call the PHP statement <tt class="docutils literal"><span class="pre">require_once</span></tt>,
 which means that your file will be included only once per request.</p>
+</div>
+<div class="section" id="decorating-services">
+<h2>Decorating Services<a class="headerlink" href="#decorating-services" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.5: </span>Decorated services were introduced in Symfony 2.5.</p>
+</div>
+<p>When overriding an existing definition, the old service is lost:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;FooService&#39;</span><span class="p">);</span>
+
+<span class="c1">// this is going to replace the old definition with the new one</span>
+<span class="c1">// old definition is lost</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;CustomFooService&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Most of the time, that&#8217;s exactly what you want to do. But sometimes,
+you might want to decorate the old one instead. In this case, the
+old service should be kept around to be able to reference it in the
+new one. This configuration replaces <tt class="docutils literal"><span class="pre">foo</span></tt> with a new one, but keeps
+a reference of the old one  as <tt class="docutils literal"><span class="pre">bar.inner</span></tt>:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">bar</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">public</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+  <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">stdClass</span>
+  <span class="l-Scalar-Plain">decorates</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">foo</span>
+  <span class="l-Scalar-Plain">arguments</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&quot;@bar.inner&quot;</span><span class="p-Indicator">]</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;bar&quot;</span> <span class="na">class=</span><span class="s">&quot;stdClass&quot;</span> <span class="na">decorates=</span><span class="s">&quot;foo&quot;</span> <span class="na">public=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;argument</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;bar.inner&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\Reference</span><span class="p">;</span>
+
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;stdClass&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addArgument</span><span class="p">(</span><span class="k">new</span> <span class="nx">Reference</span><span class="p">(</span><span class="s1">&#39;bar.inner&#39;</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="na">setPublic</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setDecoratedService</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>Here is what&#8217;s going on here: the <tt class="docutils literal"><span class="pre">setDecoratedService()`</span> <span class="pre">method</span> <span class="pre">tells</span>
+<span class="pre">the</span> <span class="pre">container</span> <span class="pre">that</span> <span class="pre">the</span> <span class="pre">``bar</span></tt> service should replace the <tt class="docutils literal"><span class="pre">foo</span></tt> service,
+renaming <tt class="docutils literal"><span class="pre">foo</span></tt> to <tt class="docutils literal"><span class="pre">bar.inner</span></tt>.
+By convention, the old <tt class="docutils literal"><span class="pre">foo</span></tt> service is going to be renamed <tt class="docutils literal"><span class="pre">bar.inner</span></tt>,
+so you can inject it into your new service.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>The generated inner id is based on the id of the decorator service
+(<tt class="docutils literal"><span class="pre">bar</span></tt> here), not of the decorated service (<tt class="docutils literal"><span class="pre">foo</span></tt> here).  This is
+mandatory to allow several decorators on the same service (they need to have
+different generated inner ids).</p>
+<p class="last">Most of the time, the decorator should be declared private, as you will not
+need to retrieve it as <tt class="docutils literal"><span class="pre">bar</span></tt> from the container. The visibility of the
+decorated <tt class="docutils literal"><span class="pre">foo</span></tt> service (which is an alias for <tt class="docutils literal"><span class="pre">bar</span></tt>) will still be the
+same as the original <tt class="docutils literal"><span class="pre">foo</span></tt> visibility.</p>
+</div>
+<p>You can change the inner service name if you want to:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">bar</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">stdClass</span>
+  <span class="l-Scalar-Plain">public</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">false</span>
+  <span class="l-Scalar-Plain">decorates</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">foo</span>
+  <span class="l-Scalar-Plain">decoration_inner_name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">bar.wooz</span>
+  <span class="l-Scalar-Plain">arguments</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="s">&quot;@bar.wooz&quot;</span><span class="p-Indicator">]</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;bar&quot;</span> <span class="na">class=</span><span class="s">&quot;stdClass&quot;</span> <span class="na">decorates=</span><span class="s">&quot;foo&quot;</span> <span class="na">decoration-inner-name=</span><span class="s">&quot;bar.wooz&quot;</span> <span class="na">public=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;argument</span> <span class="na">type=</span><span class="s">&quot;service&quot;</span> <span class="na">id=</span><span class="s">&quot;bar.wooz&quot;</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/service&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\DependencyInjection\Reference</span><span class="p">;</span>
+
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">register</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="s1">&#39;stdClass&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">addArgument</span><span class="p">(</span><span class="k">new</span> <span class="nx">Reference</span><span class="p">(</span><span class="s1">&#39;bar.wooz&#39;</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="na">setPublic</span><span class="p">(</span><span class="k">false</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setDecoratedService</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">,</span> <span class="s1">&#39;bar.wooz&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 
@@ -231,14 +334,15 @@ which means that your file will be included only once per request.</p>
 <li><a class="reference internal" href="#marking-services-as-public-private">Marking Services as public / private</a></li>
 <li><a class="reference internal" href="#synthetic-services">Synthetic Services</a></li>
 <li><a class="reference internal" href="#aliasing">Aliasing</a></li>
-<li><a class="reference internal" href="#requiring-files">Requiring files</a></li>
+<li><a class="reference internal" href="#requiring-files">Requiring Files</a></li>
+<li><a class="reference internal" href="#decorating-services">Decorating Services</a></li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="parentservices.html"
-                        title="previous chapter">Managing Common Dependencies with Parent Services</a></p>
+                        title="previous chapter">Managing common Dependencies with parent Services</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="lazy_services.html"
                         title="next chapter">Lazy Services</a></p>
@@ -274,16 +378,16 @@ which means that your file will be included only once per request.</p>
           <a href="lazy_services.html" title="Lazy Services"
              >next</a> |</li>
         <li class="right" >
-          <a href="parentservices.html" title="Managing Common Dependencies with Parent Services"
+          <a href="parentservices.html" title="Managing common Dependencies with parent Services"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
-          <li><a href="index.html" >Dependency Injection</a> &raquo;</li> 
+          <li><a href="index.html" >DependencyInjection</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

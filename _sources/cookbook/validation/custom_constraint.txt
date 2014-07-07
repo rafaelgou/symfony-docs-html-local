@@ -52,7 +52,7 @@ In other words, if you create a custom ``Constraint`` (e.g. ``MyConstraint``),
 Symfony2 will automatically look for another class, ``MyConstraintValidator``
 when actually performing the validation.
 
-The validator class is also simple, and only has one required method: ``validate``::
+The validator class is also simple, and only has one required method ``validate()``::
 
     // src/Acme/DemoBundle/Validator/Constraints/ContainsAlphanumericValidator.php
     namespace Acme\DemoBundle\Validator\Constraints;
@@ -65,7 +65,10 @@ The validator class is also simple, and only has one required method: ``validate
         public function validate($value, Constraint $constraint)
         {
             if (!preg_match('/^[a-zA-Za0-9]+$/', $value, $matches)) {
-                $this->context->addViolation($constraint->message, array('%string%' => $value));
+                $this->context->addViolation(
+                    $constraint->message,
+                    array('%string%' => $value)
+                );
             }
         }
     }
@@ -192,7 +195,7 @@ validator::
     }
 
 As mentioned above, Symfony2 will automatically look for a class named after
-the constraint, with ``Validator`` appended.  If your constraint validator
+the constraint, with ``Validator`` appended. If your constraint validator
 is defined as a service, it's important that you override the
 ``validatedBy()`` method to return the alias used when defining your service,
 otherwise Symfony2 won't use the constraint validator service, and will
@@ -202,7 +205,7 @@ Class Constraint Validator
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Beside validating a class property, a constraint can have a class scope by
-providing a target::
+providing a target in its ``Constraint`` class::
 
     public function getTargets()
     {
@@ -216,7 +219,12 @@ With this, the validator ``validate()`` method gets an object as its first argum
         public function validate($protocol, Constraint $constraint)
         {
             if ($protocol->getFoo() != $protocol->getBar()) {
-                $this->context->addViolationAt('foo', $constraint->message, array(), null);
+                $this->context->addViolationAt(
+                    'foo',
+                    $constraint->message,
+                    array(),
+                    null
+                );
             }
         }
     }

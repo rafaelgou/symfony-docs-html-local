@@ -4,7 +4,7 @@
 How to Unit Test your Forms
 ===========================
 
-The Form Component consists of 3 core objects: a form type (implementing
+The Form component consists of 3 core objects: a form type (implementing
 :class:`Symfony\\Component\\Form\\FormTypeInterface`), the
 :class:`Symfony\\Component\\Form\\Form` and the
 :class:`Symfony\\Component\\Form\\FormView`.
@@ -23,14 +23,20 @@ test the core types and you can use it to test your types too.
 .. versionadded:: 2.3
     The ``TypeTestCase`` has moved to the ``Symfony\Component\Form\Test``
     namespace in 2.3. Previously, the class was located in
-    ``Symfony\Component\Form\Tests\Core\Extension\Type``.
+    ``Symfony\Component\Form\Tests\Extension\Core\Type``.
+
+.. note::
+
+    Depending on the way you installed your Symfony or Symfony Form component
+    the tests may not be downloaded. Use the ``--prefer-source`` option with
+    Composer if this is the case.
 
 The Basics
 ----------
 
 The simplest ``TypeTestCase`` implementation looks like the following::
 
-    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
+    // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTest.php
     namespace Acme\TestBundle\Tests\Form\Type;
 
     use Acme\TestBundle\Form\Type\TestedType;
@@ -67,7 +73,7 @@ The simplest ``TypeTestCase`` implementation looks like the following::
         }
     }
 
-So, what does it test? Let's explain it line by line.
+So, what does it test? Here comes a detailed explanation.
 
 First you verify if the ``FormType`` compiles. This includes basic class
 inheritance, the ``buildForm`` function and options resolution. This should
@@ -77,7 +83,7 @@ be the first test you write::
     $form = $this->factory->create($type);
 
 This test checks that none of your data transformers used by the form
-failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized``
+failed. The :method:`Symfony\\Component\\Form\\FormInterface::isSynchronized`
 method is only set to ``false`` if a data transformer throws an exception::
 
     $form->submit($formData);
@@ -117,7 +123,7 @@ might look like this::
 
 To create your form correctly, you need to make the type available to the
 form factory in your test. The easiest way is to register it manually
-before creating the parent form using PreloadedExtension class::
+before creating the parent form using the ``PreloadedExtension`` class::
 
     // src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
     namespace Acme\TestBundle\Tests\Form\Type;
@@ -156,7 +162,7 @@ Adding custom Extensions
 ------------------------
 
 It often happens that you use some options that are added by
-:doc:`form extensions</cookbook/form/create_form_type_extension>`. One of the
+:doc:`form extensions </cookbook/form/create_form_type_extension>`. One of the
 cases may be the ``ValidatorExtension`` with its ``invalid_message`` option.
 The ``TypeTestCase`` loads only the core form extension so an "Invalid option"
 exception will be raised if you try to use it for testing a class that depends
@@ -168,6 +174,9 @@ on other extensions. You need add those extensions to the factory object::
     use Acme\TestBundle\Form\Type\TestedType;
     use Acme\TestBundle\Model\TestObject;
     use Symfony\Component\Form\Test\TypeTestCase;
+    use Symfony\Component\Form\Forms;
+    use Symfony\Component\Form\FormBuilder;
+    use Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension;
 
     class TestedTypeTest extends TypeTestCase
     {
@@ -176,6 +185,7 @@ on other extensions. You need add those extensions to the factory object::
             parent::setUp();
 
             $this->factory = Forms::createFormFactoryBuilder()
+                ->addExtensions($this->getExtensions())
                 ->addTypeExtension(
                     new FormTypeValidatorExtension(
                         $this->getMock('Symfony\Component\Validator\ValidatorInterface')

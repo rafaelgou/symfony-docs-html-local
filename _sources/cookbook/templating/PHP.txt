@@ -4,7 +4,7 @@
 How to use PHP instead of Twig for Templates
 ============================================
 
-Even if Symfony2 defaults to Twig for its template engine, you can still use
+Symfony2 defaults to Twig for its template engine, but you can still use
 plain PHP code if you want. Both templating engines are supported equally in
 Symfony2. Symfony2 adds some nice features on top of PHP to make writing
 templates with PHP more powerful.
@@ -22,14 +22,15 @@ your application configuration file:
         # app/config/config.yml
         framework:
             # ...
-            templating:    { engines: ['twig', 'php'] }
+            templating:
+                engines: ['twig', 'php']
 
     .. code-block:: xml
 
         <!-- app/config/config.xml -->
-        <framework:config ...>
+        <framework:config>
             <!-- ... -->
-            <framework:templating ...>
+            <framework:templating>
                 <framework:engine id="twig" />
                 <framework:engine id="php" />
             </framework:templating>
@@ -39,7 +40,6 @@ your application configuration file:
 
         $container->loadFromExtension('framework', array(
             // ...
-
             'templating' => array(
                 'engines' => array('twig', 'php'),
             ),
@@ -54,7 +54,10 @@ below renders the ``index.html.php`` template::
     // ...
     public function indexAction($name)
     {
-        return $this->render('AcmeHelloBundle:Hello:index.html.php', array('name' => $name));
+        return $this->render(
+            'AcmeHelloBundle:Hello:index.html.php',
+            array('name' => $name)
+        );
     }
 
 You can also use the :doc:`/bundles/SensioFrameworkExtraBundle/annotations/view`
@@ -100,7 +103,7 @@ is the same notation used to reference a template. The ``::`` part simply
 means that the controller element is empty, so the corresponding file is
 directly stored under ``views/``.
 
-Now, let's have a look at the ``layout.html.php`` file:
+Now, have a look at the ``layout.html.php`` file:
 
 .. code-block:: html+php
 
@@ -114,7 +117,7 @@ Now, let's have a look at the ``layout.html.php`` file:
 The layout is itself decorated by another one (``::base.html.php``). Symfony2
 supports multiple decoration levels: a layout can itself be decorated by
 another one. When the bundle part of the template name is empty, views are
-looked for in the ``app/Resources/views/`` directory. This directory store
+looked for in the ``app/Resources/views/`` directory. This directory stores
 global views for your entire project:
 
 .. code-block:: html+php
@@ -290,7 +293,7 @@ pattern:
 
     # src/Acme/HelloBundle/Resources/config/routing.yml
     hello: # The route name
-        path:  /hello/{name}
+        path:     /hello/{name}
         defaults: { _controller: AcmeHelloBundle:Hello:index }
 
 Using Assets: images, JavaScripts, and stylesheets
@@ -309,6 +312,21 @@ The ``assets`` helper's main purpose is to make your application more
 portable. Thanks to this helper, you can move the application root directory
 anywhere under your web root directory without changing anything in your
 template's code.
+
+Profiling Templates
+~~~~~~~~~~~~~~~~~~~
+
+By using the ``stopwatch`` helper, you are able to time parts of your template
+and display it on the timeline of the WebProfilerBundle::
+
+    <?php $view['stopwatch']->start('foo') ?>
+    ... things that get timed
+    <?php $view['stopwatch']->stop('foo') ?>
+
+.. tip::
+
+    If you use the same name more than once in your template, the times are
+    grouped on the same line in the timeline.
 
 Output Escaping
 ---------------

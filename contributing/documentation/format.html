@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Documentation Format &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Documentation Format &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Contributing Documentation" href="index.html" />
     <link rel="next" title="Documentation Standards" href="standards.html" />
     <link rel="prev" title="Contributing to the Documentation" href="overview.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="overview.html" title="Contributing to the Documentation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Contributing Documentation</a> &raquo;</li> 
       </ul>
@@ -60,22 +58,25 @@
 <a class="reference external" href="http://sphinx-doc.org/">Sphinx</a> for building the output (HTML, PDF, ...).</p>
 <div class="section" id="restructuredtext">
 <h2>reStructuredText<a class="headerlink" href="#restructuredtext" title="Permalink to this headline">¶</a></h2>
-<p>reStructuredText &#8220;is an easy-to-read, what-you-see-is-what-you-get plaintext
-markup syntax and parser system&#8221;.</p>
+<p>reStructuredText <em>&#8220;is an easy-to-read, what-you-see-is-what-you-get plaintext
+markup syntax and parser system&#8221;</em>.</p>
 <p>You can learn more about its syntax by reading existing Symfony2 <a class="reference external" href="https://github.com/symfony/symfony-docs">documents</a>
 or by reading the <a class="reference external" href="http://sphinx-doc.org/rest.html">reStructuredText Primer</a> on the Sphinx website.</p>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
 <p>If you are familiar with Markdown, be careful as things are sometimes very
 similar but different:</p>
-<ul class="simple">
+<ul class="last simple">
 <li>Lists starts at the beginning of a line (no indentation is allowed);</li>
 <li>Inline code blocks use double-ticks (<tt class="docutils literal"><span class="pre">``like</span> <span class="pre">this``</span></tt>).</li>
 </ul>
+</div>
 </div>
 <div class="section" id="sphinx">
 <h2>Sphinx<a class="headerlink" href="#sphinx" title="Permalink to this headline">¶</a></h2>
 <p>Sphinx is a build system that adds some nice tools to create documentation
 from reStructuredText documents. As such, it adds new directives and
-interpreted text roles to standard reST <a class="reference external" href="http://sphinx-doc.org/markup/">markup</a>.</p>
+interpreted text roles to the standard reST <a class="reference external" href="http://sphinx-doc.org/markup/">markup</a>.</p>
 <div class="section" id="syntax-highlighting">
 <h3>Syntax Highlighting<a class="headerlink" href="#syntax-highlighting" title="Permalink to this headline">¶</a></h3>
 <p>All code examples uses PHP as the default highlighted language. You can change
@@ -110,7 +111,7 @@ directive to show the configuration in all supported configuration formats
 
 <span class="p">    ..</span> <span class="ow">code-block</span><span class="p">::</span> xml
 
-        &lt;!-- Configuration in XML //--&gt;
+        &lt;!-- Configuration in XML --&gt;
 
 <span class="p">    ..</span> <span class="ow">code-block</span><span class="p">::</span> php
 
@@ -124,7 +125,7 @@ directive to show the configuration in all supported configuration formats
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- Configuration in XML //--&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- Configuration in XML --&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -137,8 +138,8 @@ directive to show the configuration in all supported configuration formats
 <p>The current list of supported formats are the following:</p>
 <table border="1" class="docutils">
 <colgroup>
-<col width="57%" />
-<col width="43%" />
+<col width="52%" />
+<col width="48%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Markup format</th>
@@ -173,6 +174,12 @@ directive to show the configuration in all supported configuration formats
 <tr class="row-even"><td>php-annotations</td>
 <td>Annotations</td>
 </tr>
+<tr class="row-odd"><td>php-standalone</td>
+<td>Standalone Use</td>
+</tr>
+<tr class="row-even"><td>php-symfony</td>
+<td>Framework Use</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -192,7 +199,7 @@ directive to show the configuration in all supported configuration formats
 </div>
 <p>The link text will be the main heading of the document linked to. You can
 also specify alternative text for the link:</p>
-<div class="highlight-rst"><div class="highlight"><pre><span class="na">:doc:</span><span class="nv">`Spooling Email&lt;/cookbook/email/spool&gt;`</span>
+<div class="highlight-rst"><div class="highlight"><pre><span class="na">:doc:</span><span class="nv">`Spooling Email &lt;/cookbook/email/spool&gt;`</span>
 </pre></div>
 </div>
 <p>You can also add links to the API documentation:</p>
@@ -217,41 +224,10 @@ also specify alternative text for the link:</p>
 <p>To test documentation before a commit:</p>
 <ul class="simple">
 <li>Install <a class="reference external" href="http://sphinx-doc.org/">Sphinx</a>;</li>
-<li>Run the <a class="reference external" href="http://sphinx-doc.org/tutorial.html#setting-up-the-documentation-sources">Sphinx quick setup</a>;</li>
-<li>Install the Sphinx extensions (see below);</li>
+<li>Install the Sphinx extensions using git submodules: <tt class="docutils literal"><span class="pre">git</span> <span class="pre">submodule</span> <span class="pre">update</span> <span class="pre">--init</span></tt>;</li>
+<li>(Optionally) Install the bundle docs and CMF docs: <tt class="docutils literal"><span class="pre">bash</span> <span class="pre">install.sh</span></tt>;</li>
 <li>Run <tt class="docutils literal"><span class="pre">make</span> <span class="pre">html</span></tt> and view the generated HTML in the <tt class="docutils literal"><span class="pre">build</span></tt> directory.</li>
 </ul>
-</div>
-<div class="section" id="installing-the-sphinx-extensions">
-<h3>Installing the Sphinx extensions<a class="headerlink" href="#installing-the-sphinx-extensions" title="Permalink to this headline">¶</a></h3>
-<ul class="simple">
-<li>Download the extension from the <a class="reference external" href="https://github.com/fabpot/sphinx-php">source</a> repository</li>
-<li>Copy the <tt class="docutils literal"><span class="pre">sensio</span></tt> directory to the <tt class="docutils literal"><span class="pre">_exts</span></tt> folder under your source
-folder (where <tt class="docutils literal"><span class="pre">conf.py</span></tt> is located)</li>
-<li>Add the following to the <tt class="docutils literal"><span class="pre">conf.py</span></tt> file:</li>
-</ul>
-<div class="highlight-py"><div class="highlight"><pre><span class="c"># ...</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s">&#39;_exts&#39;</span><span class="p">))</span>
-
-<span class="c"># adding PhpLexer</span>
-<span class="kn">from</span> <span class="nn">sphinx.highlighting</span> <span class="kn">import</span> <span class="n">lexers</span>
-<span class="kn">from</span> <span class="nn">pygments.lexers.web</span> <span class="kn">import</span> <span class="n">PhpLexer</span>
-
-<span class="c"># ...</span>
-<span class="c"># add the extensions to the list of extensions</span>
-<span class="n">extensions</span> <span class="o">=</span> <span class="p">[</span><span class="o">...</span><span class="p">,</span> <span class="s">&#39;sensio.sphinx.refinclude&#39;</span><span class="p">,</span> <span class="s">&#39;sensio.sphinx.configurationblock&#39;</span><span class="p">,</span> <span class="s">&#39;sensio.sphinx.phpcode&#39;</span><span class="p">]</span>
-
-<span class="c"># enable highlighting for PHP code not between ``&lt;?php ... ?&gt;`` by default</span>
-<span class="n">lexers</span><span class="p">[</span><span class="s">&#39;php&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PhpLexer</span><span class="p">(</span><span class="n">startinline</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-<span class="n">lexers</span><span class="p">[</span><span class="s">&#39;php-annotations&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">PhpLexer</span><span class="p">(</span><span class="n">startinline</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
-
-<span class="c"># use PHP as the primary domain</span>
-<span class="n">primary_domain</span> <span class="o">=</span> <span class="s">&#39;php&#39;</span>
-
-<span class="c"># set url for API links</span>
-<span class="n">api_url</span> <span class="o">=</span> <span class="s">&#39;http://api.symfony.com/master/</span><span class="si">%s</span><span class="s">&#39;</span>
-</pre></div>
-</div>
 </div>
 </div>
 </div>
@@ -271,7 +247,6 @@ folder (where <tt class="docutils literal"><span class="pre">conf.py</span></tt>
 <li><a class="reference internal" href="#configuration-blocks">Configuration Blocks</a></li>
 <li><a class="reference internal" href="#adding-links">Adding Links</a></li>
 <li><a class="reference internal" href="#testing-documentation">Testing Documentation</a></li>
-<li><a class="reference internal" href="#installing-the-sphinx-extensions">Installing the Sphinx extensions</a></li>
 </ul>
 </li>
 </ul>
@@ -318,14 +293,14 @@ folder (where <tt class="docutils literal"><span class="pre">conf.py</span></tt>
         <li class="right" >
           <a href="overview.html" title="Contributing to the Documentation"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Contributing</a> &raquo;</li>
           <li><a href="index.html" >Contributing Documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use Gmail to send Emails &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to use Gmail to Send Emails &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Email" href="index.html" />
-    <link rel="next" title="How to Work with Emails During Development" href="dev_environment.html" />
+    <link rel="next" title="How to use the Cloud to Send Emails" href="cloud.html" />
     <link rel="prev" title="How to send an Email" href="email.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="dev_environment.html" title="How to Work with Emails During Development"
+          <a href="cloud.html" title="How to use the Cloud to Send Emails"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="email.html" title="How to send an Email"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Email</a> &raquo;</li> 
       </ul>
@@ -55,9 +53,9 @@
           <div class="body">
             
   <div class="section" id="how-to-use-gmail-to-send-emails">
-<span id="index-0"></span><h1>How to use Gmail to send Emails<a class="headerlink" href="#how-to-use-gmail-to-send-emails" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>How to use Gmail to Send Emails<a class="headerlink" href="#how-to-use-gmail-to-send-emails" title="Permalink to this headline">¶</a></h1>
 <p>During development, instead of using a regular SMTP server to send emails, you
-might find using Gmail easier and more practical. The Swiftmailer bundle makes
+might find using Gmail easier and more practical. The SwiftmailerBundle makes
 it really easy.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -77,24 +75,28 @@ that you create a special account.</p>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config_dev.xml --&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xmlns:swiftmailer=</span><span class="s">&quot;http://symfony.com/schema/dic/swiftmailer&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd</span>
+<span class="s">                        http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd&quot;</span><span class="nt">&gt;</span>
 
-<span class="c">&lt;!--</span>
-<span class="c">    xmlns:swiftmailer=&quot;http://symfony.com/schema/dic/swiftmailer&quot;</span>
-<span class="c">    http://symfony.com/schema/dic/swiftmailer http://symfony.com/schema/dic/swiftmailer/swiftmailer-1.0.xsd</span>
-<span class="c">--&gt;</span>
-
-<span class="nt">&lt;swiftmailer:config</span>
-    <span class="na">transport=</span><span class="s">&quot;gmail&quot;</span>
-    <span class="na">username=</span><span class="s">&quot;your_gmail_username&quot;</span>
-    <span class="na">password=</span><span class="s">&quot;your_gmail_password&quot;</span> <span class="nt">/&gt;</span>
+    <span class="c">&lt;!-- ... --&gt;</span>
+    <span class="nt">&lt;swiftmailer:config</span>
+        <span class="na">transport=</span><span class="s">&quot;gmail&quot;</span>
+        <span class="na">username=</span><span class="s">&quot;your_gmail_username&quot;</span>
+        <span class="na">password=</span><span class="s">&quot;your_gmail_password&quot;</span>
+    <span class="nt">/&gt;</span>
+<span class="nt">&lt;/container&gt;</span>
 </pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config_dev.php</span>
 <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;swiftmailer&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
-    <span class="s1">&#39;transport&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;gmail&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;username&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;your_gmail_username&quot;</span><span class="p">,</span>
-    <span class="s1">&#39;password&#39;</span>  <span class="o">=&gt;</span> <span class="s2">&quot;your_gmail_password&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;transport&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;gmail&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;username&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;your_gmail_username&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;password&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;your_gmail_password&#39;</span><span class="p">,</span>
 <span class="p">));</span>
 </pre></div>
 </div>
@@ -104,10 +106,10 @@ that you create a special account.</p>
 <p>You&#8217;re done!</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p>If you are using the Symfony Standard Edition, configure the parameters at <tt class="docutils literal"><span class="pre">parameters.yml</span></tt>:</p>
+<p>If you are using the Symfony Standard Edition, configure the parameters in <tt class="docutils literal"><span class="pre">parameters.yml</span></tt>:</p>
 <div class="last highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/parameters.yml</span>
 <span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">...</span>
+    <span class="c1"># ...</span>
     <span class="l-Scalar-Plain">mailer_transport</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">gmail</span>
     <span class="l-Scalar-Plain">mailer_host</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">~</span>
     <span class="l-Scalar-Plain">mailer_user</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">your_gmail_username</span>
@@ -132,8 +134,8 @@ and sets <tt class="docutils literal"><span class="pre">encryption</span></tt>, 
   <p class="topless"><a href="email.html"
                         title="previous chapter">How to send an Email</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="dev_environment.html"
-                        title="next chapter">How to Work with Emails During Development</a></p>
+  <p class="topless"><a href="cloud.html"
+                        title="next chapter">How to use the Cloud to Send Emails</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/email/gmail.txt"
@@ -163,19 +165,19 @@ and sets <tt class="docutils literal"><span class="pre">encryption</span></tt>, 
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="dev_environment.html" title="How to Work with Emails During Development"
+          <a href="cloud.html" title="How to use the Cloud to Send Emails"
              >next</a> |</li>
         <li class="right" >
           <a href="email.html" title="How to send an Email"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Email</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to create a custom Data Collector &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to create a custom Data Collector &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Profiler" href="index.html" />
-    <link rel="next" title="Web Services" href="../web_services/index.html" />
+    <link rel="next" title="How to use Matchers to enable the Profiler Conditionally" href="matchers.html" />
     <link rel="prev" title="Profiler" href="index.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../web_services/index.html" title="Web Services"
+          <a href="matchers.html" title="How to use Matchers to enable the Profiler Conditionally"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Profiler"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Profiler</a> &raquo;</li> 
       </ul>
@@ -63,24 +61,25 @@ create your own.</p>
 <h2>Creating a Custom Data Collector<a class="headerlink" href="#creating-a-custom-data-collector" title="Permalink to this headline">¶</a></h2>
 <p>Creating a custom data collector is as simple as implementing the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/DataCollector/DataCollectorInterface.html" title="Symfony\Component\HttpKernel\DataCollector\DataCollectorInterface"><span class="pre">DataCollectorInterface</span></a></tt>:</p>
-<div class="highlight-python"><pre>interface DataCollectorInterface
-{
-    /**
-     * Collects data for the given Request and Response.
-     *
-     * @param Request    $request   A Request instance
-     * @param Response   $response  A Response instance
-     * @param \Exception $exception An Exception instance
-     */
-    function collect(Request $request, Response $response, \Exception $exception = null);
+<div class="highlight-php"><div class="highlight"><pre><span class="k">interface</span> <span class="nx">DataCollectorInterface</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * Collects data for the given Request and Response.</span>
+<span class="sd">     *</span>
+<span class="sd">     * @param Request    $request   A Request instance</span>
+<span class="sd">     * @param Response   $response  A Response instance</span>
+<span class="sd">     * @param \Exception $exception An Exception instance</span>
+<span class="sd">     */</span>
+    <span class="k">function</span> <span class="nf">collect</span><span class="p">(</span><span class="nx">Request</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">Response</span> <span class="nv">$response</span><span class="p">,</span> <span class="nx">\Exception</span> <span class="nv">$exception</span> <span class="o">=</span> <span class="k">null</span><span class="p">);</span>
 
-    /**
-     * Returns the name of the collector.
-     *
-     * @return string The collector name
-     */
-    function getName();
-}</pre>
+    <span class="sd">/**</span>
+<span class="sd">     * Returns the name of the collector.</span>
+<span class="sd">     *</span>
+<span class="sd">     * @return string The collector name</span>
+<span class="sd">     */</span>
+    <span class="k">function</span> <span class="nf">getName</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">getName()</span></tt> method must return a unique name. This is used to access the
 information later on (see <a class="reference internal" href="../testing/profiling.html"><em>How to use the Profiler in a Functional Test</em></a> for
@@ -97,25 +96,26 @@ to provide your own <tt class="docutils literal"><span class="pre">serialize()</
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/DataCollector/DataCollector.html" title="Symfony\Component\HttpKernel\DataCollector\DataCollector"><span class="pre">DataCollector</span></a></tt> and
 populate the <tt class="docutils literal"><span class="pre">$this-&gt;data</span></tt> property (it takes care of serializing the
 <tt class="docutils literal"><span class="pre">$this-&gt;data</span></tt> property):</p>
-<div class="highlight-python"><pre>class MemoryDataCollector extends DataCollector
-{
-    public function collect(Request $request, Response $response, \Exception $exception = null)
-    {
-        $this-&gt;data = array(
-            'memory' =&gt; memory_get_peak_usage(true),
-        );
-    }
+<div class="highlight-php"><div class="highlight"><pre><span class="k">class</span> <span class="nc">MemoryDataCollector</span> <span class="k">extends</span> <span class="nx">DataCollector</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">collect</span><span class="p">(</span><span class="nx">Request</span> <span class="nv">$request</span><span class="p">,</span> <span class="nx">Response</span> <span class="nv">$response</span><span class="p">,</span> <span class="nx">\Exception</span> <span class="nv">$exception</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;memory&#39;</span> <span class="o">=&gt;</span> <span class="nb">memory_get_peak_usage</span><span class="p">(</span><span class="k">true</span><span class="p">),</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
 
-    public function getMemory()
-    {
-        return $this-&gt;data['memory'];
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getMemory</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span><span class="p">[</span><span class="s1">&#39;memory&#39;</span><span class="p">];</span>
+    <span class="p">}</span>
 
-    public function getName()
-    {
-        return 'memory';
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;memory&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="enabling-custom-data-collectors">
@@ -150,7 +150,7 @@ configuration, and tag it with <tt class="docutils literal"><span class="pre">da
 </div>
 <div class="section" id="adding-web-profiler-templates">
 <h2>Adding Web Profiler Templates<a class="headerlink" href="#adding-web-profiler-templates" title="Permalink to this headline">¶</a></h2>
-<p>When you want to display the data collected by your Data Collector in the web
+<p>When you want to display the data collected by your data collector in the web
 debug toolbar or the web profiler, create a Twig template following this
 skeleton:</p>
 <div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">extends</span> <span class="s1">&#39;WebProfilerBundle:Profiler:layout.html.twig&#39;</span> <span class="cp">%}</span><span class="x"></span>
@@ -178,10 +178,17 @@ profiler.</p>
 <p>All blocks have access to the <tt class="docutils literal"><span class="pre">collector</span></tt> object.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">Built-in templates use a base64 encoded image for the toolbar (<tt class="docutils literal"><span class="pre">&lt;img</span>
-<span class="pre">src=&quot;data:image/png;base64,...&quot;</span></tt>). You can easily calculate the
-base64 value for an image with this little script: <tt class="docutils literal"><span class="pre">echo</span>
-<span class="pre">base64_encode(file_get_contents($_SERVER['argv'][1]));</span></tt>.</p>
+<p>Built-in templates use a base64 encoded image for the toolbar:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;data:image/png;base64,...&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+<p>You can easily calculate the base64 value for an image with this
+little script:</p>
+<div class="last highlight-php"><div class="highlight"><pre><span class="c1">#!/usr/bin/env php</span>
+<span class="o">&lt;?</span><span class="nx">php</span>
+<span class="k">echo</span> <span class="nb">base64_encode</span><span class="p">(</span><span class="nb">file_get_contents</span><span class="p">(</span><span class="nv">$_SERVER</span><span class="p">[</span><span class="s1">&#39;argv&#39;</span><span class="p">][</span><span class="mi">1</span><span class="p">]));</span>
+</pre></div>
+</div>
 </div>
 <p>To enable the template, add a <tt class="docutils literal"><span class="pre">template</span></tt> attribute to the <tt class="docutils literal"><span class="pre">data_collector</span></tt>
 tag in your configuration. For example, assuming your template is in some
@@ -237,8 +244,8 @@ tag in your configuration. For example, assuming your template is in some
   <p class="topless"><a href="index.html"
                         title="previous chapter">Profiler</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../web_services/index.html"
-                        title="next chapter">Web Services</a></p>
+  <p class="topless"><a href="matchers.html"
+                        title="next chapter">How to use Matchers to enable the Profiler Conditionally</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/profiler/data_collector.txt"
@@ -268,19 +275,19 @@ tag in your configuration. For example, assuming your template is in some
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../web_services/index.html" title="Web Services"
+          <a href="matchers.html" title="How to use Matchers to enable the Profiler Conditionally"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Profiler"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Profiler</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

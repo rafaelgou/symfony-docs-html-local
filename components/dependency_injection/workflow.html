@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Container Building Workflow &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Container Building Workflow &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
-    <link rel="up" title="Dependency Injection" href="index.html" />
-    <link rel="next" title="Event Dispatcher" href="../event_dispatcher/index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
+    <link rel="up" title="DependencyInjection" href="index.html" />
+    <link rel="next" title="The DomCrawler Component" href="../dom_crawler.html" />
     <link rel="prev" title="Lazy Services" href="lazy_services.html" /> 
   </head>
   <body>
@@ -38,14 +36,14 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../event_dispatcher/index.html" title="Event Dispatcher"
+          <a href="../dom_crawler.html" title="The DomCrawler Component"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="lazy_services.html" title="Lazy Services"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
-          <li><a href="index.html" accesskey="U">Dependency Injection</a> &raquo;</li> 
+          <li><a href="index.html" accesskey="U">DependencyInjection</a> &raquo;</li> 
       </ul>
     </div>  
 
@@ -63,15 +61,15 @@ the container. Looking at how the container is configured and built in the
 Symfony2 full stack framework will help you see how this all fits together,
 whether you are using the full stack framework or looking to use the service
 container in another application.</p>
-<p>The full stack framework uses the <tt class="docutils literal"><span class="pre">HttpKernel</span></tt> component to manage the loading
+<p>The full stack framework uses the HttpKernel component to manage the loading
 of the service container configuration from the application and bundles and
-also handles the compilation and caching. Even if you are not using <tt class="docutils literal"><span class="pre">HttpKernel</span></tt>,
+also handles the compilation and caching. Even if you are not using HttpKernel,
 it should give you an idea of one way of organizing configuration in a modular
 application.</p>
-<div class="section" id="working-with-cached-container">
-<h2>Working with cached Container<a class="headerlink" href="#working-with-cached-container" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="working-with-a-cached-container">
+<h2>Working with a Cached Container<a class="headerlink" href="#working-with-a-cached-container" title="Permalink to this headline">¶</a></h2>
 <p>Before building it, the kernel checks to see if a cached version of the container
-exists. The <tt class="docutils literal"><span class="pre">HttpKernel</span></tt> has a debug setting and if this is false, the
+exists. The HttpKernel has a debug setting and if this is false, the
 cached version is used if it exists. If debug is true then the kernel
 <a class="reference internal" href="../config/caching.html"><em>checks to see if configuration is fresh</em></a>
 and if it is, the cached version of the container is used. If not then the container
@@ -104,11 +102,11 @@ with a <a class="reference internal" href="../config/definition.html"><em>Config
 in the bundle&#8217;s <tt class="docutils literal"><span class="pre">DependencyInjection</span></tt> directory.</p>
 </div>
 <div class="section" id="compiler-passes-to-allow-interaction-between-bundles">
-<h2>Compiler passes to allow Interaction between Bundles<a class="headerlink" href="#compiler-passes-to-allow-interaction-between-bundles" title="Permalink to this headline">¶</a></h2>
+<h2>Compiler Passes to Allow Interaction between Bundles<a class="headerlink" href="#compiler-passes-to-allow-interaction-between-bundles" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference internal" href="compilation.html#components-dependency-injection-compiler-passes"><em>Compiler passes</em></a> are
 used to allow interaction between different bundles as they cannot affect
 each other&#8217;s configuration in the extension classes. One of the main uses is
-to process tagged services, allowing bundles to register services to picked
+to process tagged services, allowing bundles to register services to be picked
 up by other bundles, such as Monolog loggers, Twig extensions and Data Collectors
 for the Web Profiler. Compiler passes are usually placed in the bundle&#8217;s
 <tt class="docutils literal"><span class="pre">DependencyInjection/Compiler</span></tt> directory.</p>
@@ -131,10 +129,10 @@ is more efficient.</p>
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Container Building Workflow</a><ul>
-<li><a class="reference internal" href="#working-with-cached-container">Working with cached Container</a></li>
+<li><a class="reference internal" href="#working-with-a-cached-container">Working with a Cached Container</a></li>
 <li><a class="reference internal" href="#application-level-configuration">Application-level Configuration</a></li>
 <li><a class="reference internal" href="#bundle-level-configuration-with-extensions">Bundle-level Configuration with Extensions</a></li>
-<li><a class="reference internal" href="#compiler-passes-to-allow-interaction-between-bundles">Compiler passes to allow Interaction between Bundles</a></li>
+<li><a class="reference internal" href="#compiler-passes-to-allow-interaction-between-bundles">Compiler Passes to Allow Interaction between Bundles</a></li>
 <li><a class="reference internal" href="#compilation-and-caching">Compilation and Caching</a></li>
 </ul>
 </li>
@@ -144,8 +142,8 @@ is more efficient.</p>
   <p class="topless"><a href="lazy_services.html"
                         title="previous chapter">Lazy Services</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../event_dispatcher/index.html"
-                        title="next chapter">Event Dispatcher</a></p>
+  <p class="topless"><a href="../dom_crawler.html"
+                        title="next chapter">The DomCrawler Component</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/components/dependency_injection/workflow.txt"
@@ -175,19 +173,19 @@ is more efficient.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../event_dispatcher/index.html" title="Event Dispatcher"
+          <a href="../dom_crawler.html" title="The DomCrawler Component"
              >next</a> |</li>
         <li class="right" >
           <a href="lazy_services.html" title="Lazy Services"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Components</a> &raquo;</li>
-          <li><a href="index.html" >Dependency Injection</a> &raquo;</li> 
+          <li><a href="index.html" >DependencyInjection</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

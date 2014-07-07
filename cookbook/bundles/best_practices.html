@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use Best Practices for Structuring Bundles &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to use Best Practices for Structuring Bundles &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Bundles" href="index.html" />
     <link rel="next" title="How to use Bundle Inheritance to Override parts of a Bundle" href="inheritance.html" />
     <link rel="prev" title="How to install 3rd party Bundles" href="installation.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="installation.html" title="How to install 3rd party Bundles"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Bundles</a> &raquo;</li> 
       </ul>
@@ -62,7 +60,7 @@ flexible, you should follow some best practices if you want to distribute them.<
 <div class="section" id="bundle-name">
 <span id="bundles-naming-conventions"></span><span id="index-1"></span><h2>Bundle Name<a class="headerlink" href="#bundle-name" title="Permalink to this headline">¶</a></h2>
 <p>A bundle is also a PHP namespace. The namespace must follow the technical
-interoperability <a class="reference external" href="http://symfony.com/PSR0">standards</a> for PHP 5.3 namespaces and class names: it
+interoperability <a class="reference external" href="http://www.php-fig.org/psr/psr-0/">standards</a> for PHP 5.3 namespaces and class names: it
 starts with a vendor segment, followed by zero or more category segments, and
 it ends with the namespace short name, which must end with a <tt class="docutils literal"><span class="pre">Bundle</span></tt>
 suffix.</p>
@@ -110,7 +108,7 @@ for instance).</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Symfony2 core Bundles do not prefix the Bundle class with <tt class="docutils literal"><span class="pre">Symfony</span></tt>
-and always add a <tt class="docutils literal"><span class="pre">Bundle</span></tt> subnamespace; for example:
+and always add a <tt class="docutils literal"><span class="pre">Bundle</span></tt> sub-namespace; for example:
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/FrameworkBundle.html" title="Symfony\Bundle\FrameworkBundle\FrameworkBundle"><span class="pre">FrameworkBundle</span></a></tt>.</p>
 </div>
 <p>Each bundle has an alias, which is the lower-cased short version of the bundle
@@ -212,10 +210,11 @@ how to handle the mapping with a compiler pass.</p>
 instance, a <tt class="docutils literal"><span class="pre">HelloController</span></tt> controller is stored in
 <tt class="docutils literal"><span class="pre">Bundle/HelloBundle/Controller/HelloController.php</span></tt> and the fully qualified
 class name is <tt class="docutils literal"><span class="pre">Bundle\HelloBundle\Controller\HelloController</span></tt>.</p>
-<p>All classes and files must follow the Symfony2 coding <a class="reference internal" href="../../contributing/code/standards.html"><em>standards</em></a>.</p>
+<p>All classes and files must follow the Symfony2 coding
+<a class="reference internal" href="../../contributing/code/standards.html"><em>standards</em></a>.</p>
 <p>Some classes should be seen as facades and should be as short as possible, like
 Commands, Helpers, Listeners, and Controllers.</p>
-<p>Classes that connect to the Event Dispatcher should be suffixed with
+<p>Classes that connect to the event dispatcher should be suffixed with
 <tt class="docutils literal"><span class="pre">Listener</span></tt>.</p>
 <p>Exceptions classes should be stored in an <tt class="docutils literal"><span class="pre">Exception</span></tt> sub-namespace.</p>
 </div>
@@ -246,9 +245,10 @@ existence of a <tt class="docutils literal"><span class="pre">phpunit.xml.dist</
 <div class="section" id="documentation">
 <h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
 <p>All classes and functions must come with full PHPDoc.</p>
-<p>Extensive documentation should also be provided in the <a class="reference internal" href="../../contributing/documentation/format.html"><em>reStructuredText</em></a> format, under the <tt class="docutils literal"><span class="pre">Resources/doc/</span></tt>
-directory; the <tt class="docutils literal"><span class="pre">Resources/doc/index.rst</span></tt> file is the only mandatory file and
-must be the entry point for the documentation.</p>
+<p>Extensive documentation should also be provided in the
+<a class="reference internal" href="../../contributing/documentation/format.html"><em>reStructuredText</em></a> format, under
+the <tt class="docutils literal"><span class="pre">Resources/doc/</span></tt> directory; the <tt class="docutils literal"><span class="pre">Resources/doc/index.rst</span></tt> file is
+the only mandatory file and must be the entry point for the documentation.</p>
 </div>
 <div class="section" id="controllers">
 <h2>Controllers<a class="headerlink" href="#controllers" title="Permalink to this headline">¶</a></h2>
@@ -314,7 +314,7 @@ parameter name will use a period (<tt class="docutils literal"><span class="pre"
 </pre></div>
 </div>
 </li>
-<li><em>INI</em><div class="highlight-ini"><div class="highlight"><pre><span class="c">; app/config/config.ini</span>
+<li><em>INI</em><div class="highlight-ini"><div class="highlight"><pre><span class="c1">; app/config/config.ini</span>
 <span class="k">[parameters]</span>
 <span class="na">acme_hello.email.from</span> <span class="o">=</span> <span class="s">fabien@example.com</span>
 </pre></div>
@@ -323,7 +323,8 @@ parameter name will use a period (<tt class="docutils literal"><span class="pre"
 </ul>
 </div>
 <p>Retrieve the configuration parameters in your code from the container:</p>
-<div class="highlight-python"><pre>$container-&gt;getParameter('acme_hello.email.from');</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span><span class="o">-&gt;</span><span class="na">getParameter</span><span class="p">(</span><span class="s1">&#39;acme_hello.email.from&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>Even if this mechanism is simple enough, you are highly encouraged to use the
 semantic configuration described in the cookbook.</p>
@@ -406,14 +407,14 @@ alias.</p>
         <li class="right" >
           <a href="installation.html" title="How to install 3rd party Bundles"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Bundles</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

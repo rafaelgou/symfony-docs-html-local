@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to define Controllers as Services &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to define Controllers as Services &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Controller" href="index.html" />
-    <link rel="next" title="Routing" href="../routing/index.html" />
+    <link rel="next" title="How to optimize your development Environment for debugging" href="../debugging.html" />
     <link rel="prev" title="How to customize Error Pages" href="error_pages.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../routing/index.html" title="Routing"
+          <a href="../debugging.html" title="How to optimize your development Environment for debugging"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="error_pages.html" title="How to customize Error Pages"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Controller</a> &raquo;</li> 
       </ul>
@@ -81,18 +79,19 @@ to understand the pros and cons of both approaches.</p>
 <h2>Defining the Controller as a Service<a class="headerlink" href="#defining-the-controller-as-a-service" title="Permalink to this headline">¶</a></h2>
 <p>A controller can be defined as a service in the same way as any other class.
 For example, if you have the following simple controller:</p>
-<div class="highlight-python"><pre>// src/Acme/HelloBundle/Controller/HelloController.php
-namespace Acme\HelloBundle\Controller;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/HelloBundle/Controller/HelloController.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\HelloBundle\Controller</span><span class="p">;</span>
 
-use Symfony\Component\HttpFoundation\Response;
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
 
-class HelloController
-{
-    public function indexAction($name)
-    {
-        return new Response('&lt;html&gt;&lt;body&gt;Hello '.$name.'!&lt;/body&gt;&lt;/html&gt;');
-    }
-}</pre>
+<span class="k">class</span> <span class="nc">HelloController</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">indexAction</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="s1">&#39;&lt;html&gt;&lt;body&gt;Hello &#39;</span><span class="o">.</span><span class="nv">$name</span><span class="o">.</span><span class="s1">&#39;!&lt;/body&gt;&lt;/html&gt;&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Then you can define it as a service as follows:</p>
 <div class="configuration-block">
@@ -104,7 +103,7 @@ class HelloController
 
 <span class="l-Scalar-Plain">services</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">acme.hello.controller</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span>     <span class="s">&quot;%acme.controller.hello.class%&quot;</span>
+        <span class="l-Scalar-Plain">class</span><span class="p-Indicator">:</span> <span class="s">&quot;%acme.controller.hello.class%&quot;</span>
 </pre></div>
 </div>
 </li>
@@ -143,7 +142,8 @@ class HelloController
 <p>To refer to a controller that&#8217;s defined as a service, use the single colon (:)
 notation. For example, to forward to the <tt class="docutils literal"><span class="pre">indexAction()</span></tt> method of the service
 defined above with the id <tt class="docutils literal"><span class="pre">acme.hello.controller</span></tt>:</p>
-<div class="highlight-python"><pre>$this-&gt;forward('acme.hello.controller:indexAction');</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">forward</span><span class="p">(</span><span class="s1">&#39;acme.hello.controller:indexAction&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">));</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -156,13 +156,13 @@ the route <tt class="docutils literal"><span class="pre">_controller</span></tt>
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/routing.yml</span>
 <span class="l-Scalar-Plain">hello</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>      <span class="l-Scalar-Plain">/hello</span>
-    <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span>     <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">acme.hello.controller</span><span class="p-Indicator">:</span><span class="nv">indexAction</span> <span class="p-Indicator">}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">/hello</span>
+    <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">acme.hello.controller</span><span class="p-Indicator">:</span><span class="nv">indexAction</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/routing.xml --&gt;</span>
-<span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;hello&quot;</span> <span class="na">pattern=</span><span class="s">&quot;/hello&quot;</span><span class="nt">&gt;</span>
+<span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;hello&quot;</span> <span class="na">path=</span><span class="s">&quot;/hello&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>acme.hello.controller:indexAction<span class="nt">&lt;/default&gt;</span>
 <span class="nt">&lt;/route&gt;</span>
 </pre></div>
@@ -195,54 +195,58 @@ source on how to perform many common tasks.</p>
 <p>For example, if you want to render a template instead of creating the <tt class="docutils literal"><span class="pre">Response</span></tt>
 object directly, then your code would look like this if you were extending
 Symfony&#8217;s base controller:</p>
-<div class="highlight-python"><pre>// src/Acme/HelloBundle/Controller/HelloController.php
-namespace Acme\HelloBundle\Controller;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/HelloBundle/Controller/HelloController.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\HelloBundle\Controller</span><span class="p">;</span>
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\Controller\Controller</span><span class="p">;</span>
 
-class HelloController extends Controller
-{
-    public function indexAction($name)
-    {
-        return $this-&gt;render(
-            'AcmeHelloBundle:Hello:index.html.twig',
-            array('name' =&gt; $name)
-        );
-    }
-}</pre>
+<span class="k">class</span> <span class="nc">HelloController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">indexAction</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
+            <span class="s1">&#39;AcmeHelloBundle:Hello:index.html.twig&#39;</span><span class="p">,</span>
+            <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>If you look at the source code for the <tt class="docutils literal"><span class="pre">render</span></tt> function in Symfony&#8217;s
 <a class="reference external" href="https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Controller/Controller.php">base Controller class</a>, you&#8217;ll see that this method actually uses the
 <tt class="docutils literal"><span class="pre">templating</span></tt> service:</p>
-<div class="highlight-python"><pre>public function render($view, array $parameters = array(), Response $response = null)
-{
-    return $this-&gt;container-&gt;get('templating')-&gt;renderResponse($view, $parameters, $response);
-}</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="k">function</span> <span class="nf">render</span><span class="p">(</span><span class="nv">$view</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$parameters</span> <span class="o">=</span> <span class="k">array</span><span class="p">(),</span> <span class="nx">Response</span> <span class="nv">$response</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;templating&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">renderResponse</span><span class="p">(</span><span class="nv">$view</span><span class="p">,</span> <span class="nv">$parameters</span><span class="p">,</span> <span class="nv">$response</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>In a controller that&#8217;s defined as a service, you can instead inject the <tt class="docutils literal"><span class="pre">templating</span></tt>
 service and use it directly:</p>
-<div class="highlight-python"><pre>// src/Acme/HelloBundle/Controller/HelloController.php
-namespace Acme\HelloBundle\Controller;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/HelloBundle/Controller/HelloController.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\HelloBundle\Controller</span><span class="p">;</span>
 
-use Symfony\Component\HttpFoundation\Response;
+<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\Templating\EngineInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
 
-class HelloController
-{
-    private $templating;
+<span class="k">class</span> <span class="nc">HelloController</span>
+<span class="p">{</span>
+    <span class="k">private</span> <span class="nv">$templating</span><span class="p">;</span>
 
-    public function __construct($templating)
-    {
-        $this-&gt;templating = $templating;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">__construct</span><span class="p">(</span><span class="nx">EngineInterface</span> <span class="nv">$templating</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">templating</span> <span class="o">=</span> <span class="nv">$templating</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function indexAction($name)
-    {
-        return $this-&gt;templating-&gt;renderResponse(
-            'AcmeHelloBundle:Hello:index.html.twig',
-            array('name' =&gt; $name)
-        );
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">indexAction</span><span class="p">(</span><span class="nv">$name</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">templating</span><span class="o">-&gt;</span><span class="na">renderResponse</span><span class="p">(</span>
+            <span class="s1">&#39;AcmeHelloBundle:Hello:index.html.twig&#39;</span><span class="p">,</span>
+            <span class="k">array</span><span class="p">(</span><span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$name</span><span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The service definition also needs modifying to specify the constructor
 argument:</p>
@@ -301,7 +305,7 @@ inject <em>only</em> the exact service(s) that you need directly into the contro
 <p class="first admonition-title">Note</p>
 <p class="last">This does not mean that you cannot extend these controllers from your own
 base controller. The move away from the standard base controller is because
-its helper method rely on having the container available which is not
+its helper methods rely on having the container available which is not
 the case for controllers that are defined as services. It may be a good
 idea to extract common code into a service that&#8217;s injected rather than
 place that code into a base controller that you extend. Both approaches
@@ -331,8 +335,8 @@ you.</p>
   <p class="topless"><a href="error_pages.html"
                         title="previous chapter">How to customize Error Pages</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../routing/index.html"
-                        title="next chapter">Routing</a></p>
+  <p class="topless"><a href="../debugging.html"
+                        title="next chapter">How to optimize your development Environment for debugging</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/controller/service.txt"
@@ -362,19 +366,19 @@ you.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../routing/index.html" title="Routing"
+          <a href="../debugging.html" title="How to optimize your development Environment for debugging"
              >next</a> |</li>
         <li class="right" >
           <a href="error_pages.html" title="How to customize Error Pages"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Controller</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

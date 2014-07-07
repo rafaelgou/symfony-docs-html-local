@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to generate Entities from an Existing Database &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to generate Entities from an Existing Database &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Doctrine" href="index.html" />
     <link rel="next" title="How to work with Multiple Entity Managers and Connections" href="multiple_entity_managers.html" />
     <link rel="prev" title="How to use Doctrine’s DBAL Layer" href="dbal.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="dbal.html" title="How to use Doctrine’s DBAL Layer"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Doctrine</a> &raquo;</li> 
       </ul>
@@ -104,8 +102,8 @@ folder.</p>
 <p>The first step towards building entity classes from an existing database
 is to ask Doctrine to introspect the database and generate the corresponding
 metadata files. Metadata files describe the entity class to generate based on
-tables fields.</p>
-<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:mapping:convert xml ./src/Acme/BlogBundle/Resources/config/doctrine --from-database --force
+table fields.</p>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:mapping:import --force AcmeBlogBundle xml
 </pre></div>
 </div>
 <p>This command line tool asks Doctrine to introspect the database and generate
@@ -114,13 +112,13 @@ folder of your bundle. This generates two files: <tt class="docutils literal"><s
 <tt class="docutils literal"><span class="pre">BlogComment.orm.xml</span></tt>.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">It&#8217;s also possible to generate metadata class in YAML format by changing the
-first argument to <tt class="docutils literal"><span class="pre">yml</span></tt>.</p>
+<p class="last">It&#8217;s also possible to generate the metadata files in YAML format by changing
+the last argument to <tt class="docutils literal"><span class="pre">yml</span></tt>.</p>
 </div>
 <p>The generated <tt class="docutils literal"><span class="pre">BlogPost.orm.xml</span></tt> metadata file looks as follows:</p>
 <div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span>
 <span class="nt">&lt;doctrine-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://doctrine-project.org/schemas/orm/doctrine-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd&quot;</span><span class="nt">&gt;</span>
-  <span class="nt">&lt;entity</span> <span class="na">name=</span><span class="s">&quot;BlogPost&quot;</span> <span class="na">table=</span><span class="s">&quot;blog_post&quot;</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;entity</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\BlogPost&quot;</span> <span class="na">table=</span><span class="s">&quot;blog_post&quot;</span><span class="nt">&gt;</span>
     <span class="nt">&lt;id</span> <span class="na">name=</span><span class="s">&quot;id&quot;</span> <span class="na">type=</span><span class="s">&quot;bigint&quot;</span> <span class="na">column=</span><span class="s">&quot;id&quot;</span><span class="nt">&gt;</span>
       <span class="nt">&lt;generator</span> <span class="na">strategy=</span><span class="s">&quot;IDENTITY&quot;</span><span class="nt">/&gt;</span>
     <span class="nt">&lt;/id&gt;</span>
@@ -131,77 +129,73 @@ first argument to <tt class="docutils literal"><span class="pre">yml</span></tt>
 <span class="nt">&lt;/doctrine-mapping&gt;</span>
 </pre></div>
 </div>
-<p>Update the namespace in the <tt class="docutils literal"><span class="pre">name</span></tt> attribute of the <tt class="docutils literal"><span class="pre">entity</span></tt> element like
-this:</p>
-<div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;entity</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\BlogPost&quot;</span> <span class="na">table=</span><span class="s">&quot;blog_post&quot;</span><span class="nt">&gt;</span>
-</pre></div>
-</div>
 <p>Once the metadata files are generated, you can ask Doctrine to build related
 entity classes by executing the following two commands.</p>
 <div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:mapping:convert annotation ./src
 <span class="nv">$ </span>php app/console doctrine:generate:entities AcmeBlogBundle
 </pre></div>
 </div>
-<p>The first command generates entity classes with an annotations mapping. But
-if you want to use yml or xml mapping instead of annotations, you should
+<p>The first command generates entity classes with annotation mappings. But
+if you want to use YAML or XML mapping instead of annotations, you should
 execute the second command only.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">If you want to use annotations, you can safely delete the XML files after
-running these two commands.</p>
+<p class="last">If you want to use annotations, you can safely delete the XML (or YAML) files
+after running these two commands.</p>
 </div>
 <p>For example, the newly created <tt class="docutils literal"><span class="pre">BlogComment</span></tt> entity class looks as follow:</p>
-<div class="highlight-python"><pre>// src/Acme/BlogBundle/Entity/BlogComment.php
-namespace Acme\BlogBundle\Entity;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Entity/BlogComment.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
 
-use Doctrine\ORM\Mapping as ORM;
+<span class="k">use</span> <span class="nx">Doctrine\ORM\Mapping</span> <span class="k">as</span> <span class="nx">ORM</span><span class="p">;</span>
 
-/**
- * Acme\BlogBundle\Entity\BlogComment
- *
- * @ORM\Table(name="blog_comment")
- * @ORM\Entity
- */
-class BlogComment
-{
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="bigint")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+<span class="sd">/**</span>
+<span class="sd"> * Acme\BlogBundle\Entity\BlogComment</span>
+<span class="sd"> *</span>
+<span class="sd"> * @ORM\Table(name=&quot;blog_comment&quot;)</span>
+<span class="sd"> * @ORM\Entity</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">BlogComment</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @var integer $id</span>
+<span class="sd">     *</span>
+<span class="sd">     * @ORM\Column(name=&quot;id&quot;, type=&quot;bigint&quot;)</span>
+<span class="sd">     * @ORM\Id</span>
+<span class="sd">     * @ORM\GeneratedValue(strategy=&quot;IDENTITY&quot;)</span>
+<span class="sd">     */</span>
+    <span class="k">private</span> <span class="nv">$id</span><span class="p">;</span>
 
-    /**
-     * @var string $author
-     *
-     * @ORM\Column(name="author", type="string", length=100, nullable=false)
-     */
-    private $author;
+    <span class="sd">/**</span>
+<span class="sd">     * @var string $author</span>
+<span class="sd">     *</span>
+<span class="sd">     * @ORM\Column(name=&quot;author&quot;, type=&quot;string&quot;, length=100, nullable=false)</span>
+<span class="sd">     */</span>
+    <span class="k">private</span> <span class="nv">$author</span><span class="p">;</span>
 
-    /**
-     * @var text $content
-     *
-     * @ORM\Column(name="content", type="text", nullable=false)
-     */
-    private $content;
+    <span class="sd">/**</span>
+<span class="sd">     * @var text $content</span>
+<span class="sd">     *</span>
+<span class="sd">     * @ORM\Column(name=&quot;content&quot;, type=&quot;text&quot;, nullable=false)</span>
+<span class="sd">     */</span>
+    <span class="k">private</span> <span class="nv">$content</span><span class="p">;</span>
 
-    /**
-     * @var datetime $createdAt
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
-     */
-    private $createdAt;
+    <span class="sd">/**</span>
+<span class="sd">     * @var datetime $createdAt</span>
+<span class="sd">     *</span>
+<span class="sd">     * @ORM\Column(name=&quot;created_at&quot;, type=&quot;datetime&quot;, nullable=false)</span>
+<span class="sd">     */</span>
+    <span class="k">private</span> <span class="nv">$createdAt</span><span class="p">;</span>
 
-    /**
-     * @var BlogPost
-     *
-     * @ORM\ManyToOne(targetEntity="BlogPost")
-     * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
-     */
-    private $post;
-}</pre>
+    <span class="sd">/**</span>
+<span class="sd">     * @var BlogPost</span>
+<span class="sd">     *</span>
+<span class="sd">     * @ORM\ManyToOne(targetEntity=&quot;BlogPost&quot;)</span>
+<span class="sd">     * @ORM\JoinColumn(name=&quot;post_id&quot;, referencedColumnName=&quot;id&quot;)</span>
+<span class="sd">     */</span>
+    <span class="k">private</span> <span class="nv">$post</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>As you can see, Doctrine converts all table fields to pure private and annotated
 class properties. The most impressive thing is that it also discovered the
@@ -210,9 +204,9 @@ Consequently, you can find a private <tt class="docutils literal"><span class="p
 entity in the <tt class="docutils literal"><span class="pre">BlogComment</span></tt> entity class.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">If you want to have a <tt class="docutils literal"><span class="pre">oneToMany</span></tt> relationship, you will need to add
-it manually into the entity or to the generated <tt class="docutils literal"><span class="pre">xml</span></tt> or <tt class="docutils literal"><span class="pre">yml</span></tt> files.
-Add a section on the specific entities for <tt class="docutils literal"><span class="pre">oneToMany</span></tt> defining the
+<p class="last">If you want to have a one-to-many relationship, you will need to add
+it manually into the entity or to the generated XML or YAML files.
+Add a section on the specific entities for one-to-many defining the
 <tt class="docutils literal"><span class="pre">inversedBy</span></tt> and the <tt class="docutils literal"><span class="pre">mappedBy</span></tt> pieces.</p>
 </div>
 <p>The generated entities are now ready to be used. Have fun!</p>
@@ -264,14 +258,14 @@ Add a section on the specific entities for <tt class="docutils literal"><span cl
         <li class="right" >
           <a href="dbal.html" title="How to use Doctrine’s DBAL Layer"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Doctrine</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

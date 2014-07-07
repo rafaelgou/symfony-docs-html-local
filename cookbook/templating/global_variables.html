@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Inject Variables into all Templates (i.e. Global Variables) &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to Inject Variables into all Templates (i.e. Global Variables) &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Templating" href="index.html" />
-    <link rel="next" title="How to use and Register namespaced Twig Paths" href="namespaced_paths.html" />
+    <link rel="next" title="How to Use and Register Namespaced Twig Paths" href="namespaced_paths.html" />
     <link rel="prev" title="Templating" href="index.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="namespaced_paths.html" title="How to use and Register namespaced Twig Paths"
+          <a href="namespaced_paths.html" title="How to Use and Register Namespaced Twig Paths"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Templating"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Templating</a> &raquo;</li> 
       </ul>
@@ -68,11 +66,12 @@ This is possible inside your <tt class="docutils literal"><span class="pre">app/
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><pre>&lt;!-- app/config/config.xml --&gt;
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre>&lt;!-- app/config/config.xml --&gt;
 &lt;twig:config ...&gt;
     &lt;!-- ... --&gt;
-    &lt;twig:global key="ga_tracking"&gt;UA-xxxxx-x&lt;/twig:global&gt;
-&lt;/twig:config&gt;</pre>
+    &lt;twig:global key=&quot;ga_tracking&quot;&gt;UA-xxxxx-x&lt;/twig:global&gt;
+&lt;/twig:config&gt;
+</pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
@@ -91,7 +90,10 @@ This is possible inside your <tt class="docutils literal"><span class="pre">app/
 <div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;p&gt;</span>The google tracking code is: <span class="cp">{{</span> <span class="nv">ga_tracking</span> <span class="cp">}}</span><span class="nt">&lt;/p&gt;</span>
 </pre></div>
 </div>
-<p>It&#8217;s that easy! You can also take advantage of the built-in <a class="reference internal" href="../../book/service_container.html#book-service-container-parameters"><em>Service Parameters</em></a>
+<p>It&#8217;s that easy!</p>
+<div class="section" id="using-service-container-parameters">
+<h2>Using Service Container Parameters<a class="headerlink" href="#using-service-container-parameters" title="Permalink to this headline">¶</a></h2>
+<p>You can also take advantage of the built-in <a class="reference internal" href="../../book/service_container.html#book-service-container-parameters"><em>Service Parameters</em></a>
 system, which lets you isolate or reuse the value:</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/parameters.yml</span>
 <span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span>
@@ -107,10 +109,11 @@ system, which lets you isolate or reuse the value:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><pre>&lt;!-- app/config/config.xml --&gt;
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre>&lt;!-- app/config/config.xml --&gt;
 &lt;twig:config ...&gt;
-    &lt;twig:global key="ga_tracking"&gt;%ga_tracking%&lt;/twig:global&gt;
-&lt;/twig:config&gt;</pre>
+    &lt;twig:global key=&quot;ga_tracking&quot;&gt;%ga_tracking%&lt;/twig:global&gt;
+&lt;/twig:config&gt;
+</pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
@@ -125,8 +128,53 @@ system, which lets you isolate or reuse the value:</p>
 </ul>
 </div>
 <p>The same variable is available exactly as before.</p>
-<div class="section" id="more-complex-global-variables">
-<h2>More Complex Global Variables<a class="headerlink" href="#more-complex-global-variables" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="referencing-services">
+<h2>Referencing Services<a class="headerlink" href="#referencing-services" title="Permalink to this headline">¶</a></h2>
+<p>Instead of using static values, you can also set the value to a service.
+Whenever the global variable is accessed in the template, the service will be
+requested from the service container and you get access to that object.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The service is not loaded lazily. In other words, as soon as Twig is
+loaded, your service is instantiated, even if you never use that global
+variable.</p>
+</div>
+<p>To define a service as a global Twig variable, prefix the string with <tt class="docutils literal"><span class="pre">&#64;</span></tt>.
+This should feel familiar, as it&#8217;s the same syntax you use in service configuration.</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">twig</span><span class="p-Indicator">:</span>
+    <span class="c1"># ...</span>
+    <span class="l-Scalar-Plain">globals</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">user_management</span><span class="p-Indicator">:</span> <span class="s">&quot;@acme_user.user_management&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre>&lt;!-- app/config/config.xml --&gt;
+&lt;twig:config ...&gt;
+    &lt;!-- ... --&gt;
+    &lt;twig:global key=&quot;user_management&quot;&gt;@acme_user.user_management&lt;/twig:global&gt;
+&lt;/twig:config&gt;
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;twig&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+     <span class="c1">// ...</span>
+     <span class="s1">&#39;globals&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+         <span class="s1">&#39;user_management&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;@acme_user.user_management&#39;</span><span class="p">,</span>
+     <span class="p">),</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="using-a-twig-extension">
+<h2>Using a Twig Extension<a class="headerlink" href="#using-a-twig-extension" title="Permalink to this headline">¶</a></h2>
 <p>If the global variable you want to set is more complicated - say an object -
 then you won&#8217;t be able to use the above method. Instead, you&#8217;ll need to create
 a <a class="reference internal" href="../../reference/dic_tags.html#reference-dic-tags-twig-extension"><em>Twig Extension</em></a> and return the
@@ -143,7 +191,9 @@ global variable as one of the entries in the <tt class="docutils literal"><span 
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">How to Inject Variables into all Templates (i.e. Global Variables)</a><ul>
-<li><a class="reference internal" href="#more-complex-global-variables">More Complex Global Variables</a></li>
+<li><a class="reference internal" href="#using-service-container-parameters">Using Service Container Parameters</a></li>
+<li><a class="reference internal" href="#referencing-services">Referencing Services</a></li>
+<li><a class="reference internal" href="#using-a-twig-extension">Using a Twig Extension</a></li>
 </ul>
 </li>
 </ul>
@@ -153,7 +203,7 @@ global variable as one of the entries in the <tt class="docutils literal"><span 
                         title="previous chapter">Templating</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="namespaced_paths.html"
-                        title="next chapter">How to use and Register namespaced Twig Paths</a></p>
+                        title="next chapter">How to Use and Register Namespaced Twig Paths</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/templating/global_variables.txt"
@@ -183,19 +233,19 @@ global variable as one of the entries in the <tt class="docutils literal"><span 
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="namespaced_paths.html" title="How to use and Register namespaced Twig Paths"
+          <a href="namespaced_paths.html" title="How to Use and Register Namespaced Twig Paths"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Templating"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Templating</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Creating and using Templates &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Creating and Using Templates &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Databases and Doctrine" href="doctrine.html" />
     <link rel="prev" title="Routing" href="routing.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="routing.html" title="Routing"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -54,10 +52,10 @@
           <div class="body">
             
   <div class="section" id="creating-and-using-templates">
-<span id="index-0"></span><h1>Creating and using Templates<a class="headerlink" href="#creating-and-using-templates" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>Creating and Using Templates<a class="headerlink" href="#creating-and-using-templates" title="Permalink to this headline">¶</a></h1>
 <p>As you know, the <a class="reference internal" href="controller.html"><em>controller</em></a> is responsible for
 handling each request that comes into a Symfony2 application. In reality,
-the controller delegates the most of the heavy work to other places so that
+the controller delegates most of the heavy work to other places so that
 code can be tested and reused. When a controller needs to generate HTML,
 CSS or any other content, it hands the work off to the templating engine.
 In this chapter, you&#8217;ll learn how to write powerful templates that can be
@@ -115,19 +113,16 @@ to web designers and, in several ways, more powerful than PHP templates:</p>
 <span class="nt">&lt;/html&gt;</span>
 </pre></div>
 </div>
-<p>Twig defines two types of special syntax:</p>
+<p>Twig defines three types of special syntax:</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">{{</span> <span class="pre">...</span> <span class="pre">}}</span></tt>: &#8220;Says something&#8221;: prints a variable or the result of an
 expression to the template;</li>
 <li><tt class="docutils literal"><span class="pre">{%</span> <span class="pre">...</span> <span class="pre">%}</span></tt>: &#8220;Does something&#8221;: a <strong>tag</strong> that controls the logic of the
 template; it is used to execute statements such as for-loops for example.</li>
+<li><tt class="docutils literal"><span class="pre">{#</span> <span class="pre">...</span> <span class="pre">#}</span></tt>: &#8220;Comment something&#8221;: it&#8217;s the equivalent of the PHP
+<tt class="docutils literal"><span class="pre">/*</span> <span class="pre">comment</span> <span class="pre">*/</span></tt> syntax. It&#8217;s used to add single or multi-line comments.
+The content of the comments isn&#8217;t included in the rendered pages.</li>
 </ul>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">There is a third syntax used for creating comments: <tt class="docutils literal"><span class="pre">{#</span> <span class="pre">this</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">comment</span> <span class="pre">#}</span></tt>.
-This syntax can be used across multiple lines like the PHP-equivalent
-<tt class="docutils literal"><span class="pre">/*</span> <span class="pre">comment</span> <span class="pre">*/</span></tt> syntax.</p>
-</div>
 <p>Twig also contains <strong>filters</strong>, which modify content before being rendered.
 The following makes the <tt class="docutils literal"><span class="pre">title</span></tt> variable all uppercase before rendering
 it:</p>
@@ -222,10 +217,10 @@ that overrides certain methods of its parent class&#8221;).</p>
     <span class="nt">&lt;body&gt;</span>
         <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;sidebar&quot;</span><span class="nt">&gt;</span>
             <span class="cp">{%</span> <span class="k">block</span> <span class="nv">sidebar</span> <span class="cp">%}</span>
-            <span class="nt">&lt;ul&gt;</span>
-                <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
-                <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/blog&quot;</span><span class="nt">&gt;</span>Blog<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
-            <span class="nt">&lt;/ul&gt;</span>
+                <span class="nt">&lt;ul&gt;</span>
+                      <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>Home<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+                      <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">&quot;/blog&quot;</span><span class="nt">&gt;</span>Blog<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+                <span class="nt">&lt;/ul&gt;</span>
             <span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
         <span class="nt">&lt;/div&gt;</span>
 
@@ -389,10 +384,6 @@ to the contents of a parent block instead of completely overriding it:</p>
 </div>
 <div class="section" id="template-naming-and-locations">
 <span id="template-naming-locations"></span><span id="index-5"></span><h2>Template Naming and Locations<a class="headerlink" href="#template-naming-and-locations" title="Permalink to this headline">¶</a></h2>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.2: </span>Namespaced path support was added in 2.2, allowing for template names
-like <tt class="docutils literal"><span class="pre">&#64;AcmeDemo/layout.html.twig</span></tt>. See <a class="reference internal" href="../cookbook/templating/namespaced_paths.html"><em>How to use and Register namespaced Twig Paths</em></a>
-for more details.</p>
 <p>By default, templates can live in two different locations:</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">app/Resources/views/</span></tt>: The applications <tt class="docutils literal"><span class="pre">views</span></tt> directory can contain
@@ -410,8 +401,7 @@ lives in a specific location:</p>
 <li><p class="first"><tt class="docutils literal"><span class="pre">AcmeBlogBundle:Blog:index.html.twig</span></tt>: This syntax is used to specify a
 template for a specific page. The three parts of the string, each separated
 by a colon (<tt class="docutils literal"><span class="pre">:</span></tt>), mean the following:</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li><tt class="docutils literal"><span class="pre">AcmeBlogBundle</span></tt>: (<em>bundle</em>) the template lives inside the
 <tt class="docutils literal"><span class="pre">AcmeBlogBundle</span></tt> (e.g. <tt class="docutils literal"><span class="pre">src/Acme/BlogBundle</span></tt>);</li>
 <li><tt class="docutils literal"><span class="pre">Blog</span></tt>: (<em>controller</em>) indicates that the template lives inside the
@@ -419,7 +409,6 @@ by a colon (<tt class="docutils literal"><span class="pre">:</span></tt>), mean 
 <li><tt class="docutils literal"><span class="pre">index.html.twig</span></tt>: (<em>template</em>) the actual name of the file is
 <tt class="docutils literal"><span class="pre">index.html.twig</span></tt>.</li>
 </ul>
-</div></blockquote>
 <p>Assuming that the <tt class="docutils literal"><span class="pre">AcmeBlogBundle</span></tt> lives at <tt class="docutils literal"><span class="pre">src/Acme/BlogBundle</span></tt>, the
 final path to the layout would be <tt class="docutils literal"><span class="pre">src/Acme/BlogBundle/Resources/views/Blog/index.html.twig</span></tt>.</p>
 </li>
@@ -461,7 +450,7 @@ of these two <em>engines</em> should be used. The first part of the extension,
 generate. Unlike the engine, which determines how Symfony2 parses the template,
 this is simply an organizational tactic used in case the same resource needs
 to be rendered as HTML (<tt class="docutils literal"><span class="pre">index.html.twig</span></tt>), XML (<tt class="docutils literal"><span class="pre">index.xml.twig</span></tt>),
-or any other format. For more information, read the <a class="reference internal" href="#template-formats"><em>Debugging</em></a>
+or any other format. For more information, read the <a class="reference internal" href="#template-formats"><em>Template Formats</em></a>
 section.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -558,17 +547,16 @@ template. First, create the template that you&#8217;ll need to reuse.</p>
 </div>
 <p>The template is included using the <tt class="docutils literal"><span class="pre">{{</span> <span class="pre">include()</span> <span class="pre">}}</span></tt> function. Notice that the
 template name follows the same typical convention. The <tt class="docutils literal"><span class="pre">articleDetails.html.twig</span></tt>
-template uses an <tt class="docutils literal"><span class="pre">article</span></tt> variable. This is passed in by the <tt class="docutils literal"><span class="pre">list.html.twig</span></tt>
-template using the <tt class="docutils literal"><span class="pre">with</span></tt> command.</p>
+template uses an <tt class="docutils literal"><span class="pre">article</span></tt> variable, which we pass to it. In this case,
+you could avoid doing this entirely, as all of the variables available in
+<tt class="docutils literal"><span class="pre">list.html.twig</span></tt> are also available in <tt class="docutils literal"><span class="pre">articleDetails.html.twig</span></tt> (unless
+you set <a class="reference external" href="http://twig.sensiolabs.org/doc/functions/include.html">with_context</a> to false).</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">The <tt class="docutils literal"><span class="pre">{'article':</span> <span class="pre">article}</span></tt> syntax is the standard Twig syntax for hash
 maps (i.e. an array with named keys). If you needed to pass in multiple
 elements, it would look like this: <tt class="docutils literal"><span class="pre">{'foo':</span> <span class="pre">foo,</span> <span class="pre">'bar':</span> <span class="pre">bar}</span></tt>.</p>
 </div>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.2: </span>The <tt class="docutils literal"><span class="pre">include()</span></tt> function is a new Twig feature that&#8217;s available in
-Symfony 2.2. Prior, the <tt class="docutils literal"><span class="pre">{%</span> <span class="pre">include</span> <span class="pre">%}</span></tt> tag was used.</p>
 </div>
 <div class="section" id="embedding-controllers">
 <span id="templating-embedding-controller"></span><span id="index-8"></span><h3>Embedding Controllers<a class="headerlink" href="#embedding-controllers" title="Permalink to this headline">¶</a></h3>
@@ -579,21 +567,22 @@ other heavy logic that can&#8217;t be done from within a template.</p>
 <p>The solution is to simply embed the result of an entire controller from your
 template. First, create a controller that renders a certain number of recent
 articles:</p>
-<div class="highlight-python"><pre>// src/Acme/ArticleBundle/Controller/ArticleController.php
-class ArticleController extends Controller
-{
-    public function recentArticlesAction($max = 3)
-    {
-        // make a database call or other logic
-        // to get the "$max" most recent articles
-        $articles = ...;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/ArticleBundle/Controller/ArticleController.php</span>
+<span class="k">class</span> <span class="nc">ArticleController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">recentArticlesAction</span><span class="p">(</span><span class="nv">$max</span> <span class="o">=</span> <span class="mi">3</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// make a database call or other logic</span>
+        <span class="c1">// to get the &quot;$max&quot; most recent articles</span>
+        <span class="nv">$articles</span> <span class="o">=</span> <span class="o">...</span><span class="p">;</span>
 
-        return $this-&gt;render(
-            'AcmeArticleBundle:Article:recentList.html.twig',
-            array('articles' =&gt; $articles)
-        );
-    }
-}</pre>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
+            <span class="s1">&#39;AcmeArticleBundle:Article:recentList.html.twig&#39;</span><span class="p">,</span>
+            <span class="k">array</span><span class="p">(</span><span class="s1">&#39;articles&#39;</span> <span class="o">=&gt;</span> <span class="nv">$articles</span><span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">recentList</span></tt> template is perfectly straightforward:</p>
 <div class="configuration-block">
@@ -657,16 +646,20 @@ string syntax for controllers (i.e. <strong>bundle</strong>:<strong>controller</
 </div>
 <p>Whenever you find that you need a variable or a piece of information that
 you don&#8217;t have access to in a template, consider rendering a controller.
-Controllers are fast to execute and promote good code organization and reuse.</p>
+Controllers are fast to execute and promote good code organization and reuse.
+Of course, like all controllers, they should ideally be &#8220;skinny&#8221;, meaning
+that as much code as possible lives in reusable <a class="reference internal" href="service_container.html"><em>services</em></a>.</p>
 </div>
 <div class="section" id="asynchronous-content-with-hinclude-js">
 <h3>Asynchronous Content with hinclude.js<a class="headerlink" href="#asynchronous-content-with-hinclude-js" title="Permalink to this headline">¶</a></h3>
-<p>Controllers can be embedded asynchronously using the <a class="reference external" href="http://mnot.github.com/hinclude/">hinclude.js</a> javascript library.
+<p>Controllers can be embedded asynchronously using the <a class="reference external" href="http://mnot.github.com/hinclude/">hinclude.js</a> JavaScript library.
 As the embedded content comes from another page (or controller for that matter),
-Symfony2 uses the standard <tt class="docutils literal"><span class="pre">render</span></tt> helper to configure <tt class="docutils literal"><span class="pre">hinclude</span></tt> tags:</p>
+Symfony2 uses a version of the standard <tt class="docutils literal"><span class="pre">render</span></tt> function to configure <tt class="docutils literal"><span class="pre">hinclude</span></tt>
+tags:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Twig</em><div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">render</span> <span class="nv">url</span><span class="o">(</span><span class="s1">&#39;...&#39;</span><span class="o">)</span> <span class="k">with</span> <span class="o">{},</span> <span class="o">{</span><span class="s1">&#39;standalone&#39;</span><span class="o">:</span> <span class="s1">&#39;js&#39;</span><span class="o">}</span> <span class="cp">%}</span><span class="x"></span>
+<li><em>Twig</em><div class="highlight-jinja"><div class="highlight"><pre><span class="cp">{{</span> <span class="nv">render_hinclude</span><span class="o">(</span><span class="nv">controller</span><span class="o">(</span><span class="s1">&#39;...&#39;</span><span class="o">))</span> <span class="cp">}}</span><span class="x"></span>
+<span class="cp">{{</span> <span class="nv">render_hinclude</span><span class="o">(</span><span class="nv">url</span><span class="o">(</span><span class="s1">&#39;...&#39;</span><span class="o">))</span> <span class="cp">}}</span><span class="x"></span>
 </pre></div>
 </div>
 </li>
@@ -702,9 +695,17 @@ Symfony2 uses the standard <tt class="docutils literal"><span class="pre">render
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
-<span class="nt">&lt;framework:config&gt;</span>
-    <span class="nt">&lt;framework:fragments</span> <span class="na">path=</span><span class="s">&quot;/_fragment&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/framework:config&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xmlns:framework=</span><span class="s">&quot;http://symfony.com/schema/dic/symfony&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd</span>
+<span class="s">                        http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;framework:config&gt;</span>
+        <span class="nt">&lt;framework:fragments</span> <span class="na">path=</span><span class="s">&quot;/_fragment&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/framework:config&gt;</span>
+<span class="nt">&lt;/container&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -719,7 +720,7 @@ Symfony2 uses the standard <tt class="docutils literal"><span class="pre">render
 </ul>
 </div>
 </div>
-<p>Default content (while loading or if javascript is disabled) can be set globally
+<p>Default content (while loading or if JavaScript is disabled) can be set globally
 in your application configuration:</p>
 <div class="configuration-block">
 <ul class="simple">
@@ -732,10 +733,18 @@ in your application configuration:</p>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
-<span class="nt">&lt;framework:config&gt;</span>
-    <span class="nt">&lt;framework:templating</span>
-        <span class="na">hinclude-default-template=</span><span class="s">&quot;AcmeDemoBundle::hinclude.html.twig&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/framework:config&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xmlns:framework=</span><span class="s">&quot;http://symfony.com/schema/dic/symfony&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd</span>
+<span class="s">                        http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;framework:config&gt;</span>
+        <span class="nt">&lt;framework:templating</span>
+            <span class="na">hinclude-default-template=</span><span class="s">&quot;AcmeDemoBundle::hinclude.html.twig&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/framework:config&gt;</span>
+<span class="nt">&lt;/container&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -753,8 +762,6 @@ in your application configuration:</p>
 </li>
 </ul>
 </div>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.2: </span>Default templates per render function was added in Symfony 2.2</p>
 <p>You can define default templates per <tt class="docutils literal"><span class="pre">render</span></tt> function (which will override
 any global default template that is defined):</p>
 <div class="configuration-block">
@@ -815,9 +822,16 @@ configuration:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;_welcome&quot;</span> <span class="na">path=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeDemoBundle:Welcome:index<span class="nt">&lt;/default&gt;</span>
-<span class="nt">&lt;/route&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;_welcome&quot;</span> <span class="na">path=</span><span class="s">&quot;/&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeDemoBundle:Welcome:index<span class="nt">&lt;/default&gt;</span>
+    <span class="nt">&lt;/route&gt;</span>
+<span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -855,9 +869,16 @@ route:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;article_show&quot;</span> <span class="na">path=</span><span class="s">&quot;/article/{slug}&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeArticleBundle:Article:show<span class="nt">&lt;/default&gt;</span>
-<span class="nt">&lt;/route&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;routes</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/routing&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/routing</span>
+<span class="s">        http://symfony.com/schema/routing/routing-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;route</span> <span class="na">id=</span><span class="s">&quot;article_show&quot;</span> <span class="na">path=</span><span class="s">&quot;/article/{slug}&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;default</span> <span class="na">key=</span><span class="s">&quot;_controller&quot;</span><span class="nt">&gt;</span>AcmeArticleBundle:Article:show<span class="nt">&lt;/default&gt;</span>
+    <span class="nt">&lt;/route&gt;</span>
+<span class="nt">&lt;/routes&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -919,7 +940,7 @@ the <tt class="docutils literal"><span class="pre">generate()</span></tt> method
 </div>
 <div class="section" id="linking-to-assets">
 <span id="book-templating-assets"></span><span id="index-10"></span><h3>Linking to Assets<a class="headerlink" href="#linking-to-assets" title="Permalink to this headline">¶</a></h3>
-<p>Templates also commonly refer to images, Javascript, stylesheets and other
+<p>Templates also commonly refer to images, JavaScript, stylesheets and other
 assets. Of course you could hard-code the path to these assets (e.g. <tt class="docutils literal"><span class="pre">/images/logo.png</span></tt>),
 but Symfony2 provides a more dynamic option via the <tt class="docutils literal"><span class="pre">asset</span></tt> Twig function:</p>
 <div class="configuration-block">
@@ -950,17 +971,54 @@ append a query string to your asset, in order to guarantee that updated static
 assets won&#8217;t be cached when deployed. For example, <tt class="docutils literal"><span class="pre">/images/logo.png</span></tt> might
 look like <tt class="docutils literal"><span class="pre">/images/logo.png?v2</span></tt>. For more information, see the <a class="reference internal" href="../reference/configuration/framework.html#ref-framework-assets-version"><em>assets_version</em></a>
 configuration option.</p>
+<div class="versionadded" id="book-templating-version-by-asset">
+<p><span class="versionmodified">New in version 2.5: </span>Setting versioned URLs on an asset-by-asset basis was introduced in Symfony 2.5.</p>
+</div>
+<p>If you need to set a version for a specific asset, you can set the fourth
+argument (or the <tt class="docutils literal"><span class="pre">version</span></tt> argument) to the desired version:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset</span><span class="o">(</span><span class="s1">&#39;images/logo.png&#39;</span><span class="o">,</span> <span class="nv">version</span><span class="o">=</span><span class="s1">&#39;3.0&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Symfony!&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getUrl</span><span class="p">(</span><span class="s1">&#39;images/logo.png&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">false</span><span class="p">,</span> <span class="s1">&#39;3.0&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Symfony!&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>If you dont give a version or pass <tt class="docutils literal"><span class="pre">null</span></tt>, the default package version
+(from <a class="reference internal" href="../reference/configuration/framework.html#ref-framework-assets-version"><em>assets_version</em></a>) will be used. If you pass <tt class="docutils literal"><span class="pre">false</span></tt>,
+versioned URL will be deactivated for this asset.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.5: </span>Absolute URLs for assets were introduced in Symfony 2.5.</p>
+</div>
+<p>If you need absolute URLs for assets, you can set the third argument (or the
+<tt class="docutils literal"><span class="pre">absolute</span></tt> argument) to <tt class="docutils literal"><span class="pre">true</span></tt>:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset</span><span class="o">(</span><span class="s1">&#39;images/logo.png&#39;</span><span class="o">,</span> <span class="nv">absolute</span><span class="o">=</span><span class="kp">true</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Symfony!&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;assets&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getUrl</span><span class="p">(</span><span class="s1">&#39;images/logo.png&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">true</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Symfony!&quot;</span> <span class="nt">/&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="section" id="including-stylesheets-and-javascripts-in-twig">
-<span id="index-11"></span><h2>Including Stylesheets and Javascripts in Twig<a class="headerlink" href="#including-stylesheets-and-javascripts-in-twig" title="Permalink to this headline">¶</a></h2>
-<p>No site would be complete without including Javascript files and stylesheets.
+<span id="index-11"></span><h2>Including Stylesheets and JavaScripts in Twig<a class="headerlink" href="#including-stylesheets-and-javascripts-in-twig" title="Permalink to this headline">¶</a></h2>
+<p>No site would be complete without including JavaScript files and stylesheets.
 In Symfony, the inclusion of these assets is handled elegantly by taking
 advantage of Symfony&#8217;s template inheritance.</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">This section will teach you the philosophy behind including stylesheet
-and Javascript assets in Symfony. Symfony also packages another library,
+and JavaScript assets in Symfony. Symfony also packages another library,
 called Assetic, which follows this philosophy but allows you to do much
 more interesting things with those assets. For more information on
 using Assetic see <a class="reference internal" href="../cookbook/assetic/asset_management.html"><em>How to Use Assetic for Asset Management</em></a>.</p>
@@ -968,28 +1026,28 @@ using Assetic see <a class="reference internal" href="../cookbook/assetic/asset_
 <p>Start by adding two blocks to your base template that will hold your assets:
 one called <tt class="docutils literal"><span class="pre">stylesheets</span></tt> inside the <tt class="docutils literal"><span class="pre">head</span></tt> tag and another called <tt class="docutils literal"><span class="pre">javascripts</span></tt>
 just above the closing <tt class="docutils literal"><span class="pre">body</span></tt> tag. These blocks will contain all of the
-stylesheets and Javascripts that you&#8217;ll need throughout your site:</p>
+stylesheets and JavaScripts that you&#8217;ll need throughout your site:</p>
 <div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# app/Resources/views/base.html.twig #}</span>
 <span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;head&gt;</span>
         <span class="c">{# ... #}</span>
 
         <span class="cp">{%</span> <span class="k">block</span> <span class="nv">stylesheets</span> <span class="cp">%}</span>
-            <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset</span><span class="o">(</span><span class="s1">&#39;/css/main.css&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="nt">/&gt;</span>
+            <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset</span><span class="o">(</span><span class="s1">&#39;css/main.css&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="nt">/&gt;</span>
         <span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
     <span class="nt">&lt;/head&gt;</span>
     <span class="nt">&lt;body&gt;</span>
         <span class="c">{# ... #}</span>
 
         <span class="cp">{%</span> <span class="k">block</span> <span class="nv">javascripts</span> <span class="cp">%}</span>
-            <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset</span><span class="o">(</span><span class="s1">&#39;/js/main.js&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+            <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset</span><span class="o">(</span><span class="s1">&#39;js/main.js&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
         <span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
     <span class="nt">&lt;/body&gt;</span>
 <span class="nt">&lt;/html&gt;</span>
 </pre></div>
 </div>
 <p>That&#8217;s easy enough! But what if you need to include an extra stylesheet or
-Javascript from a child template? For example, suppose you have a contact
+JavaScript from a child template? For example, suppose you have a contact
 page and you need to include a <tt class="docutils literal"><span class="pre">contact.css</span></tt> stylesheet <em>just</em> on that
 page. From inside that contact page&#8217;s template, do the following:</p>
 <div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/DemoBundle/Resources/views/Contact/contact.html.twig #}</span>
@@ -998,7 +1056,7 @@ page. From inside that contact page&#8217;s template, do the following:</p>
 <span class="cp">{%</span> <span class="k">block</span> <span class="nv">stylesheets</span> <span class="cp">%}</span>
     <span class="cp">{{</span> <span class="nv">parent</span><span class="o">()</span> <span class="cp">}}</span>
 
-    <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset</span><span class="o">(</span><span class="s1">&#39;/css/contact.css&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset</span><span class="o">(</span><span class="s1">&#39;css/contact.css&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="nt">/&gt;</span>
 <span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
 
 <span class="c">{# ... #}</span>
@@ -1022,7 +1080,7 @@ stylesheets.</p>
 <div class="section" id="global-template-variables">
 <h2>Global Template Variables<a class="headerlink" href="#global-template-variables" title="Permalink to this headline">¶</a></h2>
 <p>During each request, Symfony2 will set a global template variable <tt class="docutils literal"><span class="pre">app</span></tt>
-in both Twig and PHP template engines by default.  The <tt class="docutils literal"><span class="pre">app</span></tt> variable
+in both Twig and PHP template engines by default. The <tt class="docutils literal"><span class="pre">app</span></tt> variable
 is a <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/Templating/GlobalVariables.html" title="Symfony\Bundle\FrameworkBundle\Templating\GlobalVariables"><span class="pre">GlobalVariables</span></a></tt>
 instance which will give you access to some application specific variables
 automatically:</p>
@@ -1061,20 +1119,22 @@ on <a class="reference internal" href="../cookbook/templating/global_variables.h
 </div>
 </div>
 <div class="section" id="configuring-and-using-the-templating-service">
-<span id="index-12"></span><h2>Configuring and using the <tt class="docutils literal"><span class="pre">templating</span></tt> Service<a class="headerlink" href="#configuring-and-using-the-templating-service" title="Permalink to this headline">¶</a></h2>
+<span id="index-12"></span><h2>Configuring and Using the <tt class="docutils literal"><span class="pre">templating</span></tt> Service<a class="headerlink" href="#configuring-and-using-the-templating-service" title="Permalink to this headline">¶</a></h2>
 <p>The heart of the template system in Symfony2 is the templating <tt class="docutils literal"><span class="pre">Engine</span></tt>.
 This special object is responsible for rendering templates and returning
 their content. When you render a template in a controller, for example,
 you&#8217;re actually using the templating engine service. For example:</p>
-<div class="highlight-python"><pre>return $this-&gt;render('AcmeArticleBundle:Article:index.html.twig');</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeArticleBundle:Article:index.html.twig&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>is equivalent to:</p>
-<div class="highlight-python"><pre>use Symfony\Component\HttpFoundation\Response;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
 
-$engine = $this-&gt;container-&gt;get('templating');
-$content = $engine-&gt;render('AcmeArticleBundle:Article:index.html.twig');
+<span class="nv">$engine</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;templating&#39;</span><span class="p">);</span>
+<span class="nv">$content</span> <span class="o">=</span> <span class="nv">$engine</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeArticleBundle:Article:index.html.twig&#39;</span><span class="p">);</span>
 
-return $response = new Response($content);</pre>
+<span class="k">return</span> <span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="nv">$content</span><span class="p">);</span>
+</pre></div>
 </div>
 <p id="template-configuration">The templating engine (or &#8220;service&#8221;) is preconfigured to work automatically
 inside Symfony2. It can, of course, be configured further in the application
@@ -1089,9 +1149,19 @@ configuration file:</p>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
-<span class="nt">&lt;framework:templating&gt;</span>
-    <span class="nt">&lt;framework:engine</span> <span class="na">id=</span><span class="s">&quot;twig&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/framework:templating&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xmlns:framework=</span><span class="s">&quot;http://symfony.com/schema/dic/symfony&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd</span>
+<span class="s">                        http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;framework:config&gt;</span>
+        <span class="nt">&lt;framework:templating&gt;</span>
+            <span class="nt">&lt;framework:engine</span> <span class="na">id=</span><span class="s">&quot;twig&quot;</span> <span class="nt">/&gt;</span>
+        <span class="nt">&lt;/framework:templating&gt;</span>
+    <span class="nt">&lt;/framework:config&gt;</span>
+<span class="nt">&lt;/container&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -1127,16 +1197,17 @@ project (e.g. in the <tt class="docutils literal"><span class="pre">src/Acme/Blo
 really happy with everything, you want to override the blog &#8220;list&#8221; page to
 customize the markup specifically for your application. By digging into the
 <tt class="docutils literal"><span class="pre">Blog</span></tt> controller of the <tt class="docutils literal"><span class="pre">AcmeBlogBundle</span></tt>, you find the following:</p>
-<div class="highlight-python"><pre>public function indexAction()
-{
-    // some logic to retrieve the blogs
-    $blogs = ...;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="k">function</span> <span class="nf">indexAction</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="c1">// some logic to retrieve the blogs</span>
+    <span class="nv">$blogs</span> <span class="o">=</span> <span class="o">...</span><span class="p">;</span>
 
-    $this-&gt;render(
-        'AcmeBlogBundle:Blog:index.html.twig',
-        array('blogs' =&gt; $blogs)
-    );
-}</pre>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
+        <span class="s1">&#39;AcmeBlogBundle:Blog:index.html.twig&#39;</span><span class="p">,</span>
+        <span class="k">array</span><span class="p">(</span><span class="s1">&#39;blogs&#39;</span> <span class="o">=&gt;</span> <span class="nv">$blogs</span><span class="p">)</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>When the <tt class="docutils literal"><span class="pre">AcmeBlogBundle:Blog:index.html.twig</span></tt> is rendered, Symfony2 actually
 looks in two different locations for the template:</p>
@@ -1178,10 +1249,10 @@ inheritance. For more information, see <a class="reference internal" href="../co
 <span class="target" id="templating-overriding-core-templates"></span><div class="section" id="overriding-core-templates">
 <span id="index-14"></span><h3>Overriding Core Templates<a class="headerlink" href="#overriding-core-templates" title="Permalink to this headline">¶</a></h3>
 <p>Since the Symfony2 framework itself is just a bundle, core templates can be
-overridden in the same way. For example, the core <tt class="docutils literal"><span class="pre">TwigBundle</span></tt> contains
+overridden in the same way. For example, the core TwigBundle contains
 a number of different &#8220;exception&#8221; and &#8220;error&#8221; templates that can be overridden
 by copying each from the <tt class="docutils literal"><span class="pre">Resources/views/Exception</span></tt> directory of the
-<tt class="docutils literal"><span class="pre">TwigBundle</span></tt> to, you guessed it, the
+TwigBundle to, you guessed it, the
 <tt class="docutils literal"><span class="pre">app/Resources/TwigBundle/views/Exception</span></tt> directory.</p>
 </div>
 </div>
@@ -1225,7 +1296,7 @@ close to <tt class="docutils literal"><span class="pre">AcmeBlogBundle:Blog:inde
 </div>
 </li>
 </ul>
-<p>Notice that this template extends the section template -(<tt class="docutils literal"><span class="pre">AcmeBlogBundle::layout.html.twig</span></tt>)
+<p>Notice that this template extends the section template (<tt class="docutils literal"><span class="pre">AcmeBlogBundle::layout.html.twig</span></tt>)
 which in-turn extends the base application layout (<tt class="docutils literal"><span class="pre">::base.html.twig</span></tt>).
 This is the common three-level inheritance model.</p>
 <p>When building your application, you may choose to follow this method or simply
@@ -1254,8 +1325,8 @@ this classic example:</p>
 </li>
 </ul>
 </div>
-<p>Imagine that the user enters the following code as his/her name:</p>
-<div class="highlight-text"><div class="highlight"><pre>&lt;script&gt;alert(&#39;hello!&#39;)&lt;/script&gt;
+<p>Imagine the user enters the following code for their name:</p>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;script&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;hello!&#39;</span><span class="p">)</span><span class="nt">&lt;/script&gt;</span>
 </pre></div>
 </div>
 <p>Without any output escaping, the resulting template will cause a JavaScript
@@ -1312,10 +1383,10 @@ in a JavaScript string, use the <tt class="docutils literal"><span class="pre">j
 </div>
 </div>
 <div class="section" id="debugging">
-<span id="template-formats"></span><span id="index-17"></span><h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
+<span id="index-17"></span><h2>Debugging<a class="headerlink" href="#debugging" title="Permalink to this headline">¶</a></h2>
 <p>When using PHP, you can use <tt class="docutils literal"><span class="pre">var_dump()</span></tt> if you need to quickly find the
 value of a variable passed. This is useful, for example, inside your controller.
-The same can be achieved when using Twig thanks to the the debug extension.</p>
+The same can be achieved when using Twig thanks to the debug extension.</p>
 <p>Template parameters can then be dumped using the <tt class="docutils literal"><span class="pre">dump</span></tt> function:</p>
 <div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/ArticleBundle/Resources/views/Article/recentList.html.twig #}</span>
 <span class="cp">{{</span> <span class="nv">dump</span><span class="o">(</span><span class="nv">articles</span><span class="o">)</span> <span class="cp">}}</span>
@@ -1346,8 +1417,8 @@ console command:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>Template Formats<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="template-formats">
+<span id="id2"></span><h2>Template Formats<a class="headerlink" href="#template-formats" title="Permalink to this headline">¶</a></h2>
 <p>Templates are a generic way to render content in <em>any</em> format. And while in
 most cases you&#8217;ll use templates to render HTML content, a template can just
 as easily generate JavaScript, CSS, XML or any other format you can dream of.</p>
@@ -1363,12 +1434,13 @@ isn&#8217;t actually rendered differently based on its format.</p>
 <p>In many cases, you may want to allow a single controller to render multiple
 different formats based on the &#8220;request format&#8221;. For that reason, a common
 pattern is to do the following:</p>
-<div class="highlight-python"><pre>public function indexAction()
-{
-    $format = $this-&gt;getRequest()-&gt;getRequestFormat();
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="k">function</span> <span class="nf">indexAction</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$format</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getRequest</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getRequestFormat</span><span class="p">();</span>
 
-    return $this-&gt;render('AcmeBlogBundle:Blog:index.'.$format.'.twig');
-}</pre>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeBlogBundle:Blog:index.&#39;</span><span class="o">.</span><span class="nv">$format</span><span class="o">.</span><span class="s1">&#39;.twig&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">getRequestFormat</span></tt> on the <tt class="docutils literal"><span class="pre">Request</span></tt> object defaults to <tt class="docutils literal"><span class="pre">html</span></tt>,
 but can return any other format based on the format requested by the user.
@@ -1405,11 +1477,12 @@ you need to generate presentational content in HTML, XML or any other format.
 And though templates are a common way to generate content in a controller,
 their use is not mandatory. The <tt class="docutils literal"><span class="pre">Response</span></tt> object returned by a controller
 can be created with or without the use of a template:</p>
-<div class="highlight-python"><pre>// creates a Response object whose content is the rendered template
-$response = $this-&gt;render('AcmeArticleBundle:Article:index.html.twig');
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// creates a Response object whose content is the rendered template</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeArticleBundle:Article:index.html.twig&#39;</span><span class="p">);</span>
 
-// creates a Response object whose content is simple text
-$response = new Response('response content');</pre>
+<span class="c1">// creates a Response object whose content is simple text</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="s1">&#39;response content&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>Symfony&#8217;s templating engine is very flexible and two different template
 renderers are available by default: the traditional <em>PHP</em> templates and the
@@ -1438,7 +1511,7 @@ and in Symfony2, that&#8217;s absolutely fine.</p>
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Creating and using Templates</a><ul>
+<li><a class="reference internal" href="#">Creating and Using Templates</a><ul>
 <li><a class="reference internal" href="#templates">Templates</a><ul>
 <li><a class="reference internal" href="#twig-template-caching">Twig Template Caching</a></li>
 </ul>
@@ -1456,9 +1529,9 @@ and in Symfony2, that&#8217;s absolutely fine.</p>
 <li><a class="reference internal" href="#linking-to-assets">Linking to Assets</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#including-stylesheets-and-javascripts-in-twig">Including Stylesheets and Javascripts in Twig</a></li>
+<li><a class="reference internal" href="#including-stylesheets-and-javascripts-in-twig">Including Stylesheets and JavaScripts in Twig</a></li>
 <li><a class="reference internal" href="#global-template-variables">Global Template Variables</a></li>
-<li><a class="reference internal" href="#configuring-and-using-the-templating-service">Configuring and using the <tt class="docutils literal"><span class="pre">templating</span></tt> Service</a></li>
+<li><a class="reference internal" href="#configuring-and-using-the-templating-service">Configuring and Using the <tt class="docutils literal"><span class="pre">templating</span></tt> Service</a></li>
 <li><a class="reference internal" href="#overriding-bundle-templates">Overriding Bundle Templates</a><ul>
 <li><a class="reference internal" href="#overriding-core-templates">Overriding Core Templates</a></li>
 </ul>
@@ -1471,7 +1544,7 @@ and in Symfony2, that&#8217;s absolutely fine.</p>
 </li>
 <li><a class="reference internal" href="#debugging">Debugging</a></li>
 <li><a class="reference internal" href="#syntax-checking">Syntax Checking</a></li>
-<li><a class="reference internal" href="#id2">Template Formats</a></li>
+<li><a class="reference internal" href="#template-formats">Template Formats</a></li>
 <li><a class="reference internal" href="#final-thoughts">Final Thoughts</a></li>
 <li><a class="reference internal" href="#learn-more-from-the-cookbook">Learn more from the Cookbook</a></li>
 </ul>
@@ -1518,13 +1591,13 @@ and in Symfony2, that&#8217;s absolutely fine.</p>
         <li class="right" >
           <a href="routing.html" title="Routing"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>HTTP Cache &mdash; Symfony Docs 2.3 documentation</title>
+    <title>HTTP Cache &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Translations" href="translation.html" />
     <link rel="prev" title="Security" href="security.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="security.html" title="Security"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -159,21 +157,22 @@ wraps the default one (<tt class="docutils literal"><span class="pre">AppKernel<
 proxy.</p>
 <p>To enable caching, modify the code of a front controller to use the caching
 kernel:</p>
-<div class="highlight-python"><pre>// web/app.php
-require_once __DIR__.'/../app/bootstrap.php.cache';
-require_once __DIR__.'/../app/AppKernel.php';
-require_once __DIR__.'/../app/AppCache.php';
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// web/app.php</span>
+<span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/bootstrap.php.cache&#39;</span><span class="p">;</span>
+<span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/AppKernel.php&#39;</span><span class="p">;</span>
+<span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/AppCache.php&#39;</span><span class="p">;</span>
 
-use Symfony\Component\HttpFoundation\Request;
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
 
-$kernel = new AppKernel('prod', false);
-$kernel-&gt;loadClassCache();
-// wrap the default AppKernel with the AppCache one
-$kernel = new AppCache($kernel);
-$request = Request::createFromGlobals();
-$response = $kernel-&gt;handle($request);
-$response-&gt;send();
-$kernel-&gt;terminate($request, $response);</pre>
+<span class="nv">$kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AppKernel</span><span class="p">(</span><span class="s1">&#39;prod&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<span class="nv">$kernel</span><span class="o">-&gt;</span><span class="na">loadClassCache</span><span class="p">();</span>
+<span class="c1">// wrap the default AppKernel with the AppCache one</span>
+<span class="nv">$kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AppCache</span><span class="p">(</span><span class="nv">$kernel</span><span class="p">);</span>
+<span class="nv">$request</span> <span class="o">=</span> <span class="nx">Request</span><span class="o">::</span><span class="na">createFromGlobals</span><span class="p">();</span>
+<span class="nv">$response</span> <span class="o">=</span> <span class="nv">$kernel</span><span class="o">-&gt;</span><span class="na">handle</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+<span class="nv">$kernel</span><span class="o">-&gt;</span><span class="na">terminate</span><span class="p">(</span><span class="nv">$request</span><span class="p">,</span> <span class="nv">$response</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>The caching kernel will immediately act as a reverse proxy - caching responses
 from your application and returning them to the client.</p>
@@ -182,31 +181,33 @@ from your application and returning them to the client.</p>
 <p>The cache kernel has a special <tt class="docutils literal"><span class="pre">getLog()</span></tt> method that returns a string
 representation of what happened in the cache layer. In the development
 environment, use it to debug and validate your cache strategy:</p>
-<div class="last highlight-python"><pre>error_log($kernel-&gt;getLog());</pre>
+<div class="last highlight-php"><div class="highlight"><pre><span class="nb">error_log</span><span class="p">(</span><span class="nv">$kernel</span><span class="o">-&gt;</span><span class="na">getLog</span><span class="p">());</span>
+</pre></div>
 </div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">AppCache</span></tt> object has a sensible default configuration, but it can be
 finely tuned via a set of options you can set by overriding the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Bundle/FrameworkBundle/HttpCache/HttpCache.html#method_getOptions" title="Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache::getOptions()"><span class="pre">getOptions()</span></a></tt>
 method:</p>
-<div class="highlight-python"><pre>// app/AppCache.php
-use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/AppCache.php</span>
+<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache</span><span class="p">;</span>
 
-class AppCache extends HttpCache
-{
-    protected function getOptions()
-    {
-        return array(
-            'debug'                  =&gt; false,
-            'default_ttl'            =&gt; 0,
-            'private_headers'        =&gt; array('Authorization', 'Cookie'),
-            'allow_reload'           =&gt; false,
-            'allow_revalidate'       =&gt; false,
-            'stale_while_revalidate' =&gt; 2,
-            'stale_if_error'         =&gt; 60,
-        );
-    }
-}</pre>
+<span class="k">class</span> <span class="nc">AppCache</span> <span class="k">extends</span> <span class="nx">HttpCache</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">getOptions</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;debug&#39;</span>                  <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+            <span class="s1">&#39;default_ttl&#39;</span>            <span class="o">=&gt;</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s1">&#39;private_headers&#39;</span>        <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Authorization&#39;</span><span class="p">,</span> <span class="s1">&#39;Cookie&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;allow_reload&#39;</span>           <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+            <span class="s1">&#39;allow_revalidate&#39;</span>       <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+            <span class="s1">&#39;stale_while_revalidate&#39;</span> <span class="o">=&gt;</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="s1">&#39;stale_if_error&#39;</span>         <span class="o">=&gt;</span> <span class="mi">60</span><span class="p">,</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -243,7 +244,7 @@ error is encountered (default: <tt class="docutils literal"><span class="pre">60
 header to the response containing useful information about cache hits and
 misses.</p>
 <div class="sidebar">
-<p class="first sidebar-title">Changing from one Reverse Proxy to Another</p>
+<p class="first sidebar-title">Changing from one Reverse Proxy to another</p>
 <p>The Symfony2 reverse proxy is a great tool to use when developing your
 website or when you deploy your website to a shared host where you cannot
 install anything beyond PHP code. But being written in PHP, it cannot
@@ -296,32 +297,34 @@ which is actually a collection of various cache information.</p>
 <p>The <tt class="docutils literal"><span class="pre">Cache-Control</span></tt> header is unique in that it contains not one, but various
 pieces of information about the cacheability of a response. Each piece of
 information is separated by a comma:</p>
-<blockquote>
-<div><p>Cache-Control: private, max-age=0, must-revalidate</p>
-<p>Cache-Control: max-age=3600, must-revalidate</p>
-</div></blockquote>
+<div class="highlight-text"><div class="highlight"><pre>Cache-Control: private, max-age=0, must-revalidate
+
+Cache-Control: max-age=3600, must-revalidate
+</pre></div>
+</div>
 <p>Symfony provides an abstraction around the <tt class="docutils literal"><span class="pre">Cache-Control</span></tt> header to make
 its creation more manageable:</p>
-<div class="highlight-python"><pre>// ...
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// ...</span>
 
-use Symfony\Component\HttpFoundation\Response;
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
 
-$response = new Response();
+<span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">();</span>
 
-// mark the response as either public or private
-$response-&gt;setPublic();
-$response-&gt;setPrivate();
+<span class="c1">// mark the response as either public or private</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setPublic</span><span class="p">();</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setPrivate</span><span class="p">();</span>
 
-// set the private or shared max age
-$response-&gt;setMaxAge(600);
-$response-&gt;setSharedMaxAge(600);
+<span class="c1">// set the private or shared max age</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setMaxAge</span><span class="p">(</span><span class="mi">600</span><span class="p">);</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setSharedMaxAge</span><span class="p">(</span><span class="mi">600</span><span class="p">);</span>
 
-// set a custom Cache-Control directive
-$response-&gt;headers-&gt;addCacheControlDirective('must-revalidate', true);</pre>
+<span class="c1">// set a custom Cache-Control directive</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">headers</span><span class="o">-&gt;</span><span class="na">addCacheControlDirective</span><span class="p">(</span><span class="s1">&#39;must-revalidate&#39;</span><span class="p">,</span> <span class="k">true</span><span class="p">);</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="public-vs-private-responses">
-<h3>Public vs Private Responses<a class="headerlink" href="#public-vs-private-responses" title="Permalink to this headline">¶</a></h3>
+<h3>Public vs private Responses<a class="headerlink" href="#public-vs-private-responses" title="Permalink to this headline">¶</a></h3>
 <p>Both gateway and proxy caches are considered &#8220;shared&#8221; caches as the cached
 content is shared by more than one user. If a user-specific response were
 ever mistakenly stored by a shared cache, it might be returned later to any
@@ -369,7 +372,7 @@ or <tt class="docutils literal"><span class="pre">Last-Modified</span></tt>), <t
 that the response will not be cached;</li>
 <li>If <tt class="docutils literal"><span class="pre">Cache-Control</span></tt> is empty (but one of the other cache headers is present),
 its value is set to <tt class="docutils literal"><span class="pre">private,</span> <span class="pre">must-revalidate</span></tt>;</li>
-<li>But if at least one <tt class="docutils literal"><span class="pre">Cache-Control</span></tt> directive is set, and no &#8216;public&#8217; or
+<li>But if at least one <tt class="docutils literal"><span class="pre">Cache-Control</span></tt> directive is set, and no <tt class="docutils literal"><span class="pre">public</span></tt> or
 <tt class="docutils literal"><span class="pre">private</span></tt> directives have been explicitly added, Symfony2 adds the
 <tt class="docutils literal"><span class="pre">private</span></tt> directive automatically (except when <tt class="docutils literal"><span class="pre">s-maxage</span></tt> is set).</li>
 </ul>
@@ -402,7 +405,7 @@ specification document - <a class="reference external" href="http://tools.ietf.o
 not describe a new version of HTTP, but mostly clarifies the original HTTP
 specification. The organization is also improved as the specification
 is split into seven parts; everything related to HTTP caching can be
-found in two dedicated parts (<a class="reference external" href="http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional-12">P4 - Conditional Requests</a> and <a class="reference external" href="http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache-12">P6 -
+found in two dedicated parts (<a class="reference external" href="http://tools.ietf.org/html/draft-ietf-httpbis-p4-conditional">P4 - Conditional Requests</a> and <a class="reference external" href="http://tools.ietf.org/html/draft-ietf-httpbis-p6-cache">P6 -
 Caching: Browser and intermediary caches</a>).</p>
 <p class="last">As a web developer, you are strongly urged to read the specification. Its
 clarity and power - even more than ten years after its creation - is
@@ -424,10 +427,11 @@ HTTP headers: <tt class="docutils literal"><span class="pre">Expires</span></tt>
 the date/time after which the response is considered stale.&#8221; The <tt class="docutils literal"><span class="pre">Expires</span></tt>
 header can be set with the <tt class="docutils literal"><span class="pre">setExpires()</span></tt> <tt class="docutils literal"><span class="pre">Response</span></tt> method. It takes a
 <tt class="docutils literal"><span class="pre">DateTime</span></tt> instance as an argument:</p>
-<div class="highlight-python"><pre>$date = new DateTime();
-$date-&gt;modify('+600 seconds');
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$date</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">DateTime</span><span class="p">();</span>
+<span class="nv">$date</span><span class="o">-&gt;</span><span class="na">modify</span><span class="p">(</span><span class="s1">&#39;+600 seconds&#39;</span><span class="p">);</span>
 
-$response-&gt;setExpires($date);</pre>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setExpires</span><span class="p">(</span><span class="nv">$date</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>The resulting HTTP header will look like this:</p>
 <div class="highlight-text"><div class="highlight"><pre>Expires: Thu, 01 Mar 2011 16:00:00 GMT
@@ -440,7 +444,7 @@ timezone as required by the specification.</p>
 </div>
 <p>Note that in HTTP versions before 1.1 the origin server wasn&#8217;t required to
 send the <tt class="docutils literal"><span class="pre">Date</span></tt> header. Consequently the cache (e.g. the browser) might
-need to rely onto his local clock to evaluate the <tt class="docutils literal"><span class="pre">Expires</span></tt> header making
+need to rely on the local clock to evaluate the <tt class="docutils literal"><span class="pre">Expires</span></tt> header making
 the lifetime calculation vulnerable to clock skew. Another limitation
 of the <tt class="docutils literal"><span class="pre">Expires</span></tt> header is that the specification states that &#8220;HTTP/1.1
 servers should not send <tt class="docutils literal"><span class="pre">Expires</span></tt> dates more than one year in the future.&#8221;</p>
@@ -453,12 +457,13 @@ header is used to specify many different cache directives. For expiration,
 there are two directives, <tt class="docutils literal"><span class="pre">max-age</span></tt> and <tt class="docutils literal"><span class="pre">s-maxage</span></tt>. The first one is
 used by all caches, whereas the second one is only taken into account by
 shared caches:</p>
-<div class="highlight-python"><pre>// Sets the number of seconds after which the response
-// should no longer be considered fresh
-$response-&gt;setMaxAge(600);
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// Sets the number of seconds after which the response</span>
+<span class="c1">// should no longer be considered fresh</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setMaxAge</span><span class="p">(</span><span class="mi">600</span><span class="p">);</span>
 
-// Same as above but only for shared caches
-$response-&gt;setSharedMaxAge(600);</pre>
+<span class="c1">// Same as above but only for shared caches</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setSharedMaxAge</span><span class="p">(</span><span class="mi">600</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">Cache-Control</span></tt> header would take on the following format (it may have
 additional directives):</p>
@@ -477,17 +482,15 @@ to store responses. The difference is that, for each request, the cache asks
 the application whether or not the cached response is still valid. If the
 cache <em>is</em> still valid, your application should return a 304 status code
 and no content. This tells the cache that it&#8217;s ok to return the cached response.</p>
-<p>Under this model, you mainly save bandwidth as the representation is not
-sent twice to the same client (a 304 response is sent instead). But if you
-design your application carefully, you might be able to get the bare minimum
-data needed to send a 304 response and save CPU also (see below for an implementation
-example).</p>
+<p>Under this model, you only save CPU if you&#8217;re able to determine that the
+cached response is still valid by doing <em>less</em> work than generating the whole
+page again (see below for an implementation example).</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">The 304 status code means &#8220;Not Modified&#8221;. It&#8217;s important because with
 this status code the response does <em>not</em> contain the actual content being
 requested. Instead, the response is simply a light-weight set of directions that
-tell cache that it should use its stored version.</p>
+tells the cache that it should use its stored version.</p>
 </div>
 <p>Like with expiration, there are two different HTTP headers that can be used
 to implement the validation model: <tt class="docutils literal"><span class="pre">ETag</span></tt> and <tt class="docutils literal"><span class="pre">Last-Modified</span></tt>.</p>
@@ -502,20 +505,30 @@ would return. An <tt class="docutils literal"><span class="pre">ETag</span></tt>
 if two different versions of a resource are equivalent. Like fingerprints,
 each <tt class="docutils literal"><span class="pre">ETag</span></tt> must be unique across all representations of the same resource.</p>
 <p>To see a simple implementation, generate the ETag as the md5 of the content:</p>
-<div class="highlight-python"><pre>public function indexAction()
-{
-    $response = $this-&gt;render('MyBundle:Main:index.html.twig');
-    $response-&gt;setETag(md5($response-&gt;getContent()));
-    $response-&gt;setPublic(); // make sure the response is public/cacheable
-    $response-&gt;isNotModified($this-&gt;getRequest());
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
 
-    return $response;
-}</pre>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">indexAction</span><span class="p">(</span><span class="nx">Request</span> <span class="nv">$request</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$response</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;MyBundle:Main:index.html.twig&#39;</span><span class="p">);</span>
+    <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setETag</span><span class="p">(</span><span class="nb">md5</span><span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">getContent</span><span class="p">()));</span>
+    <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setPublic</span><span class="p">();</span> <span class="c1">// make sure the response is public/cacheable</span>
+    <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">isNotModified</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="nv">$response</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Response.html#method_isNotModified" title="Symfony\Component\HttpFoundation\Response::isNotModified()"><span class="pre">isNotModified()</span></a></tt>
-method compares the <tt class="docutils literal"><span class="pre">ETag</span></tt> sent with the <tt class="docutils literal"><span class="pre">Request</span></tt> with the one set
-on the <tt class="docutils literal"><span class="pre">Response</span></tt>. If the two match, the method automatically sets the
-<tt class="docutils literal"><span class="pre">Response</span></tt> status code to 304.</p>
+method compares the <tt class="docutils literal"><span class="pre">If-None-Match</span></tt> sent with the <tt class="docutils literal"><span class="pre">Request</span></tt> with the
+<tt class="docutils literal"><span class="pre">ETag</span></tt> header set on the <tt class="docutils literal"><span class="pre">Response</span></tt>. If the two match, the method
+automatically sets the <tt class="docutils literal"><span class="pre">Response</span></tt> status code to 304.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The cache sets the <tt class="docutils literal"><span class="pre">If-None-Match</span></tt> header on the request to the <tt class="docutils literal"><span class="pre">ETag</span></tt>
+of the original cached response before sending the request back to the
+app. This is how the cache and server communicate with each other and
+decide whether or not the resource has been updated since it was cached.</p>
+</div>
 <p>This algorithm is simple enough and very generic, but you need to create the
 whole <tt class="docutils literal"><span class="pre">Response</span></tt> before being able to compute the ETag, which is sub-optimal.
 In other words, it saves on bandwidth, but not CPU cycles.</p>
@@ -540,27 +553,30 @@ since the response was cached.</p>
 <p>For instance, you can use the latest update date for all the objects needed to
 compute the resource representation as the value for the <tt class="docutils literal"><span class="pre">Last-Modified</span></tt>
 header value:</p>
-<div class="highlight-python"><pre>public function showAction($articleSlug)
-{
-    // ...
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
 
-    $articleDate = new \DateTime($article-&gt;getUpdatedAt());
-    $authorDate = new \DateTime($author-&gt;getUpdatedAt());
+<span class="k">public</span> <span class="k">function</span> <span class="nf">showAction</span><span class="p">(</span><span class="nv">$articleSlug</span><span class="p">,</span> <span class="nx">Request</span> <span class="nv">$request</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
 
-    $date = $authorDate &gt; $articleDate ? $authorDate : $articleDate;
+    <span class="nv">$articleDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(</span><span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getUpdatedAt</span><span class="p">());</span>
+    <span class="nv">$authorDate</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(</span><span class="nv">$author</span><span class="o">-&gt;</span><span class="na">getUpdatedAt</span><span class="p">());</span>
 
-    $response-&gt;setLastModified($date);
-    // Set response as public. Otherwise it will be private by default.
-    $response-&gt;setPublic();
+    <span class="nv">$date</span> <span class="o">=</span> <span class="nv">$authorDate</span> <span class="o">&gt;</span> <span class="nv">$articleDate</span> <span class="o">?</span> <span class="nv">$authorDate</span> <span class="o">:</span> <span class="nv">$articleDate</span><span class="p">;</span>
 
-    if ($response-&gt;isNotModified($this-&gt;getRequest())) {
-        return $response;
-    }
+    <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setLastModified</span><span class="p">(</span><span class="nv">$date</span><span class="p">);</span>
+    <span class="c1">// Set response as public. Otherwise it will be private by default.</span>
+    <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setPublic</span><span class="p">();</span>
 
-    // ... do more work to populate the response with the full content
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">isNotModified</span><span class="p">(</span><span class="nv">$request</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$response</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    return $response;
-}</pre>
+    <span class="c1">// ... do more work to populate the response with the full content</span>
+
+    <span class="k">return</span> <span class="nv">$response</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Response.html#method_isNotModified" title="Symfony\Component\HttpFoundation\Response::isNotModified()"><span class="pre">isNotModified()</span></a></tt>
 method compares the <tt class="docutils literal"><span class="pre">If-Modified-Since</span></tt> header sent by the request with
@@ -568,10 +584,10 @@ the <tt class="docutils literal"><span class="pre">Last-Modified</span></tt> hea
 the <tt class="docutils literal"><span class="pre">Response</span></tt> will be set to a 304 status code.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The <tt class="docutils literal"><span class="pre">If-Modified-Since</span></tt> request header equals the <tt class="docutils literal"><span class="pre">Last-Modified</span></tt>
-header of the last response sent to the client for the particular resource.
-This is how the client and server communicate with each other and decide
-whether or not the resource has been updated since it was cached.</p>
+<p class="last">The cache sets the <tt class="docutils literal"><span class="pre">If-Modified-Since</span></tt> header on the request to the <tt class="docutils literal"><span class="pre">Last-Modified</span></tt>
+of the original cached response before sending the request back to the
+app. This is how the cache and server communicate with each other and
+decide whether or not the resource has been updated since it was cached.</p>
 </div>
 </div>
 <div class="section" id="optimizing-your-code-with-validation">
@@ -580,40 +596,42 @@ whether or not the resource has been updated since it was cached.</p>
 Put another way, the less you do in your application to return a 304 response,
 the better. The <tt class="docutils literal"><span class="pre">Response::isNotModified()</span></tt> method does exactly that by
 exposing a simple and efficient pattern:</p>
-<div class="highlight-python"><pre>use Symfony\Component\HttpFoundation\Response;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
 
-public function showAction($articleSlug)
-{
-    // Get the minimum information to compute
-    // the ETag or the Last-Modified value
-    // (based on the Request, data is retrieved from
-    // a database or a key-value store for instance)
-    $article = ...;
+<span class="k">public</span> <span class="k">function</span> <span class="nf">showAction</span><span class="p">(</span><span class="nv">$articleSlug</span><span class="p">,</span> <span class="nx">Request</span> <span class="nv">$request</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Get the minimum information to compute</span>
+    <span class="c1">// the ETag or the Last-Modified value</span>
+    <span class="c1">// (based on the Request, data is retrieved from</span>
+    <span class="c1">// a database or a key-value store for instance)</span>
+    <span class="nv">$article</span> <span class="o">=</span> <span class="o">...</span><span class="p">;</span>
 
-    // create a Response with a ETag and/or a Last-Modified header
-    $response = new Response();
-    $response-&gt;setETag($article-&gt;computeETag());
-    $response-&gt;setLastModified($article-&gt;getPublishedAt());
+    <span class="c1">// create a Response with an ETag and/or a Last-Modified header</span>
+    <span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">();</span>
+    <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setETag</span><span class="p">(</span><span class="nv">$article</span><span class="o">-&gt;</span><span class="na">computeETag</span><span class="p">());</span>
+    <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setLastModified</span><span class="p">(</span><span class="nv">$article</span><span class="o">-&gt;</span><span class="na">getPublishedAt</span><span class="p">());</span>
 
-    // Set response as public. Otherwise it will be private by default.
-    $response-&gt;setPublic();
+    <span class="c1">// Set response as public. Otherwise it will be private by default.</span>
+    <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setPublic</span><span class="p">();</span>
 
-    // Check that the Response is not modified for the given Request
-    if ($response-&gt;isNotModified($this-&gt;getRequest())) {
-        // return the 304 Response immediately
-        return $response;
-    } else {
-        // do more work here - like retrieving more data
-        $comments = ...;
+    <span class="c1">// Check that the Response is not modified for the given Request</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$response</span><span class="o">-&gt;</span><span class="na">isNotModified</span><span class="p">(</span><span class="nv">$request</span><span class="p">))</span> <span class="p">{</span>
+        <span class="c1">// return the 304 Response immediately</span>
+        <span class="k">return</span> <span class="nv">$response</span><span class="p">;</span>
+    <span class="p">}</span>
 
-        // or render a template with the $response you've already started
-        return $this-&gt;render(
-            'MyBundle:MyController:article.html.twig',
-            array('article' =&gt; $article, 'comments' =&gt; $comments),
-            $response
-        );
-    }
-}</pre>
+    <span class="c1">// do more work here - like retrieving more data</span>
+    <span class="nv">$comments</span> <span class="o">=</span> <span class="o">...</span><span class="p">;</span>
+
+    <span class="c1">// or render a template with the $response you&#39;ve already started</span>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
+        <span class="s1">&#39;MyBundle:MyController:article.html.twig&#39;</span><span class="p">,</span>
+        <span class="k">array</span><span class="p">(</span><span class="s1">&#39;article&#39;</span> <span class="o">=&gt;</span> <span class="nv">$article</span><span class="p">,</span> <span class="s1">&#39;comments&#39;</span> <span class="o">=&gt;</span> <span class="nv">$comments</span><span class="p">),</span>
+        <span class="nv">$response</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>When the <tt class="docutils literal"><span class="pre">Response</span></tt> is not modified, the <tt class="docutils literal"><span class="pre">isNotModified()</span></tt> automatically sets
 the response status code to <tt class="docutils literal"><span class="pre">304</span></tt>, removes the content, and removes some
@@ -647,11 +665,12 @@ resource based on the URI and the value of the <tt class="docutils literal"><spa
 </div>
 <p>The <tt class="docutils literal"><span class="pre">Response</span></tt> object offers a clean interface for managing the <tt class="docutils literal"><span class="pre">Vary</span></tt>
 header:</p>
-<div class="highlight-python"><pre>// set one vary header
-$response-&gt;setVary('Accept-Encoding');
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// set one vary header</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setVary</span><span class="p">(</span><span class="s1">&#39;Accept-Encoding&#39;</span><span class="p">);</span>
 
-// set multiple vary headers
-$response-&gt;setVary(array('Accept-Encoding', 'User-Agent'));</pre>
+<span class="c1">// set multiple vary headers</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setVary</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;Accept-Encoding&#39;</span><span class="p">,</span> <span class="s1">&#39;User-Agent&#39;</span><span class="p">));</span>
+</pre></div>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">setVary()</span></tt> method takes a header name or an array of header names for
 which the response varies.</p>
@@ -668,23 +687,25 @@ at some interval (the expiration) to verify that the content is still valid.</p>
 <span id="index-15"></span><h3>More Response Methods<a class="headerlink" href="#more-response-methods" title="Permalink to this headline">¶</a></h3>
 <p>The Response class provides many more methods related to the cache. Here are
 the most useful ones:</p>
-<div class="highlight-python"><pre>// Marks the Response stale
-$response-&gt;expire();
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// Marks the Response stale</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">expire</span><span class="p">();</span>
 
-// Force the response to return a proper 304 response with no content
-$response-&gt;setNotModified();</pre>
+<span class="c1">// Force the response to return a proper 304 response with no content</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setNotModified</span><span class="p">();</span>
+</pre></div>
 </div>
 <p>Additionally, most cache-related HTTP headers can be set via the single
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Response.html#method_setCache" title="Symfony\Component\HttpFoundation\Response::setCache()"><span class="pre">setCache()</span></a></tt> method:</p>
-<div class="highlight-python"><pre>// Set cache settings in one call
-$response-&gt;setCache(array(
-    'etag'          =&gt; $etag,
-    'last_modified' =&gt; $date,
-    'max_age'       =&gt; 10,
-    's_maxage'      =&gt; 10,
-    'public'        =&gt; true,
-    // 'private'    =&gt; true,
-));</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// Set cache settings in one call</span>
+<span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setCache</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;etag&#39;</span>          <span class="o">=&gt;</span> <span class="nv">$etag</span><span class="p">,</span>
+    <span class="s1">&#39;last_modified&#39;</span> <span class="o">=&gt;</span> <span class="nv">$date</span><span class="p">,</span>
+    <span class="s1">&#39;max_age&#39;</span>       <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">&#39;s_maxage&#39;</span>      <span class="o">=&gt;</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">&#39;public&#39;</span>        <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="c1">// &#39;private&#39;    =&gt; true,</span>
+<span class="p">));</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -694,12 +715,12 @@ $response-&gt;setCache(array(
 have one limitation: they can only cache whole pages. If you can&#8217;t cache
 whole pages or if parts of a page has &#8220;more&#8221; dynamic parts, you are out of
 luck. Fortunately, Symfony2 provides a solution for these cases, based on a
-technology called <a class="reference external" href="http://www.w3.org/TR/esi-lang">ESI</a>, or Edge Side Includes. Akamaï wrote this specification
+technology called <a class="reference external" href="http://www.w3.org/TR/esi-lang">ESI</a>, or Edge Side Includes. Akamai wrote this specification
 almost 10 years ago, and it allows specific parts of a page to have a different
 caching strategy than the main page.</p>
 <p>The ESI specification describes tags you can embed in your pages to communicate
 with the gateway cache. Only one tag is implemented in Symfony2, <tt class="docutils literal"><span class="pre">include</span></tt>,
-as this is the only useful one outside of Akamaï context:</p>
+as this is the only useful one outside of Akamai context:</p>
 <div class="highlight-html"><div class="highlight"><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
 <span class="nt">&lt;html&gt;</span>
     <span class="nt">&lt;body&gt;</span>
@@ -741,11 +762,21 @@ tags, Symfony2 makes the process of including them almost effortless.</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><pre>&lt;!-- app/config/config.xml --&gt;
-&lt;framework:config ...&gt;
-    &lt;!-- ... --&gt;
-    &lt;framework:esi enabled="true" /&gt;
-&lt;/framework:config&gt;</pre>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre>&lt;!-- app/config/config.xml --&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;container xmlns=&quot;http://symfony.com/schema/dic/symfony&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xmlns:framework=&quot;http://symfony.com/schema/dic/symfony&quot;
+    xsi:schemaLocation=&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                        http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd&quot;&gt;
+
+    &lt;framework:config ...&gt;
+        &lt;!-- ... --&gt;
+        &lt;framework:esi enabled=&quot;true&quot; /&gt;
+    &lt;/framework:config&gt;
+
+&lt;/container&gt;
+</pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
@@ -789,12 +820,12 @@ matter), Symfony2 uses the standard <tt class="docutils literal"><span class="pr
 </li>
 <li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;actions&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
     <span class="k">new</span> <span class="nx">ControllerReference</span><span class="p">(</span><span class="s1">&#39;...:news&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;max&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">)),</span>
-    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;renderer&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;esi&#39;</span><span class="p">))</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;strategy&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;esi&#39;</span><span class="p">))</span>
 <span class="cp">?&gt;</span>
 
 <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;actions&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
     <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;router&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">generate</span><span class="p">(</span><span class="s1">&#39;latest_news&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;max&#39;</span> <span class="o">=&gt;</span> <span class="mi">5</span><span class="p">),</span> <span class="k">true</span><span class="p">),</span>
-    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;renderer&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;esi&#39;</span><span class="p">),</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;strategy&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;esi&#39;</span><span class="p">),</span>
 <span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
@@ -816,7 +847,7 @@ the included page content within the main one as it would have done if you had
 used <tt class="docutils literal"><span class="pre">render</span></tt>.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Symfony2 detects if a gateway cache supports ESI via another Akamaï
+<p class="last">Symfony2 detects if a gateway cache supports ESI via another Akamai
 specification that is supported out of the box by the Symfony2 reverse
 proxy.</p>
 </div>
@@ -835,8 +866,9 @@ component cache will only last for 60 seconds.</p>
 <p>When using a controller reference, the ESI tag should reference the embedded
 action as an accessible URL so the gateway cache can fetch it independently of
 the rest of the page. Symfony2 takes care of generating a unique URL for any
-controller reference and it is able to route them properly thanks to a
-listener that must be enabled in your configuration:</p>
+controller reference and it is able to route them properly thanks to the
+<tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpKernel/EventListener/FragmentListener.html" title="Symfony\Component\HttpKernel\EventListener\FragmentListener"><span class="pre">FragmentListener</span></a></tt>
+that must be enabled in your configuration:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
@@ -847,9 +879,17 @@ listener that must be enabled in your configuration:</p>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
-<span class="nt">&lt;framework:config&gt;</span>
-    <span class="nt">&lt;framework:fragments</span> <span class="na">path=</span><span class="s">&quot;/_fragment&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/framework:config&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xmlns:doctrine=</span><span class="s">&quot;http://symfony.com/schema/dic/framework&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd</span>
+<span class="s">                        http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;framework:config&gt;</span>
+        <span class="nt">&lt;framework:fragments</span> <span class="na">path=</span><span class="s">&quot;/_fragment&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;/framework:config&gt;</span>
+<span class="nt">&lt;/container&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -893,7 +933,7 @@ a failure, the gateway cache will simply remove the ESI tag silently.</li>
 <span id="http-cache-invalidation"></span><span id="index-17"></span><h2>Cache Invalidation<a class="headerlink" href="#cache-invalidation" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <div>&#8220;There are only two hard things in Computer Science: cache invalidation
-and naming things.&#8221; &#8211;Phil Karlton</div></blockquote>
+and naming things.&#8221; &#8211; Phil Karlton</div></blockquote>
 <p>You should never need to invalidate cached data because invalidation is already
 taken into account natively in the HTTP cache models. If you use validation,
 you never need to invalidate anything by definition; and if you use expiration
@@ -910,31 +950,35 @@ should avoid them as much as possible. The most standard way is to purge the
 cache for a given URL by requesting it with the special <tt class="docutils literal"><span class="pre">PURGE</span></tt> HTTP method.</p>
 <p>Here is how you can configure the Symfony2 reverse proxy to support the
 <tt class="docutils literal"><span class="pre">PURGE</span></tt> HTTP method:</p>
-<div class="highlight-python"><pre>// app/AppCache.php
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/AppCache.php</span>
 
-// ...
-use Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+<span class="c1">// ...</span>
+<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\HttpCache\HttpCache</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Response</span><span class="p">;</span>
 
-class AppCache extends HttpCache
-{
-    protected function invalidate(Request $request, $catch = false)
-    {
-        if ('PURGE' !== $request-&gt;getMethod()) {
-            return parent::invalidate($request, $catch);
-        }
+<span class="k">class</span> <span class="nc">AppCache</span> <span class="k">extends</span> <span class="nx">HttpCache</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">invalidate</span><span class="p">(</span><span class="nx">Request</span> <span class="nv">$request</span><span class="p">,</span> <span class="nv">$catch</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;PURGE&#39;</span> <span class="o">!==</span> <span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getMethod</span><span class="p">())</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">parent</span><span class="o">::</span><span class="na">invalidate</span><span class="p">(</span><span class="nv">$request</span><span class="p">,</span> <span class="nv">$catch</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        $response = new Response();
-        if (!$this-&gt;getStore()-&gt;purge($request-&gt;getUri())) {
-            $response-&gt;setStatusCode(404, 'Not purged');
-        } else {
-            $response-&gt;setStatusCode(200, 'Purged');
-        }
+        <span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">();</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getStore</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">purge</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">getUri</span><span class="p">()))</span> <span class="p">{</span>
+            <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="nx">Response</span><span class="o">::</span><span class="na">HTTP_OK</span><span class="p">,</span> <span class="s1">&#39;Purged&#39;</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">setStatusCode</span><span class="p">(</span><span class="nx">Response</span><span class="o">::</span><span class="na">HTTP_NOT_FOUND</span><span class="p">,</span> <span class="s1">&#39;Not purged&#39;</span><span class="p">);</span>
+        <span class="p">}</span>
 
-        return $response;
-    }
-}</pre>
+        <span class="k">return</span> <span class="nv">$response</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.4: </span>Support for HTTP status code constants was introduced in Symfony 2.4.</p>
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
@@ -976,7 +1020,7 @@ Varnish.</p>
 </li>
 <li><a class="reference internal" href="#introduction-to-http-caching">Introduction to HTTP Caching</a><ul>
 <li><a class="reference internal" href="#the-cache-control-header">The Cache-Control Header</a></li>
-<li><a class="reference internal" href="#public-vs-private-responses">Public vs Private Responses</a></li>
+<li><a class="reference internal" href="#public-vs-private-responses">Public vs private Responses</a></li>
 <li><a class="reference internal" href="#safe-methods">Safe Methods</a></li>
 <li><a class="reference internal" href="#caching-rules-and-defaults">Caching Rules and Defaults</a></li>
 </ul>
@@ -1045,13 +1089,13 @@ Varnish.</p>
         <li class="right" >
           <a href="security.html" title="Security"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -60,7 +60,7 @@ Then you can define it as a service as follows:
 
         services:
             acme.hello.controller:
-                class:     "%acme.controller.hello.class%"
+                class: "%acme.controller.hello.class%"
 
     .. code-block:: xml
 
@@ -96,7 +96,7 @@ To refer to a controller that's defined as a service, use the single colon (:)
 notation. For example, to forward to the ``indexAction()`` method of the service
 defined above with the id ``acme.hello.controller``::
 
-    $this->forward('acme.hello.controller:indexAction');
+    $this->forward('acme.hello.controller:indexAction', array('name' => $name));
 
 .. note::
 
@@ -112,13 +112,13 @@ the route ``_controller`` value:
 
         # app/config/routing.yml
         hello:
-            pattern:      /hello
-            defaults:     { _controller: acme.hello.controller:indexAction }
+            path:     /hello
+            defaults: { _controller: acme.hello.controller:indexAction }
 
     .. code-block:: xml
 
         <!-- app/config/routing.xml -->
-        <route id="hello" pattern="/hello">
+        <route id="hello" path="/hello">
             <default key="_controller">acme.hello.controller:indexAction</default>
         </route>
 
@@ -133,7 +133,7 @@ the route ``_controller`` value:
 
     You can also use annotations to configure routing using a controller
     defined as a service. See the
-    :doc:`FrameworkExtraBundle documentation</bundles/SensioFrameworkExtraBundle/annotations/routing>`
+    :doc:`FrameworkExtraBundle documentation </bundles/SensioFrameworkExtraBundle/annotations/routing>`
     for details.
 
 Alternatives to Base Controller Methods
@@ -180,13 +180,14 @@ service and use it directly::
     // src/Acme/HelloBundle/Controller/HelloController.php
     namespace Acme\HelloBundle\Controller;
 
+    use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
     use Symfony\Component\HttpFoundation\Response;
 
     class HelloController
     {
         private $templating;
 
-        public function __construct($templating)
+        public function __construct(EngineInterface $templating)
         {
             $this->templating = $templating;
         }
@@ -257,7 +258,7 @@ inject *only* the exact service(s) that you need directly into the controller.
 
    This does not mean that you cannot extend these controllers from your own
    base controller. The move away from the standard base controller is because
-   its helper method rely on having the container available which is not
+   its helper methods rely on having the container available which is not
    the case for controllers that are defined as services. It may be a good
    idea to extract common code into a service that's injected rather than
    place that code into a base controller that you extend. Both approaches

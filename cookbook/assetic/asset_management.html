@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Use Assetic for Asset Management &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to Use Assetic for Asset Management &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Assetic" href="index.html" />
-    <link rel="next" title="How to Minify CSS/JS Files (using UglifyJs and UglifyCss)" href="uglifyjs.html" />
+    <link rel="next" title="How to Minify CSS/JS Files (using UglifyJS and UglifyCSS)" href="uglifyjs.html" />
     <link rel="prev" title="Assetic" href="index.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="uglifyjs.html" title="How to Minify CSS/JS Files (using UglifyJs and UglifyCss)"
+          <a href="uglifyjs.html" title="How to Minify CSS/JS Files (using UglifyJS and UglifyCSS)"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Assetic"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Assetic</a> &raquo;</li> 
       </ul>
@@ -66,11 +64,11 @@ to the user.</p>
 directly:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset</span><span class="o">(</span><span class="s1">&#39;js/script.js&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="nt">/&gt;</span>
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset</span><span class="o">(</span><span class="s1">&#39;js/script.js&#39;</span><span class="o">)</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;&lt;?php echo </span><span class="si">$view[&#39;assets&#39;]</span><span class="s2">-&gt;getUrl(&#39;js/script.js&#39;) ?&gt;&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span> <span class="o">/&gt;</span>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;&lt;?php echo </span><span class="si">$view[&#39;assets&#39;]</span><span class="s2">-&gt;getUrl(&#39;js/script.js&#39;) ?&gt;&quot;</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;&lt;/</span><span class="nx">script</span><span class="o">&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -89,14 +87,13 @@ such as LESS, SASS or CoffeeScript</li>
 <p>Using Assetic provides many advantages over directly serving the files.
 The files do not need to be stored where they are served from and can be
 drawn from various sources such as from within a bundle.</p>
-<p>You can use Assetic to process both <a class="reference internal" href="#cookbook-assetic-including-css"><em>CSS stylesheets</em></a>
-and <a class="reference internal" href="#cookbook-assetic-including-javascript"><em>JavaScript files</em></a>. The philosophy
+<p>You can use Assetic to process <a class="reference internal" href="#cookbook-assetic-including-css"><em>CSS stylesheets</em></a>,
+<a class="reference internal" href="#cookbook-assetic-including-javascript"><em>JavaScript files</em></a> and
+<a class="reference internal" href="#cookbook-assetic-including-image"><em>images</em></a>. The philosophy
 behind adding either is basically the same, but with a slightly different syntax.</p>
 <div class="section" id="including-javascript-files">
 <span id="cookbook-assetic-including-javascript"></span><h3>Including JavaScript Files<a class="headerlink" href="#including-javascript-files" title="Permalink to this headline">¶</a></h3>
-<p>To include JavaScript files, use the <tt class="docutils literal"><span class="pre">javascript</span></tt> tag in any template.
-This will most commonly live in the <tt class="docutils literal"><span class="pre">javascripts</span></tt> block, if you&#8217;re using
-the default block names from the Symfony Standard Distribution:</p>
+<p>To include JavaScript files, use the <tt class="docutils literal"><span class="pre">javascripts</span></tt> tag in any template:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">javascripts</span> <span class="s1">&#39;@AcmeFooBundle/Resources/public/js/*&#39;</span> <span class="cp">%}</span>
@@ -115,6 +112,21 @@ the default block names from the Symfony Standard Distribution:</p>
 </li>
 </ul>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you&#8217;re using the default block names from the Symfony Standard Edition,
+the <tt class="docutils literal"><span class="pre">javascripts</span></tt> tag will most commonly live in the <tt class="docutils literal"><span class="pre">javascripts</span></tt>
+block:</p>
+<div class="last highlight-html+jinja"><div class="highlight"><pre><span class="c">{# ... #}</span>
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">javascripts</span> <span class="cp">%}</span>
+    <span class="cp">{%</span> <span class="k">javascripts</span> <span class="s1">&#39;@AcmeFooBundle/Resources/public/js/*&#39;</span> <span class="cp">%}</span>
+        <span class="nt">&lt;script </span><span class="na">type=</span><span class="s">&quot;text/javascript&quot;</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset_url</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+    <span class="cp">{%</span> <span class="k">endjavascripts</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
+<span class="c">{# ... #}</span>
+</pre></div>
+</div>
+</div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
 <p class="last">You can also include CSS Stylesheets: see <a class="reference internal" href="#cookbook-assetic-including-css"><em>Including CSS Stylesheets</em></a>.</p>
@@ -132,9 +144,7 @@ that reference images by their relative path. See <a class="reference internal" 
 <div class="section" id="including-css-stylesheets">
 <span id="cookbook-assetic-including-css"></span><h3>Including CSS Stylesheets<a class="headerlink" href="#including-css-stylesheets" title="Permalink to this headline">¶</a></h3>
 <p>To bring in CSS stylesheets, you can use the same methodologies seen
-above, except with the <tt class="docutils literal"><span class="pre">stylesheets</span></tt> tag. If you&#8217;re using the default
-block names from the Symfony Standard Distribution, this will usually live
-inside a <tt class="docutils literal"><span class="pre">stylesheets</span></tt> block:</p>
+above, except with the <tt class="docutils literal"><span class="pre">stylesheets</span></tt> tag:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">stylesheets</span> <span class="s1">&#39;bundles/acme_foo/css/*&#39;</span> <span class="nv">filter</span><span class="o">=</span><span class="s1">&#39;cssrewrite&#39;</span> <span class="cp">%}</span>
@@ -154,6 +164,21 @@ inside a <tt class="docutils literal"><span class="pre">stylesheets</span></tt> 
 </li>
 </ul>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>If you&#8217;re using the default block names from the Symfony Standard Edition,
+the <tt class="docutils literal"><span class="pre">stylesheets</span></tt> tag will most commonly live in the <tt class="docutils literal"><span class="pre">stylesheets</span></tt>
+block:</p>
+<div class="last highlight-html+jinja"><div class="highlight"><pre><span class="c">{# ... #}</span>
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">stylesheets</span> <span class="cp">%}</span>
+    <span class="cp">{%</span> <span class="k">stylesheets</span> <span class="s1">&#39;bundles/acme_foo/css/*&#39;</span> <span class="nv">filter</span><span class="o">=</span><span class="s1">&#39;cssrewrite&#39;</span> <span class="cp">%}</span>
+        <span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset_url</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="nt">/&gt;</span>
+    <span class="cp">{%</span> <span class="k">endstylesheets</span> <span class="cp">%}</span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
+<span class="c">{# ... #}</span>
+</pre></div>
+</div>
+</div>
 <p>But because Assetic changes the paths to your assets, this <em>will</em> break any
 background images (or other paths) that uses relative paths, unless you use
 the <a class="reference internal" href="#cookbook-assetic-cssrewrite"><em>cssrewrite</em></a> filter.</p>
@@ -166,6 +191,30 @@ publicly-accessible path: <tt class="docutils literal"><span class="pre">bundles
 that there is a known issue that causes the <tt class="docutils literal"><span class="pre">cssrewrite</span></tt> filter to fail
 when using the <tt class="docutils literal"><span class="pre">&#64;AcmeFooBundle</span></tt> syntax for CSS Stylesheets.</p>
 </div>
+</div>
+<div class="section" id="including-images">
+<span id="cookbook-assetic-including-image"></span><h3>Including images<a class="headerlink" href="#including-images" title="Permalink to this headline">¶</a></h3>
+<p>To include an image you can use the <tt class="docutils literal"><span class="pre">image</span></tt> tag.</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">image</span> <span class="s1">&#39;@AcmeFooBundle/Resources/public/images/example.jpg&#39;</span> <span class="cp">%}</span>
+    <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset_url</span> <span class="cp">}}</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Example&quot;</span> <span class="nt">/&gt;</span>
+<span class="cp">{%</span> <span class="k">endimage</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;assetic&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">image</span><span class="p">(</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;@AcmeFooBundle/Resources/public/images/example.jpg&#39;</span><span class="p">)</span>
+<span class="p">)</span> <span class="k">as</span> <span class="nv">$url</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+    <span class="nt">&lt;img</span> <span class="na">src=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$url</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span> <span class="na">alt=</span><span class="s">&quot;Example&quot;</span> <span class="nt">/&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>You can also use Assetic for image optimization. More information in
+<a class="reference internal" href="jpeg_optimize.html"><em>How to Use Assetic For Image Optimization with Twig Functions</em></a>.</p>
 </div>
 <div class="section" id="fixing-css-paths-with-the-cssrewrite-filter">
 <span id="cookbook-assetic-cssrewrite"></span><h3>Fixing CSS Paths with the <tt class="docutils literal"><span class="pre">cssrewrite</span></tt> Filter<a class="headerlink" href="#fixing-css-paths-with-the-cssrewrite-filter" title="Permalink to this headline">¶</a></h3>
@@ -251,6 +300,81 @@ combine third party assets, such as jQuery, with your own into a single file:</p
 </ul>
 </div>
 </div>
+<div class="section" id="using-named-assets">
+<h3>Using Named Assets<a class="headerlink" href="#using-named-assets" title="Permalink to this headline">¶</a></h3>
+<p>AsseticBundle configuration directives allow you to define named asset sets.
+You can do so by defining the input files, filters and output files in your
+configuration under the <tt class="docutils literal"><span class="pre">assetic</span></tt> section. Read more in the
+<a class="reference internal" href="../../reference/configuration/assetic.html"><em>assetic config reference</em></a>.</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
+<span class="l-Scalar-Plain">assetic</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">assets</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">jquery_and_ui</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">inputs</span><span class="p-Indicator">:</span>
+                <span class="p-Indicator">-</span> <span class="s">&#39;@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js&#39;</span>
+                <span class="p-Indicator">-</span> <span class="s">&#39;@AcmeFooBundle/Resources/public/js/thirdparty/jquery.ui.js&#39;</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+    <span class="na">xmlns:assetic=</span><span class="s">&quot;http://symfony.com/schema/dic/assetic&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;assetic:config&gt;</span>
+        <span class="nt">&lt;assetic:asset</span> <span class="na">name=</span><span class="s">&quot;jquery_and_ui&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;assetic:input&gt;</span>@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js<span class="nt">&lt;/assetic:input&gt;</span>
+            <span class="nt">&lt;assetic:input&gt;</span>@AcmeFooBundle/Resources/public/js/thirdparty/jquery.ui.js<span class="nt">&lt;/assetic:input&gt;</span>
+        <span class="nt">&lt;/assetic:asset&gt;</span>
+    <span class="nt">&lt;/assetic:config&gt;</span>
+<span class="nt">&lt;/container&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
+<span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;assetic&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;assets&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;jquery_and_ui&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;inputs&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;@AcmeFooBundle/Resources/public/js/thirdparty/jquery.js&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;@AcmeFooBundle/Resources/public/js/thirdparty/jquery.ui.js&#39;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">),</span>
+    <span class="p">),</span>
+<span class="p">);</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>After you have defined the named assets, you can reference them in your templates
+with the <tt class="docutils literal"><span class="pre">&#64;named_asset</span></tt> notation:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">javascripts</span>
+    <span class="s1">&#39;@jquery_and_ui&#39;</span>
+    <span class="s1">&#39;@AcmeFooBundle/Resources/public/js/*&#39;</span> <span class="cp">%}</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset_url</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="cp">{%</span> <span class="k">endjavascripts</span> <span class="cp">%}</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;assetic&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">javascripts</span><span class="p">(</span>
+    <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;@jquery_and_ui&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;@AcmeFooBundle/Resources/public/js/*&#39;</span><span class="p">,</span>
+    <span class="p">)</span>
+<span class="p">)</span> <span class="k">as</span> <span class="nv">$url</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$url</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+</div>
 </div>
 <div class="section" id="filters">
 <span id="cookbook-assetic-filters"></span><h2>Filters<a class="headerlink" href="#filters" title="Permalink to this headline">¶</a></h2>
@@ -261,7 +385,7 @@ can compile JavaScript file from CoffeeScript files and process SASS into CSS.
 In fact, Assetic has a long list of available filters.</p>
 <p>Many of the filters do not do the work directly, but use existing third-party
 libraries to do the heavy-lifting. This means that you&#8217;ll often need to install
-a third-party library to use a filter.  The great advantage of using Assetic
+a third-party library to use a filter. The great advantage of using Assetic
 to invoke these libraries (as opposed to using them directly) is that instead
 of having to run them manually after you work on the files, Assetic will
 take care of this for you and remove this step altogether from your development
@@ -269,23 +393,23 @@ and deployment processes.</p>
 <p>To use a filter, you first need to specify it in the Assetic configuration.
 Adding a filter here doesn&#8217;t mean it&#8217;s being used - it just means that it&#8217;s
 available to use (you&#8217;ll use the filter below).</p>
-<p>For example to use the JavaScript YUI Compressor the following config should
+<p>For example to use the UglifyJS JavaScript minifier the following config should
 be added:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">assetic</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">filters</span><span class="p-Indicator">:</span>
-        <span class="l-Scalar-Plain">yui_js</span><span class="p-Indicator">:</span>
-            <span class="l-Scalar-Plain">jar</span><span class="p-Indicator">:</span> <span class="s">&quot;%kernel.root_dir%/Resources/java/yuicompressor.jar&quot;</span>
+        <span class="l-Scalar-Plain">uglifyjs2</span><span class="p-Indicator">:</span>
+            <span class="l-Scalar-Plain">bin</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/usr/local/bin/uglifyjs</span>
 </pre></div>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
 <span class="nt">&lt;assetic:config&gt;</span>
     <span class="nt">&lt;assetic:filter</span>
-        <span class="na">name=</span><span class="s">&quot;yui_js&quot;</span>
-        <span class="na">jar=</span><span class="s">&quot;%kernel.root_dir%/Resources/java/yuicompressor.jar&quot;</span> <span class="nt">/&gt;</span>
+        <span class="na">name=</span><span class="s">&quot;uglifyjs2&quot;</span>
+        <span class="na">bin=</span><span class="s">&quot;/usr/local/bin/uglifyjs&quot;</span> <span class="nt">/&gt;</span>
 <span class="nt">&lt;/assetic:config&gt;</span>
 </pre></div>
 </div>
@@ -293,8 +417,8 @@ be added:</p>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
 <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;assetic&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
     <span class="s1">&#39;filters&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
-        <span class="s1">&#39;yui_js&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
-            <span class="s1">&#39;jar&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;%kernel.root_dir%/Resources/java/yuicompressor.jar&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;uglifyjs2&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;bin&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;/usr/local/bin/uglifyjs&#39;</span><span class="p">,</span>
         <span class="p">),</span>
     <span class="p">),</span>
 <span class="p">));</span>
@@ -307,7 +431,7 @@ be added:</p>
 into your template:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">javascripts</span> <span class="s1">&#39;@AcmeFooBundle/Resources/public/js/*&#39;</span> <span class="nv">filter</span><span class="o">=</span><span class="s1">&#39;yui_js&#39;</span> <span class="cp">%}</span>
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="cp">{%</span> <span class="k">javascripts</span> <span class="s1">&#39;@AcmeFooBundle/Resources/public/js/*&#39;</span> <span class="nv">filter</span><span class="o">=</span><span class="s1">&#39;uglifyjs2&#39;</span> <span class="cp">%}</span>
     <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;</span><span class="cp">{{</span> <span class="nv">asset_url</span> <span class="cp">}}</span><span class="s">&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="cp">{%</span> <span class="k">endjavascripts</span> <span class="cp">%}</span>
 </pre></div>
@@ -315,7 +439,7 @@ into your template:</p>
 </li>
 <li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">foreach</span> <span class="p">(</span><span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;assetic&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">javascripts</span><span class="p">(</span>
     <span class="k">array</span><span class="p">(</span><span class="s1">&#39;@AcmeFooBundle/Resources/public/js/*&#39;</span><span class="p">),</span>
-    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;yui_js&#39;</span><span class="p">)</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;uglifyjs2&#39;</span><span class="p">)</span>
 <span class="p">)</span> <span class="k">as</span> <span class="nv">$url</span><span class="p">)</span><span class="o">:</span> <span class="cp">?&gt;</span>
     <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;</span><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">escape</span><span class="p">(</span><span class="nv">$url</span><span class="p">)</span> <span class="cp">?&gt;</span><span class="s">&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 <span class="cp">&lt;?php</span> <span class="k">endforeach</span><span class="p">;</span> <span class="cp">?&gt;</span>
@@ -325,7 +449,7 @@ into your template:</p>
 </ul>
 </div>
 <p>A more detailed guide about configuring and using Assetic filters as well as
-details of Assetic&#8217;s debug mode can be found in <a class="reference internal" href="yuicompressor.html"><em>How to Minify JavaScripts and Stylesheets with YUI Compressor</em></a>.</p>
+details of Assetic&#8217;s debug mode can be found in <a class="reference internal" href="uglifyjs.html"><em>How to Minify CSS/JS Files (using UglifyJS and UglifyCSS)</em></a>.</p>
 </div>
 <div class="section" id="controlling-the-url-used">
 <h2>Controlling the URL used<a class="headerlink" href="#controlling-the-url-used" title="Permalink to this headline">¶</a></h2>
@@ -376,7 +500,7 @@ of being generated dynamically.</p>
 <p>In the <tt class="docutils literal"><span class="pre">prod</span></tt> environment, your JS and CSS files are represented by a single
 tag each. In other words, instead of seeing each JavaScript file you&#8217;re including
 in your source, you&#8217;ll likely just see something like this:</p>
-<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/app_dev.php/js/abcd123.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
+<div class="highlight-html"><div class="highlight"><pre><span class="nt">&lt;script </span><span class="na">src=</span><span class="s">&quot;/js/abcd123.js&quot;</span><span class="nt">&gt;&lt;/script&gt;</span>
 </pre></div>
 </div>
 <p>Moreover, that file does <strong>not</strong> actually exist, nor is it dynamically rendered
@@ -473,8 +597,10 @@ some isolated directory (e.g. <tt class="docutils literal"><span class="pre">/js
 <li><a class="reference internal" href="#assets">Assets</a><ul>
 <li><a class="reference internal" href="#including-javascript-files">Including JavaScript Files</a></li>
 <li><a class="reference internal" href="#including-css-stylesheets">Including CSS Stylesheets</a></li>
+<li><a class="reference internal" href="#including-images">Including images</a></li>
 <li><a class="reference internal" href="#fixing-css-paths-with-the-cssrewrite-filter">Fixing CSS Paths with the <tt class="docutils literal"><span class="pre">cssrewrite</span></tt> Filter</a></li>
 <li><a class="reference internal" href="#combining-assets">Combining Assets</a></li>
+<li><a class="reference internal" href="#using-named-assets">Using Named Assets</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#filters">Filters</a></li>
@@ -493,7 +619,7 @@ some isolated directory (e.g. <tt class="docutils literal"><span class="pre">/js
                         title="previous chapter">Assetic</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="uglifyjs.html"
-                        title="next chapter">How to Minify CSS/JS Files (using UglifyJs and UglifyCss)</a></p>
+                        title="next chapter">How to Minify CSS/JS Files (using UglifyJS and UglifyCSS)</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/assetic/asset_management.txt"
@@ -523,19 +649,19 @@ some isolated directory (e.g. <tt class="docutils literal"><span class="pre">/js
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="uglifyjs.html" title="How to Minify CSS/JS Files (using UglifyJs and UglifyCss)"
+          <a href="uglifyjs.html" title="How to Minify CSS/JS Files (using UglifyJS and UglifyCSS)"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Assetic"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Assetic</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

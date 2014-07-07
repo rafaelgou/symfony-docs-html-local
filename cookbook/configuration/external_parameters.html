@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Set External Parameters in the Service Container &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to Set External Parameters in the Service Container &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Configuration" href="index.html" />
     <link rel="next" title="How to use PdoSessionHandler to store Sessions in the Database" href="pdo_session_storage.html" />
     <link rel="prev" title="Understanding how the Front Controller, Kernel and Environments work together" href="front_controllers_and_kernel.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="front_controllers_and_kernel.html" title="Understanding how the Front Controller, Kernel and Environments work together"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Configuration</a> &raquo;</li> 
       </ul>
@@ -64,7 +62,7 @@ you to easily do this.</p>
 <div class="section" id="environment-variables">
 <h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h2>
 <p>Symfony will grab any environment variable prefixed with <tt class="docutils literal"><span class="pre">SYMFONY__</span></tt> and
-set it as a parameter in the service container.  Double underscores are replaced
+set it as a parameter in the service container. Double underscores are replaced
 with a period, as a period is not a valid character in an environment variable
 name.</p>
 <p>For example, if you&#8217;re using Apache, environment variables can be set using
@@ -86,7 +84,7 @@ the following <tt class="docutils literal"><span class="pre">VirtualHost</span><
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>The example above is for an Apache configuration, using the <a class="reference external" href="http://httpd.apache.org/docs/current/env.html">SetEnv</a>
-directive.  However, this will work for any web server which supports
+directive. However, this will work for any web server which supports
 the setting of environment variables.</p>
 <p>Also, in order for your console to work (which does not use Apache),
 you must export these as shell variables. On a Unix system, you can run
@@ -178,8 +176,8 @@ in the container. The following imports a file named <tt class="docutils literal
 closure resources are all supported by the <tt class="docutils literal"><span class="pre">imports</span></tt> directive.</p>
 </div>
 <p>In <tt class="docutils literal"><span class="pre">parameters.php</span></tt>, tell the service container the parameters that you wish
-to set. This is useful when important configuration is in a nonstandard
-format. The example below includes a Drupal database&#8217;s configuration in
+to set. This is useful when important configuration is in a non-standard
+format. The example below includes a Drupal database configuration in
 the Symfony service container.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/parameters.php</span>
 <span class="k">include_once</span><span class="p">(</span><span class="s1">&#39;/path/to/drupal/sites/default/settings.php&#39;</span><span class="p">);</span>
@@ -245,14 +243,14 @@ the Symfony service container.</p>
         <li class="right" >
           <a href="front_controllers_and_kernel.html" title="Understanding how the Front Controller, Kernel and Environments work together"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Configuration</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

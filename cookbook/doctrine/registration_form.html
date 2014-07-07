@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to implement a simple Registration Form &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to implement a simple Registration Form &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Doctrine" href="index.html" />
-    <link rel="next" title="Form" href="../form/index.html" />
+    <link rel="next" title="Console Commands" href="console.html" />
     <link rel="prev" title="How to provide model classes for several Doctrine implementations" href="mapping_model_classes.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../form/index.html" title="Form"
+          <a href="console.html" title="Console Commands"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="mapping_model_classes.html" title="How to provide model classes for several Doctrine implementations"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Doctrine</a> &raquo;</li> 
       </ul>
@@ -63,64 +61,66 @@ that actually stores the account information.</p>
 <div class="section" id="the-simple-user-model">
 <h2>The simple User model<a class="headerlink" href="#the-simple-user-model" title="Permalink to this headline">¶</a></h2>
 <p>You have a simple <tt class="docutils literal"><span class="pre">User</span></tt> entity mapped to the database:</p>
-<div class="highlight-python"><pre>// src/Acme/AccountBundle/Entity/User.php
-namespace Acme\AccountBundle\Entity;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/AccountBundle/Entity/User.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\AccountBundle\Entity</span><span class="p">;</span>
 
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+<span class="k">use</span> <span class="nx">Doctrine\ORM\Mapping</span> <span class="k">as</span> <span class="nx">ORM</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity</span><span class="p">;</span>
 
-/**
- * @ORM\Entity
- * @UniqueEntity(fields="email", message="Email already taken")
- */
-class User
-{
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    protected $id;
+<span class="sd">/**</span>
+<span class="sd"> * @ORM\Entity</span>
+<span class="sd"> * @UniqueEntity(fields=&quot;email&quot;, message=&quot;Email already taken&quot;)</span>
+<span class="sd"> */</span>
+<span class="k">class</span> <span class="nc">User</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @ORM\Id</span>
+<span class="sd">     * @ORM\Column(type=&quot;integer&quot;)</span>
+<span class="sd">     * @ORM\GeneratedValue(strategy=&quot;AUTO&quot;)</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$id</span><span class="p">;</span>
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
-    protected $email;
+    <span class="sd">/**</span>
+<span class="sd">     * @ORM\Column(type=&quot;string&quot;, length=255)</span>
+<span class="sd">     * @Assert\NotBlank()</span>
+<span class="sd">     * @Assert\Email()</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$email</span><span class="p">;</span>
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank()
-     */
-    protected $plainPassword;
+    <span class="sd">/**</span>
+<span class="sd">     * @ORM\Column(type=&quot;string&quot;, length=255)</span>
+<span class="sd">     * @Assert\NotBlank()</span>
+<span class="sd">     * @Assert\Length(max = 4096)</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$plainPassword</span><span class="p">;</span>
 
-    public function getId()
-    {
-        return $this-&gt;id;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getId</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function getEmail()
-    {
-        return $this-&gt;email;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getEmail</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">email</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function setEmail($email)
-    {
-        $this-&gt;email = $email;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setEmail</span><span class="p">(</span><span class="nv">$email</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">email</span> <span class="o">=</span> <span class="nv">$email</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function getPlainPassword()
-    {
-        return $this-&gt;plainPassword;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getPlainPassword</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">plainPassword</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function setPlainPassword($password)
-    {
-        $this-&gt;plainPassword = $password;
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setPlainPassword</span><span class="p">(</span><span class="nv">$password</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">plainPassword</span> <span class="o">=</span> <span class="nv">$password</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>This <tt class="docutils literal"><span class="pre">User</span></tt> entity contains three fields and two of them (<tt class="docutils literal"><span class="pre">email</span></tt> and
 <tt class="docutils literal"><span class="pre">plainPassword</span></tt>) should display on the form. The email property must be unique
@@ -130,50 +130,63 @@ the class.</p>
 <p class="first admonition-title">Note</p>
 <p class="last">If you want to integrate this User within the security system, you need
 to implement the <a class="reference internal" href="../../book/security.html#book-security-user-entity"><em>UserInterface</em></a> of the
-security component.</p>
+Security component.</p>
+</div>
+<div class="sidebar" id="cookbook-registration-password-max">
+<p class="first sidebar-title">Why the 4096 Password Limit?</p>
+<p>Notice that the <tt class="docutils literal"><span class="pre">plainPassword</span></tt> field has a max length of 4096 characters.
+For security purposes (<a class="reference external" href="http://symfony.com/blog/cve-2013-5750-security-issue-in-fosuserbundle-login-form">CVE-2013-5750</a>), Symfony limits the plain password
+length to 4096 characters when encoding it. Adding this constraint makes
+sure that your form will give a validation error if anyone tries a super-long
+password.</p>
+<p class="last">You&#8217;ll need to add this constraint anywhere in your application where
+your user submits a plaintext password (e.g. change password form). The
+only place where you don&#8217;t need to worry about this is your login form,
+since Symfony&#8217;s Security component handles this for you.</p>
 </div>
 </div>
 <div class="section" id="create-a-form-for-the-model">
 <h2>Create a Form for the Model<a class="headerlink" href="#create-a-form-for-the-model" title="Permalink to this headline">¶</a></h2>
 <p>Next, create the form for the <tt class="docutils literal"><span class="pre">User</span></tt> model:</p>
-<div class="highlight-python"><pre>// src/Acme/AccountBundle/Form/Type/UserType.php
-namespace Acme\AccountBundle\Form\Type;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/AccountBundle/Form/Type/UserType.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\AccountBundle\Form\Type</span><span class="p">;</span>
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractType</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
 
-class UserType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder-&gt;add('email', 'email');
-        $builder-&gt;add('plainPassword', 'repeated', array(
-           'first_name'  =&gt; 'password',
-           'second_name' =&gt; 'confirm',
-           'type'        =&gt; 'password',
-        ));
-    }
+<span class="k">class</span> <span class="nc">UserType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">);</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;plainPassword&#39;</span><span class="p">,</span> <span class="s1">&#39;repeated&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+           <span class="s1">&#39;first_name&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;second_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;confirm&#39;</span><span class="p">,</span>
+           <span class="s1">&#39;type&#39;</span>        <span class="o">=&gt;</span> <span class="s1">&#39;password&#39;</span><span class="p">,</span>
+        <span class="p">));</span>
+    <span class="p">}</span>
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver-&gt;setDefaults(array(
-            'data_class' =&gt; 'Acme\AccountBundle\Entity\User'
-        ));
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setDefaultOptions</span><span class="p">(</span><span class="nx">OptionsResolverInterface</span> <span class="nv">$resolver</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$resolver</span><span class="o">-&gt;</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;data_class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Acme\AccountBundle\Entity\User&#39;</span>
+        <span class="p">));</span>
+    <span class="p">}</span>
 
-    public function getName()
-    {
-        return 'user';
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;user&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>There are just two fields: <tt class="docutils literal"><span class="pre">email</span></tt> and <tt class="docutils literal"><span class="pre">plainPassword</span></tt> (repeated to confirm
-the entered password). The <tt class="docutils literal"><span class="pre">data_class</span></tt> option tells the form the name of
-data class (i.e. your <tt class="docutils literal"><span class="pre">User</span></tt> entity).</p>
+the entered password). The <tt class="docutils literal"><span class="pre">data_class</span></tt> option tells the form the name of the
+underlying data class (i.e. your <tt class="docutils literal"><span class="pre">User</span></tt> entity).</p>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">To explore more things about the form component, read <a class="reference internal" href="../../book/forms.html"><em>Forms</em></a>.</p>
+<p class="last">To explore more things about the Form component, read <a class="reference internal" href="../../book/forms.html"><em>Forms</em></a>.</p>
 </div>
 </div>
 <div class="section" id="embedding-the-user-form-into-a-registration-form">
@@ -183,74 +196,77 @@ form used to simply modify the <tt class="docutils literal"><span class="pre">Us
 form will contain further fields like &#8220;accept the terms&#8221;, whose value won&#8217;t
 be stored in the database.</p>
 <p>Start by creating a simple class which represents the &#8220;registration&#8221;:</p>
-<div class="highlight-python"><pre>// src/Acme/AccountBundle/Form/Model/Registration.php
-namespace Acme\AccountBundle\Form\Model;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/AccountBundle/Form/Model/Registration.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\AccountBundle\Form\Model</span><span class="p">;</span>
 
-use Symfony\Component\Validator\Constraints as Assert;
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
 
-use Acme\AccountBundle\Entity\User;
+<span class="k">use</span> <span class="nx">Acme\AccountBundle\Entity\User</span><span class="p">;</span>
 
-class Registration
-{
-    /**
-     * @Assert\Type(type="Acme\AccountBundle\Entity\User")
-     * @Assert\Valid()
-     */
-    protected $user;
+<span class="k">class</span> <span class="nc">Registration</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @Assert\Type(type=&quot;Acme\AccountBundle\Entity\User&quot;)</span>
+<span class="sd">     * @Assert\Valid()</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$user</span><span class="p">;</span>
 
-    /**
-     * @Assert\NotBlank()
-     * @Assert\True()
-     */
-    protected $termsAccepted;
+    <span class="sd">/**</span>
+<span class="sd">     * @Assert\NotBlank()</span>
+<span class="sd">     * @Assert\True()</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$termsAccepted</span><span class="p">;</span>
 
-    public function setUser(User $user)
-    {
-        $this-&gt;user = $user;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setUser</span><span class="p">(</span><span class="nx">User</span> <span class="nv">$user</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">user</span> <span class="o">=</span> <span class="nv">$user</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function getUser()
-    {
-        return $this-&gt;user;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getUser</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">user</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function getTermsAccepted()
-    {
-        return $this-&gt;termsAccepted;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getTermsAccepted</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">termsAccepted</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function setTermsAccepted($termsAccepted)
-    {
-        $this-&gt;termsAccepted = (Boolean) $termsAccepted;
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setTermsAccepted</span><span class="p">(</span><span class="nv">$termsAccepted</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">termsAccepted</span> <span class="o">=</span> <span class="p">(</span><span class="nx">Boolean</span><span class="p">)</span> <span class="nv">$termsAccepted</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Next, create the form for this <tt class="docutils literal"><span class="pre">Registration</span></tt> model:</p>
-<div class="highlight-python"><pre>// src/Acme/AccountBundle/Form/Type/RegistrationType.php
-namespace Acme\AccountBundle\Form\Type;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/AccountBundle/Form/Type/RegistrationType.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\AccountBundle\Form\Type</span><span class="p">;</span>
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractType</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
 
-class RegistrationType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder-&gt;add('user', new UserType());
-        $builder-&gt;add(
-            'terms',
-            'checkbox',
-            array('property_path' =&gt; 'termsAccepted')
-        );
-    }
+<span class="k">class</span> <span class="nc">RegistrationType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">UserType</span><span class="p">());</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span>
+            <span class="s1">&#39;terms&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;checkbox&#39;</span><span class="p">,</span>
+            <span class="k">array</span><span class="p">(</span><span class="s1">&#39;property_path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;termsAccepted&#39;</span><span class="p">)</span>
+        <span class="p">);</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;Register&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    public function getName()
-    {
-        return 'registration';
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;registration&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-<p>You don&#8217;t need to use special method for embedding the <tt class="docutils literal"><span class="pre">UserType</span></tt> form.
+<p>You don&#8217;t need to use a special method for embedding the <tt class="docutils literal"><span class="pre">UserType</span></tt> form.
 A form is a field, too - so you can add this like any other field, with the
 expectation that the <tt class="docutils literal"><span class="pre">Registration.user</span></tt> property will hold an instance
 of the <tt class="docutils literal"><span class="pre">User</span></tt> class.</p>
@@ -259,60 +275,64 @@ of the <tt class="docutils literal"><span class="pre">User</span></tt> class.</p
 <h2>Handling the Form Submission<a class="headerlink" href="#handling-the-form-submission" title="Permalink to this headline">¶</a></h2>
 <p>Next, you need a controller to handle the form. Start by creating a simple
 controller for displaying the registration form:</p>
-<div class="highlight-python"><pre>// src/Acme/AccountBundle/Controller/AccountController.php
-namespace Acme\AccountBundle\Controller;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/AccountBundle/Controller/AccountController.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\AccountBundle\Controller</span><span class="p">;</span>
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
+<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\Controller\Controller</span><span class="p">;</span>
 
-use Acme\AccountBundle\Form\Type\RegistrationType;
-use Acme\AccountBundle\Form\Model\Registration;
+<span class="k">use</span> <span class="nx">Acme\AccountBundle\Form\Type\RegistrationType</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Acme\AccountBundle\Form\Model\Registration</span><span class="p">;</span>
 
-class AccountController extends Controller
-{
-    public function registerAction()
-    {
-        $registration = new Registration();
-        $form = $this-&gt;createForm(new RegistrationType(), $registration, array(
-            'action' =&gt; $this-&gt;generateUrl('account_create'),
-        ));
+<span class="k">class</span> <span class="nc">AccountController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">registerAction</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$registration</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Registration</span><span class="p">();</span>
+        <span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createForm</span><span class="p">(</span><span class="k">new</span> <span class="nx">RegistrationType</span><span class="p">(),</span> <span class="nv">$registration</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;action&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">generateUrl</span><span class="p">(</span><span class="s1">&#39;account_create&#39;</span><span class="p">),</span>
+        <span class="p">));</span>
 
-        return $this-&gt;render(
-            'AcmeAccountBundle:Account:register.html.twig',
-            array('form' =&gt; $form-&gt;createView())
-        );
-    }
-}</pre>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
+            <span class="s1">&#39;AcmeAccountBundle:Account:register.html.twig&#39;</span><span class="p">,</span>
+            <span class="k">array</span><span class="p">(</span><span class="s1">&#39;form&#39;</span> <span class="o">=&gt;</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">createView</span><span class="p">())</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-<p>and its template:</p>
+<p>And its template:</p>
 <div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/AccountBundle/Resources/views/Account/register.html.twig #}</span>
 <span class="cp">{{</span> <span class="nv">form</span><span class="o">(</span><span class="nv">form</span><span class="o">)</span> <span class="cp">}}</span>
 </pre></div>
 </div>
-<p>Next, create the controller which handles the form submission.  This performs
+<p>Next, create the controller which handles the form submission. This performs
 the validation and saves the data into the database:</p>
-<div class="highlight-python"><pre>public function createAction(Request $request)
-{
-    $em = $this-&gt;getDoctrine()-&gt;getEntityManager();
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+<span class="c1">// ...</span>
 
-    $form = $this-&gt;createForm(new RegistrationType(), new Registration());
+<span class="k">public</span> <span class="k">function</span> <span class="nf">createAction</span><span class="p">(</span><span class="nx">Request</span> <span class="nv">$request</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$em</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getDoctrine</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getManager</span><span class="p">();</span>
 
-    $form-&gt;handleRequest($request);
+    <span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createForm</span><span class="p">(</span><span class="k">new</span> <span class="nx">RegistrationType</span><span class="p">(),</span> <span class="k">new</span> <span class="nx">Registration</span><span class="p">());</span>
 
-    if ($form-&gt;isValid()) {
-        $registration = $form-&gt;getData();
+    <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">handleRequest</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
 
-        $em-&gt;persist($registration-&gt;getUser());
-        $em-&gt;flush();
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
+        <span class="nv">$registration</span> <span class="o">=</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">getData</span><span class="p">();</span>
 
-        return $this-&gt;redirect(...);
-    }
+        <span class="nv">$em</span><span class="o">-&gt;</span><span class="na">persist</span><span class="p">(</span><span class="nv">$registration</span><span class="o">-&gt;</span><span class="na">getUser</span><span class="p">());</span>
+        <span class="nv">$em</span><span class="o">-&gt;</span><span class="na">flush</span><span class="p">();</span>
 
-    return $this-&gt;render(
-        'AcmeAccountBundle:Account:register.html.twig',
-        array('form' =&gt; $form-&gt;createView())
-    );
-}</pre>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">redirect</span><span class="p">(</span><span class="o">...</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
+        <span class="s1">&#39;AcmeAccountBundle:Account:register.html.twig&#39;</span><span class="p">,</span>
+        <span class="k">array</span><span class="p">(</span><span class="s1">&#39;form&#39;</span> <span class="o">=&gt;</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">createView</span><span class="p">())</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="add-new-routes">
@@ -324,12 +344,12 @@ the validation and saves the data into the database:</p>
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/AccountBundle/Resources/config/routing.yml</span>
 <span class="l-Scalar-Plain">account_register</span><span class="p-Indicator">:</span>
-   <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/register</span>
-   <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeAccountBundle</span><span class="p-Indicator">:</span><span class="nv">Account</span><span class="p-Indicator">:</span><span class="nv">register</span> <span class="p-Indicator">}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">/register</span>
+    <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeAccountBundle</span><span class="p-Indicator">:</span><span class="nv">Account</span><span class="p-Indicator">:</span><span class="nv">register</span> <span class="p-Indicator">}</span>
 
 <span class="l-Scalar-Plain">account_create</span><span class="p-Indicator">:</span>
-   <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>  <span class="l-Scalar-Plain">/register/create</span>
-   <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeAccountBundle</span><span class="p-Indicator">:</span><span class="nv">Account</span><span class="p-Indicator">:</span><span class="nv">create</span> <span class="p-Indicator">}</span>
+    <span class="l-Scalar-Plain">path</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">/register/create</span>
+    <span class="l-Scalar-Plain">defaults</span><span class="p-Indicator">:</span> <span class="p-Indicator">{</span> <span class="nv">_controller</span><span class="p-Indicator">:</span> <span class="nv">AcmeAccountBundle</span><span class="p-Indicator">:</span><span class="nv">Account</span><span class="p-Indicator">:</span><span class="nv">create</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
 </li>
@@ -373,8 +393,9 @@ the validation and saves the data into the database:</p>
 <h2>Update your Database Schema<a class="headerlink" href="#update-your-database-schema" title="Permalink to this headline">¶</a></h2>
 <p>Of course, since you&#8217;ve added a <tt class="docutils literal"><span class="pre">User</span></tt> entity during this tutorial, make
 sure that your database schema has been updated properly:</p>
-<blockquote>
-<div>$ php app/console doctrine:schema:update &#8211;force</div></blockquote>
+<div class="highlight-bash"><div class="highlight"><pre><span class="nv">$ </span>php app/console doctrine:schema:update --force
+</pre></div>
+</div>
 <p>That&#8217;s it! Your form now validates, and allows you to save the <tt class="docutils literal"><span class="pre">User</span></tt>
 object to the database. The extra <tt class="docutils literal"><span class="pre">terms</span></tt> checkbox on the <tt class="docutils literal"><span class="pre">Registration</span></tt>
 model class is used during validation, but not actually used afterwards when
@@ -405,8 +426,8 @@ saving the User to the database.</p>
   <p class="topless"><a href="mapping_model_classes.html"
                         title="previous chapter">How to provide model classes for several Doctrine implementations</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../form/index.html"
-                        title="next chapter">Form</a></p>
+  <p class="topless"><a href="console.html"
+                        title="next chapter">Console Commands</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/doctrine/registration_form.txt"
@@ -436,19 +457,19 @@ saving the User to the database.</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../form/index.html" title="Form"
+          <a href="console.html" title="Console Commands"
              >next</a> |</li>
         <li class="right" >
           <a href="mapping_model_classes.html" title="How to provide model classes for several Doctrine implementations"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Doctrine</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

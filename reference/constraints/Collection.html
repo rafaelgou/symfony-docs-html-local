@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Collection &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Collection &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
     <link rel="next" title="Count" href="Count.html" />
     <link rel="prev" title="Choice" href="Choice.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="Choice.html" title="Choice"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -94,21 +92,22 @@ and that extra keys are not present.</p>
 <h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
 <p>The <tt class="docutils literal"><span class="pre">Collection</span></tt> constraint allows you to validate the different keys of
 a collection individually. Take the following example:</p>
-<div class="highlight-python"><pre>// src/Acme/BlogBundle/Entity/Author.php
-namespace Acme\BlogBundle\Entity;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Entity/Author.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
 
-class Author
-{
-    protected $profileData = array(
-        'personal_email',
-        'short_bio',
-    );
+<span class="k">class</span> <span class="nc">Author</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$profileData</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;personal_email&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;short_bio&#39;</span><span class="p">,</span>
+    <span class="p">);</span>
 
-    public function setProfileData($key, $value)
-    {
-        $this-&gt;profileData[$key] = $value;
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setProfileData</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">profileData</span><span class="p">[</span><span class="nv">$key</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$value</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>To validate that the <tt class="docutils literal"><span class="pre">personal_email</span></tt> element of the <tt class="docutils literal"><span class="pre">profileData</span></tt> array
 property is a valid email address and that the <tt class="docutils literal"><span class="pre">short_bio</span></tt> element is not
@@ -162,25 +161,31 @@ blank but is no longer than 100 characters in length, you would do the following
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/config/validation.xml --&gt;</span>
-<span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;profileData&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Collection&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;fields&quot;</span><span class="nt">&gt;</span>
-                <span class="nt">&lt;value</span> <span class="na">key=</span><span class="s">&quot;personal_email&quot;</span><span class="nt">&gt;</span>
-                    <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Email&quot;</span> <span class="nt">/&gt;</span>
-                <span class="nt">&lt;/value&gt;</span>
-                <span class="nt">&lt;value</span> <span class="na">key=</span><span class="s">&quot;short_bio&quot;</span><span class="nt">&gt;</span>
-                    <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;NotBlank&quot;</span> <span class="nt">/&gt;</span>
-                    <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Length&quot;</span><span class="nt">&gt;</span>
-                        <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;max&quot;</span><span class="nt">&gt;</span>100<span class="nt">&lt;/option&gt;</span>
-                        <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;maxMessage&quot;</span><span class="nt">&gt;</span>Your bio is too long!<span class="nt">&lt;/option&gt;</span>
-                    <span class="nt">&lt;/constraint&gt;</span>
-                <span class="nt">&lt;/value&gt;</span>
-            <span class="nt">&lt;/option&gt;</span>
-            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;allowMissingFields&quot;</span><span class="nt">&gt;</span>true<span class="nt">&lt;/option&gt;</span>
-        <span class="nt">&lt;/constraint&gt;</span>
-    <span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;/class&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;profileData&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Collection&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;fields&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;value</span> <span class="na">key=</span><span class="s">&quot;personal_email&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Email&quot;</span> <span class="nt">/&gt;</span>
+                    <span class="nt">&lt;/value&gt;</span>
+                    <span class="nt">&lt;value</span> <span class="na">key=</span><span class="s">&quot;short_bio&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;NotBlank&quot;</span> <span class="nt">/&gt;</span>
+                        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Length&quot;</span><span class="nt">&gt;</span>
+                            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;max&quot;</span><span class="nt">&gt;</span>100<span class="nt">&lt;/option&gt;</span>
+                            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;maxMessage&quot;</span><span class="nt">&gt;</span>Your bio is too long!<span class="nt">&lt;/option&gt;</span>
+                        <span class="nt">&lt;/constraint&gt;</span>
+                    <span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;/option&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;allowMissingFields&quot;</span><span class="nt">&gt;</span>true<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;/constraint&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;/class&gt;</span>
+<span class="nt">&lt;/constraint-mapping&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -225,12 +230,13 @@ the <a class="reference internal" href="#allowmissingfields">allowMissingFields<
 the above example, the <tt class="docutils literal"><span class="pre">allowMissingFields</span></tt> option was set to true, meaning
 that if either of the <tt class="docutils literal"><span class="pre">personal_email</span></tt> or <tt class="docutils literal"><span class="pre">short_bio</span></tt> elements were missing
 from the <tt class="docutils literal"><span class="pre">$personalData</span></tt> property, no validation error would occur.</p>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3: </span>The <tt class="docutils literal"><span class="pre">Required</span></tt> and <tt class="docutils literal"><span class="pre">Optional</span></tt> constraints were moved to the namespace
-<tt class="docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\</span></tt> in Symfony 2.3.</p>
 </div>
 <div class="section" id="required-and-optional-field-constraints">
-<h3>Required and Optional Field Constraints<a class="headerlink" href="#required-and-optional-field-constraints" title="Permalink to this headline">¶</a></h3>
+<h3>Required and optional Field Constraints<a class="headerlink" href="#required-and-optional-field-constraints" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>The <tt class="docutils literal"><span class="pre">Required</span></tt> and <tt class="docutils literal"><span class="pre">Optional</span></tt> constraints were moved to the namespace
+<tt class="docutils literal"><span class="pre">Symfony\Component\Validator\Constraints\</span></tt> in Symfony 2.3.</p>
+</div>
 <p>Constraints for fields within a collection can be wrapped in the <tt class="docutils literal"><span class="pre">Required</span></tt> or
 <tt class="docutils literal"><span class="pre">Optional</span></tt> constraint to control whether they should always be applied (<tt class="docutils literal"><span class="pre">Required</span></tt>)
 or only applied when the field is present (<tt class="docutils literal"><span class="pre">Optional</span></tt>).</p>
@@ -239,6 +245,22 @@ or only applied when the field is present (<tt class="docutils literal"><span cl
 field is optional but must be a valid email if supplied, you can do the following:</p>
 <div class="configuration-block">
 <ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/BlogBundle/Resources/config/validation.yml</span>
+<span class="l-Scalar-Plain">Acme\BlogBundle\Entity\Author</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">profile_data</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Collection</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">fields</span><span class="p-Indicator">:</span>
+                    <span class="l-Scalar-Plain">personal_email</span><span class="p-Indicator">:</span>
+                        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Required</span>
+                            <span class="l-Scalar-Plain">- NotBlank</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
+                            <span class="l-Scalar-Plain">- Email</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
+                    <span class="l-Scalar-Plain">alternate_email</span><span class="p-Indicator">:</span>
+                        <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Optional</span><span class="p-Indicator">:</span>
+                            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Email</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">~</span>
+</pre></div>
+</div>
+</li>
 <li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Entity/Author.php</span>
 <span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
 
@@ -258,6 +280,35 @@ field is optional but must be a valid email if supplied, you can do the followin
          <span class="s1">&#39;personal_email&#39;</span><span class="p">,</span>
      <span class="p">);</span>
 <span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/config/validation.xml --&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;profile_data&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Collection&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;fields&quot;</span><span class="nt">&gt;</span>
+                    <span class="nt">&lt;value</span> <span class="na">key=</span><span class="s">&quot;personal_email&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Required&quot;</span><span class="nt">&gt;</span>
+                            <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;NotBlank&quot;</span> <span class="nt">/&gt;</span>
+                            <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Email&quot;</span> <span class="nt">/&gt;</span>
+                        <span class="nt">&lt;/constraint&gt;</span>
+                    <span class="nt">&lt;/value&gt;</span>
+                    <span class="nt">&lt;value</span> <span class="na">key=</span><span class="s">&quot;alternate_email&quot;</span><span class="nt">&gt;</span>
+                        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Optional&quot;</span><span class="nt">&gt;</span>
+                            <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Email&quot;</span> <span class="nt">/&gt;</span>
+                        <span class="nt">&lt;/constraint&gt;</span>
+                    <span class="nt">&lt;/value&gt;</span>
+                <span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;/constraint&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;/class&gt;</span>
+<span class="nt">&lt;/constraint-mapping&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -311,7 +362,7 @@ error will be returned. If set to <tt class="docutils literal"><span class="pre"
 </div>
 <div class="section" id="extrafieldsmessage">
 <h3>extraFieldsMessage<a class="headerlink" href="#extrafieldsmessage" title="Permalink to this headline">¶</a></h3>
-<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">The</span> <span class="pre">fields</span> <span class="pre">{{</span> <span class="pre">fields</span> <span class="pre">}}</span> <span class="pre">were</span> <span class="pre">not</span> <span class="pre">expected</span></tt></p>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">The</span> <span class="pre">fields</span> <span class="pre">{{</span> <span class="pre">fields</span> <span class="pre">}}</span> <span class="pre">were</span> <span class="pre">not</span> <span class="pre">expected.</span></tt></p>
 <p>The message shown if <a class="reference internal" href="#allowextrafields">allowExtraFields</a> is false and an extra field is detected.</p>
 </div>
 <div class="section" id="allowmissingfields">
@@ -319,12 +370,12 @@ error will be returned. If set to <tt class="docutils literal"><span class="pre"
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: false</p>
 <p>If this option is set to <tt class="docutils literal"><span class="pre">false</span></tt> and one or more fields from the <a class="reference internal" href="#fields">fields</a>
 option are not present in the underlying collection, a validation error will
-be returned. If set to <tt class="docutils literal"><span class="pre">true</span></tt>, it&#8217;s ok if some fields in the <cite>fields_</cite>
+be returned. If set to <tt class="docutils literal"><span class="pre">true</span></tt>, it&#8217;s ok if some fields in the <a class="reference internal" href="#fields">fields</a>
 option are not present in the underlying collection.</p>
 </div>
 <div class="section" id="missingfieldsmessage">
 <h3>missingFieldsMessage<a class="headerlink" href="#missingfieldsmessage" title="Permalink to this headline">¶</a></h3>
-<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">The</span> <span class="pre">fields</span> <span class="pre">{{</span> <span class="pre">fields</span> <span class="pre">}}</span> <span class="pre">are</span> <span class="pre">missing</span></tt></p>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">The</span> <span class="pre">fields</span> <span class="pre">{{</span> <span class="pre">fields</span> <span class="pre">}}</span> <span class="pre">are</span> <span class="pre">missing.</span></tt></p>
 <p>The message shown if <a class="reference internal" href="#allowmissingfields">allowMissingFields</a> is false and one or more fields
 are missing from the underlying collection.</p>
 </div>
@@ -342,7 +393,7 @@ are missing from the underlying collection.</p>
 <li><a class="reference internal" href="#">Collection</a><ul>
 <li><a class="reference internal" href="#basic-usage">Basic Usage</a><ul>
 <li><a class="reference internal" href="#presence-and-absence-of-fields">Presence and Absence of Fields</a></li>
-<li><a class="reference internal" href="#required-and-optional-field-constraints">Required and Optional Field Constraints</a></li>
+<li><a class="reference internal" href="#required-and-optional-field-constraints">Required and optional Field Constraints</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#options">Options</a><ul>
@@ -397,14 +448,14 @@ are missing from the underlying collection.</p>
         <li class="right" >
           <a href="Choice.html" title="Choice"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

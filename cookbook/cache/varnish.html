@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use Varnish to speed up my Website &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to use Varnish to speed up my Website &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Cache" href="index.html" />
-    <link rel="next" title="Templating" href="../templating/index.html" />
+    <link rel="next" title="Configuration" href="../configuration/index.html" />
     <link rel="prev" title="Cache" href="index.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../templating/index.html" title="Templating"
+          <a href="../configuration/index.html" title="Configuration"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Cache"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Cache</a> &raquo;</li> 
       </ul>
@@ -58,16 +56,15 @@
 <span id="index-0"></span><h1>How to use Varnish to speed up my Website<a class="headerlink" href="#how-to-use-varnish-to-speed-up-my-website" title="Permalink to this headline">¶</a></h1>
 <p>Because Symfony2&#8217;s cache uses the standard HTTP cache headers, the
 <a class="reference internal" href="../../book/http_cache.html#symfony-gateway-cache"><em>Symfony2 Reverse Proxy</em></a> can easily be replaced with any other reverse
-proxy. Varnish is a powerful, open-source, HTTP accelerator capable of serving
-cached content quickly and including support for <a class="reference internal" href="../../book/http_cache.html#edge-side-includes"><em>Edge Side
-Includes</em></a>.</p>
+proxy. <a class="reference external" href="https://www.varnish-cache.org">Varnish</a> is a powerful, open-source, HTTP accelerator capable of serving
+cached content quickly and including support for <a class="reference internal" href="../../book/http_cache.html#edge-side-includes"><em>Edge Side Includes</em></a>.</p>
 <div class="section" id="configuration">
 <span id="index-1"></span><h2>Configuration<a class="headerlink" href="#configuration" title="Permalink to this headline">¶</a></h2>
 <p>As seen previously, Symfony2 is smart enough to detect whether it talks to a
 reverse proxy that understands ESI or not. It works out of the box when you
 use the Symfony2 reverse proxy, but you need a special configuration to make
 it work with Varnish. Thankfully, Symfony2 relies on yet another standard
-written by Akamaï (<a class="reference external" href="http://www.w3.org/TR/edge-arch">Edge Architecture</a>), so the configuration tips in this
+written by Akamai (<a class="reference external" href="http://www.w3.org/TR/edge-arch">Edge Architecture</a>), so the configuration tips in this
 chapter can be useful even if you don&#8217;t use Symfony2.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -99,6 +96,14 @@ Symfony2 adds automatically:</p>
         // For Varnish &lt; 3.0
         // esi;
     }
+    /* By default Varnish ignores Cache-Control: nocache
+    (https://www.varnish-cache.org/docs/3.0/tutorial/increasing_your_hitrate.html#cache-control),
+    so in order avoid caching it has to be done explicitly */
+    if (beresp.http.Pragma ~ &quot;no-cache&quot; ||
+         beresp.http.Cache-Control ~ &quot;no-cache&quot; ||
+         beresp.http.Cache-Control ~ &quot;private&quot;) {
+        return (hit_for_pass);
+    }
 }
 </pre></div>
 </div>
@@ -126,7 +131,7 @@ backend default {
 
 sub vcl_recv {
     /*
-    Varnish default behaviour doesn&#39;t support PURGE.
+    Varnish default behavior doesn&#39;t support PURGE.
     Match the PURGE request and immediately do a cache lookup,
     otherwise Varnish will directly pipe the request to the backend
     and bypass the cache
@@ -171,7 +176,7 @@ backend default {
     .port = &quot;8080&quot;;
 }
 
-// Acl&#39;s can contain IP&#39;s, subnets and hostnames
+// ACL&#39;s can contain IP&#39;s, subnets and hostnames
 acl purge {
     &quot;localhost&quot;;
     &quot;192.168.55.0&quot;/24;
@@ -180,7 +185,7 @@ acl purge {
 sub vcl_recv {
     // Match PURGE request to avoid cache bypassing
     if (req.request == &quot;PURGE&quot;) {
-        // Match client IP to the acl
+        // Match client IP to the ACL
         if (!client.ip ~ purge) {
             // Deny access
             error 405 &quot;Not allowed.&quot;;
@@ -212,6 +217,34 @@ sub vcl_miss {
 </div>
 </div>
 </div>
+<div class="section" id="routing-and-x-forwarded-headers">
+<h2>Routing and X-FORWARDED Headers<a class="headerlink" href="#routing-and-x-forwarded-headers" title="Permalink to this headline">¶</a></h2>
+<p>To ensure that the Symfony Router generates URLs correctly with Varnish,
+proper <tt class="docutils literal"><span class="pre">`X-Forwarded`</span></tt> headers must be added so that Symfony is aware of
+the original port number of the request. Exactly how this is done depends
+on your setup. As a simple example, Varnish and your web server are on the
+same machine and that Varnish is listening on one port (e.g. 80) and Apache
+on another (e.g. 8080). In this situation, Varnish should add the <tt class="docutils literal"><span class="pre">X-Forwarded-Port</span></tt>
+header so that the Symfony application knows that the original port number
+is 80 and not 8080.</p>
+<p>If this header weren&#8217;t set properly, Symfony may append <tt class="docutils literal"><span class="pre">8080</span></tt> when generating
+absolute URLs:</p>
+<div class="highlight-text"><div class="highlight"><pre>sub vcl_recv {
+    if (req.http.X-Forwarded-Proto == &quot;https&quot; ) {
+        set req.http.X-Forwarded-Port = &quot;443&quot;;
+    } else {
+        set req.http.X-Forwarded-Port = &quot;80&quot;;
+    }
+}
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Remember to configure <a class="reference internal" href="../../reference/configuration/framework.html#reference-framework-trusted-proxies"><em>framework.trusted_proxies</em></a>
+in the Symfony configuration so that Varnish is seen as a trusted proxy
+and the <tt class="docutils literal"><span class="pre">X-Forwarded-</span></tt> headers are used.</p>
+</div>
+</div>
 </div>
 
 
@@ -225,6 +258,7 @@ sub vcl_miss {
 <li><a class="reference internal" href="#">How to use Varnish to speed up my Website</a><ul>
 <li><a class="reference internal" href="#configuration">Configuration</a></li>
 <li><a class="reference internal" href="#cache-invalidation">Cache Invalidation</a></li>
+<li><a class="reference internal" href="#routing-and-x-forwarded-headers">Routing and X-FORWARDED Headers</a></li>
 </ul>
 </li>
 </ul>
@@ -233,8 +267,8 @@ sub vcl_miss {
   <p class="topless"><a href="index.html"
                         title="previous chapter">Cache</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../templating/index.html"
-                        title="next chapter">Templating</a></p>
+  <p class="topless"><a href="../configuration/index.html"
+                        title="next chapter">Configuration</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/cache/varnish.txt"
@@ -264,19 +298,19 @@ sub vcl_miss {
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../templating/index.html" title="Templating"
+          <a href="../configuration/index.html" title="Configuration"
              >next</a> |</li>
         <li class="right" >
           <a href="index.html" title="Cache"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Cache</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

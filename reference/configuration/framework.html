@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>FrameworkBundle Configuration (“framework”) &mdash; Symfony Docs 2.3 documentation</title>
+    <title>FrameworkBundle Configuration (“framework”) &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Reference Documents" href="../index.html" />
-    <link rel="next" title="AsseticBundle Configuration Reference" href="assetic.html" />
+    <link rel="next" title="DoctrineBundle Configuration (“doctrine”)" href="doctrine.html" />
     <link rel="prev" title="Reference Documents" href="../index.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="assetic.html" title="AsseticBundle Configuration Reference"
+          <a href="doctrine.html" title="DoctrineBundle Configuration (“doctrine”)"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="../index.html" title="Reference Documents"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" accesskey="U">Reference Documents</a> &raquo;</li> 
       </ul>
     </div>  
@@ -57,7 +55,7 @@
 <span id="index-0"></span><h1>FrameworkBundle Configuration (&#8220;framework&#8221;)<a class="headerlink" href="#frameworkbundle-configuration-framework" title="Permalink to this headline">¶</a></h1>
 <p>This reference document is a work in progress. It should be accurate, but
 all options are not yet fully covered.</p>
-<p>The <tt class="docutils literal"><span class="pre">FrameworkBundle</span></tt> contains most of the &#8220;base&#8221; framework functionality
+<p>The FrameworkBundle contains most of the &#8220;base&#8221; framework functionality
 and can be configured under the <tt class="docutils literal"><span class="pre">framework</span></tt> key in your application configuration.
 This includes settings related to sessions, translation, forms, validation,
 routing and more.</p>
@@ -75,18 +73,28 @@ routing and more.</p>
 <li><p class="first"><a class="reference internal" href="#trusted-proxies">trusted_proxies</a></p>
 </li>
 <li><dl class="first docutils">
-<dt><a class="reference internal" href="#form">form</a></dt>
+<dt><a class="reference internal" href="#csrf-protection">csrf_protection</a></dt>
 <dd><ul class="first last simple">
 <li>enabled</li>
+<li>field_name (deprecated)</li>
 </ul>
 </dd>
 </dl>
 </li>
 <li><dl class="first docutils">
-<dt><a class="reference internal" href="#csrf-protection">csrf_protection</a></dt>
+<dt><a class="reference internal" href="#form">form</a></dt>
+<dd><ul class="first last">
+<li><p class="first">enabled</p>
+</li>
+<li><dl class="first docutils">
+<dt>csrf_protection</dt>
 <dd><ul class="first last simple">
 <li>enabled</li>
 <li>field_name</li>
+</ul>
+</dd>
+</dl>
+</li>
 </ul>
 </dd>
 </dl>
@@ -146,8 +154,9 @@ parameter named <tt class="docutils literal"><span class="pre">kernel.secret</sp
 </div>
 <div class="section" id="http-method-override">
 <span id="configuration-framework-http-method-override"></span><h3>http_method_override<a class="headerlink" href="#http-method-override" title="Permalink to this headline">¶</a></h3>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3: </span>The <tt class="docutils literal"><span class="pre">http_method_override</span></tt> option is new in Symfony 2.3.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>The <tt class="docutils literal"><span class="pre">http_method_override</span></tt> option was introduced in Symfony 2.3.</p>
+</div>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">true</span></tt></p>
 <p>This determines whether the <tt class="docutils literal"><span class="pre">_method</span></tt> request parameter is used as the intended
 HTTP method on POST requests. If enabled, the
@@ -162,23 +171,49 @@ gets called automatically. It becomes the service container parameter named
 <p>If you&#8217;re using an IDE like TextMate or Mac Vim, then Symfony can turn all
 of the file paths in an exception message into a link, which will open that
 file in your IDE.</p>
-<p>If you use TextMate or Mac Vim, you can simply use one of the following built-in
-values:</p>
+<p>Symfony contains preconfigured urls for some popular IDEs, you can set them
+using the following keys:</p>
 <ul class="simple">
 <li><tt class="docutils literal"><span class="pre">textmate</span></tt></li>
 <li><tt class="docutils literal"><span class="pre">macvim</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">emacs</span></tt></li>
+<li><tt class="docutils literal"><span class="pre">sublime</span></tt></li>
 </ul>
-<p>You can also specify a custom file link string. If you do this, all percentage
-signs (<tt class="docutils literal"><span class="pre">%</span></tt>) must be doubled to escape that character. For example, the
-full TextMate string would look like this:</p>
-<div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
-    <span class="l-Scalar-Plain">ide</span><span class="p-Indicator">:</span>  <span class="s">&quot;txmt://open?url=file://%%f&amp;line=%%l&quot;</span>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3.14: </span>The <tt class="docutils literal"><span class="pre">emacs</span></tt> and <tt class="docutils literal"><span class="pre">sublime</span></tt> editors were introduced in Symfony 2.3.14.</p>
+</div>
+<p>You can also specify a custom url string. If you do this, all percentage
+signs (<tt class="docutils literal"><span class="pre">%</span></tt>) must be doubled to escape that character. For example, if you
+have installed <a class="reference external" href="https://github.com/pinepain/PhpStormOpener">PhpStormOpener</a> and use PHPstorm, you will do something like:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">ide</span><span class="p-Indicator">:</span> <span class="s">&quot;pstorm://%%f:%%l&quot;</span>
 </pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="cp">&lt;?xml version=&quot;1.0&quot; charset=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/service&quot;</span>
+    <span class="na">xmlns:framework=</span><span class="s">&quot;http://symfony.com/schema/dic/symfony&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;framework:config</span> <span class="na">ide=</span><span class="s">&quot;pstorm://%%f:%%l&quot;</span> <span class="nt">/&gt;</span>
+
+<span class="nt">&lt;/container&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="nv">$container</span><span class="o">-&gt;</span><span class="na">loadFromExtension</span><span class="p">(</span><span class="s1">&#39;framework&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;ide&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;pstorm://%%f:%%l&#39;</span><span class="p">,</span>
+<span class="p">));</span>
+</pre></div>
+</div>
+</li>
+</ul>
 </div>
 <p>Of course, since every developer uses a different IDE, it&#8217;s better to set
 this on a system level. This can be done by setting the <tt class="docutils literal"><span class="pre">xdebug.file_link_format</span></tt>
-PHP.ini value to the file link string. If this configuration value is set, then
-the <tt class="docutils literal"><span class="pre">ide</span></tt> option does not need to be specified.</p>
+in the <tt class="docutils literal"><span class="pre">php.ini</span></tt> configuration to the url string. If this configuration value
+is set, then the <tt class="docutils literal"><span class="pre">ide</span></tt> option will be ignored.</p>
 </div>
 <div class="section" id="test">
 <span id="reference-framework-test"></span><h3>test<a class="headerlink" href="#test" title="Permalink to this headline">¶</a></h3>
@@ -189,13 +224,14 @@ This setting should be present in your <tt class="docutils literal"><span class=
 <tt class="docutils literal"><span class="pre">app/config/config_test.yml</span></tt>). For more information, see <a class="reference internal" href="../../book/testing.html"><em>Testing</em></a>.</p>
 </div>
 <div class="section" id="trusted-proxies">
-<h3>trusted_proxies<a class="headerlink" href="#trusted-proxies" title="Permalink to this headline">¶</a></h3>
+<span id="reference-framework-trusted-proxies"></span><h3>trusted_proxies<a class="headerlink" href="#trusted-proxies" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">array</span></tt></p>
 <p>Configures the IP addresses that should be trusted as proxies. For more details,
 see <a class="reference internal" href="../../components/http_foundation/trusting_proxies.html"><em>Trusting Proxies</em></a>.</p>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3: </span>CIDR notation support was introduced, so you can whitelist whole
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>CIDR notation support was introduced in Symfony 2.3, so you can whitelist whole
 subnets (e.g. <tt class="docutils literal"><span class="pre">10.0.0.0/8</span></tt>, <tt class="docutils literal"><span class="pre">fc00::/7</span></tt>).</p>
+</div>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
@@ -234,9 +270,11 @@ name which is defined in the <tt class="docutils literal"><span class="pre">php.
 </div>
 <div class="section" id="cookie-lifetime">
 <h4>cookie_lifetime<a class="headerlink" href="#cookie-lifetime" title="Permalink to this headline">¶</a></h4>
-<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">integer</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">0</span></tt></p>
-<p>This determines the lifetime of the session - in seconds. By default it will use
-<tt class="docutils literal"><span class="pre">0</span></tt>, which means the cookie is valid for the length of the browser session.</p>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">integer</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">null</span></tt></p>
+<p>This determines the lifetime of the session - in seconds. It will use <tt class="docutils literal"><span class="pre">null</span></tt> by
+default, which means <tt class="docutils literal"><span class="pre">session.cookie_lifetime</span></tt> value from <tt class="docutils literal"><span class="pre">php.ini</span></tt> will be used.
+Setting this value to <tt class="docutils literal"><span class="pre">0</span></tt> means the cookie is valid for the length of the browser
+session.</p>
 </div>
 <div class="section" id="cookie-path">
 <h4>cookie_path<a class="headerlink" href="#cookie-path" title="Permalink to this headline">¶</a></h4>
@@ -258,7 +296,7 @@ to the cookie specification.</p>
 <div class="section" id="cookie-httponly">
 <h4>cookie_httponly<a class="headerlink" href="#cookie-httponly" title="Permalink to this headline">¶</a></h4>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">false</span></tt></p>
-<p>This determines whether cookies should only accessible through the HTTP protocol.
+<p>This determines whether cookies should only be accessible through the HTTP protocol.
 This means that the cookie won&#8217;t be accessible by scripting languages, such
 as JavaScript. This setting can effectively help to reduce identity theft
 through XSS attacks.</p>
@@ -278,7 +316,7 @@ that the GC process will start on each request.</p>
 </div>
 <div class="section" id="gc-maxlifetime">
 <h4>gc_maxlifetime<a class="headerlink" href="#gc-maxlifetime" title="Permalink to this headline">¶</a></h4>
-<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">integer</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">14400</span></tt></p>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">integer</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">1440</span></tt></p>
 <p>This determines the number of seconds after which data will be seen as &#8220;garbage&#8221;
 and potentially cleaned up. Garbage collection may occur during session start
 and depends on <a class="reference internal" href="#gc-divisor">gc_divisor</a> and <a class="reference internal" href="#gc-probability">gc_probability</a>.</p>
@@ -288,7 +326,7 @@ and depends on <a class="reference internal" href="#gc-divisor">gc_divisor</a> a
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">%kernel.cache.dir%/sessions</span></tt></p>
 <p>This determines the argument to be passed to the save handler. If you choose
 the default file handler, this is the path where the session files are created.
-For more information, see <a class="reference internal" href="../../cookbook/session/sessions_directory.html"><em>Configuring the Directory where Sessions Files are Saved</em></a>.</p>
+For more information, see <a class="reference internal" href="../../cookbook/session/sessions_directory.html"><em>Configuring the Directory Where Sessions Files are Saved</em></a>.</p>
 <p>You can also set this value to the <tt class="docutils literal"><span class="pre">save_path</span></tt> of your <tt class="docutils literal"><span class="pre">php.ini</span></tt> by setting
 the value to <tt class="docutils literal"><span class="pre">null</span></tt>:</p>
 <div class="configuration-block">
@@ -399,6 +437,9 @@ Now, activate the <tt class="docutils literal"><span class="pre">assets_version<
 <p>Now, the same asset will be rendered as <tt class="docutils literal"><span class="pre">/images/logo.png?v2</span></tt> If you use
 this feature, you <strong>must</strong> manually increment the <tt class="docutils literal"><span class="pre">assets_version</span></tt> value
 before each deployment so that the query parameters change.</p>
+<p>It&#8217;s also possible to set the version value on an asset-by-asset basis (instead
+of using the global version - e.g. <tt class="docutils literal"><span class="pre">v2</span></tt> - set here). See
+<a class="reference internal" href="../../book/templating.html#book-templating-version-by-asset"><em>Versioning by Asset</em></a> for details.</p>
 <p>You can also control how the query string works via the <a class="reference internal" href="#assets-version-format">assets_version_format</a>
 option.</p>
 </div>
@@ -436,16 +477,16 @@ accessible at their original URL.</p>
 </div>
 <div class="section" id="profiler">
 <h3>profiler<a class="headerlink" href="#profiler" title="Permalink to this headline">¶</a></h3>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.2: </span>The <tt class="docutils literal"><span class="pre">enabled</span></tt> option was added in Symfony 2.2. Previously, the profiler
-could only be disabled by omitting the <tt class="docutils literal"><span class="pre">framework.profiler</span></tt> configuration
-entirely.</p>
 <div class="section" id="profiler-enabled">
 <span id="id1"></span><h4>enabled<a class="headerlink" href="#profiler-enabled" title="Permalink to this headline">¶</a></h4>
 <p><strong>default</strong>: <tt class="docutils literal"><span class="pre">true</span></tt> in the <tt class="docutils literal"><span class="pre">dev</span></tt> and <tt class="docutils literal"><span class="pre">test</span></tt> environments</p>
 <p>The profiler can be disabled by setting this key to <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3.</span></p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>The <tt class="docutils literal"><span class="pre">collect</span></tt> option was introduced in Symfony 2.3. Previously, when
+<tt class="docutils literal"><span class="pre">profiler.enabled</span></tt> was <tt class="docutils literal"><span class="pre">false</span></tt>, the profiler <em>was</em> actually enabled,
+but the collectors were disabled. Now, the profiler and the collectors
+can be controlled independently.</p>
+</div>
 </div>
 <div class="section" id="collect">
 <h4>collect<a class="headerlink" href="#collect" title="Permalink to this headline">¶</a></h4>
@@ -454,16 +495,17 @@ entirely.</p>
 to <tt class="docutils literal"><span class="pre">true</span></tt>, the profiler collects data for all requests. If you want to only
 collect information on-demand, you can set the <tt class="docutils literal"><span class="pre">collect</span></tt> flag to <tt class="docutils literal"><span class="pre">false</span></tt>
 and activate the data collectors by hand:</p>
-<div class="highlight-python"><pre>$profiler-&gt;enable();</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$profiler</span><span class="o">-&gt;</span><span class="na">enable</span><span class="p">();</span>
+</pre></div>
 </div>
 </div>
 </div>
 </div>
 <div class="section" id="full-default-configuration">
-<h2>Full Default Configuration<a class="headerlink" href="#full-default-configuration" title="Permalink to this headline">¶</a></h2>
+<h2>Full default Configuration<a class="headerlink" href="#full-default-configuration" title="Permalink to this headline">¶</a></h2>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><pre>framework:
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre>framework:
     secret:               ~
     http_method_override: true
     trusted_proxies:      []
@@ -471,12 +513,16 @@ and activate the data collectors by hand:</p>
     test:                 ~
     default_locale:       en
 
+    csrf_protection:
+        enabled:              false
+        field_name:           _token # Deprecated since 2.4, to be removed in 3.0. Use form.csrf_protection.field_name instead
+
     # form configuration
     form:
         enabled:              false
-    csrf_protection:
-        enabled:              false
-        field_name:           _token
+        csrf_protection:
+            enabled:          true
+            field_name:       ~
 
     # esi configuration
     esi:
@@ -514,7 +560,7 @@ and activate the data collectors by hand:</p>
         # set to true to throw an exception when a parameter does not match the requirements
         # set to false to disable exceptions when a parameter does not match the requirements (and return null instead)
         # set to null to disable parameter checks against requirements
-        # 'true' is the preferred configuration in development mode, while 'false' or 'null' might be preferred in production
+        # &#39;true&#39; is the preferred configuration in development mode, while &#39;false&#39; or &#39;null&#39; might be preferred in production
         strict_requirements:  true
 
     # session configuration
@@ -581,7 +627,8 @@ and activate the data collectors by hand:</p>
     annotations:
         cache:                file
         file_cache_dir:       %kernel.cache_dir%/annotations
-        debug:                %kernel.debug%</pre>
+        debug:                %kernel.debug%
+</pre></div>
 </div>
 </li>
 </ul>
@@ -636,7 +683,7 @@ and activate the data collectors by hand:</p>
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#full-default-configuration">Full Default Configuration</a></li>
+<li><a class="reference internal" href="#full-default-configuration">Full default Configuration</a></li>
 </ul>
 </li>
 </ul>
@@ -645,8 +692,8 @@ and activate the data collectors by hand:</p>
   <p class="topless"><a href="../index.html"
                         title="previous chapter">Reference Documents</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="assetic.html"
-                        title="next chapter">AsseticBundle Configuration Reference</a></p>
+  <p class="topless"><a href="doctrine.html"
+                        title="next chapter">DoctrineBundle Configuration (&#8220;doctrine&#8221;)</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/reference/configuration/framework.txt"
@@ -676,18 +723,18 @@ and activate the data collectors by hand:</p>
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="assetic.html" title="AsseticBundle Configuration Reference"
+          <a href="doctrine.html" title="DoctrineBundle Configuration (“doctrine”)"
              >next</a> |</li>
         <li class="right" >
           <a href="../index.html" title="Reference Documents"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

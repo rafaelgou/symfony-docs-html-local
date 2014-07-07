@@ -4,19 +4,17 @@
 How to force HTTPS or HTTP for Different URLs
 =============================================
 
-You can force areas of your site to use the ``HTTPS`` protocol in the security
+You can force areas of your site to use the HTTPS protocol in the security
 config. This is done through the ``access_control`` rules using the ``requires_channel``
 option. For example, if you want to force all URLs starting with ``/secure``
-to use ``HTTPS`` then you could use the following configuration:
+to use HTTPS then you could use the following configuration:
 
 .. configuration-block::
 
         .. code-block:: yaml
 
             access_control:
-                - path: ^/secure
-                  roles: ROLE_ADMIN
-                  requires_channel: https
+                - { path: ^/secure, roles: ROLE_ADMIN, requires_channel: https }
 
         .. code-block:: xml
 
@@ -35,7 +33,7 @@ to use ``HTTPS`` then you could use the following configuration:
             ),
 
 The login form itself needs to allow anonymous access, otherwise users will
-be unable to authenticate. To force it to use ``HTTPS`` you can still use
+be unable to authenticate. To force it to use HTTPS you can still use
 ``access_control`` rules by using the ``IS_AUTHENTICATED_ANONYMOUSLY``
 role:
 
@@ -44,9 +42,7 @@ role:
         .. code-block:: yaml
 
             access_control:
-                - path: ^/login
-                  roles: IS_AUTHENTICATED_ANONYMOUSLY
-                  requires_channel: https
+                - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
 
         .. code-block:: xml
 
@@ -66,5 +62,5 @@ role:
                 ),
             ),
 
-It is also possible to specify using ``HTTPS`` in the routing configuration
+It is also possible to specify using HTTPS in the routing configuration,
 see :doc:`/cookbook/routing/scheme` for more details.

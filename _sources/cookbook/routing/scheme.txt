@@ -51,7 +51,7 @@ will automatically generate an absolute URL with HTTPS as the scheme:
 
     {# If the current scheme is HTTPS #}
     {{ path('secure') }}
-    # generates /secure
+    {# generates /secure #}
 
     {# If the current scheme is HTTP #}
     {{ path('secure') }}
@@ -66,7 +66,8 @@ to always use ``http``.
 
 .. note::
 
-    The Security component provides another way to enforce HTTP or HTTPs via
+    The Security component provides another way to enforce HTTP or HTTPS via
     the ``requires_channel`` setting. This alternative method is better suited
     to secure an "area" of your website (all URLs under ``/admin``) or when
-    you want to secure URLs defined in a third party bundle.
+    you want to secure URLs defined in a third party bundle (see
+    :doc:`/cookbook/security/force_https` for more details).

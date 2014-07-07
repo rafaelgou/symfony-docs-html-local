@@ -33,7 +33,7 @@ which defines a method to check if the user is equal to the current user. This
 interface requires an :method:`Symfony\\Component\\Security\\Core\\User\\EquatableInterface::isEqualTo`
 method.
 
-Let's see this in action::
+This is how your ``WebserviceUser`` class looks in action::
 
     // src/Acme/WebserviceUserBundle/Security/User/WebserviceUser.php
     namespace Acme\WebserviceUserBundle\Security\User;
@@ -144,13 +144,17 @@ Here's an example of how this might look::
                 return new WebserviceUser($username, $password, $salt, $roles);
             }
 
-            throw new UsernameNotFoundException(sprintf('Username "%s" does not exist.', $username));
+            throw new UsernameNotFoundException(
+                sprintf('Username "%s" does not exist.', $username)
+            );
         }
 
         public function refreshUser(UserInterface $user)
         {
             if (!$user instanceof WebserviceUser) {
-                throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', get_class($user)));
+                throw new UnsupportedUserException(
+                    sprintf('Instances of "%s" are not supported.', get_class($user))
+                );
             }
 
             return $this->loadUserByUsername($user->getUsername());
@@ -221,7 +225,7 @@ to the list of providers in the "security" section. Choose a name for the user p
 
     .. code-block:: yaml
 
-        // app/config/security.yml
+        # app/config/security.yml
         security:
             providers:
                 webservice:
@@ -276,7 +280,7 @@ users, e.g. by filling in a login form. You can do this by adding a line to the
 
 The value here should correspond with however the passwords were originally
 encoded when creating your users (however those users were created). When
-a user submits her password, the password is appended to the salt value and
+a user submits their password, the salt value is appended to the password and
 then encoded using this algorithm before being compared to the hashed password
 returned by your ``getPassword()`` method. Additionally, depending on your
 options, the password may be encoded multiple times and encoded to base64.

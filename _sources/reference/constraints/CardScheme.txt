@@ -1,15 +1,12 @@
 CardScheme
 ==========
 
-.. versionadded:: 2.2
-    The CardScheme validation is new in Symfony 2.2.
-
 This constraint ensures that a credit card number is valid for a given credit card
-company. It can be used to validate the number before trying to initiate a payment 
+company. It can be used to validate the number before trying to initiate a payment
 through a payment gateway.
 
 +----------------+--------------------------------------------------------------------------+
-| Applies to     | :ref:`property or method<validation-property-target>`                    |
+| Applies to     | :ref:`property or method <validation-property-target>`                   |
 +----------------+--------------------------------------------------------------------------+
 | Options        | - `schemes`_                                                             |
 |                | - `message`_                                                             |
@@ -23,7 +20,7 @@ Basic Usage
 -----------
 
 To use the ``CardScheme`` validator, simply apply it to a property or method
-on an  object that will contain a credit card number.
+on an object that will contain a credit card number.
 
 .. configuration-block::
 
@@ -40,22 +37,28 @@ on an  object that will contain a credit card number.
     .. code-block:: xml
 
         <!-- src/Acme/SubscriptionBundle/Resources/config/validation.xml -->
-        <class name="Acme\SubscriptionBundle\Entity\Transaction">
-            <property name="cardNumber">
-                <constraint name="CardScheme">
-                    <option name="schemes">
-                        <value>VISA</value>
-                    </option>
-                    <option name="message">Your credit card number is invalid.</option>
-                </constraint>
-            </property>
-        </class>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd">
+
+            <class name="Acme\SubscriptionBundle\Entity\Transaction">
+                <property name="cardNumber">
+                    <constraint name="CardScheme">
+                        <option name="schemes">
+                            <value>VISA</value>
+                        </option>
+                        <option name="message">Your credit card number is invalid.</option>
+                    </constraint>
+                </property>
+            </class>
+        </constraint-mapping>
 
     .. code-block:: php-annotations
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
         namespace Acme\SubscriptionBundle\Entity\Transaction;
-        
+
         use Symfony\Component\Validator\Constraints as Assert;
 
         class Transaction
@@ -70,7 +73,7 @@ on an  object that will contain a credit card number.
 
         // src/Acme/SubscriptionBundle/Entity/Transaction.php
         namespace Acme\SubscriptionBundle\Entity\Transaction;
-        
+
         use Symfony\Component\Validator\Mapping\ClassMetadata;
         use Symfony\Component\Validator\Constraints as Assert;
 
@@ -93,11 +96,11 @@ Available Options
 -----------------
 
 schemes
--------
+~~~~~~~
 
-**type**: ``mixed`` [:ref:`default option<validation-default-option>`]
+**type**: ``mixed`` [:ref:`default option <validation-default-option>`]
 
-This option is required and represents the name of the number scheme used to 
+This option is required and represents the name of the number scheme used to
 validate the credit card number, it can either be a string or an array. Valid
 values are:
 
@@ -117,7 +120,7 @@ For more information about the used schemes, see `Wikipedia: Issuer identificati
 message
 ~~~~~~~
 
-**type**: ``string`` **default**: ``Unsupported card type or invalid card number``
+**type**: ``string`` **default**: ``Unsupported card type or invalid card number.``
 
 The message shown when the value does not pass the ``CardScheme`` check.
 

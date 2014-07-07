@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Configuring a web server &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Configuring a web server &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,9 +23,9 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Configuration" href="index.html" />
-    <link rel="next" title="How to use the Serializer" href="../serializer.html" />
+    <link rel="next" title="Console" href="../console/index.html" />
     <link rel="prev" title="How to use the Apache Router" href="apache_router.html" /> 
   </head>
   <body>
@@ -38,12 +36,12 @@
           <a href="../../genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="../serializer.html" title="How to use the Serializer"
+          <a href="../console/index.html" title="Console"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="apache_router.html" title="How to use the Apache Router"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Configuration</a> &raquo;</li> 
       </ul>
@@ -87,13 +85,25 @@ are:</p>
 <p class="first admonition-title">Note</p>
 <p class="last">For performance reasons, you will probably want to set
 <tt class="docutils literal"><span class="pre">AllowOverride</span> <span class="pre">None</span></tt> and implement the rewrite rules in the <tt class="docutils literal"><span class="pre">web/.htaccess</span></tt>
-into the virtualhost config.</p>
+into the <tt class="docutils literal"><span class="pre">VirtualHost</span></tt> config.</p>
 </div>
 <p>If you are using <strong>php-cgi</strong>, Apache does not pass HTTP basic username and
 password to PHP by default. To work around this limitation, you should use the
 following configuration snippet:</p>
 <div class="highlight-apache"><div class="highlight"><pre><span class="nb">RewriteRule</span> .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 </pre></div>
+</div>
+<div class="admonition caution">
+<p class="first admonition-title">Caution</p>
+<p>In Apache 2.4, <tt class="docutils literal"><span class="pre">Order</span> <span class="pre">allow,deny</span></tt> has been replaced by <tt class="docutils literal"><span class="pre">Require</span> <span class="pre">all</span> <span class="pre">granted</span></tt>,
+and hence you need to modify your <tt class="docutils literal"><span class="pre">Directory</span></tt> permission settings as follows:</p>
+<div class="last highlight-apache"><div class="highlight"><pre><span class="nt">&lt;Directory</span> <span class="s">/var/www/project/web</span><span class="nt">&gt;</span>
+    <span class="c"># enable the .htaccess rewrites</span>
+    <span class="nb">AllowOverride</span> <span class="k">All</span>
+    <span class="nb">Require</span> <span class="k">all</span> granted
+<span class="nt">&lt;/Directory&gt;</span>
+</pre></div>
+</div>
 </div>
 </div>
 <div class="section" id="nginx">
@@ -106,13 +116,8 @@ are:</p>
     <span class="kn">root</span> <span class="s">/var/www/project/web</span><span class="p">;</span>
 
     <span class="kn">location</span> <span class="s">/</span> <span class="p">{</span>
-        <span class="c1"># try to serve file directly, fallback to rewrite</span>
-        <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="s">@rewriteapp</span><span class="p">;</span>
-    <span class="p">}</span>
-
-    <span class="kn">location</span> <span class="s">@rewriteapp</span> <span class="p">{</span>
-        <span class="c1"># rewrite all to app.php</span>
-        <span class="kn">rewrite</span> <span class="s">^(.*)</span>$ <span class="s">/app.php/</span><span class="nv">$1</span> <span class="s">last</span><span class="p">;</span>
+        <span class="c1"># try to serve file directly, fallback to app.php</span>
+        <span class="kn">try_files</span> <span class="nv">$uri</span> <span class="s">/app.php</span><span class="nv">$is_args$args</span><span class="p">;</span>
     <span class="p">}</span>
 
     <span class="kn">location</span> <span class="p">~</span> <span class="sr">^/(app|app_dev|config)\.php(/|$)</span> <span class="p">{</span>
@@ -165,8 +170,8 @@ be sure to include them in the <tt class="docutils literal"><span class="pre">lo
   <p class="topless"><a href="apache_router.html"
                         title="previous chapter">How to use the Apache Router</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="../serializer.html"
-                        title="next chapter">How to use the Serializer</a></p>
+  <p class="topless"><a href="../console/index.html"
+                        title="next chapter">Console</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="../../_sources/cookbook/configuration/web_server_configuration.txt"
@@ -196,19 +201,19 @@ be sure to include them in the <tt class="docutils literal"><span class="pre">lo
           <a href="../../genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="../serializer.html" title="How to use the Serializer"
+          <a href="../console/index.html" title="Console"
              >next</a> |</li>
         <li class="right" >
           <a href="apache_router.html" title="How to use the Apache Router"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Configuration</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

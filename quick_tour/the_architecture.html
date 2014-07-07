@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>The Architecture &mdash; Symfony Docs 2.3 documentation</title>
+    <title>The Architecture &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../index.html" />
     <link rel="up" title="The Quick Tour" href="index.html" />
     <link rel="next" title="The Book" href="../book/index.html" />
     <link rel="prev" title="The Controller" href="the_controller.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="the_controller.html" title="The Controller"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Quick Tour</a> &raquo;</li> 
       </ul>
     </div>  
@@ -63,33 +61,33 @@ architecture now.</p>
 <div class="section" id="understanding-the-directory-structure">
 <h2>Understanding the Directory Structure<a class="headerlink" href="#understanding-the-directory-structure" title="Permalink to this headline">¶</a></h2>
 <p>The directory structure of a Symfony2 <a class="reference internal" href="../glossary.html#term-application"><em class="xref std std-term">application</em></a> is rather flexible,
-but the directory structure of the <em>Standard Edition</em> distribution reflects
-the typical and recommended structure of a Symfony2 application:</p>
+but the recommended structure is as follows:</p>
 <ul class="simple">
-<li><tt class="docutils literal"><span class="pre">app/</span></tt>:    The application configuration;</li>
-<li><tt class="docutils literal"><span class="pre">src/</span></tt>:    The project&#8217;s PHP code;</li>
-<li><tt class="docutils literal"><span class="pre">vendor/</span></tt>: The third-party dependencies;</li>
-<li><tt class="docutils literal"><span class="pre">web/</span></tt>:    The web root directory.</li>
+<li><tt class="docutils literal"><span class="pre">app/</span></tt>:    the application configuration;</li>
+<li><tt class="docutils literal"><span class="pre">src/</span></tt>:    the project&#8217;s PHP code;</li>
+<li><tt class="docutils literal"><span class="pre">vendor/</span></tt>: the third-party dependencies;</li>
+<li><tt class="docutils literal"><span class="pre">web/</span></tt>:    the web root directory.</li>
 </ul>
 <div class="section" id="the-web-directory">
 <h3>The <tt class="docutils literal"><span class="pre">web/</span></tt> Directory<a class="headerlink" href="#the-web-directory" title="Permalink to this headline">¶</a></h3>
 <p>The web root directory is the home of all public and static files like images,
 stylesheets, and JavaScript files. It is also where each <a class="reference internal" href="../glossary.html#term-front-controller"><em class="xref std std-term">front controller</em></a>
 lives:</p>
-<div class="highlight-python"><pre>// web/app.php
-require_once __DIR__.'/../app/bootstrap.php.cache';
-require_once __DIR__.'/../app/AppKernel.php';
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// web/app.php</span>
+<span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/bootstrap.php.cache&#39;</span><span class="p">;</span>
+<span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/AppKernel.php&#39;</span><span class="p">;</span>
 
-use Symfony\Component\HttpFoundation\Request;
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
 
-$kernel = new AppKernel('prod', false);
-$kernel-&gt;loadClassCache();
-$kernel-&gt;handle(Request::createFromGlobals())-&gt;send();</pre>
+<span class="nv">$kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AppKernel</span><span class="p">(</span><span class="s1">&#39;prod&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<span class="nv">$kernel</span><span class="o">-&gt;</span><span class="na">loadClassCache</span><span class="p">();</span>
+<span class="nv">$kernel</span><span class="o">-&gt;</span><span class="na">handle</span><span class="p">(</span><span class="nx">Request</span><span class="o">::</span><span class="na">createFromGlobals</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+</pre></div>
 </div>
-<p>The kernel first requires the <tt class="docutils literal"><span class="pre">bootstrap.php.cache</span></tt> file, which bootstraps
-the framework and registers the autoloader (see below).</p>
-<p>Like any front controller, <tt class="docutils literal"><span class="pre">app.php</span></tt> uses a Kernel Class, <tt class="docutils literal"><span class="pre">AppKernel</span></tt>, to
-bootstrap the application.</p>
+<p>The controller first bootstraps the application using a kernel class (<tt class="docutils literal"><span class="pre">AppKernel</span></tt>
+in this case). Then, it creates the <tt class="docutils literal"><span class="pre">Request</span></tt> object using the PHP&#8217;s global
+variables and passes it to the kernel. The last step is to send the response
+contents returned by the kernel back to the user.</p>
 </div>
 <div class="section" id="the-app-directory">
 <span id="the-app-dir"></span><h3>The <tt class="docutils literal"><span class="pre">app/</span></tt> Directory<a class="headerlink" href="#the-app-directory" title="Permalink to this headline">¶</a></h3>
@@ -103,16 +101,10 @@ application;</li>
 (more on this later).</li>
 </ul>
 <p>Autoloading is handled automatically via <a class="reference external" href="http://getcomposer.org">Composer</a>, which means that you
-can use any PHP classes without doing anything at all! If you need more flexibility,
-you can extend the autoloader in the <tt class="docutils literal"><span class="pre">app/autoload.php</span></tt> file. All dependencies
+can use any PHP class without doing anything at all! All dependencies
 are stored under the <tt class="docutils literal"><span class="pre">vendor/</span></tt> directory, but this is just a convention.
 You can store them wherever you want, globally on your server or locally
 in your projects.</p>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">If you want to learn more about Composer&#8217;s autoloader, read <a class="reference external" href="http://getcomposer.org/doc/01-basic-usage.md#autoloading">Composer-Autoloader</a>.
-Symfony also has an autoloading component - read &#8220;<a class="reference internal" href="../components/class_loader.html"><em>The ClassLoader Component</em></a>&#8221;.</p>
-</div>
 </div>
 </div>
 <div class="section" id="understanding-the-bundle-system">
@@ -122,50 +114,51 @@ Symfony2, the <a class="reference internal" href="../glossary.html#term-bundle">
 <p>A bundle is kind of like a plugin in other software. So why is it called a
 <em>bundle</em> and not a <em>plugin</em>? This is because <em>everything</em> is a bundle in
 Symfony2, from the core framework features to the code you write for your
-application. Bundles are first-class citizens in Symfony2. This gives you
-the flexibility to use pre-built features packaged in third-party bundles
-or to distribute your own bundles. It makes it easy to pick and choose which
-features to enable in your application and optimize them the way you want.
-And at the end of the day, your application code is just as <em>important</em> as
-the core framework itself.</p>
+application.</p>
+<p>Bundles are first-class citizens in Symfony2. This gives you the flexibility
+to use pre-built features packaged in third-party bundles or to distribute your
+own bundles. It makes it easy to pick and choose which features to enable in
+your application and optimize them the way you want. And at the end of the day,
+your application code is just as <em>important</em> as the core framework itself.</p>
 <div class="section" id="registering-a-bundle">
 <h3>Registering a Bundle<a class="headerlink" href="#registering-a-bundle" title="Permalink to this headline">¶</a></h3>
 <p>An application is made up of bundles as defined in the <tt class="docutils literal"><span class="pre">registerBundles()</span></tt>
 method of the <tt class="docutils literal"><span class="pre">AppKernel</span></tt> class. Each bundle is a directory that contains
 a single <tt class="docutils literal"><span class="pre">Bundle</span></tt> class that describes it:</p>
-<div class="highlight-python"><pre>// app/AppKernel.php
-public function registerBundles()
-{
-    $bundles = array(
-        new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-        new Symfony\Bundle\SecurityBundle\SecurityBundle(),
-        new Symfony\Bundle\TwigBundle\TwigBundle(),
-        new Symfony\Bundle\MonologBundle\MonologBundle(),
-        new Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle(),
-        new Symfony\Bundle\DoctrineBundle\DoctrineBundle(),
-        new Symfony\Bundle\AsseticBundle\AsseticBundle(),
-        new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
-    );
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/AppKernel.php</span>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">registerBundles</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$bundles</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+        <span class="k">new</span> <span class="nx">Symfony\Bundle\FrameworkBundle\FrameworkBundle</span><span class="p">(),</span>
+        <span class="k">new</span> <span class="nx">Symfony\Bundle\SecurityBundle\SecurityBundle</span><span class="p">(),</span>
+        <span class="k">new</span> <span class="nx">Symfony\Bundle\TwigBundle\TwigBundle</span><span class="p">(),</span>
+        <span class="k">new</span> <span class="nx">Symfony\Bundle\MonologBundle\MonologBundle</span><span class="p">(),</span>
+        <span class="k">new</span> <span class="nx">Symfony\Bundle\SwiftmailerBundle\SwiftmailerBundle</span><span class="p">(),</span>
+        <span class="k">new</span> <span class="nx">Symfony\Bundle\DoctrineBundle\DoctrineBundle</span><span class="p">(),</span>
+        <span class="k">new</span> <span class="nx">Symfony\Bundle\AsseticBundle\AsseticBundle</span><span class="p">(),</span>
+        <span class="k">new</span> <span class="nx">Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle</span><span class="p">(),</span>
+    <span class="p">);</span>
 
-    if (in_array($this-&gt;getEnvironment(), array('dev', 'test'))) {
-        $bundles[] = new Acme\DemoBundle\AcmeDemoBundle();
-        $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
-        $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-        $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
-    }
+    <span class="k">if</span> <span class="p">(</span><span class="nb">in_array</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getEnvironment</span><span class="p">(),</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;dev&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">)))</span> <span class="p">{</span>
+        <span class="nv">$bundles</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Acme\DemoBundle\AcmeDemoBundle</span><span class="p">();</span>
+        <span class="nv">$bundles</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Symfony\Bundle\WebProfilerBundle\WebProfilerBundle</span><span class="p">();</span>
+        <span class="nv">$bundles</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sensio\Bundle\DistributionBundle\SensioDistributionBundle</span><span class="p">();</span>
+        <span class="nv">$bundles</span><span class="p">[]</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle</span><span class="p">();</span>
+    <span class="p">}</span>
 
-    return $bundles;
-}</pre>
+    <span class="k">return</span> <span class="nv">$bundles</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-<p>In addition to the <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt> that was already talked about, notice
-that the kernel also enables other bundles such as the <tt class="docutils literal"><span class="pre">FrameworkBundle</span></tt>,
-<tt class="docutils literal"><span class="pre">DoctrineBundle</span></tt>, <tt class="docutils literal"><span class="pre">SwiftmailerBundle</span></tt>, and <tt class="docutils literal"><span class="pre">AsseticBundle</span></tt> bundle.
-They are all part of the core framework.</p>
+<p>In addition to the AcmeDemoBundle that was already talked about, notice
+that the kernel also enables other bundles such as the FrameworkBundle,
+DoctrineBundle, SwiftmailerBundle and AsseticBundle bundle. They are all part
+of the core framework.</p>
 </div>
 <div class="section" id="configuring-a-bundle">
 <h3>Configuring a Bundle<a class="headerlink" href="#configuring-a-bundle" title="Permalink to this headline">¶</a></h3>
 <p>Each bundle can be customized via configuration files written in YAML, XML, or
-PHP. Have a look at the default configuration:</p>
+PHP. Have a look at the default Symfony configuration:</p>
 <div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">imports</span><span class="p-Indicator">:</span>
     <span class="p-Indicator">-</span> <span class="p-Indicator">{</span> <span class="nv">resource</span><span class="p-Indicator">:</span> <span class="nv">parameters.yml</span> <span class="p-Indicator">}</span>
@@ -219,7 +212,7 @@ PHP. Have a look at the default configuration:</p>
         <span class="l-Scalar-Plain">auto_generate_proxy_classes</span><span class="p-Indicator">:</span> <span class="s">&quot;%kernel.debug%&quot;</span>
         <span class="l-Scalar-Plain">auto_mapping</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
 
-<span class="c1"># Swiftmailer Configuration</span>
+<span class="c1"># Swift Mailer Configuration</span>
 <span class="l-Scalar-Plain">swiftmailer</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">transport</span><span class="p-Indicator">:</span> <span class="s">&quot;%mailer_transport%&quot;</span>
     <span class="l-Scalar-Plain">host</span><span class="p-Indicator">:</span>      <span class="s">&quot;%mailer_host%&quot;</span>
@@ -228,9 +221,9 @@ PHP. Have a look at the default configuration:</p>
     <span class="l-Scalar-Plain">spool</span><span class="p-Indicator">:</span>     <span class="p-Indicator">{</span> <span class="nv">type</span><span class="p-Indicator">:</span> <span class="nv">memory</span> <span class="p-Indicator">}</span>
 </pre></div>
 </div>
-<p>Each entry like <tt class="docutils literal"><span class="pre">framework</span></tt> defines the configuration for a specific bundle.
-For example, <tt class="docutils literal"><span class="pre">framework</span></tt> configures the <tt class="docutils literal"><span class="pre">FrameworkBundle</span></tt> while <tt class="docutils literal"><span class="pre">swiftmailer</span></tt>
-configures the <tt class="docutils literal"><span class="pre">SwiftmailerBundle</span></tt>.</p>
+<p>Each first level entry like <tt class="docutils literal"><span class="pre">framework</span></tt>, <tt class="docutils literal"><span class="pre">twig</span></tt> or <tt class="docutils literal"><span class="pre">doctrine</span></tt> defines the
+configuration for a specific bundle. For example, <tt class="docutils literal"><span class="pre">framework</span></tt> configures the
+FrameworkBundle while <tt class="docutils literal"><span class="pre">swiftmailer</span></tt> configures the SwiftmailerBundle.</p>
 <p>Each <a class="reference internal" href="../glossary.html#term-environment"><em class="xref std std-term">environment</em></a> can override the default configuration by providing a
 specific configuration file. For example, the <tt class="docutils literal"><span class="pre">dev</span></tt> environment loads the
 <tt class="docutils literal"><span class="pre">config_dev.yml</span></tt> file, which loads the main configuration (i.e. <tt class="docutils literal"><span class="pre">config.yml</span></tt>)
@@ -276,7 +269,7 @@ come in handy: they abstract where the resource is actually stored.</p>
 to the real path to the bundle. For instance, the logical path
 <tt class="docutils literal"><span class="pre">&#64;AcmeDemoBundle/Controller/DemoController.php</span></tt> would be converted to
 <tt class="docutils literal"><span class="pre">src/Acme/DemoBundle/Controller/DemoController.php</span></tt>, because Symfony knows
-the location of the <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt>.</p>
+the location of the AcmeDemoBundle.</p>
 </div>
 <div class="section" id="logical-controller-names">
 <h4>Logical Controller Names<a class="headerlink" href="#logical-controller-names" title="Permalink to this headline">¶</a></h4>
@@ -297,10 +290,10 @@ instance.</p>
 <h4>Extending Bundles<a class="headerlink" href="#extending-bundles" title="Permalink to this headline">¶</a></h4>
 <p>If you follow these conventions, then you can use <a class="reference internal" href="../cookbook/bundles/inheritance.html"><em>bundle inheritance</em></a>
 to &#8220;override&#8221; files, controllers or templates. For example, you can create
-a bundle - <tt class="docutils literal"><span class="pre">AcmeNewBundle</span></tt> - and specify that it overrides <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt>.
+a bundle - AcmeNewBundle - and specify that it overrides AcmeDemoBundle.
 When Symfony loads the <tt class="docutils literal"><span class="pre">AcmeDemoBundle:Welcome:index</span></tt> controller, it will
-first look for the <tt class="docutils literal"><span class="pre">WelcomeController</span></tt> class in <tt class="docutils literal"><span class="pre">AcmeNewBundle</span></tt> and, if
-it doesn&#8217;t exist, then look inside <tt class="docutils literal"><span class="pre">AcmeDemoBundle</span></tt>. This means that one bundle
+first look for the <tt class="docutils literal"><span class="pre">WelcomeController</span></tt> class in AcmeNewBundle and, if
+it doesn&#8217;t exist, then look inside AcmeDemoBundle. This means that one bundle
 can override almost any part of another bundle!</p>
 <p>Do you understand now why Symfony2 is so flexible? Share your bundles between
 applications, store them locally or globally, your choice.</p>
@@ -322,8 +315,9 @@ each request? The speed is partly due to its cache system. The application
 configuration is only parsed for the very first request and then compiled down
 to plain PHP code stored in the <tt class="docutils literal"><span class="pre">app/cache/</span></tt> directory. In the development
 environment, Symfony2 is smart enough to flush the cache when you change a
-file. But in the production environment, it is your responsibility to clear
-the cache when you update your code or change its configuration.</p>
+file. But in the production environment, to speed things up, it is your
+responsibility to clear the cache when you update your code or change its
+configuration.</p>
 <p>When developing a web application, things can go wrong in many ways. The log
 files in the <tt class="docutils literal"><span class="pre">app/logs/</span></tt> directory tell you everything about the requests
 and help you fix the problem quickly.</p>
@@ -429,13 +423,13 @@ any topic you want.</p>
         <li class="right" >
           <a href="the_controller.html" title="The Controller"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" >The Quick Tour</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Unit Test your Forms &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to Unit Test your Forms &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Form" href="index.html" />
     <link rel="next" title="How to configure Empty Data for a Form Class" href="use_empty_data.html" />
     <link rel="prev" title="How to Reduce Code Duplication with “inherit_data”" href="inherit_data_option.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="inherit_data_option.html" title="How to Reduce Code Duplication with “inherit_data”"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Form</a> &raquo;</li> 
       </ul>
@@ -56,7 +54,7 @@
             
   <div class="section" id="how-to-unit-test-your-forms">
 <span id="index-0"></span><h1>How to Unit Test your Forms<a class="headerlink" href="#how-to-unit-test-your-forms" title="Permalink to this headline">¶</a></h1>
-<p>The Form Component consists of 3 core objects: a form type (implementing
+<p>The Form component consists of 3 core objects: a form type (implementing
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/FormTypeInterface.html" title="Symfony\Component\Form\FormTypeInterface"><span class="pre">FormTypeInterface</span></a></tt>), the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/Form.html" title="Symfony\Component\Form\Form"><span class="pre">Form</span></a></tt> and the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/FormView.html" title="Symfony\Component\Form\FormView"><span class="pre">FormView</span></a></tt>.</p>
@@ -69,62 +67,72 @@ the Symfony components enough to use them as a testing base.</p>
 <p>There is already a class that you can benefit from for simple FormTypes
 testing: <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/Test/TypeTestCase.html" title="Symfony\Component\Form\Test\TypeTestCase"><span class="pre">TypeTestCase</span></a></tt>. It is used to
 test the core types and you can use it to test your types too.</p>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3: </span>The <tt class="docutils literal"><span class="pre">TypeTestCase</span></tt> has moved to the <tt class="docutils literal"><span class="pre">Symfony\Component\Form\Test</span></tt>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>The <tt class="docutils literal"><span class="pre">TypeTestCase</span></tt> has moved to the <tt class="docutils literal"><span class="pre">Symfony\Component\Form\Test</span></tt>
 namespace in 2.3. Previously, the class was located in
-<tt class="docutils literal"><span class="pre">Symfony\Component\Form\Tests\Core\Extension\Type</span></tt>.</p>
+<tt class="docutils literal"><span class="pre">Symfony\Component\Form\Tests\Extension\Core\Type</span></tt>.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Depending on the way you installed your Symfony or Symfony Form component
+the tests may not be downloaded. Use the <tt class="docutils literal"><span class="pre">--prefer-source</span></tt> option with
+Composer if this is the case.</p>
+</div>
 <div class="section" id="the-basics">
 <h2>The Basics<a class="headerlink" href="#the-basics" title="Permalink to this headline">¶</a></h2>
 <p>The simplest <tt class="docutils literal"><span class="pre">TypeTestCase</span></tt> implementation looks like the following:</p>
-<div class="highlight-python"><pre>// src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
-namespace Acme\TestBundle\Tests\Form\Type;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TestBundle/Tests/Form/Type/TestedTypeTest.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\TestBundle\Tests\Form\Type</span><span class="p">;</span>
 
-use Acme\TestBundle\Form\Type\TestedType;
-use Acme\TestBundle\Model\TestObject;
-use Symfony\Component\Form\Test\TypeTestCase;
+<span class="k">use</span> <span class="nx">Acme\TestBundle\Form\Type\TestedType</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Acme\TestBundle\Model\TestObject</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\Test\TypeTestCase</span><span class="p">;</span>
 
-class TestedTypeTest extends TypeTestCase
-{
-    public function testSubmitValidData()
-    {
-        $formData = array(
-            'test' =&gt; 'test',
-            'test2' =&gt; 'test2',
-        );
+<span class="k">class</span> <span class="nc">TestedTypeTest</span> <span class="k">extends</span> <span class="nx">TypeTestCase</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testSubmitValidData</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$formData</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;test&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;test2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;test2&#39;</span><span class="p">,</span>
+        <span class="p">);</span>
 
-        $type = new TestedType();
-        $form = $this-&gt;factory-&gt;create($type);
+        <span class="nv">$type</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestedType</span><span class="p">();</span>
+        <span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">factory</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="nv">$type</span><span class="p">);</span>
 
-        $object = new TestObject();
-        $object-&gt;fromArray($formData);
+        <span class="nv">$object</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestObject</span><span class="p">();</span>
+        <span class="nv">$object</span><span class="o">-&gt;</span><span class="na">fromArray</span><span class="p">(</span><span class="nv">$formData</span><span class="p">);</span>
 
-        // submit the data to the form directly
-        $form-&gt;submit($formData);
+        <span class="c1">// submit the data to the form directly</span>
+        <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">submit</span><span class="p">(</span><span class="nv">$formData</span><span class="p">);</span>
 
-        $this-&gt;assertTrue($form-&gt;isSynchronized());
-        $this-&gt;assertEquals($object, $form-&gt;getData());
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertTrue</span><span class="p">(</span><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">isSynchronized</span><span class="p">());</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="nv">$object</span><span class="p">,</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">getData</span><span class="p">());</span>
 
-        $view = $form-&gt;createView();
-        $children = $view-&gt;children;
+        <span class="nv">$view</span> <span class="o">=</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">createView</span><span class="p">();</span>
+        <span class="nv">$children</span> <span class="o">=</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">children</span><span class="p">;</span>
 
-        foreach (array_keys($formData) as $key) {
-            $this-&gt;assertArrayHasKey($key, $children);
-        }
-    }
-}</pre>
+        <span class="k">foreach</span> <span class="p">(</span><span class="nb">array_keys</span><span class="p">(</span><span class="nv">$formData</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$key</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertArrayHasKey</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$children</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-<p>So, what does it test? Let&#8217;s explain it line by line.</p>
+<p>So, what does it test? Here comes a detailed explanation.</p>
 <p>First you verify if the <tt class="docutils literal"><span class="pre">FormType</span></tt> compiles. This includes basic class
 inheritance, the <tt class="docutils literal"><span class="pre">buildForm</span></tt> function and options resolution. This should
 be the first test you write:</p>
-<div class="highlight-python"><pre>$type = new TestedType();
-$form = $this-&gt;factory-&gt;create($type);</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$type</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestedType</span><span class="p">();</span>
+<span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">factory</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="nv">$type</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>This test checks that none of your data transformers used by the form
-failed. The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/FormInterface.html#method_isSynchronized`" title="Symfony\Component\Form\FormInterface::isSynchronized`()"><span class="pre">isSynchronized`()</span></a></tt>
+failed. The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/FormInterface.html#method_isSynchronized" title="Symfony\Component\Form\FormInterface::isSynchronized()"><span class="pre">isSynchronized()</span></a></tt>
 method is only set to <tt class="docutils literal"><span class="pre">false</span></tt> if a data transformer throws an exception:</p>
-<div class="highlight-python"><pre>$form-&gt;submit($formData);
-$this-&gt;assertTrue($form-&gt;isSynchronized());</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">submit</span><span class="p">(</span><span class="nv">$formData</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertTrue</span><span class="p">(</span><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">isSynchronized</span><span class="p">());</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -134,56 +142,60 @@ Instead, unit test your custom constraints directly.</p>
 </div>
 <p>Next, verify the submission and mapping of the form. The test below
 checks if all the fields are correctly specified:</p>
-<div class="highlight-python"><pre>$this-&gt;assertEquals($object, $form-&gt;getData());</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="nv">$object</span><span class="p">,</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">getData</span><span class="p">());</span>
+</pre></div>
 </div>
 <p>Finally, check the creation of the <tt class="docutils literal"><span class="pre">FormView</span></tt>. You should check if all
 widgets you want to display are available in the children property:</p>
-<div class="highlight-python"><pre>$view = $form-&gt;createView();
-$children = $view-&gt;children;
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$view</span> <span class="o">=</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">createView</span><span class="p">();</span>
+<span class="nv">$children</span> <span class="o">=</span> <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">children</span><span class="p">;</span>
 
-foreach (array_keys($formData) as $key) {
-    $this-&gt;assertArrayHasKey($key, $children);
-}</pre>
+<span class="k">foreach</span> <span class="p">(</span><span class="nb">array_keys</span><span class="p">(</span><span class="nv">$formData</span><span class="p">)</span> <span class="k">as</span> <span class="nv">$key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertArrayHasKey</span><span class="p">(</span><span class="nv">$key</span><span class="p">,</span> <span class="nv">$children</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="adding-a-type-your-form-depends-on">
 <h2>Adding a Type your Form depends on<a class="headerlink" href="#adding-a-type-your-form-depends-on" title="Permalink to this headline">¶</a></h2>
 <p>Your form may depend on other types that are defined as services. It
 might look like this:</p>
-<div class="highlight-python"><pre>// src/Acme/TestBundle/Form/Type/TestedType.php
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TestBundle/Form/Type/TestedType.php</span>
 
-// ... the buildForm method
-$builder-&gt;add('acme_test_child_type');</pre>
+<span class="c1">// ... the buildForm method</span>
+<span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;acme_test_child_type&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>To create your form correctly, you need to make the type available to the
 form factory in your test. The easiest way is to register it manually
-before creating the parent form using PreloadedExtension class:</p>
-<div class="highlight-python"><pre>// src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
-namespace Acme\TestBundle\Tests\Form\Type;
+before creating the parent form using the <tt class="docutils literal"><span class="pre">PreloadedExtension</span></tt> class:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\TestBundle\Tests\Form\Type</span><span class="p">;</span>
 
-use Acme\TestBundle\Form\Type\TestedType;
-use Acme\TestBundle\Model\TestObject;
-use Symfony\Component\Form\Test\TypeTestCase;
-use Symfony\Component\Form\PreloadedExtension;
+<span class="k">use</span> <span class="nx">Acme\TestBundle\Form\Type\TestedType</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Acme\TestBundle\Model\TestObject</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\Test\TypeTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\PreloadedExtension</span><span class="p">;</span>
 
-class TestedTypeTest extends TypeTestCase
-{
-    protected function getExtensions()
-    {
-        $childType = new TestChildType();
-        return array(new PreloadedExtension(array(
-            $childType-&gt;getName() =&gt; $childType,
-        ), array()));
-    }
+<span class="k">class</span> <span class="nc">TestedTypeTest</span> <span class="k">extends</span> <span class="nx">TypeTestCase</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">getExtensions</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$childType</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestChildType</span><span class="p">();</span>
+        <span class="k">return</span> <span class="k">array</span><span class="p">(</span><span class="k">new</span> <span class="nx">PreloadedExtension</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="nv">$childType</span><span class="o">-&gt;</span><span class="na">getName</span><span class="p">()</span> <span class="o">=&gt;</span> <span class="nv">$childType</span><span class="p">,</span>
+        <span class="p">),</span> <span class="k">array</span><span class="p">()));</span>
+    <span class="p">}</span>
 
-    public function testSubmitValidData()
-    {
-        $type = new TestedType();
-        $form = $this-&gt;factory-&gt;create($type);
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testSubmitValidData</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$type</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">TestedType</span><span class="p">();</span>
+        <span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">factory</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="nv">$type</span><span class="p">);</span>
 
-        // ... your test
-    }
-}</pre>
+        <span class="c1">// ... your test</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <div class="admonition caution">
 <p class="first admonition-title">Caution</p>
@@ -200,85 +212,91 @@ cases may be the <tt class="docutils literal"><span class="pre">ValidatorExtensi
 The <tt class="docutils literal"><span class="pre">TypeTestCase</span></tt> loads only the core form extension so an &#8220;Invalid option&#8221;
 exception will be raised if you try to use it for testing a class that depends
 on other extensions. You need add those extensions to the factory object:</p>
-<div class="highlight-python"><pre>// src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
-namespace Acme\TestBundle\Tests\Form\Type;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\TestBundle\Tests\Form\Type</span><span class="p">;</span>
 
-use Acme\TestBundle\Form\Type\TestedType;
-use Acme\TestBundle\Model\TestObject;
-use Symfony\Component\Form\Test\TypeTestCase;
+<span class="k">use</span> <span class="nx">Acme\TestBundle\Form\Type\TestedType</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Acme\TestBundle\Model\TestObject</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\Test\TypeTestCase</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\Forms</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilder</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\Extension\Validator\Type\FormTypeValidatorExtension</span><span class="p">;</span>
 
-class TestedTypeTest extends TypeTestCase
-{
-    protected function setUp()
-    {
-        parent::setUp();
+<span class="k">class</span> <span class="nc">TestedTypeTest</span> <span class="k">extends</span> <span class="nx">TypeTestCase</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="k">function</span> <span class="nf">setUp</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">setUp</span><span class="p">();</span>
 
-        $this-&gt;factory = Forms::createFormFactoryBuilder()
-            -&gt;addTypeExtension(
-                new FormTypeValidatorExtension(
-                    $this-&gt;getMock('Symfony\Component\Validator\ValidatorInterface')
-                )
-            )
-            -&gt;addTypeGuesser(
-                $this-&gt;getMockBuilder(
-                    'Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser'
-                )
-                    -&gt;disableOriginalConstructor()
-                    -&gt;getMock()
-            )
-            -&gt;getFormFactory();
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">factory</span> <span class="o">=</span> <span class="nx">Forms</span><span class="o">::</span><span class="na">createFormFactoryBuilder</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">addExtensions</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getExtensions</span><span class="p">())</span>
+            <span class="o">-&gt;</span><span class="na">addTypeExtension</span><span class="p">(</span>
+                <span class="k">new</span> <span class="nx">FormTypeValidatorExtension</span><span class="p">(</span>
+                    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;Symfony\Component\Validator\ValidatorInterface&#39;</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">addTypeGuesser</span><span class="p">(</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMockBuilder</span><span class="p">(</span>
+                    <span class="s1">&#39;Symfony\Component\Form\Extension\Validator\ValidatorTypeGuesser&#39;</span>
+                <span class="p">)</span>
+                    <span class="o">-&gt;</span><span class="na">disableOriginalConstructor</span><span class="p">()</span>
+                    <span class="o">-&gt;</span><span class="na">getMock</span><span class="p">()</span>
+            <span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">getFormFactory</span><span class="p">();</span>
 
-        $this-&gt;dispatcher = $this-&gt;getMock('Symfony\Component\EventDispatcher\EventDispatcherInterface');
-        $this-&gt;builder = new FormBuilder(null, null, $this-&gt;dispatcher, $this-&gt;factory);
-    }
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dispatcher</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getMock</span><span class="p">(</span><span class="s1">&#39;Symfony\Component\EventDispatcher\EventDispatcherInterface&#39;</span><span class="p">);</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">FormBuilder</span><span class="p">(</span><span class="k">null</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dispatcher</span><span class="p">,</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">factory</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    // ... your tests
-}</pre>
+    <span class="c1">// ... your tests</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="testing-against-different-sets-of-data">
 <h2>Testing against different Sets of Data<a class="headerlink" href="#testing-against-different-sets-of-data" title="Permalink to this headline">¶</a></h2>
 <p>If you are not familiar yet with PHPUnit&#8217;s <a class="reference external" href="http://www.phpunit.de/manual/current/en/writing-tests-for-phpunit.html#writing-tests-for-phpunit.data-providers">data providers</a>, this might be
 a good opportunity to use them:</p>
-<div class="highlight-python"><pre>// src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php
-namespace Acme\TestBundle\Tests\Form\Type;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TestBundle/Tests/Form/Type/TestedTypeTests.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\TestBundle\Tests\Form\Type</span><span class="p">;</span>
 
-use Acme\TestBundle\Form\Type\TestedType;
-use Acme\TestBundle\Model\TestObject;
-use Symfony\Component\Form\Test\TypeTestCase;
+<span class="k">use</span> <span class="nx">Acme\TestBundle\Form\Type\TestedType</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Acme\TestBundle\Model\TestObject</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\Test\TypeTestCase</span><span class="p">;</span>
 
-class TestedTypeTest extends TypeTestCase
-{
+<span class="k">class</span> <span class="nc">TestedTypeTest</span> <span class="k">extends</span> <span class="nx">TypeTestCase</span>
+<span class="p">{</span>
 
-    /**
-     * @dataProvider getValidTestData
-     */
-    public function testForm($data)
-    {
-        // ... your test
-    }
+    <span class="sd">/**</span>
+<span class="sd">     * @dataProvider getValidTestData</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">testForm</span><span class="p">(</span><span class="nv">$data</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// ... your test</span>
+    <span class="p">}</span>
 
-    public function getValidTestData()
-    {
-        return array(
-            array(
-                'data' =&gt; array(
-                    'test' =&gt; 'test',
-                    'test2' =&gt; 'test2',
-                ),
-            ),
-            array(
-                'data' =&gt; array(),
-            ),
-            array(
-                'data' =&gt; array(
-                    'test' =&gt; null,
-                    'test2' =&gt; null,
-                ),
-            ),
-        );
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getValidTestData</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="k">array</span><span class="p">(</span>
+            <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;data&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                    <span class="s1">&#39;test&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;test2&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;test2&#39;</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+            <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;data&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(),</span>
+            <span class="p">),</span>
+            <span class="k">array</span><span class="p">(</span>
+                <span class="s1">&#39;data&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+                    <span class="s1">&#39;test&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+                    <span class="s1">&#39;test2&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The code above will run your test three times with 3 different sets of
 data. This allows for decoupling the test fixtures from the tests and
@@ -345,14 +363,14 @@ be synchronized with the given set of data or not etc.</p>
         <li class="right" >
           <a href="inherit_data_option.html" title="How to Reduce Code Duplication with “inherit_data”"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Form</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

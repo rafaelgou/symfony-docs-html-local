@@ -16,7 +16,7 @@ to where it is now.
 By the end, you'll see how Symfony2 can rescue you from mundane tasks and
 let you take back control of your code.
 
-A simple Blog in flat PHP
+A Simple Blog in Flat PHP
 -------------------------
 
 In this chapter, you'll build the token blog application using only flat PHP.
@@ -74,8 +74,6 @@ to maintain. There are several problems that need to be addressed:
     Another problem not mentioned here is the fact that the database is
     tied to MySQL. Though not covered here, Symfony2 fully integrates `Doctrine`_,
     a library dedicated to database abstraction and mapping.
-
-Let's get to work on solving these problems and more.
 
 Isolating the Presentation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -247,7 +245,7 @@ the layout:
 You've now introduced a methodology that allows for the reuse of the
 layout. Unfortunately, to accomplish this, you're forced to use a few ugly
 PHP functions (``ob_start()``, ``ob_get_clean()``) in the template. Symfony2
-uses a ``Templating`` component that allows this to be accomplished cleanly
+uses a Templating component that allows this to be accomplished cleanly
 and easily. You'll see it in action shortly.
 
 Adding a Blog "show" Page
@@ -433,7 +431,7 @@ content:
 
     {
         "require": {
-            "symfony/symfony": "2.3.*"
+            "symfony/symfony": "2.4.*"
         },
         "autoload": {
             "files": ["model.php","controllers.php"]
@@ -476,11 +474,14 @@ the HTTP response being returned. Use them to improve the blog:
         $response = show_action($request->query->get('id'));
     } else {
         $html = '<html><body><h1>Page Not Found</h1></body></html>';
-        $response = new Response($html, 404);
+        $response = new Response($html, Response::HTTP_NOT_FOUND);
     }
 
     // echo the headers and send the response
     $response->send();
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 The controllers are now responsible for returning a ``Response`` object.
 To make this easier, you can add a new ``render_template()`` function, which,
@@ -552,7 +553,8 @@ them for you. Here's the same sample application, now built in Symfony2::
     {
         public function listAction()
         {
-            $posts = $this->get('doctrine')->getManager()
+            $posts = $this->get('doctrine')
+                ->getManager()
                 ->createQuery('SELECT p FROM AcmeBlogBundle:Post p')
                 ->execute();
 
@@ -567,8 +569,7 @@ them for you. Here's the same sample application, now built in Symfony2::
             $post = $this->get('doctrine')
                 ->getManager()
                 ->getRepository('AcmeBlogBundle:Post')
-                ->find($id)
-            ;
+                ->find($id);
 
             if (!$post) {
                 // cause the 404 page not found to be displayed
@@ -582,8 +583,8 @@ them for you. Here's the same sample application, now built in Symfony2::
         }
     }
 
-The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library</book/doctrine>`
-to retrieve objects from the database and the ``Templating`` component to
+The two controllers are still lightweight. Each uses the :doc:`Doctrine ORM library </book/doctrine>`
+to retrieve objects from the database and the Templating component to
 render a template and return a ``Response`` object. The list template is
 now quite a bit simpler:
 
@@ -667,40 +668,40 @@ controller method is responsible for returning the final ``Response`` object.
 There's really not much else to it.
 
 For a visual representation of how Symfony2 handles each request, see the
-:ref:`request flow diagram<request-flow-figure>`.
+:ref:`request flow diagram <request-flow-figure>`.
 
 Where Symfony2 Delivers
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 In the upcoming chapters, you'll learn more about how each piece of Symfony
-works and the recommended organization of a project. For now, let's see how
-migrating the blog from flat PHP to Symfony2 has improved life:
+works and the recommended organization of a project. For now, have a look
+at how migrating the blog from flat PHP to Symfony2 has improved life:
 
 * Your application now has **clear and consistently organized code** (though
   Symfony doesn't force you into this). This promotes **reusability** and
   allows for new developers to be productive in your project more quickly;
 
 * 100% of the code you write is for *your* application. You **don't need
-  to develop or maintain low-level utilities** such as :ref:`autoloading<autoloading-introduction-sidebar>`,
-  :doc:`routing</book/routing>`, or rendering :doc:`controllers</book/controller>`;
+  to develop or maintain low-level utilities** such as :ref:`autoloading <autoloading-introduction-sidebar>`,
+  :doc:`routing </book/routing>`, or rendering :doc:`controllers </book/controller>`;
 
 * Symfony2 gives you **access to open source tools** such as Doctrine and the
   Templating, Security, Form, Validation and Translation components (to name
   a few);
 
-* The application now enjoys **fully-flexible URLs** thanks to the ``Routing``
+* The application now enjoys **fully-flexible URLs** thanks to the Routing
   component;
 
 * Symfony2's HTTP-centric architecture gives you access to powerful tools
   such as **HTTP caching** powered by **Symfony2's internal HTTP cache** or
   more powerful tools such as `Varnish`_. This is covered in a later chapter
-  all about :doc:`caching</book/http_cache>`.
+  all about :doc:`caching </book/http_cache>`.
 
 And perhaps best of all, by using Symfony2, you now have access to a whole
 set of **high-quality open source tools developed by the Symfony2 community**!
 A good selection of Symfony2 community tools can be found on `KnpBundles.com`_.
 
-Better templates
+Better Templates
 ----------------
 
 If you choose to use it, Symfony2 comes standard with a templating engine
@@ -745,7 +746,7 @@ The corresponding ``layout.html.twig`` template is also easier to write:
 
 Twig is well-supported in Symfony2. And while PHP templates will always
 be supported in Symfony2, the many advantages of Twig will continue to
-be discussed. For more information, see the :doc:`templating chapter</book/templating>`.
+be discussed. For more information, see the :doc:`templating chapter </book/templating>`.
 
 Learn more from the Cookbook
 ----------------------------

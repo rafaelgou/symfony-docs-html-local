@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to provide model classes for several Doctrine implementations &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to provide model classes for several Doctrine implementations &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Doctrine" href="index.html" />
     <link rel="next" title="How to implement a simple Registration Form" href="registration_form.html" />
     <link rel="prev" title="How to Define Relationships with Abstract Classes and Interfaces" href="resolve_target_entity.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="resolve_target_entity.html" title="How to Define Relationships with Abstract Classes and Interfaces"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Doctrine</a> &raquo;</li> 
       </ul>
@@ -67,77 +65,79 @@ in the default locations: <tt class="docutils literal"><span class="pre">Entity<
 for one of the ODMs. For reusable bundles, rather than duplicate model classes
 just to get the auto mapping, use the compiler pass.</p>
 </div>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3: </span>The base mapping compiler pass was added in Symfony 2.3. The Doctrine bundles
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>The base mapping compiler pass was introduced in Symfony 2.3. The Doctrine bundles
 support it from DoctrineBundle &gt;= 1.2.1, MongoDBBundle &gt;= 3.0.0,
 PHPCRBundle &gt;= 1.0.0-alpha2 and the (unversioned) CouchDBBundle supports the
 compiler pass since the <a class="reference external" href="https://github.com/doctrine/DoctrineCouchDBBundle/pull/27">CouchDB Mapping Compiler Pass pull request</a>
-was merged.<p>If you want your bundle to support older versions of Symfony and
+was merged.</p>
+<p>If you want your bundle to support older versions of Symfony and
 Doctrine, you can provide a copy of the compiler pass in your bundle.
 See for example the <a class="reference external" href="https://github.com/FriendsOfSymfony/FOSUserBundle/blob/master/FOSUserBundle.php">FOSUserBundle mapping configuration</a>
 <tt class="docutils literal"><span class="pre">addRegisterMappingsPass</span></tt>.</p>
-</p>
+</div>
 <p>In your bundle class, write the following code to register the compiler pass.
 This one is written for the FOSUserBundle, so parts of it will need to
 be adapted for your case:</p>
-<div class="highlight-python"><pre>use Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass;
-use Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass;
-use Doctrine\Bundle\CouchDBBundle\DependencyInjection\Compiler\DoctrineCouchDBMappingsPass;
-use Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Doctrine\Bundle\CouchDBBundle\DependencyInjection\Compiler\DoctrineCouchDBMappingsPass</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass</span><span class="p">;</span>
 
-class FOSUserBundle extends Bundle
-{
-    public function build(ContainerBuilder $container)
-    {
-        parent::build($container);
-        // ...
+<span class="k">class</span> <span class="nc">FOSUserBundle</span> <span class="k">extends</span> <span class="nx">Bundle</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">build</span><span class="p">(</span><span class="nx">ContainerBuilder</span> <span class="nv">$container</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">parent</span><span class="o">::</span><span class="na">build</span><span class="p">(</span><span class="nv">$container</span><span class="p">);</span>
+        <span class="c1">// ...</span>
 
-        $modelDir = realpath(__DIR__.'/Resources/config/doctrine/model');
-        $mappings = array(
-            $modelDir =&gt; 'FOS\UserBundle\Model',
-        );
+        <span class="nv">$modelDir</span> <span class="o">=</span> <span class="nb">realpath</span><span class="p">(</span><span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/Resources/config/doctrine/model&#39;</span><span class="p">);</span>
+        <span class="nv">$mappings</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+            <span class="nv">$modelDir</span> <span class="o">=&gt;</span> <span class="s1">&#39;FOS\UserBundle\Model&#39;</span><span class="p">,</span>
+        <span class="p">);</span>
 
-        $ormCompilerClass = 'Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass';
-        if (class_exists($ormCompilerClass)) {
-            $container-&gt;addCompilerPass(
-                DoctrineOrmMappingsPass::createXmlMappingDriver(
-                    $mappings,
-                    array('fos_user.model_manager_name'),
-                    'fos_user.backend_type_orm'
-            ));
-        }
+        <span class="nv">$ormCompilerClass</span> <span class="o">=</span> <span class="s1">&#39;Doctrine\Bundle\DoctrineBundle\DependencyInjection\Compiler\DoctrineOrmMappingsPass&#39;</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">class_exists</span><span class="p">(</span><span class="nv">$ormCompilerClass</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">addCompilerPass</span><span class="p">(</span>
+                <span class="nx">DoctrineOrmMappingsPass</span><span class="o">::</span><span class="na">createXmlMappingDriver</span><span class="p">(</span>
+                    <span class="nv">$mappings</span><span class="p">,</span>
+                    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;fos_user.model_manager_name&#39;</span><span class="p">),</span>
+                    <span class="s1">&#39;fos_user.backend_type_orm&#39;</span>
+            <span class="p">));</span>
+        <span class="p">}</span>
 
-        $mongoCompilerClass = 'Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass';
-        if (class_exists($mongoCompilerClass)) {
-            $container-&gt;addCompilerPass(
-                DoctrineMongoDBMappingsPass::createXmlMappingDriver(
-                    $mappings,
-                    array('fos_user.model_manager_name'),
-                    'fos_user.backend_type_mongodb'
-            ));
-        }
+        <span class="nv">$mongoCompilerClass</span> <span class="o">=</span> <span class="s1">&#39;Doctrine\Bundle\MongoDBBundle\DependencyInjection\Compiler\DoctrineMongoDBMappingsPass&#39;</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">class_exists</span><span class="p">(</span><span class="nv">$mongoCompilerClass</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">addCompilerPass</span><span class="p">(</span>
+                <span class="nx">DoctrineMongoDBMappingsPass</span><span class="o">::</span><span class="na">createXmlMappingDriver</span><span class="p">(</span>
+                    <span class="nv">$mappings</span><span class="p">,</span>
+                    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;fos_user.model_manager_name&#39;</span><span class="p">),</span>
+                    <span class="s1">&#39;fos_user.backend_type_mongodb&#39;</span>
+            <span class="p">));</span>
+        <span class="p">}</span>
 
-        $couchCompilerClass = 'Doctrine\Bundle\CouchDBBundle\DependencyInjection\Compiler\DoctrineCouchDBMappingsPass';
-        if (class_exists($couchCompilerClass)) {
-            $container-&gt;addCompilerPass(
-                DoctrineCouchDBMappingsPass::createXmlMappingDriver(
-                    $mappings,
-                    array('fos_user.model_manager_name'),
-                    'fos_user.backend_type_couchdb'
-            ));
-        }
+        <span class="nv">$couchCompilerClass</span> <span class="o">=</span> <span class="s1">&#39;Doctrine\Bundle\CouchDBBundle\DependencyInjection\Compiler\DoctrineCouchDBMappingsPass&#39;</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">class_exists</span><span class="p">(</span><span class="nv">$couchCompilerClass</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">addCompilerPass</span><span class="p">(</span>
+                <span class="nx">DoctrineCouchDBMappingsPass</span><span class="o">::</span><span class="na">createXmlMappingDriver</span><span class="p">(</span>
+                    <span class="nv">$mappings</span><span class="p">,</span>
+                    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;fos_user.model_manager_name&#39;</span><span class="p">),</span>
+                    <span class="s1">&#39;fos_user.backend_type_couchdb&#39;</span>
+            <span class="p">));</span>
+        <span class="p">}</span>
 
-        $phpcrCompilerClass = 'Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass';
-        if (class_exists($phpcrCompilerClass)) {
-            $container-&gt;addCompilerPass(
-                DoctrinePhpcrMappingsPass::createXmlMappingDriver(
-                    $mappings,
-                    array('fos_user.model_manager_name'),
-                    'fos_user.backend_type_phpcr'
-            ));
-        }
-    }
-}</pre>
+        <span class="nv">$phpcrCompilerClass</span> <span class="o">=</span> <span class="s1">&#39;Doctrine\Bundle\PHPCRBundle\DependencyInjection\Compiler\DoctrinePhpcrMappingsPass&#39;</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">class_exists</span><span class="p">(</span><span class="nv">$phpcrCompilerClass</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$container</span><span class="o">-&gt;</span><span class="na">addCompilerPass</span><span class="p">(</span>
+                <span class="nx">DoctrinePhpcrMappingsPass</span><span class="o">::</span><span class="na">createXmlMappingDriver</span><span class="p">(</span>
+                    <span class="nv">$mappings</span><span class="p">,</span>
+                    <span class="k">array</span><span class="p">(</span><span class="s1">&#39;fos_user.model_manager_name&#39;</span><span class="p">),</span>
+                    <span class="s1">&#39;fos_user.backend_type_phpcr&#39;</span>
+            <span class="p">));</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Note the <tt class="docutils literal"><a class="reference external" href="http://php.net/manual/en/function.class-exists.php" title="class_exists"><span class="pre">class_exists</span></a></tt> check. This is crucial, as you do not want your
 bundle to have a hard dependency on all Doctrine bundles but let the user
@@ -153,7 +153,7 @@ parameter. The compiler pass will append the parameter Doctrine is using
 to specify the name of the default manager. The first parameter found is
 used and the mappings are registered with that manager;</li>
 <li>an optional container parameter name that will be used by the compiler
-pass to determine if this Doctrine type is used at all (this is relevant if
+pass to determine if this Doctrine type is used at all. This is relevant if
 your user has more than one type of Doctrine bundle installed, but your
 bundle is only used with one type of Doctrine.</li>
 </ul>
@@ -168,24 +168,25 @@ of the class as their filename (e.g. <tt class="docutils literal"><span class="p
 with the <tt class="docutils literal"><span class="pre">DefaultFileLocator</span></tt> like this. This code is simply taken from the
 <tt class="docutils literal"><span class="pre">DoctrineOrmMappingsPass</span></tt> and adapted to use the <tt class="docutils literal"><span class="pre">DefaultFileLocator</span></tt>
 instead of the <tt class="docutils literal"><span class="pre">SymfonyFileLocator</span></tt>:</p>
-<div class="highlight-python"><pre>private function buildMappingCompilerPass()
-{
-    $arguments = array(array(realpath(__DIR__ . '/Resources/config/doctrine-base')), '.orm.xml');
-    $locator = new Definition('Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator', $arguments);
-    $driver = new Definition('Doctrine\ORM\Mapping\Driver\XmlDriver', array($locator));
+<div class="highlight-php"><div class="highlight"><pre><span class="k">private</span> <span class="k">function</span> <span class="nf">buildMappingCompilerPass</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$arguments</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="nb">realpath</span><span class="p">(</span><span class="nx">__DIR__</span> <span class="o">.</span> <span class="s1">&#39;/Resources/config/doctrine-base&#39;</span><span class="p">)),</span> <span class="s1">&#39;.orm.xml&#39;</span><span class="p">);</span>
+    <span class="nv">$locator</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Definition</span><span class="p">(</span><span class="s1">&#39;Doctrine\Common\Persistence\Mapping\Driver\DefaultFileLocator&#39;</span><span class="p">,</span> <span class="nv">$arguments</span><span class="p">);</span>
+    <span class="nv">$driver</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Definition</span><span class="p">(</span><span class="s1">&#39;Doctrine\ORM\Mapping\Driver\XmlDriver&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="nv">$locator</span><span class="p">));</span>
 
-    return new DoctrineOrmMappingsPass(
-        $driver,
-        array('Full\Namespace'),
-        array('your_bundle.manager_name'),
-        'your_bundle.orm_enabled'
-    );
-}</pre>
+    <span class="k">return</span> <span class="k">new</span> <span class="nx">DoctrineOrmMappingsPass</span><span class="p">(</span>
+        <span class="nv">$driver</span><span class="p">,</span>
+        <span class="k">array</span><span class="p">(</span><span class="s1">&#39;Full\Namespace&#39;</span><span class="p">),</span>
+        <span class="k">array</span><span class="p">(</span><span class="s1">&#39;your_bundle.manager_name&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;your_bundle.orm_enabled&#39;</span>
+    <span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Now place your mapping file into <tt class="docutils literal"><span class="pre">/Resources/config/doctrine-base</span></tt> with the
 fully qualified class name, separated by <tt class="docutils literal"><span class="pre">.</span></tt> instead of <tt class="docutils literal"><span class="pre">\</span></tt>, for example
 <tt class="docutils literal"><span class="pre">Other.Namespace.Model.Name.orm.xml</span></tt>. You may not mix the two as otherwise
-the SymfonyFileLocator will get confused.</p>
+the <tt class="docutils literal"><span class="pre">SymfonyFileLocator</span></tt> will get confused.</p>
 <p class="last">Adjust accordingly for the other Doctrine implementations.</p>
 </div>
 </div>
@@ -236,14 +237,14 @@ the SymfonyFileLocator will get confused.</p>
         <li class="right" >
           <a href="resolve_target_entity.html" title="How to Define Relationships with Abstract Classes and Interfaces"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Doctrine</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

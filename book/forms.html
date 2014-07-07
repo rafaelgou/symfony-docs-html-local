@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Forms &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Forms &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Security" href="security.html" />
     <link rel="prev" title="Validation" href="validation.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="validation.html" title="Validation"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -61,9 +59,9 @@ forms easy. In this chapter, you&#8217;ll build a complex form from the ground-u
 learning the most important features of the form library along the way.</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">The Symfony form component is a standalone library that can be used outside
-of Symfony2 projects. For more information, see the <a class="reference external" href="https://github.com/symfony/Form">Symfony2 Form Component</a>
-on Github.</p>
+<p class="last">The Symfony Form component is a standalone library that can be used outside
+of Symfony2 projects. For more information, see the <a class="reference external" href="https://github.com/symfony/Form">Symfony2 Form component</a>
+on GitHub.</p>
 </div>
 <div class="section" id="creating-a-simple-form">
 <span id="index-1"></span><h2>Creating a Simple Form<a class="headerlink" href="#creating-a-simple-form" title="Permalink to this headline">¶</a></h2>
@@ -71,33 +69,36 @@ on Github.</p>
 display &#8220;tasks&#8221;. Because your users will need to edit and create tasks, you&#8217;re
 going to need to build a form. But before you begin, first focus on the generic
 <tt class="docutils literal"><span class="pre">Task</span></tt> class that represents and stores the data for a single task:</p>
-<div class="highlight-python"><pre>// src/Acme/TaskBundle/Entity/Task.php
-namespace Acme\TaskBundle\Entity;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TaskBundle/Entity/Task.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\TaskBundle\Entity</span><span class="p">;</span>
 
-class Task
-{
-    protected $task;
+<span class="k">class</span> <span class="nc">Task</span>
+<span class="p">{</span>
+    <span class="k">protected</span> <span class="nv">$task</span><span class="p">;</span>
 
-    protected $dueDate;
+    <span class="k">protected</span> <span class="nv">$dueDate</span><span class="p">;</span>
 
-    public function getTask()
-    {
-        return $this-&gt;task;
-    }
-    public function setTask($task)
-    {
-        $this-&gt;task = $task;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getTask</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">task</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function getDueDate()
-    {
-        return $this-&gt;dueDate;
-    }
-    public function setDueDate(\DateTime $dueDate = null)
-    {
-        $this-&gt;dueDate = $dueDate;
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setTask</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">task</span> <span class="o">=</span> <span class="nv">$task</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getDueDate</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dueDate</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setDueDate</span><span class="p">(</span><span class="nx">\DateTime</span> <span class="nv">$dueDate</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">dueDate</span> <span class="o">=</span> <span class="nv">$dueDate</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -120,33 +121,34 @@ its data, and persist it to the database.</p>
 render the actual HTML form. In Symfony2, this is done by building a form
 object and then rendering it in a template. For now, this can all be done
 from inside a controller:</p>
-<div class="highlight-python"><pre>// src/Acme/TaskBundle/Controller/DefaultController.php
-namespace Acme\TaskBundle\Controller;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TaskBundle/Controller/DefaultController.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\TaskBundle\Controller</span><span class="p">;</span>
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Acme\TaskBundle\Entity\Task;
-use Symfony\Component\HttpFoundation\Request;
+<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\Controller\Controller</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Acme\TaskBundle\Entity\Task</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
 
-class DefaultController extends Controller
-{
-    public function newAction(Request $request)
-    {
-        // create a task and give it some dummy data for this example
-        $task = new Task();
-        $task-&gt;setTask('Write a blog post');
-        $task-&gt;setDueDate(new \DateTime('tomorrow'));
+<span class="k">class</span> <span class="nc">DefaultController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">newAction</span><span class="p">(</span><span class="nx">Request</span> <span class="nv">$request</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// create a task and give it some dummy data for this example</span>
+        <span class="nv">$task</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Task</span><span class="p">();</span>
+        <span class="nv">$task</span><span class="o">-&gt;</span><span class="na">setTask</span><span class="p">(</span><span class="s1">&#39;Write a blog post&#39;</span><span class="p">);</span>
+        <span class="nv">$task</span><span class="o">-&gt;</span><span class="na">setDueDate</span><span class="p">(</span><span class="k">new</span> <span class="nx">\DateTime</span><span class="p">(</span><span class="s1">&#39;tomorrow&#39;</span><span class="p">));</span>
 
-        $form = $this-&gt;createFormBuilder($task)
-            -&gt;add('task', 'text')
-            -&gt;add('dueDate', 'date')
-            -&gt;add('save', 'submit')
-            -&gt;getForm();
+        <span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createFormBuilder</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;task&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;save&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">getForm</span><span class="p">();</span>
 
-        return $this-&gt;render('AcmeTaskBundle:Default:new.html.twig', array(
-            'form' =&gt; $form-&gt;createView(),
-        ));
-    }
-}</pre>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span><span class="s1">&#39;AcmeTaskBundle:Default:new.html.twig&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;form&#39;</span> <span class="o">=&gt;</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">createView</span><span class="p">(),</span>
+        <span class="p">));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
@@ -164,9 +166,10 @@ corresponding to the <tt class="docutils literal"><span class="pre">task</span><
 You&#8217;ve also assigned each a &#8220;type&#8221; (e.g. <tt class="docutils literal"><span class="pre">text</span></tt>, <tt class="docutils literal"><span class="pre">date</span></tt>), which, among
 other things, determines which HTML form tag(s) is rendered for that field.
 Finally, you added a submit button for submitting the form to the server.</p>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3: </span>Support for submit buttons was added in Symfony 2.3. Before that, you had
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>Support for submit buttons was introduced in Symfony 2.3. Before that, you had
 to add buttons to the form&#8217;s HTML manually.</p>
+</div>
 <p>Symfony2 comes with many built-in types that will be discussed shortly
 (see <a class="reference internal" href="#book-forms-type-reference"><em>Built-in Field Types</em></a>).</p>
 </div>
@@ -201,7 +204,7 @@ change the request method and the target URL of the form.</p>
 </div>
 <p>That&#8217;s it! By printing <tt class="docutils literal"><span class="pre">form(form)</span></tt>, each field in the form is rendered, along
 with a label and error message (if there is one). The <tt class="docutils literal"><span class="pre">form</span></tt> function also
-surrounds everything in the necessary HTML <tt class="docutils literal"><span class="pre">form</span></tt> tag. As easy as this is,
+surrounds everything in the necessary HTML <tt class="docutils literal"><span class="pre">&lt;form&gt;</span></tt> tag. As easy as this is,
 it&#8217;s not very flexible (yet). Usually, you&#8217;ll want to render each form field
 individually so you can control how the form looks. You&#8217;ll learn how to do
 that in the &#8220;<a class="reference internal" href="#form-rendering-template"><em>Rendering a Form in a Template</em></a>&#8221; section.</p>
@@ -214,7 +217,7 @@ it into a format that&#8217;s suitable for being rendered in an HTML form.</p>
 <p class="last">The form system is smart enough to access the value of the protected
 <tt class="docutils literal"><span class="pre">task</span></tt> property via the <tt class="docutils literal"><span class="pre">getTask()</span></tt> and <tt class="docutils literal"><span class="pre">setTask()</span></tt> methods on the
 <tt class="docutils literal"><span class="pre">Task</span></tt> class. Unless a property is public, it <em>must</em> have a &#8220;getter&#8221; and
-&#8220;setter&#8221; method so that the form component can get and put data onto the
+&#8220;setter&#8221; method so that the Form component can get and put data onto the
 property. For a Boolean property, you can use an &#8220;isser&#8221; or &#8220;hasser&#8221; method
 (e.g. <tt class="docutils literal"><span class="pre">isPublished()</span></tt> or <tt class="docutils literal"><span class="pre">hasReminder()</span></tt>) instead of a getter (e.g.
 <tt class="docutils literal"><span class="pre">getPublished()</span></tt> or <tt class="docutils literal"><span class="pre">getReminder()</span></tt>).</p>
@@ -226,36 +229,38 @@ property. For a Boolean property, you can use an &#8220;isser&#8221; or &#8220;h
 properties of an object. To make this happen, the submitted data from the
 user must be written into the form. Add the following functionality to your
 controller:</p>
-<div class="highlight-python"><pre>// ...
-use Symfony\Component\HttpFoundation\Request;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// ...</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
 
-public function newAction(Request $request)
-{
-    // just setup a fresh $task object (remove the dummy data)
-    $task = new Task();
+<span class="k">public</span> <span class="k">function</span> <span class="nf">newAction</span><span class="p">(</span><span class="nx">Request</span> <span class="nv">$request</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// just setup a fresh $task object (remove the dummy data)</span>
+    <span class="nv">$task</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Task</span><span class="p">();</span>
 
-    $form = $this-&gt;createFormBuilder($task)
-        -&gt;add('task', 'text')
-        -&gt;add('dueDate', 'date')
-        -&gt;add('save', 'submit')
-        -&gt;getForm();
+    <span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createFormBuilder</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;task&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;save&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">getForm</span><span class="p">();</span>
 
-    $form-&gt;handleRequest($request);
+    <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">handleRequest</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
 
-    if ($form-&gt;isValid()) {
-        // perform some action, such as saving the task to the database
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// perform some action, such as saving the task to the database</span>
 
-        return $this-&gt;redirect($this-&gt;generateUrl('task_success'));
-    }
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">redirect</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">generateUrl</span><span class="p">(</span><span class="s1">&#39;task_success&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
 
-    // ...
-}</pre>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3: </span>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/FormInterface.html#method_handleRequest" title="Symfony\Component\Form\FormInterface::handleRequest()"><span class="pre">handleRequest()</span></a></tt> method was
-added in Symfony 2.3. Previously, the <tt class="docutils literal"><span class="pre">$request</span></tt> was passed to the
-<tt class="docutils literal"><span class="pre">submit</span></tt> method - a strategy which is deprecated and will be removed
-in Symfony 3.0. For details on that method, see <a class="reference internal" href="../cookbook/form/direct_submit.html#cookbook-form-submit-request"><em>Passing a Request to Form::submit() (deprecated)</em></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>The <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/FormInterface.html#method_handleRequest" title="Symfony\Component\Form\FormInterface::handleRequest()"><span class="pre">handleRequest()</span></a></tt> method
+was introduced in Symfony 2.3. Previously, the <tt class="docutils literal"><span class="pre">$request</span></tt> was passed
+to the <tt class="docutils literal"><span class="pre">submit</span></tt> method - a strategy which is deprecated and will be
+removed in Symfony 3.0. For details on that method, see <a class="reference internal" href="../cookbook/form/direct_submit.html#cookbook-form-submit-request"><em>Passing a Request to Form::submit() (deprecated)</em></a>.</p>
+</div>
 <p>This controller follows a common pattern for handling forms, and has three
 possible paths:</p>
 <ol class="arabic">
@@ -286,42 +291,46 @@ the user to some other page (e.g. a &#8220;thank you&#8221; or &#8220;success&#8
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">Redirecting a user after a successful form submission prevents the user
-from being able to hit &#8220;refresh&#8221; and re-post the data.</p>
+from being able to hit the &#8220;Refresh&#8221; button of their browser and re-post
+the data.</p>
 </div>
 </li>
 </ol>
 </div>
 <div class="section" id="submitting-forms-with-multiple-buttons">
 <span id="book-form-submitting-multiple-buttons"></span><span id="index-5"></span><h3>Submitting Forms with Multiple Buttons<a class="headerlink" href="#submitting-forms-with-multiple-buttons" title="Permalink to this headline">¶</a></h3>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3: </span>Support for buttons in forms was added in Symfony 2.3.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>Support for buttons in forms was introduced in Symfony 2.3.</p>
+</div>
 <p>When your form contains more than one submit button, you will want to check
 which of the buttons was clicked to adapt the program flow in your controller.
-Let&#8217;s add a second button with the caption &#8220;Save and add&#8221; to our form:</p>
-<div class="highlight-python"><pre>$form = $this-&gt;createFormBuilder($task)
-    -&gt;add('task', 'text')
-    -&gt;add('dueDate', 'date')
-    -&gt;add('save', 'submit')
-    -&gt;add('saveAndAdd', 'submit')
-    -&gt;getForm();</pre>
+To do this, add a second button with the caption &#8220;Save and add&#8221; to your form:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createFormBuilder</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;task&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;save&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;saveAndAdd&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">getForm</span><span class="p">();</span>
+</pre></div>
 </div>
 <p>In your controller, use the button&#8217;s
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/ClickableInterface.html#method_isClicked" title="Symfony\Component\Form\ClickableInterface::isClicked()"><span class="pre">isClicked()</span></a></tt> method for
 querying if the &#8220;Save and add&#8221; button was clicked:</p>
-<div class="highlight-python"><pre>if ($form-&gt;isValid()) {
-    // ... perform some action, such as saving the task to the database
+<div class="highlight-php"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
+    <span class="c1">// ... perform some action, such as saving the task to the database</span>
 
-    $nextAction = $form-&gt;get('saveAndAdd')-&gt;isClicked()
-        ? 'task_new'
-        : 'task_success';
+    <span class="nv">$nextAction</span> <span class="o">=</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;saveAndAdd&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">isClicked</span><span class="p">()</span>
+        <span class="o">?</span> <span class="s1">&#39;task_new&#39;</span>
+        <span class="o">:</span> <span class="s1">&#39;task_success&#39;</span><span class="p">;</span>
 
-    return $this-&gt;redirect($this-&gt;generateUrl($nextAction));
-}</pre>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">redirect</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">generateUrl</span><span class="p">(</span><span class="nv">$nextAction</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 </div>
 <div class="section" id="form-validation">
-<span id="index-6"></span><h2>Form Validation<a class="headerlink" href="#form-validation" title="Permalink to this headline">¶</a></h2>
+<span id="book-forms-form-validation"></span><span id="index-6"></span><h2>Form Validation<a class="headerlink" href="#form-validation" title="Permalink to this headline">¶</a></h2>
 <p>In the previous section, you learned how a form can be submitted with valid
 or invalid data. In Symfony2, validation is applied to the underlying object
 (e.g. <tt class="docutils literal"><span class="pre">Task</span></tt>). In other words, the question isn&#8217;t whether the &#8220;form&#8221; is
@@ -365,8 +374,12 @@ object.</p>
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- Acme/TaskBundle/Resources/config/validation.xml --&gt;</span>
-<span class="cp">&lt;?xml version=&quot;1.0&quot; charset=&quot;UTF-8&quot;?&gt;</span>
-<span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span> <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span> <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span>
+<span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping</span>
+<span class="s">        http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
     <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\TaskBundle\Entity\Task&quot;</span><span class="nt">&gt;</span>
         <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;task&quot;</span><span class="nt">&gt;</span>
             <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;NotBlank&quot;</span> <span class="nt">/&gt;</span>
@@ -376,7 +389,7 @@ object.</p>
             <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Type&quot;</span><span class="nt">&gt;</span>\DateTime<span class="nt">&lt;/constraint&gt;</span>
         <span class="nt">&lt;/property&gt;</span>
     <span class="nt">&lt;/class&gt;</span>
-<span class="nt">&lt;constraint-mapping&gt;</span>
+<span class="nt">&lt;/constraint-mapping&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -414,133 +427,150 @@ on the client side. The most common validation is activated by rendering
 a <tt class="docutils literal"><span class="pre">required</span></tt> attribute on fields that are required. For browsers that
 support HTML5, this will result in a native browser message being displayed
 if the user tries to submit the form with that field blank.</p>
-<p class="last">Generated forms take full advantage of this new feature by adding sensible
+<p>Generated forms take full advantage of this new feature by adding sensible
 HTML attributes that trigger the validation. The client-side validation,
 however, can be disabled by adding the <tt class="docutils literal"><span class="pre">novalidate</span></tt> attribute to the
 <tt class="docutils literal"><span class="pre">form</span></tt> tag or <tt class="docutils literal"><span class="pre">formnovalidate</span></tt> to the submit tag. This is especially
 useful when you want to test your server-side validation constraints,
 but are being prevented by your browser from, for example, submitting
 blank fields.</p>
+<div class="last configuration-block">
+<ul class="simple">
+<li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# src/Acme/DemoBundle/Resources/views/Default/new.html.twig #}</span>
+
+<span class="cp">{{</span> <span class="nv">form</span><span class="o">(</span><span class="nv">form</span><span class="o">,</span> <span class="o">{</span><span class="s1">&#39;attr&#39;</span><span class="o">:</span> <span class="o">{</span><span class="s1">&#39;novalidate&#39;</span><span class="o">:</span> <span class="s1">&#39;novalidate&#39;</span><span class="cp">}}</span>) }}
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/DemoBundle/Resources/views/Default/new.html.php --&gt;</span>
+
+<span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">form</span><span class="p">(</span><span class="nv">$form</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;attr&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;novalidate&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;novalidate&#39;</span><span class="p">),</span>
+<span class="p">))</span> <span class="cp">?&gt;</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
 </div>
 <p>Validation is a very powerful feature of Symfony2 and has its own
 <a class="reference internal" href="validation.html"><em>dedicated chapter</em></a>.</p>
 <div class="section" id="validation-groups">
 <span id="book-forms-validation-groups"></span><span id="index-7"></span><h3>Validation Groups<a class="headerlink" href="#validation-groups" title="Permalink to this headline">¶</a></h3>
-<div class="admonition tip">
-<p class="first admonition-title">Tip</p>
-<p class="last">If you&#8217;re not using <a class="reference internal" href="validation.html#book-validation-validation-groups"><em>validation groups</em></a>,
-then you can skip this section.</p>
-</div>
 <p>If your object takes advantage of <a class="reference internal" href="validation.html#book-validation-validation-groups"><em>validation groups</em></a>,
 you&#8217;ll need to specify which validation group(s) your form should use:</p>
-<div class="highlight-python"><pre>$form = $this-&gt;createFormBuilder($users, array(
-    'validation_groups' =&gt; array('registration'),
-))-&gt;add(...);</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createFormBuilder</span><span class="p">(</span><span class="nv">$users</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;validation_groups&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;registration&#39;</span><span class="p">),</span>
+<span class="p">))</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="o">...</span><span class="p">);</span>
+</pre></div>
 </div>
 <p>If you&#8217;re creating <a class="reference internal" href="#book-form-creating-form-classes"><em>form classes</em></a> (a
 good practice), then you&#8217;ll need to add the following to the <tt class="docutils literal"><span class="pre">setDefaultOptions()</span></tt>
 method:</p>
-<div class="highlight-python"><pre>use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
 
-public function setDefaultOptions(OptionsResolverInterface $resolver)
-{
-    $resolver-&gt;setDefaults(array(
-        'validation_groups' =&gt; array('registration'),
-    ));
-}</pre>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">setDefaultOptions</span><span class="p">(</span><span class="nx">OptionsResolverInterface</span> <span class="nv">$resolver</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$resolver</span><span class="o">-&gt;</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;validation_groups&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;registration&#39;</span><span class="p">),</span>
+    <span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>In both of these cases, <em>only</em> the <tt class="docutils literal"><span class="pre">registration</span></tt> validation group will
 be used to validate the underlying object.</p>
 </div>
 <div class="section" id="disabling-validation">
 <span id="index-8"></span><h3>Disabling Validation<a class="headerlink" href="#disabling-validation" title="Permalink to this headline">¶</a></h3>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3: </span>The ability to set <tt class="docutils literal"><span class="pre">validation_groups</span></tt> to false was added in Symfony 2.3,
-although setting it to an empty array achieved the same result in previous
-versions.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>The ability to set <tt class="docutils literal"><span class="pre">validation_groups</span></tt> to false was introduced in Symfony 2.3.</p>
+</div>
 <p>Sometimes it is useful to suppress the validation of a form altogether. For
-these cases, you can skip the call to <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/FormInterface.html#method_isValid" title="Symfony\Component\Form\FormInterface::isValid()"><span class="pre">isValid()</span></a></tt>
-in your controller. If this is not possible, you can alternatively set the
-<tt class="docutils literal"><span class="pre">validation_groups</span></tt> option to <tt class="docutils literal"><span class="pre">false</span></tt> or an empty array:</p>
-<div class="highlight-python"><pre>use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+these cases you can set the <tt class="docutils literal"><span class="pre">validation_groups</span></tt> option to <tt class="docutils literal"><span class="pre">false</span></tt>:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
 
-public function setDefaultOptions(OptionsResolverInterface $resolver)
-{
-    $resolver-&gt;setDefaults(array(
-        'validation_groups' =&gt; false,
-    ));
-}</pre>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">setDefaultOptions</span><span class="p">(</span><span class="nx">OptionsResolverInterface</span> <span class="nv">$resolver</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$resolver</span><span class="o">-&gt;</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;validation_groups&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Note that when you do that, the form will still run basic integrity checks,
 for example whether an uploaded file was too large or whether non-existing
-fields were submitted. If you want to suppress validation completely, remove
-the <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/FormInterface.html#method_isValid" title="Symfony\Component\Form\FormInterface::isValid()"><span class="pre">isValid()</span></a></tt> call from your
-controller.</p>
+fields were submitted. If you want to suppress validation, you can use the
+<a class="reference internal" href="../cookbook/form/dynamic_form_modification.html#cookbook-dynamic-form-modification-suppressing-form-validation"><em>POST_SUBMIT event</em></a>.</p>
 </div>
 <div class="section" id="groups-based-on-the-submitted-data">
 <span id="index-9"></span><h3>Groups based on the Submitted Data<a class="headerlink" href="#groups-based-on-the-submitted-data" title="Permalink to this headline">¶</a></h3>
 <p>If you need some advanced logic to determine the validation groups (e.g.
 based on submitted data), you can set the <tt class="docutils literal"><span class="pre">validation_groups</span></tt> option
 to an array callback:</p>
-<div class="highlight-python"><pre>use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
 
-public function setDefaultOptions(OptionsResolverInterface $resolver)
-{
-    $resolver-&gt;setDefaults(array(
-        'validation_groups' =&gt; array(
-            'Acme\AcmeBundle\Entity\Client',
-            'determineValidationGroups',
-        ),
-    ));
-}</pre>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">setDefaultOptions</span><span class="p">(</span><span class="nx">OptionsResolverInterface</span> <span class="nv">$resolver</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$resolver</span><span class="o">-&gt;</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;validation_groups&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;Acme\AcmeBundle\Entity\Client&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;determineValidationGroups&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>This will call the static method <tt class="docutils literal"><span class="pre">determineValidationGroups()</span></tt> on the
 <tt class="docutils literal"><span class="pre">Client</span></tt> class after the form is submitted, but before validation is executed.
 The Form object is passed as an argument to that method (see next example).
 You can also define whole logic inline by using a <tt class="docutils literal"><span class="pre">Closure</span></tt>:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Form\FormInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Form\FormInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
 
-public function setDefaultOptions(OptionsResolverInterface $resolver)
-{
-    $resolver-&gt;setDefaults(array(
-        'validation_groups' =&gt; function(FormInterface $form) {
-            $data = $form-&gt;getData();
-            if (Entity\Client::TYPE_PERSON == $data-&gt;getType()) {
-                return array('person');
-            } else {
-                return array('company');
-            }
-        },
-    ));
-}</pre>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">setDefaultOptions</span><span class="p">(</span><span class="nx">OptionsResolverInterface</span> <span class="nv">$resolver</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$resolver</span><span class="o">-&gt;</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;validation_groups&#39;</span> <span class="o">=&gt;</span> <span class="k">function</span><span class="p">(</span><span class="nx">FormInterface</span> <span class="nv">$form</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">getData</span><span class="p">();</span>
+            <span class="k">if</span> <span class="p">(</span><span class="nx">Entity\Client</span><span class="o">::</span><span class="na">TYPE_PERSON</span> <span class="o">==</span> <span class="nv">$data</span><span class="o">-&gt;</span><span class="na">getType</span><span class="p">())</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;person&#39;</span><span class="p">);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                <span class="k">return</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;company&#39;</span><span class="p">);</span>
+            <span class="p">}</span>
+        <span class="p">},</span>
+    <span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="groups-based-on-the-clicked-button">
 <span id="index-10"></span><h3>Groups based on the Clicked Button<a class="headerlink" href="#groups-based-on-the-clicked-button" title="Permalink to this headline">¶</a></h3>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.3: </span>Support for buttons in forms was added in Symfony 2.3.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.3: </span>Support for buttons in forms was introduced in Symfony 2.3.</p>
+</div>
 <p>When your form contains multiple submit buttons, you can change the validation
 group depending on which button is used to submit the form. For example,
 consider a form in a wizard that lets you advance to the next step or go back
-to the previous step. Let&#8217;s assume also that when returning to the previous
-step, the data of the form should be saved, but not validated.</p>
+to the previous step. Also assume that when returning to the previous step,
+the data of the form should be saved, but not validated.</p>
 <p>First, we need to add the two buttons to the form:</p>
-<div class="highlight-python"><pre>$form = $this-&gt;createFormBuilder($task)
-    // ...
-    -&gt;add('nextStep', 'submit')
-    -&gt;add('previousStep', 'submit')
-    -&gt;getForm();</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createFormBuilder</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+    <span class="c1">// ...</span>
+    <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;nextStep&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;previousStep&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">getForm</span><span class="p">();</span>
+</pre></div>
 </div>
 <p>Then, we configure the button for returning to the previous step to run
 specific validation groups. In this example, we want it to suppress validation,
-so we set its <tt class="docutils literal"><span class="pre">validation_groups</span></tt> options to false:</p>
-<div class="highlight-python"><pre>$form = $this-&gt;createFormBuilder($task)
-    // ...
-    -&gt;add('previousStep', 'submit', array(
-        'validation_groups' =&gt; false,
-    ))
-    -&gt;getForm();</pre>
+so we set its <tt class="docutils literal"><span class="pre">validation_groups</span></tt> option to false:</p>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createFormBuilder</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+    <span class="c1">// ...</span>
+    <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;previousStep&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;validation_groups&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">,</span>
+    <span class="p">))</span>
+    <span class="o">-&gt;</span><span class="na">getForm</span><span class="p">();</span>
+</pre></div>
 </div>
 <p>Now the form will skip your validation constraints. It will still validate
 basic integrity constraints, such as checking whether an uploaded file was too
@@ -631,19 +661,21 @@ For example, the <tt class="docutils literal"><span class="pre">dueDate</span></
 boxes. However, the <a class="reference internal" href="../reference/forms/types/date.html"><em>date field</em></a> can be
 configured to be rendered as a single text box (where the user would enter
 the date as a string in the box):</p>
-<div class="highlight-python"><pre>-&gt;add('dueDate', 'date', array('widget' =&gt; 'single_text'))</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;widget&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;single_text&#39;</span><span class="p">))</span>
+</pre></div>
 </div>
 <img alt="../_images/form-simple2.png" class="align-center" src="../_images/form-simple2.png" />
 <p>Each field type has a number of different options that can be passed to it.
 Many of these are specific to the field type and details can be found in
 the documentation for each type.</p>
 <div class="sidebar">
-<p class="first sidebar-title">The <tt class="docutils literal"><span class="pre">required</span></tt> option</p>
+<p class="first sidebar-title">The <tt class="docutils literal"><span class="pre">required</span></tt> Option</p>
 <p>The most common option is the <tt class="docutils literal"><span class="pre">required</span></tt> option, which can be applied to
 any field. By default, the <tt class="docutils literal"><span class="pre">required</span></tt> option is set to <tt class="docutils literal"><span class="pre">true</span></tt>, meaning
 that HTML5-ready browsers will apply client-side validation if the field
 is left blank. If you don&#8217;t want this behavior, either set the <tt class="docutils literal"><span class="pre">required</span></tt>
-option on your field to <tt class="docutils literal"><span class="pre">false</span></tt> or <a class="reference internal" href="#book-forms-html5-validation-disable"><em>disable HTML5 validation</em></a>.</p>
+option on your field to <tt class="docutils literal"><span class="pre">false</span></tt> or
+<a class="reference internal" href="#book-forms-html5-validation-disable"><em>disable HTML5 validation</em></a>.</p>
 <p>Also note that setting the <tt class="docutils literal"><span class="pre">required</span></tt> option to <tt class="docutils literal"><span class="pre">true</span></tt> will <strong>not</strong>
 result in server-side validation to be applied. In other words, if a
 user submits a blank value for the field (either with an old browser
@@ -653,16 +685,18 @@ you use Symfony&#8217;s <tt class="docutils literal"><span class="pre">NotBlank<
 validation should <em>always</em> be used.</p>
 </div>
 <div class="sidebar">
-<p class="first sidebar-title">The <tt class="docutils literal"><span class="pre">label</span></tt> option</p>
+<p class="first sidebar-title">The <tt class="docutils literal"><span class="pre">label</span></tt> Option</p>
 <p>The label for the form field can be set using the <tt class="docutils literal"><span class="pre">label</span></tt> option,
 which can be applied to any field:</p>
-<div class="highlight-python"><pre>-&gt;add('dueDate', 'date', array(
-    'widget' =&gt; 'single_text',
-    'label'  =&gt; 'Due Date',
-))</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;widget&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;single_text&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;label&#39;</span>  <span class="o">=&gt;</span> <span class="s1">&#39;Due Date&#39;</span><span class="p">,</span>
+<span class="p">))</span>
+</pre></div>
 </div>
 <p class="last">The label for a field can also be set in the template rendering the
-form, see below.</p>
+form, see below. If you don&#8217;t need a label associated to your input,
+you can disable it by setting its value to <tt class="docutils literal"><span class="pre">false</span></tt>.</p>
 </div>
 </div>
 </div>
@@ -673,15 +707,17 @@ already knows a bit about your fields. If you allow it, Symfony can &#8220;guess
 the type of your field and set it up for you. In this example, Symfony can
 guess from the validation rules that both the <tt class="docutils literal"><span class="pre">task</span></tt> field is a normal
 <tt class="docutils literal"><span class="pre">text</span></tt> field and the <tt class="docutils literal"><span class="pre">dueDate</span></tt> field is a <tt class="docutils literal"><span class="pre">date</span></tt> field:</p>
-<div class="highlight-python"><pre>public function newAction()
-{
-    $task = new Task();
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="k">function</span> <span class="nf">newAction</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$task</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Task</span><span class="p">();</span>
 
-    $form = $this-&gt;createFormBuilder($task)
-        -&gt;add('task')
-        -&gt;add('dueDate', null, array('widget' =&gt; 'single_text'))
-        -&gt;getForm();
-}</pre>
+    <span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createFormBuilder</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;task&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;widget&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;single_text&#39;</span><span class="p">))</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;save&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">getForm</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The &#8220;guessing&#8221; is activated when you omit the second argument to the <tt class="docutils literal"><span class="pre">add()</span></tt>
 method (or if you pass <tt class="docutils literal"><span class="pre">null</span></tt> to it). If you pass an options array as the
@@ -711,8 +747,8 @@ field type options can then be guessed from that information.</p>
 rules (i.e. is the field <tt class="docutils literal"><span class="pre">NotBlank</span></tt> or <tt class="docutils literal"><span class="pre">NotNull</span></tt>) or the Doctrine metadata
 (i.e. is the field <tt class="docutils literal"><span class="pre">nullable</span></tt>). This is very useful, as your client-side
 validation will automatically match your validation rules.</li>
-<li><tt class="docutils literal"><span class="pre">max_length</span></tt>: If the field is some sort of text field, then the <tt class="docutils literal"><span class="pre">max_length</span></tt>
-option can be guessed from the validation constraints (if <tt class="docutils literal"><span class="pre">Length</span></tt> or
+<li><tt class="docutils literal"><span class="pre">maxlength</span></tt>: If the field is some sort of text field, then the <tt class="docutils literal"><span class="pre">maxlength</span></tt>
+option attribute can be guessed from the validation constraints (if <tt class="docutils literal"><span class="pre">Length</span></tt> or
 <tt class="docutils literal"><span class="pre">Range</span></tt> is used) or from the Doctrine metadata (via the field&#8217;s length).</li>
 </ul>
 <div class="admonition note">
@@ -722,7 +758,8 @@ the field type (i.e. omit or pass <tt class="docutils literal"><span class="pre"
 </div>
 <p>If you&#8217;d like to change one of the guessed values, you can override it by
 passing the option in the options field array:</p>
-<div class="highlight-python"><pre>-&gt;add('task', null, array('max_length' =&gt; 4))</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;task&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;attr&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;maxlength&#39;</span> <span class="o">=&gt;</span> <span class="mi">4</span><span class="p">)))</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -738,8 +775,6 @@ of code. Of course, you&#8217;ll usually need much more flexibility when renderi
 
     <span class="cp">{{</span> <span class="nv">form_row</span><span class="o">(</span><span class="nv">form.task</span><span class="o">)</span> <span class="cp">}}</span>
     <span class="cp">{{</span> <span class="nv">form_row</span><span class="o">(</span><span class="nv">form.dueDate</span><span class="o">)</span> <span class="cp">}}</span>
-
-    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="nt">/&gt;</span>
 <span class="cp">{{</span> <span class="nv">form_end</span><span class="o">(</span><span class="nv">form</span><span class="o">)</span> <span class="cp">}}</span>
 </pre></div>
 </div>
@@ -750,8 +785,6 @@ of code. Of course, you&#8217;ll usually need much more flexibility when renderi
 
     <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">row</span><span class="p">(</span><span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
     <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">row</span><span class="p">(</span><span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;dueDate&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
-
-    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="nt">/&gt;</span>
 <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">end</span><span class="p">(</span><span class="nv">$form</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
@@ -783,7 +816,7 @@ output can be customized on many different levels.</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getTask</span><span class="p">()</span> <span class="cp">?&gt;</span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">vars</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">getTask</span><span class="p">()</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -814,7 +847,9 @@ used the <tt class="docutils literal"><span class="pre">form_row</span></tt> hel
         <span class="cp">{{</span> <span class="nv">form_widget</span><span class="o">(</span><span class="nv">form.dueDate</span><span class="o">)</span> <span class="cp">}}</span>
     <span class="nt">&lt;/div&gt;</span>
 
-<span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+        <span class="cp">{{</span> <span class="nv">form_widget</span><span class="o">(</span><span class="nv">form.save</span><span class="o">)</span> <span class="cp">}}</span>
+    <span class="nt">&lt;/div&gt;</span>
 
 <span class="cp">{{</span> <span class="nv">form_end</span><span class="o">(</span><span class="nv">form</span><span class="o">)</span> <span class="cp">}}</span>
 </pre></div>
@@ -836,7 +871,9 @@ used the <tt class="docutils literal"><span class="pre">form_row</span></tt> hel
         <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">widget</span><span class="p">(</span><span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;dueDate&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
     <span class="nt">&lt;/div&gt;</span>
 
-    <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="nt">/&gt;</span>
+    <span class="nt">&lt;div&gt;</span>
+        <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">widget</span><span class="p">(</span><span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;save&#39;</span><span class="p">])</span> <span class="cp">?&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
 
 <span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">end</span><span class="p">(</span><span class="nv">$form</span><span class="p">)</span> <span class="cp">?&gt;</span>
 </pre></div>
@@ -886,7 +923,7 @@ to get the <tt class="docutils literal"><span class="pre">id</span></tt>:</p>
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">vars</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -900,7 +937,7 @@ the <tt class="docutils literal"><span class="pre">full_name</span></tt> value:<
 </pre></div>
 </div>
 </li>
-<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;full_name&#39;</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<li><em>PHP</em><div class="highlight-html+php"><div class="highlight"><pre><span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$form</span><span class="p">[</span><span class="s1">&#39;task&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">vars</span><span class="p">[</span><span class="s1">&#39;full_name&#39;</span><span class="p">]</span> <span class="cp">?&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -922,12 +959,14 @@ tag and we assumed that each form is submitted to the same URL in a POST request
 Sometimes you want to change these parameters. You can do so in a few different
 ways. If you build your form in the controller, you can use <tt class="docutils literal"><span class="pre">setAction()</span></tt> and
 <tt class="docutils literal"><span class="pre">setMethod()</span></tt>:</p>
-<div class="highlight-python"><pre>$form = $this-&gt;createFormBuilder($task)
-    -&gt;setAction($this-&gt;generateUrl('target_route'))
-    -&gt;setMethod('GET')
-    -&gt;add('task', 'text')
-    -&gt;add('dueDate', 'date')
-    -&gt;getForm();</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createFormBuilder</span><span class="p">(</span><span class="nv">$task</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">setAction</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">generateUrl</span><span class="p">(</span><span class="s1">&#39;target_route&#39;</span><span class="p">))</span>
+    <span class="o">-&gt;</span><span class="na">setMethod</span><span class="p">(</span><span class="s1">&#39;GET&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;task&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="s1">&#39;date&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;save&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">)</span>
+    <span class="o">-&gt;</span><span class="na">getForm</span><span class="p">();</span>
+</pre></div>
 </div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
@@ -937,10 +976,11 @@ that points to the controller that processes the form.</p>
 <p>In <a class="reference internal" href="#book-form-creating-form-classes"><em>Creating Form Classes</em></a> you will learn how to move the
 form building code into separate classes. When using an external form class
 in the controller, you can pass the action and method as form options:</p>
-<div class="highlight-python"><pre>$form = $this-&gt;createForm(new TaskType(), $task, array(
-    'action' =&gt; $this-&gt;generateUrl('target_route'),
-    'method' =&gt; 'GET',
-));</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createForm</span><span class="p">(</span><span class="k">new</span> <span class="nx">TaskType</span><span class="p">(),</span> <span class="nv">$task</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">&#39;action&#39;</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">generateUrl</span><span class="p">(</span><span class="s1">&#39;target_route&#39;</span><span class="p">),</span>
+    <span class="s1">&#39;method&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+<span class="p">));</span>
+</pre></div>
 </div>
 <p>Finally, you can override the action and method in the template by passing them
 to the <tt class="docutils literal"><span class="pre">form()</span></tt> or the <tt class="docutils literal"><span class="pre">form_start()</span></tt> helper:</p>
@@ -971,10 +1011,10 @@ to the <tt class="docutils literal"><span class="pre">form()</span></tt> or the 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p class="last">If the form&#8217;s method is not GET or POST, but PUT, PATCH or DELETE, Symfony2
-will insert a hidden field with the name &#8220;_method&#8221; that stores this method.
+will insert a hidden field with the name <tt class="docutils literal"><span class="pre">_method</span></tt> that stores this method.
 The form will be submitted in a normal POST request, but Symfony2&#8217;s router
-is capable of detecting the &#8220;_method&#8221; parameter and will interpret the
-request as PUT, PATCH or DELETE request. Read the cookbook chapter
+is capable of detecting the <tt class="docutils literal"><span class="pre">_method</span></tt> parameter and will interpret it as
+a PUT, PATCH or DELETE request. Read the cookbook chapter
 &#8220;<a class="reference internal" href="../cookbook/routing/method_parameters.html"><em>How to use HTTP Methods beyond GET and POST in Routes</em></a>&#8221; for more information.</p>
 </div>
 </div>
@@ -984,41 +1024,45 @@ request as PUT, PATCH or DELETE request. Read the cookbook chapter
 However, a better practice is to build the form in a separate, standalone PHP
 class, which can then be reused anywhere in your application. Create a new class
 that will house the logic for building the task form:</p>
-<div class="highlight-python"><pre>// src/Acme/TaskBundle/Form/Type/TaskType.php
-namespace Acme\TaskBundle\Form\Type;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TaskBundle/Form/Type/TaskType.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\TaskBundle\Form\Type</span><span class="p">;</span>
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractType</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
 
-class TaskType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder-&gt;add('task');
-        $builder-&gt;add('dueDate', null, array('widget' =&gt; 'single_text'));
-    }
+<span class="k">class</span> <span class="nc">TaskType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$builder</span>
+            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;task&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;widget&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;single_text&#39;</span><span class="p">))</span>
+            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;save&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    public function getName()
-    {
-        return 'task';
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;task&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>This new class contains all the directions needed to create the task form
 (note that the <tt class="docutils literal"><span class="pre">getName()</span></tt> method should return a unique identifier for this
 form &#8220;type&#8221;). It can be used to quickly build a form object in the controller:</p>
-<div class="highlight-python"><pre>// src/Acme/TaskBundle/Controller/DefaultController.php
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TaskBundle/Controller/DefaultController.php</span>
 
-// add this new use statement at the top of the class
-use Acme\TaskBundle\Form\Type\TaskType;
+<span class="c1">// add this new use statement at the top of the class</span>
+<span class="k">use</span> <span class="nx">Acme\TaskBundle\Form\Type\TaskType</span><span class="p">;</span>
 
-public function newAction()
-{
-    $task = ...;
-    $form = $this-&gt;createForm(new TaskType(), $task);
+<span class="k">public</span> <span class="k">function</span> <span class="nf">newAction</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$task</span> <span class="o">=</span> <span class="o">...</span><span class="p">;</span>
+    <span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createForm</span><span class="p">(</span><span class="k">new</span> <span class="nx">TaskType</span><span class="p">(),</span> <span class="nv">$task</span><span class="p">);</span>
 
-    // ...
-}</pre>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Placing the form logic into its own class means that the form can be easily
 reused elsewhere in your project. This is the best way to create forms, but
@@ -1032,14 +1076,15 @@ based off of the object passed to the second argument to <tt class="docutils lit
 longer be sufficient. So, while not always necessary, it&#8217;s generally a
 good idea to explicitly specify the <tt class="docutils literal"><span class="pre">data_class</span></tt> option by adding the
 following to your form type class:</p>
-<div class="last highlight-python"><pre>use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+<div class="last highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
 
-public function setDefaultOptions(OptionsResolverInterface $resolver)
-{
-    $resolver-&gt;setDefaults(array(
-        'data_class' =&gt; 'Acme\TaskBundle\Entity\Task',
-    ));
-}</pre>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">setDefaultOptions</span><span class="p">(</span><span class="nx">OptionsResolverInterface</span> <span class="nv">$resolver</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$resolver</span><span class="o">-&gt;</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;data_class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Acme\TaskBundle\Entity\Task&#39;</span><span class="p">,</span>
+    <span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="admonition tip">
@@ -1050,24 +1095,38 @@ be thrown.</p>
 <p>In cases where you need extra fields in the form (for example: a &#8220;do you
 agree with these terms&#8221; checkbox) that will not be mapped to the underlying
 object, you need to set the <tt class="docutils literal"><span class="pre">mapped</span></tt> option to <tt class="docutils literal"><span class="pre">false</span></tt>:</p>
-<div class="highlight-python"><pre>use Symfony\Component\Form\FormBuilderInterface;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
 
-public function buildForm(FormBuilderInterface $builder, array $options)
-{
-    $builder-&gt;add('task');
-    $builder-&gt;add('dueDate', null, array('mapped' =&gt; false));
-}</pre>
+<span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$builder</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;task&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">,</span> <span class="k">null</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;mapped&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">))</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;save&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Additionally, if there are any fields on the form that aren&#8217;t included in
 the submitted data, those fields will be explicitly set to <tt class="docutils literal"><span class="pre">null</span></tt>.</p>
 <p>The field data can be accessed in a controller with:</p>
-<div class="last highlight-python"><pre>$form-&gt;get('dueDate')-&gt;getData();</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">getData</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>In addition, the data of an unmapped field can also be modified directly:</p>
+<div class="last highlight-php"><div class="highlight"><pre><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;dueDate&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="k">new</span> <span class="nx">\DateTime</span><span class="p">());</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="defining-your-forms-as-services">
 <h3>Defining your Forms as Services<a class="headerlink" href="#defining-your-forms-as-services" title="Permalink to this headline">¶</a></h3>
 <p>Defining your form type as a service is a good practice and makes it really
 easy to use in your application.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Services and the service container will be handled
+<a class="reference internal" href="service_container.html"><em>later on in this book</em></a>. Things will be
+more clear after reading that chapter.</p>
+</div>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/TaskBundle/Resources/config/services.yml</span>
@@ -1079,11 +1138,17 @@ easy to use in your application.</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/TaskBundle/Resources/config/services.xml --&gt;</span>
-<span class="nt">&lt;service</span> <span class="na">id=</span><span class="s">&quot;acme_demo.form.type.task&quot;</span>
-    <span class="na">class=</span><span class="s">&quot;Acme\TaskBundle\Form\Type\TaskType&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;tag</span> <span class="na">name=</span><span class="s">&quot;form.type&quot;</span> <span class="na">alias=</span><span class="s">&quot;task&quot;</span> <span class="nt">/&gt;</span>
-<span class="nt">&lt;/service&gt;</span>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre>&lt;!-- src/Acme/TaskBundle/Resources/config/services.xml --&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;container xmlns=&quot;http://symfony.com/schema/dic/services&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd&gt;
+
+    &lt;service id=&quot;acme_demo.form.type.task&quot;
+        class=&quot;Acme\TaskBundle\Form\Type\TaskType&quot;&gt;
+        &lt;tag name=&quot;form.type&quot; alias=&quot;task&quot; /&gt;
+    &lt;/service&gt;
+&lt;/container&gt;
 </pre></div>
 </div>
 </li>
@@ -1105,30 +1170,32 @@ easy to use in your application.</p>
 </ul>
 </div>
 <p>That&#8217;s it! Now you can use your form type directly in a controller:</p>
-<div class="highlight-python"><pre>// src/Acme/TaskBundle/Controller/DefaultController.php
-// ...
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TaskBundle/Controller/DefaultController.php</span>
+<span class="c1">// ...</span>
 
-public function newAction()
-{
-    $task = ...;
-    $form = $this-&gt;createForm('task', $task);
+<span class="k">public</span> <span class="k">function</span> <span class="nf">newAction</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="nv">$task</span> <span class="o">=</span> <span class="o">...</span><span class="p">;</span>
+    <span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createForm</span><span class="p">(</span><span class="s1">&#39;task&#39;</span><span class="p">,</span> <span class="nv">$task</span><span class="p">);</span>
 
-    // ...
-}</pre>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>or even use from within the form type of another form:</p>
-<div class="highlight-python"><pre>// src/Acme/TaskBundle/Form/Type/ListType.php
-// ...
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TaskBundle/Form/Type/ListType.php</span>
+<span class="c1">// ...</span>
 
-class ListType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        // ...
+<span class="k">class</span> <span class="nc">ListType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// ...</span>
 
-        $builder-&gt;add('someTask', 'task');
-    }
-}</pre>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;someTask&#39;</span><span class="p">,</span> <span class="s1">&#39;task&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Read <a class="reference internal" href="../cookbook/form/create_custom_field_type.html#form-cookbook-form-field-service"><em>Creating your Field Type as a Service</em></a> for more information.</p>
 </div>
@@ -1142,17 +1209,19 @@ unrelated to the topic of forms. But, if you&#8217;ve configured the <tt class="
 to be persisted via Doctrine (i.e. you&#8217;ve added
 <a class="reference internal" href="doctrine.html#book-doctrine-adding-mapping"><em>mapping metadata</em></a> for it), then persisting
 it after a form submission can be done when the form is valid:</p>
-<div class="highlight-python"><pre>if ($form-&gt;isValid()) {
-    $em = $this-&gt;getDoctrine()-&gt;getManager();
-    $em-&gt;persist($task);
-    $em-&gt;flush();
+<div class="highlight-php"><div class="highlight"><pre><span class="k">if</span> <span class="p">(</span><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
+    <span class="nv">$em</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getDoctrine</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getManager</span><span class="p">();</span>
+    <span class="nv">$em</span><span class="o">-&gt;</span><span class="na">persist</span><span class="p">(</span><span class="nv">$task</span><span class="p">);</span>
+    <span class="nv">$em</span><span class="o">-&gt;</span><span class="na">flush</span><span class="p">();</span>
 
-    return $this-&gt;redirect($this-&gt;generateUrl('task_success'));
-}</pre>
+    <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">redirect</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">generateUrl</span><span class="p">(</span><span class="s1">&#39;task_success&#39;</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>If, for some reason, you don&#8217;t have access to your original <tt class="docutils literal"><span class="pre">$task</span></tt> object,
 you can fetch it from the form:</p>
-<div class="highlight-python"><pre>$task = $form-&gt;getData();</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$task</span> <span class="o">=</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">getData</span><span class="p">();</span>
+</pre></div>
 </div>
 <p>For more information, see the <a class="reference internal" href="doctrine.html"><em>Doctrine ORM chapter</em></a>.</p>
 <p>The key thing to understand is that when the form is submitted, the submitted
@@ -1165,77 +1234,80 @@ contains the submitted data).</p>
 <p>Often, you&#8217;ll want to build a form that will include fields from many different
 objects. For example, a registration form may contain data belonging to
 a <tt class="docutils literal"><span class="pre">User</span></tt> object as well as many <tt class="docutils literal"><span class="pre">Address</span></tt> objects. Fortunately, this
-is easy and natural with the form component.</p>
+is easy and natural with the Form component.</p>
 <div class="section" id="embedding-a-single-object">
 <h3>Embedding a Single Object<a class="headerlink" href="#embedding-a-single-object" title="Permalink to this headline">¶</a></h3>
 <p>Suppose that each <tt class="docutils literal"><span class="pre">Task</span></tt> belongs to a simple <tt class="docutils literal"><span class="pre">Category</span></tt> object. Start,
 of course, by creating the <tt class="docutils literal"><span class="pre">Category</span></tt> object:</p>
-<div class="highlight-python"><pre>// src/Acme/TaskBundle/Entity/Category.php
-namespace Acme\TaskBundle\Entity;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TaskBundle/Entity/Category.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\TaskBundle\Entity</span><span class="p">;</span>
 
-use Symfony\Component\Validator\Constraints as Assert;
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
 
-class Category
-{
-    /**
-     * @Assert\NotBlank()
-     */
-    public $name;
-}</pre>
+<span class="k">class</span> <span class="nc">Category</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @Assert\NotBlank()</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="nv">$name</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Next, add a new <tt class="docutils literal"><span class="pre">category</span></tt> property to the <tt class="docutils literal"><span class="pre">Task</span></tt> class:</p>
-<div class="highlight-python"><pre>// ...
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// ...</span>
 
-class Task
-{
-    // ...
+<span class="k">class</span> <span class="nc">Task</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
 
-    /**
-     * @Assert\Type(type="Acme\TaskBundle\Entity\Category")
-     */
-    protected $category;
+    <span class="sd">/**</span>
+<span class="sd">     * @Assert\Type(type=&quot;Acme\TaskBundle\Entity\Category&quot;)</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$category</span><span class="p">;</span>
 
-    // ...
+    <span class="c1">// ...</span>
 
-    public function getCategory()
-    {
-        return $this-&gt;category;
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getCategory</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">category</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    public function setCategory(Category $category = null)
-    {
-        $this-&gt;category = $category;
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setCategory</span><span class="p">(</span><span class="nx">Category</span> <span class="nv">$category</span> <span class="o">=</span> <span class="k">null</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">category</span> <span class="o">=</span> <span class="nv">$category</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Now that your application has been updated to reflect the new requirements,
 create a form class so that a <tt class="docutils literal"><span class="pre">Category</span></tt> object can be modified by the user:</p>
-<div class="highlight-python"><pre>// src/Acme/TaskBundle/Form/Type/CategoryType.php
-namespace Acme\TaskBundle\Form\Type;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/TaskBundle/Form/Type/CategoryType.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\TaskBundle\Form\Type</span><span class="p">;</span>
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractType</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
 
-class CategoryType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder-&gt;add('name');
-    }
+<span class="k">class</span> <span class="nc">CategoryType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$builder</span><span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
+    <span class="p">}</span>
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver-&gt;setDefaults(array(
-            'data_class' =&gt; 'Acme\TaskBundle\Entity\Category',
-        ));
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setDefaultOptions</span><span class="p">(</span><span class="nx">OptionsResolverInterface</span> <span class="nv">$resolver</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$resolver</span><span class="o">-&gt;</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;data_class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Acme\TaskBundle\Entity\Category&#39;</span><span class="p">,</span>
+        <span class="p">));</span>
+    <span class="p">}</span>
 
-    public function getName()
-    {
-        return 'category';
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;category&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The end goal is to allow the <tt class="docutils literal"><span class="pre">Category</span></tt> of a <tt class="docutils literal"><span class="pre">Task</span></tt> to be modified right
 inside the task form itself. To accomplish this, add a <tt class="docutils literal"><span class="pre">category</span></tt> field
@@ -1254,16 +1326,16 @@ class:</p>
 <p>The fields from <tt class="docutils literal"><span class="pre">CategoryType</span></tt> can now be rendered alongside those from
 the <tt class="docutils literal"><span class="pre">TaskType</span></tt> class. To activate validation on CategoryType, add
 the <tt class="docutils literal"><span class="pre">cascade_validation</span></tt> option to <tt class="docutils literal"><span class="pre">TaskType</span></tt>:</p>
-<div class="highlight-python"><pre>public function setDefaultOptions(OptionsResolverInterface $resolver)
-{
-    $resolver-&gt;setDefaults(array(
-        'data_class' =&gt; 'Acme\TaskBundle\Entity\Task',
-        'cascade_validation' =&gt; true,
-    ));
-}</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="k">public</span> <span class="k">function</span> <span class="nf">setDefaultOptions</span><span class="p">(</span><span class="nx">OptionsResolverInterface</span> <span class="nv">$resolver</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$resolver</span><span class="o">-&gt;</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+        <span class="s1">&#39;data_class&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Acme\TaskBundle\Entity\Task&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;cascade_validation&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+    <span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
 </div>
-<p>Render the <tt class="docutils literal"><span class="pre">Category</span></tt> fields in the same way
-as the original <tt class="docutils literal"><span class="pre">Task</span></tt> fields:</p>
+<p>Render the <tt class="docutils literal"><span class="pre">Category</span></tt> fields in the same way as the original <tt class="docutils literal"><span class="pre">Task</span></tt> fields:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>Twig</em><div class="highlight-html+jinja"><div class="highlight"><pre><span class="c">{# ... #}</span>
@@ -1302,7 +1374,7 @@ and can be persisted to the database or used however you need.</p>
 form with many <tt class="docutils literal"><span class="pre">Product</span></tt> sub-forms). This is done by using the <tt class="docutils literal"><span class="pre">collection</span></tt>
 field type.</p>
 <p>For more information see the &#8220;<a class="reference internal" href="../cookbook/form/form_collections.html"><em>How to Embed a Collection of Forms</em></a>&#8221; cookbook
-entry and  the <a class="reference internal" href="../reference/forms/types/collection.html"><em>collection</em></a> field type reference.</p>
+entry and the <a class="reference internal" href="../reference/forms/types/collection.html"><em>collection</em></a> field type reference.</p>
 </div>
 </div>
 <div class="section" id="form-theming">
@@ -1348,7 +1420,7 @@ do this, create a new template file that will store the new markup:</p>
 </ul>
 </div>
 <p>The <tt class="docutils literal"><span class="pre">form_row</span></tt> form fragment is used when rendering most fields via the
-<tt class="docutils literal"><span class="pre">form_row</span></tt> function. To tell the form component to use your new <tt class="docutils literal"><span class="pre">form_row</span></tt>
+<tt class="docutils literal"><span class="pre">form_row</span></tt> function. To tell the Form component to use your new <tt class="docutils literal"><span class="pre">form_row</span></tt>
 fragment defined above, add the following to the top of the template that
 renders the form:</p>
 <div class="configuration-block">
@@ -1358,7 +1430,7 @@ renders the form:</p>
 
 <span class="cp">{%</span> <span class="k">form_theme</span> <span class="nv">form</span> <span class="s1">&#39;AcmeTaskBundle:Form:fields.html.twig&#39;</span> <span class="s1">&#39;AcmeTaskBundle:Form:fields2.html.twig&#39;</span> <span class="cp">%}</span>
 
-<span class="cp">{{</span> <span class="nv">form</span><span class="o">(</span><span class="nv">form</span><span class="o">)</span> <span class="cp">}}</span>
+<span class="c">&lt;!-- ... render the form --&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -1367,7 +1439,7 @@ renders the form:</p>
 
 <span class="cp">&lt;?php</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">setTheme</span><span class="p">(</span><span class="nv">$form</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;AcmeTaskBundle:Form&#39;</span><span class="p">,</span> <span class="s1">&#39;AcmeTaskBundle:Form&#39;</span><span class="p">))</span> <span class="cp">?&gt;</span>
 
-<span class="cp">&lt;?php</span> <span class="k">echo</span> <span class="nv">$view</span><span class="p">[</span><span class="s1">&#39;form&#39;</span><span class="p">]</span><span class="o">-&gt;</span><span class="na">form</span><span class="p">(</span><span class="nv">$form</span><span class="p">)</span> <span class="cp">?&gt;</span>
+<span class="c">&lt;!-- ... render the form --&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -1397,13 +1469,13 @@ the next section.</p>
 <div class="section" id="form-fragment-naming">
 <span id="form-template-blocks"></span><span id="index-22"></span><h3>Form Fragment Naming<a class="headerlink" href="#form-fragment-naming" title="Permalink to this headline">¶</a></h3>
 <p>In Symfony, every part of a form that is rendered - HTML form elements, errors,
-labels, etc - is defined in a base theme, which is a collection of blocks
+labels, etc. - is defined in a base theme, which is a collection of blocks
 in Twig and a collection of template files in PHP.</p>
-<p>In Twig, every block needed is defined in a single template file (<a class="reference external" href="https://github.com/symfony/symfony/blob/2.2/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig">form_div_layout.html.twig</a>)
-that lives inside the <a class="reference external" href="https://github.com/symfony/symfony/tree/2.2/src/Symfony/Bridge/Twig">Twig Bridge</a>. Inside this file, you can see every block
+<p>In Twig, every block needed is defined in a single template file (<a class="reference external" href="https://github.com/symfony/symfony/blob/master/src/Symfony/Bridge/Twig/Resources/views/Form/form_div_layout.html.twig">form_div_layout.html.twig</a>)
+that lives inside the <a class="reference external" href="https://github.com/symfony/symfony/tree/master/src/Symfony/Bridge/Twig">Twig Bridge</a>. Inside this file, you can see every block
 needed to render a form and every default field type.</p>
 <p>In PHP, the fragments are individual template files. By default they are located in
-the <cite>Resources/views/Form</cite> directory of the framework bundle (<a class="reference external" href="https://github.com/symfony/symfony/tree/2.2/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form">view on GitHub</a>).</p>
+the <cite>Resources/views/Form</cite> directory of the framework bundle (<a class="reference external" href="https://github.com/symfony/symfony/tree/master/src/Symfony/Bundle/FrameworkBundle/Resources/views/Form">view on GitHub</a>).</p>
 <p>Each fragment name follows the same basic pattern and is broken up into two pieces,
 separated by a single underscore character (<tt class="docutils literal"><span class="pre">_</span></tt>). A few examples are:</p>
 <ul class="simple">
@@ -1493,13 +1565,22 @@ file:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><pre>&lt;!-- app/config/config.xml --&gt;
-&lt;twig:config ...&gt;
-        &lt;twig:form&gt;
-            &lt;resource&gt;AcmeTaskBundle:Form:fields.html.twig&lt;/resource&gt;
-        &lt;/twig:form&gt;
-        &lt;!-- ... --&gt;
-&lt;/twig:config&gt;</pre>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- app/config/config.xml --&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;container</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/services&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xmlns:twig=</span><span class="s">&quot;http://symfony.com/schema/dic/twig&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd</span>
+<span class="s">                        http://symfony.com/schema/dic/twig http://symfony.com/schema/dic/twig/twig-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;twig:config&gt;</span>
+            <span class="nt">&lt;twig:form&gt;</span>
+                <span class="nt">&lt;twig:resource&gt;</span>AcmeTaskBundle:Form:fields.html.twig<span class="nt">&lt;/twig:resource&gt;</span>
+            <span class="nt">&lt;/twig:form&gt;</span>
+            <span class="c">&lt;!-- ... --&gt;</span>
+    <span class="nt">&lt;/twig:config&gt;</span>
+<span class="nt">&lt;/container&gt;</span>
+</pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
@@ -1568,15 +1649,24 @@ file:</p>
 </pre></div>
 </div>
 </li>
-<li><em>XML</em><div class="highlight-xml"><pre>&lt;!-- app/config/config.xml --&gt;
-&lt;framework:config ...&gt;
-    &lt;framework:templating&gt;
-        &lt;framework:form&gt;
-            &lt;resource&gt;AcmeTaskBundle:Form&lt;/resource&gt;
-        &lt;/framework:form&gt;
-    &lt;/framework:templating&gt;
-    &lt;!-- ... --&gt;
-&lt;/framework:config&gt;</pre>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre>&lt;!-- app/config/config.xml --&gt;
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;container xmlns=&quot;http://symfony.com/schema/dic/services&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xmlns:framework=&quot;http://symfony.com/schema/dic/symfony&quot;
+    xsi:schemaLocation=&quot;http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd
+                        http://symfony.com/schema/dic/symfony http://symfony.com/schema/dic/symfony/symfony-1.0.xsd&quot;&gt;
+
+    &lt;framework:config ...&gt;
+        &lt;framework:templating&gt;
+            &lt;framework:form&gt;
+                &lt;framework:resource&gt;AcmeTaskBundle:Form&lt;/framework:resource&gt;
+            &lt;/framework:form&gt;
+        &lt;/framework:templating&gt;
+        &lt;!-- ... --&gt;
+    &lt;/framework:config&gt;
+&lt;/container&gt;
+</pre></div>
 </div>
 </li>
 <li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// app/config/config.php</span>
@@ -1618,25 +1708,26 @@ Symfony automatically validates the presence and accuracy of this token.</p>
 if you include the <tt class="docutils literal"><span class="pre">form_end()</span></tt> function in your template, which ensures
 that all un-rendered fields are output.</p>
 <p>The CSRF token can be customized on a form-by-form basis. For example:</p>
-<div class="highlight-python"><pre>use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+<div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
 
-class TaskType extends AbstractType
-{
-    // ...
+<span class="k">class</span> <span class="nc">TaskType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver-&gt;setDefaults(array(
-            'data_class'      =&gt; 'Acme\TaskBundle\Entity\Task',
-            'csrf_protection' =&gt; true,
-            'csrf_field_name' =&gt; '_token',
-            // a unique key to help generate the secret token
-            'intention'       =&gt; 'task_item',
-        ));
-    }
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setDefaultOptions</span><span class="p">(</span><span class="nx">OptionsResolverInterface</span> <span class="nv">$resolver</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$resolver</span><span class="o">-&gt;</span><span class="na">setDefaults</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;data_class&#39;</span>      <span class="o">=&gt;</span> <span class="s1">&#39;Acme\TaskBundle\Entity\Task&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;csrf_protection&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span>
+            <span class="s1">&#39;csrf_field_name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;_token&#39;</span><span class="p">,</span>
+            <span class="c1">// a unique key to help generate the secret token</span>
+            <span class="s1">&#39;intention&#39;</span>       <span class="o">=&gt;</span> <span class="s1">&#39;task_item&#39;</span><span class="p">,</span>
+        <span class="p">));</span>
+    <span class="p">}</span>
 
-    // ...
-}</pre>
+    <span class="c1">// ...</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>To disable CSRF protection, set the <tt class="docutils literal"><span class="pre">csrf_protection</span></tt> option to false.
 Customizations can also be made globally in your project. For more information,
@@ -1655,28 +1746,30 @@ and store their data on the properties of that object. This is exactly what
 you&#8217;ve seen so far in this chapter with the <cite>Task</cite> class.</p>
 <p>But sometimes, you may just want to use a form without a class, and get back
 an array of the submitted data. This is actually really easy:</p>
-<div class="highlight-python"><pre>// make sure you've imported the Request namespace above the class
-use Symfony\Component\HttpFoundation\Request;
-// ...
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// make sure you&#39;ve imported the Request namespace above the class</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
+<span class="c1">// ...</span>
 
-public function contactAction(Request $request)
-{
-    $defaultData = array('message' =&gt; 'Type your message here');
-    $form = $this-&gt;createFormBuilder($defaultData)
-        -&gt;add('name', 'text')
-        -&gt;add('email', 'email')
-        -&gt;add('message', 'textarea')
-        -&gt;getForm();
+<span class="k">public</span> <span class="k">function</span> <span class="nf">contactAction</span><span class="p">(</span><span class="nx">Request</span> <span class="nv">$request</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$defaultData</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Type your message here&#39;</span><span class="p">);</span>
+    <span class="nv">$form</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createFormBuilder</span><span class="p">(</span><span class="nv">$defaultData</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">,</span> <span class="s1">&#39;email&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;message&#39;</span><span class="p">,</span> <span class="s1">&#39;textarea&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;send&#39;</span><span class="p">,</span> <span class="s1">&#39;submit&#39;</span><span class="p">)</span>
+        <span class="o">-&gt;</span><span class="na">getForm</span><span class="p">();</span>
 
-    $form-&gt;handleRequest($request);
+    <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">handleRequest</span><span class="p">(</span><span class="nv">$request</span><span class="p">);</span>
 
-    if ($form-&gt;isValid()) {
-        // data is an array with "name", "email", and "message" keys
-        $data = $form-&gt;getData();
-    }
+    <span class="k">if</span> <span class="p">(</span><span class="nv">$form</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
+        <span class="c1">// data is an array with &quot;name&quot;, &quot;email&quot;, and &quot;message&quot; keys</span>
+        <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">getData</span><span class="p">();</span>
+    <span class="p">}</span>
 
-    // ... render the form
-}</pre>
+    <span class="c1">// ... render the form</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>By default, a form actually assumes that you want to work with arrays of
 data, instead of an object. There are exactly two ways that you can change
@@ -1694,9 +1787,10 @@ an array.</p>
 <p class="first admonition-title">Tip</p>
 <p>You can also access POST values (in this case &#8220;name&#8221;) directly through
 the request object, like so:</p>
-<div class="highlight-python"><pre>$this-&gt;get('request')-&gt;request-&gt;get('name');</pre>
+<div class="highlight-php"><div class="highlight"><pre><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;request&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
+</pre></div>
 </div>
-<p class="last">Be advised, however, that in most cases using the getData() method is
+<p class="last">Be advised, however, that in most cases using the <tt class="docutils literal"><span class="pre">getData()</span></tt> method is
 a better choice, since it returns the data (usually an object) after
 it&#8217;s been transformed by the form framework.</p>
 </div>
@@ -1713,10 +1807,6 @@ your form?</p>
 <p>The answer is to setup the constraints yourself, and attach them to the individual
 fields. The overall approach is covered a bit more in the <a class="reference internal" href="validation.html#book-validation-raw-values"><em>validation chapter</em></a>,
 but here&#8217;s a short example:</p>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.1: </span>The <tt class="docutils literal"><span class="pre">constraints</span></tt> option, which accepts a single constraint or an array
-of constraints (before 2.1, the option was called <tt class="docutils literal"><span class="pre">validation_constraint</span></tt>,
-and only accepted a single constraint) is new to Symfony 2.1.</p>
 <div class="highlight-php"><div class="highlight"><pre><span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints\Length</span><span class="p">;</span>
 <span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints\NotBlank</span><span class="p">;</span>
 
@@ -1735,7 +1825,7 @@ and only accepted a single constraint) is new to Symfony 2.1.</p>
 </div>
 <div class="admonition tip">
 <p class="first admonition-title">Tip</p>
-<p class="last">If you are using Validation Groups, you need to either reference the
+<p class="last">If you are using validation groups, you need to either reference the
 <tt class="docutils literal"><span class="pre">Default</span></tt> group when creating the form, or set the correct group on
 the constraint you are adding.</p>
 </div>
@@ -1752,10 +1842,11 @@ the first goal of a form is to translate data from an object (<tt class="docutil
 HTML form so that the user can modify that data. The second goal of a form is to
 take the data submitted by the user and to re-apply it to the object.</p>
 <p>There&#8217;s still much more to learn about the powerful world of forms, such as
-how to handle <a class="reference internal" href="../cookbook/doctrine/file_uploads.html"><em>file uploads with Doctrine</em></a> or how to create a form where a dynamic
-number of sub-forms can be added (e.g. a todo list where you can keep adding
-more fields via Javascript before submitting). See the cookbook for these
-topics. Also, be sure to lean on the
+how to handle
+<a class="reference internal" href="../cookbook/doctrine/file_uploads.html"><em>file uploads with Doctrine</em></a> or how
+to create a form where a dynamic number of sub-forms can be added (e.g. a
+todo list where you can keep adding more fields via JavaScript before submitting).
+See the cookbook for these topics. Also, be sure to lean on the
 <a class="reference internal" href="../reference/forms/types.html"><em>field type reference documentation</em></a>, which
 includes examples of how to use each field type and its options.</p>
 </div>
@@ -1888,13 +1979,13 @@ includes examples of how to use each field type and its options.</p>
         <li class="right" >
           <a href="validation.html" title="Validation"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

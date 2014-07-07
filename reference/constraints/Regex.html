@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Regex &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Regex &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Validation Constraints Reference" href="../constraints.html" />
     <link rel="next" title="Ip" href="Ip.html" />
     <link rel="prev" title="Url" href="Url.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="Url.html" title="Url"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" accesskey="U">Validation Constraints Reference</a> &raquo;</li> 
       </ul>
@@ -69,6 +67,7 @@
 <tr class="row-even"><td>Options</td>
 <td><ul class="first last simple">
 <li><a class="reference internal" href="#pattern">pattern</a></li>
+<li><a class="reference internal" href="#htmlpattern">htmlPattern</a></li>
 <li><a class="reference internal" href="#match">match</a></li>
 <li><a class="reference internal" href="#message">message</a></li>
 </ul>
@@ -90,11 +89,12 @@ be <tt class="docutils literal"><span class="pre">/^\w+/</span></tt>, indicating
 characters at the beginning of your string:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><pre># src/Acme/BlogBundle/Resources/config/validation.yml
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre># src/Acme/BlogBundle/Resources/config/validation.yml
 Acme\BlogBundle\Entity\Author:
     properties:
         description:
-            - Regex: "/^\w+/"</pre>
+            - Regex: &quot;/^\w+/&quot;
+</pre></div>
 </div>
 </li>
 <li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Entity/Author.php</span>
@@ -113,13 +113,19 @@ Acme\BlogBundle\Entity\Author:
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/config/validation.xml --&gt;</span>
-<span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Regex&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;pattern&quot;</span><span class="nt">&gt;</span>/^\w+/<span class="nt">&lt;/option&gt;</span>
-        <span class="nt">&lt;/constraint&gt;</span>
-    <span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;/class&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;description&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Regex&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;pattern&quot;</span><span class="nt">&gt;</span>/^\w+/<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;/constraint&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;/class&gt;</span>
+<span class="nt">&lt;/constraint-mapping&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -149,14 +155,15 @@ that the <tt class="docutils literal"><span class="pre">firstName</span></tt> fi
 message:</p>
 <div class="configuration-block">
 <ul class="simple">
-<li><em>YAML</em><div class="highlight-yaml"><pre># src/Acme/BlogBundle/Resources/config/validation.yml
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre># src/Acme/BlogBundle/Resources/config/validation.yml
 Acme\BlogBundle\Entity\Author:
     properties:
         firstName:
             - Regex:
-                pattern: "/\d/"
+                pattern: &quot;/\d/&quot;
                 match:   false
-                message: Your name cannot contain a number</pre>
+                message: Your name cannot contain a number
+</pre></div>
 </div>
 </li>
 <li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Entity/Author.php</span>
@@ -179,15 +186,21 @@ Acme\BlogBundle\Entity\Author:
 </div>
 </li>
 <li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/config/validation.xml --&gt;</span>
-<span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
-    <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;firstName&quot;</span><span class="nt">&gt;</span>
-        <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Regex&quot;</span><span class="nt">&gt;</span>
-            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;pattern&quot;</span><span class="nt">&gt;</span>/\d/<span class="nt">&lt;/option&gt;</span>
-            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;match&quot;</span><span class="nt">&gt;</span>false<span class="nt">&lt;/option&gt;</span>
-            <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;message&quot;</span><span class="nt">&gt;</span>Your name cannot contain a number<span class="nt">&lt;/option&gt;</span>
-        <span class="nt">&lt;/constraint&gt;</span>
-    <span class="nt">&lt;/property&gt;</span>
-<span class="nt">&lt;/class&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;firstName&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Regex&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;pattern&quot;</span><span class="nt">&gt;</span>/\d/<span class="nt">&lt;/option&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;match&quot;</span><span class="nt">&gt;</span>false<span class="nt">&lt;/option&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;message&quot;</span><span class="nt">&gt;</span>Your name cannot contain a number<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;/constraint&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;/class&gt;</span>
+<span class="nt">&lt;/constraint-mapping&gt;</span>
 </pre></div>
 </div>
 </li>
@@ -225,6 +238,88 @@ does <em>not</em> match this regular expression (via the <tt class="docutils lit
 However, if <a class="reference internal" href="#match">match</a> is set to false, then validation will fail if the input
 string <em>does</em> match this pattern.</p>
 </div>
+<div class="section" id="htmlpattern">
+<h3>htmlPattern<a class="headerlink" href="#htmlpattern" title="Permalink to this headline">¶</a></h3>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string|Boolean</span></tt> <strong>default</strong>: null</p>
+<p>This option specifies the pattern to use in the HTML5 <tt class="docutils literal"><span class="pre">pattern</span></tt> attribute.
+You usually don&#8217;t need to specify this option because by default, the constraint
+will convert the pattern given in the <a class="reference internal" href="#pattern">pattern</a> option into an HTML5 compatible
+pattern. This means that the delimiters are removed (e.g. <tt class="docutils literal"><span class="pre">/[a-z]+/</span></tt> becomes <tt class="docutils literal"><span class="pre">[a-z]+</span></tt>).</p>
+<p>However, there are some other incompatibilities between both patterns which
+cannot be fixed by the constraint. For instance, the HTML5 <tt class="docutils literal"><span class="pre">pattern</span></tt> attribute
+does not support flags. If you have a pattern like <tt class="docutils literal"><span class="pre">/[a-z]+/i</span></tt> you need to
+specify the HTML5 compatible pattern in the <tt class="docutils literal"><span class="pre">htmlPattern</span></tt> option:</p>
+<div class="configuration-block">
+<ul class="simple">
+<li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># src/Acme/BlogBundle/Resources/config/validation.yml</span>
+<span class="l-Scalar-Plain">Acme\BlogBundle\Entity\Author</span><span class="p-Indicator">:</span>
+    <span class="l-Scalar-Plain">properties</span><span class="p-Indicator">:</span>
+        <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span>
+            <span class="p-Indicator">-</span> <span class="l-Scalar-Plain">Regex</span><span class="p-Indicator">:</span>
+                <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span> <span class="s">&quot;/^[a-z]+$/i&quot;</span>
+                <span class="l-Scalar-Plain">htmlPattern</span><span class="p-Indicator">:</span> <span class="s">&quot;^[a-zA-Z]+$&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><em>Annotations</em><div class="highlight-php-annotations"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Entity/Author.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Author</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * @Assert\Regex(</span>
+<span class="sd">     *     pattern     = &quot;/^[a-z]+$/i&quot;,</span>
+<span class="sd">     *     htmlPattern = &quot;^[a-zA-Z]+$&quot;</span>
+<span class="sd">     * )</span>
+<span class="sd">     */</span>
+    <span class="k">protected</span> <span class="nv">$name</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><em>XML</em><div class="highlight-xml"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/config/validation.xml --&gt;</span>
+<span class="cp">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;</span>
+<span class="nt">&lt;constraint-mapping</span> <span class="na">xmlns=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping&quot;</span>
+    <span class="na">xmlns:xsi=</span><span class="s">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span>
+    <span class="na">xsi:schemaLocation=</span><span class="s">&quot;http://symfony.com/schema/dic/constraint-mapping http://symfony.com/schema/dic/constraint-mapping/constraint-mapping-1.0.xsd&quot;</span><span class="nt">&gt;</span>
+
+    <span class="nt">&lt;class</span> <span class="na">name=</span><span class="s">&quot;Acme\BlogBundle\Entity\Author&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">&quot;name&quot;</span><span class="nt">&gt;</span>
+            <span class="nt">&lt;constraint</span> <span class="na">name=</span><span class="s">&quot;Regex&quot;</span><span class="nt">&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;pattern&quot;</span><span class="nt">&gt;</span>/^[a-z]+$/i<span class="nt">&lt;/option&gt;</span>
+                <span class="nt">&lt;option</span> <span class="na">name=</span><span class="s">&quot;htmlPattern&quot;</span><span class="nt">&gt;</span>^[a-zA-Z]+$<span class="nt">&lt;/option&gt;</span>
+            <span class="nt">&lt;/constraint&gt;</span>
+        <span class="nt">&lt;/property&gt;</span>
+    <span class="nt">&lt;/class&gt;</span>
+<span class="nt">&lt;/constraint-mapping&gt;</span>
+</pre></div>
+</div>
+</li>
+<li><em>PHP</em><div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Entity/Author.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Entity</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Mapping\ClassMetadata</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">Author</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">loadValidatorMetadata</span><span class="p">(</span><span class="nx">ClassMetadata</span> <span class="nv">$metadata</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$metadata</span><span class="o">-&gt;</span><span class="na">addPropertyConstraint</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="k">new</span> <span class="nx">Assert\Regex</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+            <span class="s1">&#39;pattern&#39;</span>     <span class="o">=&gt;</span> <span class="s1">&#39;/^[a-z]+$/i&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;htmlPattern&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;^[a-zA-Z]+$&#39;</span><span class="p">,</span>
+        <span class="p">)));</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<p>Setting <tt class="docutils literal"><span class="pre">htmlPattern</span></tt> to false will disable client side validation.</p>
+</div>
 <div class="section" id="match">
 <h3>match<a class="headerlink" href="#match" title="Permalink to this headline">¶</a></h3>
 <p><strong>type</strong>: <tt class="docutils literal"><span class="pre">Boolean</span></tt> default: <tt class="docutils literal"><span class="pre">true</span></tt></p>
@@ -235,7 +330,7 @@ string does <strong>not</strong> match the <a class="reference internal" href="#
 </div>
 <div class="section" id="message">
 <h3>message<a class="headerlink" href="#message" title="Permalink to this headline">¶</a></h3>
-<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">This</span> <span class="pre">value</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">valid</span></tt></p>
+<p><strong>type</strong>: <tt class="docutils literal"><span class="pre">string</span></tt> <strong>default</strong>: <tt class="docutils literal"><span class="pre">This</span> <span class="pre">value</span> <span class="pre">is</span> <span class="pre">not</span> <span class="pre">valid.</span></tt></p>
 <p>This is the message that will be shown if this validator fails.</p>
 </div>
 </div>
@@ -253,6 +348,7 @@ string does <strong>not</strong> match the <a class="reference internal" href="#
 <li><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
 <li><a class="reference internal" href="#options">Options</a><ul>
 <li><a class="reference internal" href="#pattern">pattern</a></li>
+<li><a class="reference internal" href="#htmlpattern">htmlPattern</a></li>
 <li><a class="reference internal" href="#match">match</a></li>
 <li><a class="reference internal" href="#message">message</a></li>
 </ul>
@@ -301,14 +397,14 @@ string does <strong>not</strong> match the <a class="reference internal" href="#
         <li class="right" >
           <a href="Url.html" title="Url"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >Reference Documents</a> &raquo;</li>
           <li><a href="../constraints.html" >Validation Constraints Reference</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

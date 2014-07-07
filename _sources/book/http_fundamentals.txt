@@ -42,7 +42,7 @@ how to master it.
 .. index::
    single: HTTP; Request-response paradigm
 
-Step1: The Client sends a Request
+Step1: The Client Sends a Request
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Every conversation on the web starts with a *request*. The request is a text
@@ -105,7 +105,7 @@ the client accepts (``Accept``) and the application the client is using to
 make the request (``User-Agent``). Many other headers exist and can be found
 on Wikipedia's `List of HTTP header fields`_ article.
 
-Step 2: The Server returns a Response
+Step 2: The Server Returns a Response
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Once a server has received the request, it knows exactly which resource the
@@ -246,9 +246,9 @@ have all the request information at your fingertips::
 As a bonus, the ``Request`` class does a lot of work in the background that
 you'll never need to worry about. For example, the ``isSecure()`` method
 checks the *three* different values in PHP that can indicate whether or not
-the user is connecting via a secured connection (i.e. ``https``).
+the user is connecting via a secured connection (i.e. HTTPS).
 
-.. sidebar:: ParameterBags and Request attributes
+.. sidebar:: ParameterBags and Request Attributes
 
     As seen above, the ``$_GET`` and ``$_POST`` variables are accessible via
     the public ``query`` and ``request`` properties respectively. Each of
@@ -278,11 +278,14 @@ interface to construct the response that needs to be returned to the client::
     $response = new Response();
 
     $response->setContent('<html><body><h1>Hello world!</h1></body></html>');
-    $response->setStatusCode(200);
+    $response->setStatusCode(Response::HTTP_OK);
     $response->headers->set('Content-Type', 'text/html');
 
     // prints the HTTP headers followed by the content
     $response->send();
+
+.. versionadded:: 2.4
+    Support for HTTP status code constants was introduced in Symfony 2.4.
 
 If Symfony offered nothing else, you would already have a toolkit for easily
 accessing request information and an object-oriented interface for creating
@@ -293,7 +296,7 @@ and create the appropriate response based on your application logic*.
 .. tip::
 
     The ``Request`` and ``Response`` classes are part of a standalone component
-    included with Symfony called ``HttpFoundation``. This component can be
+    included with Symfony called HttpFoundation. This component can be
     used entirely independently of Symfony and also provides classes for handling
     sessions and file uploads.
 
@@ -364,6 +367,7 @@ on that value. This can get ugly quickly::
     // index.php
     use Symfony\Component\HttpFoundation\Request;
     use Symfony\Component\HttpFoundation\Response;
+
     $request = Request::createFromGlobals();
     $path = $request->getPathInfo(); // the URI path being requested
 
@@ -372,7 +376,7 @@ on that value. This can get ugly quickly::
     } elseif ($path == '/contact') {
         $response = new Response('Contact us');
     } else {
-        $response = new Response('Page not found.', 404);
+        $response = new Response('Page not found.', Response::HTTP_NOT_FOUND);
     }
     $response->send();
 
@@ -429,9 +433,16 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
     .. code-block:: xml
 
-        <route id="contact" path="/contact">
-            <default key="_controller">AcmeBlogBundle:Main:contact</default>
-        </route>
+        <?xml version="1.0" encoding="UTF-8" ?>
+        <routes xmlns="http://symfony.com/schema/routing"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://symfony.com/schema/routing
+                http://symfony.com/schema/routing/routing-1.0.xsd">
+
+            <route id="contact" path="/contact">
+                <default key="_controller">AcmeDemoBundle:Main:contact</default>
+            </route>
+        </routes>
 
     .. code-block:: php
 
@@ -441,19 +452,19 @@ by adding an entry for ``/contact`` to your routing configuration file:
 
         $collection = new RouteCollection();
         $collection->add('contact', new Route('/contact', array(
-            '_controller' => 'AcmeBlogBundle:Main:contact',
+            '_controller' => 'AcmeDemoBundle:Main:contact',
         )));
 
         return $collection;
 
 .. note::
 
-   This example uses :doc:`YAML</components/yaml/format>` to define the routing
+   This example uses :doc:`YAML </components/yaml/yaml_format>` to define the routing
    configuration. Routing configuration can also be written in other formats
    such as XML or PHP.
 
 When someone visits the ``/contact`` page, this route is matched, and the
-specified controller is executed. As you'll learn in the :doc:`routing chapter</book/routing>`,
+specified controller is executed. As you'll learn in the :doc:`routing chapter </book/routing>`,
 the ``AcmeDemoBundle:Main:contact`` string is a short syntax that points to a
 specific PHP method ``contactAction`` inside a class called ``MainController``::
 
@@ -472,7 +483,7 @@ specific PHP method ``contactAction`` inside a class called ``MainController``::
 
 In this very simple example, the controller simply creates a
 :class:`Symfony\\Component\\HttpFoundation\\Response` object with the HTML
-"``<h1>Contact us!</h1>"``. In the :doc:`controller chapter</book/controller>`,
+``<h1>Contact us!</h1>``. In the :doc:`controller chapter </book/controller>`,
 you'll learn how a controller can render templates, allowing your "presentation"
 code (i.e. anything that actually writes out HTML) to live in a separate
 template file. This frees up the controller to worry only about the hard
@@ -505,11 +516,11 @@ libraries that can be used inside *any* PHP project. These libraries, called
 the *Symfony2 Components*, contain something useful for almost any situation,
 regardless of how your project is developed. To name a few:
 
-* :doc:`HttpFoundation</components/http_foundation/introduction>` - Contains
+* :doc:`HttpFoundation </components/http_foundation/introduction>` - Contains
   the ``Request`` and ``Response`` classes, as well as other classes for handling
   sessions and file uploads;
 
-* :doc:`Routing</components/routing/introduction>` - Powerful and fast routing system that
+* :doc:`Routing </components/routing/introduction>` - Powerful and fast routing system that
   allows you to map a specific URI (e.g. ``/contact``) to some information
   about how that request should be handled (e.g. execute the ``contactAction()``
   method);
@@ -517,21 +528,21 @@ regardless of how your project is developed. To name a few:
 * `Form`_ - A full-featured and flexible framework for creating forms and
   handling form submissions;
 
-* `Validator`_ A system for creating rules about data and then validating
+* `Validator`_ - A system for creating rules about data and then validating
   whether or not user-submitted data follows those rules;
 
-* :doc:`ClassLoader</components/class_loader>` An autoloading library that allows
+* :doc:`ClassLoader </components/class_loader/introduction>` - An autoloading library that allows
   PHP classes to be used without needing to manually ``require`` the files
   containing those classes;
 
-* :doc:`Templating</components/templating>` A toolkit for rendering templates,
-  handling template inheritance (i.e. a template is decorated with a layout)
-  and performing other common template tasks;
+* :doc:`Templating </components/templating/introduction>` - A toolkit for rendering
+  templates, handling template inheritance (i.e. a template is decorated with
+  a layout) and performing other common template tasks;
 
 * `Security`_ - A powerful library for handling all types of security inside
   an application;
 
-* `Translation`_ A framework for translating strings in your application.
+* `Translation`_ - A framework for translating strings in your application.
 
 Each and every one of these components is decoupled and can be used in *any*
 PHP project, regardless of whether or not you use the Symfony2 framework.
@@ -544,7 +555,7 @@ So then, what *is* the Symfony2 *Framework*? The *Symfony2 Framework* is
 a PHP library that accomplishes two distinct tasks:
 
 #. Provides a selection of components (i.e. the Symfony2 Components) and
-   third-party libraries (e.g. `Swiftmailer`_ for sending emails);
+   third-party libraries (e.g. `Swift Mailer`_ for sending emails);
 
 #. Provides sensible configuration and a "glue" library that ties all of these
    pieces together.
@@ -570,4 +581,4 @@ sensible defaults. For more advanced users, the sky is the limit.
 .. _`Validator`: https://github.com/symfony/Validator
 .. _`Security`: https://github.com/symfony/Security
 .. _`Translation`: https://github.com/symfony/Translation
-.. _`Swiftmailer`: http://swiftmailer.org/
+.. _`Swift Mailer`: http://swiftmailer.org/

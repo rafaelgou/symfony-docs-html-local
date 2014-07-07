@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to Create a Form Type Extension &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to Create a Form Type Extension &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Form" href="index.html" />
     <link rel="next" title="How to Reduce Code Duplication with “inherit_data”" href="inherit_data_option.html" />
     <link rel="prev" title="How to Create a Custom Form Field Type" href="create_custom_field_type.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="create_custom_field_type.html" title="How to Create a Custom Form Field Type"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Form</a> &raquo;</li> 
       </ul>
@@ -84,30 +82,31 @@ input.</p>
 template. But field type extensions allow you to do this in a nice DRY fashion.</p>
 <div class="section" id="defining-the-form-type-extension">
 <h2>Defining the Form Type Extension<a class="headerlink" href="#defining-the-form-type-extension" title="Permalink to this headline">¶</a></h2>
-<p>Your first task will be to create the form type extension class. Let&#8217;s
-call it <tt class="docutils literal"><span class="pre">ImageTypeExtension</span></tt>. By standard, form extensions usually live
-in the <tt class="docutils literal"><span class="pre">Form\Extension</span></tt> directory of one of your bundles.</p>
+<p>Your first task will be to create the form type extension class (called <tt class="docutils literal"><span class="pre">ImageTypeExtension</span></tt>
+in this article). By standard, form extensions usually live in the <tt class="docutils literal"><span class="pre">Form\Extension</span></tt>
+directory of one of your bundles.</p>
 <p>When creating a form type extension, you can either implement the
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/FormTypeExtensionInterface.html" title="Symfony\Component\Form\FormTypeExtensionInterface"><span class="pre">FormTypeExtensionInterface</span></a></tt> interface
 or extend the <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/Form/AbstractTypeExtension.html" title="Symfony\Component\Form\AbstractTypeExtension"><span class="pre">AbstractTypeExtension</span></a></tt>
 class. In most cases, it&#8217;s easier to extend the abstract class:</p>
-<div class="highlight-python"><pre>// src/Acme/DemoBundle/Form/Extension/ImageTypeExtension.php
-namespace Acme\DemoBundle\Form\Extension;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/Form/Extension/ImageTypeExtension.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\DemoBundle\Form\Extension</span><span class="p">;</span>
 
-use Symfony\Component\Form\AbstractTypeExtension;
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractTypeExtension</span><span class="p">;</span>
 
-class ImageTypeExtension extends AbstractTypeExtension
-{
-    /**
-     * Returns the name of the type being extended.
-     *
-     * @return string The name of the type being extended
-     */
-    public function getExtendedType()
-    {
-        return 'file';
-    }
-}</pre>
+<span class="k">class</span> <span class="nc">ImageTypeExtension</span> <span class="k">extends</span> <span class="nx">AbstractTypeExtension</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * Returns the name of the type being extended.</span>
+<span class="sd">     *</span>
+<span class="sd">     * @return string The name of the type being extended</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getExtendedType</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;file&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The only method you <strong>must</strong> implement is the <tt class="docutils literal"><span class="pre">getExtendedType</span></tt> function.
 It is used to indicate the name of the form type that will be extended
@@ -171,115 +170,117 @@ you will use <tt class="docutils literal"><span class="pre">file</span></tt> as 
 <div class="section" id="adding-the-extension-business-logic">
 <h2>Adding the extension Business Logic<a class="headerlink" href="#adding-the-extension-business-logic" title="Permalink to this headline">¶</a></h2>
 <p>The goal of your extension is to display nice images next to file inputs
-(when the underlying model contains images). For that purpose, let&#8217;s assume
-that you use an approach similar to the one described in
+(when the underlying model contains images). For that purpose, suppose that
+you use an approach similar to the one described in
 <a class="reference internal" href="../doctrine/file_uploads.html"><em>How to handle File Uploads with Doctrine</em></a>:
 you have a Media model with a file property (corresponding to the file field
 in the form) and a path property (corresponding to the image path in the
 database):</p>
-<div class="highlight-python"><pre>// src/Acme/DemoBundle/Entity/Media.php
-namespace Acme\DemoBundle\Entity;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/Entity/Media.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\DemoBundle\Entity</span><span class="p">;</span>
 
-use Symfony\Component\Validator\Constraints as Assert;
+<span class="k">use</span> <span class="nx">Symfony\Component\Validator\Constraints</span> <span class="k">as</span> <span class="nx">Assert</span><span class="p">;</span>
 
-class Media
-{
-    // ...
+<span class="k">class</span> <span class="nc">Media</span>
+<span class="p">{</span>
+    <span class="c1">// ...</span>
 
-    /**
-     * @var string The path - typically stored in the database
-     */
-    private $path;
+    <span class="sd">/**</span>
+<span class="sd">     * @var string The path - typically stored in the database</span>
+<span class="sd">     */</span>
+    <span class="k">private</span> <span class="nv">$path</span><span class="p">;</span>
 
-    /**
-     * @var \Symfony\Component\HttpFoundation\File\UploadedFile
-     * @Assert\File(maxSize="2M")
-     */
-    public $file;
+    <span class="sd">/**</span>
+<span class="sd">     * @var \Symfony\Component\HttpFoundation\File\UploadedFile</span>
+<span class="sd">     * @Assert\File(maxSize=&quot;2M&quot;)</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="nv">$file</span><span class="p">;</span>
 
-    // ...
+    <span class="c1">// ...</span>
 
-    /**
-     * Get the image url
-     *
-     * @return null|string
-     */
-    public function getWebPath()
-    {
-        // ... $webPath being the full image url, to be used in templates
+    <span class="sd">/**</span>
+<span class="sd">     * Get the image URL</span>
+<span class="sd">     *</span>
+<span class="sd">     * @return null|string</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getWebPath</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="c1">// ... $webPath being the full image URL, to be used in templates</span>
 
-        return $webPath;
-    }
-}</pre>
+        <span class="k">return</span> <span class="nv">$webPath</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Your form type extension class will need to do two things in order to extend
 the <tt class="docutils literal"><span class="pre">file</span></tt> form type:</p>
 <ol class="arabic simple">
-<li>Override the <tt class="docutils literal"><span class="pre">setDefaultOptions</span></tt> method in order to add an image_path
+<li>Override the <tt class="docutils literal"><span class="pre">setDefaultOptions</span></tt> method in order to add an <tt class="docutils literal"><span class="pre">image_path</span></tt>
 option;</li>
 <li>Override the <tt class="docutils literal"><span class="pre">buildForm</span></tt> and <tt class="docutils literal"><span class="pre">buildView</span></tt> methods in order to pass the image
-url to the view.</li>
+URL to the view.</li>
 </ol>
 <p>The logic is the following: when adding a form field of type <tt class="docutils literal"><span class="pre">file</span></tt>,
 you will be able to specify a new option: <tt class="docutils literal"><span class="pre">image_path</span></tt>. This option will
-tell the file field how to get the actual image url in order to display
+tell the file field how to get the actual image URL in order to display
 it in the view:</p>
-<div class="highlight-python"><pre>// src/Acme/DemoBundle/Form/Extension/ImageTypeExtension.php
-namespace Acme\DemoBundle\Form\Extension;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/Form/Extension/ImageTypeExtension.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\DemoBundle\Form\Extension</span><span class="p">;</span>
 
-use Symfony\Component\Form\AbstractTypeExtension;
-use Symfony\Component\Form\FormView;
-use Symfony\Component\Form\FormInterface;
-use Symfony\Component\PropertyAccess\PropertyAccess;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractTypeExtension</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormView</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormInterface</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\PropertyAccess\PropertyAccess</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
 
-class ImageTypeExtension extends AbstractTypeExtension
-{
-    /**
-     * Returns the name of the type being extended.
-     *
-     * @return string The name of the type being extended
-     */
-    public function getExtendedType()
-    {
-        return 'file';
-    }
+<span class="k">class</span> <span class="nc">ImageTypeExtension</span> <span class="k">extends</span> <span class="nx">AbstractTypeExtension</span>
+<span class="p">{</span>
+    <span class="sd">/**</span>
+<span class="sd">     * Returns the name of the type being extended.</span>
+<span class="sd">     *</span>
+<span class="sd">     * @return string The name of the type being extended</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getExtendedType</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;file&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
 
-    /**
-     * Add the image_path option
-     *
-     * @param OptionsResolverInterface $resolver
-     */
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver-&gt;setOptional(array('image_path'));
-    }
+    <span class="sd">/**</span>
+<span class="sd">     * Add the image_path option</span>
+<span class="sd">     *</span>
+<span class="sd">     * @param OptionsResolverInterface $resolver</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">setDefaultOptions</span><span class="p">(</span><span class="nx">OptionsResolverInterface</span> <span class="nv">$resolver</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$resolver</span><span class="o">-&gt;</span><span class="na">setOptional</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">&#39;image_path&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
 
-    /**
-     * Pass the image url to the view
-     *
-     * @param FormView $view
-     * @param FormInterface $form
-     * @param array $options
-     */
-    public function buildView(FormView $view, FormInterface $form, array $options)
-    {
-        if (array_key_exists('image_path', $options)) {
-            $parentData = $form-&gt;getParent()-&gt;getData();
+    <span class="sd">/**</span>
+<span class="sd">     * Pass the image URL to the view</span>
+<span class="sd">     *</span>
+<span class="sd">     * @param FormView $view</span>
+<span class="sd">     * @param FormInterface $form</span>
+<span class="sd">     * @param array $options</span>
+<span class="sd">     */</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildView</span><span class="p">(</span><span class="nx">FormView</span> <span class="nv">$view</span><span class="p">,</span> <span class="nx">FormInterface</span> <span class="nv">$form</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">array_key_exists</span><span class="p">(</span><span class="s1">&#39;image_path&#39;</span><span class="p">,</span> <span class="nv">$options</span><span class="p">))</span> <span class="p">{</span>
+            <span class="nv">$parentData</span> <span class="o">=</span> <span class="nv">$form</span><span class="o">-&gt;</span><span class="na">getParent</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getData</span><span class="p">();</span>
 
-            if (null !== $parentData) {
-                $accessor = PropertyAccess::createPropertyAccessor();
-                $imageUrl = $accessor-&gt;getValue($parentData, $options['image_path']);
-            } else {
-                 $imageUrl = null;
-            }
+            <span class="k">if</span> <span class="p">(</span><span class="k">null</span> <span class="o">!==</span> <span class="nv">$parentData</span><span class="p">)</span> <span class="p">{</span>
+                <span class="nv">$accessor</span> <span class="o">=</span> <span class="nx">PropertyAccess</span><span class="o">::</span><span class="na">createPropertyAccessor</span><span class="p">();</span>
+                <span class="nv">$imageUrl</span> <span class="o">=</span> <span class="nv">$accessor</span><span class="o">-&gt;</span><span class="na">getValue</span><span class="p">(</span><span class="nv">$parentData</span><span class="p">,</span> <span class="nv">$options</span><span class="p">[</span><span class="s1">&#39;image_path&#39;</span><span class="p">]);</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                 <span class="nv">$imageUrl</span> <span class="o">=</span> <span class="k">null</span><span class="p">;</span>
+            <span class="p">}</span>
 
-            // set an "image_url" variable that will be available when rendering this field
-            $view-&gt;vars['image_url'] = $imageUrl;
-        }
-    }
+            <span class="c1">// set an &quot;image_url&quot; variable that will be available when rendering this field</span>
+            <span class="nv">$view</span><span class="o">-&gt;</span><span class="na">vars</span><span class="p">[</span><span class="s1">&#39;image_url&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nv">$imageUrl</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-}</pre>
+<span class="p">}</span>
+</pre></div>
 </div>
 </div>
 <div class="section" id="override-the-file-widget-template-fragment">
@@ -331,26 +332,27 @@ information.</p>
 <p>From now on, when adding a field of type <tt class="docutils literal"><span class="pre">file</span></tt> in your form, you can
 specify an <tt class="docutils literal"><span class="pre">image_path</span></tt> option that will be used to display an image
 next to the file field. For example:</p>
-<div class="highlight-python"><pre>// src/Acme/DemoBundle/Form/Type/MediaType.php
-namespace Acme\DemoBundle\Form\Type;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/DemoBundle/Form/Type/MediaType.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\DemoBundle\Form\Type</span><span class="p">;</span>
 
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractType</span><span class="p">;</span>
+<span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
 
-class MediaType extends AbstractType
-{
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            -&gt;add('name', 'text')
-            -&gt;add('file', 'file', array('image_path' =&gt; 'webPath'));
-    }
+<span class="k">class</span> <span class="nc">MediaType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$builder</span>
+            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;text&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="s1">&#39;file&#39;</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;image_path&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;webPath&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
 
-    public function getName()
-    {
-        return 'media';
-    }
-}</pre>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">getName</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="s1">&#39;media&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>When displaying the form, if the underlying model has already been associated
 with an image, you will see it displayed next to the file input.</p>
@@ -415,14 +417,14 @@ with an image, you will see it displayed next to the file input.</p>
         <li class="right" >
           <a href="create_custom_field_type.html" title="How to Create a Custom Form Field Type"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Form</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>How to use PdoSessionHandler to store Sessions in the Database &mdash; Symfony Docs 2.3 documentation</title>
+    <title>How to use PdoSessionHandler to store Sessions in the Database &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../../index.html" />
     <link rel="up" title="Configuration" href="index.html" />
     <link rel="next" title="How to use the Apache Router" href="apache_router.html" />
     <link rel="prev" title="How to Set External Parameters in the Service Container" href="external_parameters.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="external_parameters.html" title="How to Set External Parameters in the Service Container"
              accesskey="P">previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">Configuration</a> &raquo;</li> 
       </ul>
@@ -64,19 +62,13 @@ multi-webserver environment.</p>
 <tt class="docutils literal"><a class="reference external" href="http://api.symfony.com/master/Symfony/Component/HttpFoundation/Session/Storage/Handler/PdoSessionHandler.html" title="Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler"><span class="pre">PdoSessionHandler</span></a></tt>.
 To use it, you just need to change some parameters in <tt class="docutils literal"><span class="pre">config.yml</span></tt> (or the
 configuration format of your choice):</p>
-<p class="versionadded">
-<span class="versionmodified">New in version 2.1: </span>In Symfony2.1 the class and namespace are slightly modified. You can now
-find the session storage classes in the <cite>Session\Storage</cite> namespace:
-<tt class="docutils literal"><span class="pre">Symfony\Component\HttpFoundation\Session\Storage</span></tt>. Also
-note that in Symfony2.1 you should configure <tt class="docutils literal"><span class="pre">handler_id</span></tt> not <tt class="docutils literal"><span class="pre">storage_id</span></tt> like in Symfony2.0.
-Below, you&#8217;ll notice that <tt class="docutils literal"><span class="pre">%session.storage.options%</span></tt> is not used anymore.</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="c1"># app/config/config.yml</span>
 <span class="l-Scalar-Plain">framework</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">session</span><span class="p-Indicator">:</span>
         <span class="c1"># ...</span>
-        <span class="l-Scalar-Plain">handler_id</span><span class="p-Indicator">:</span>     <span class="l-Scalar-Plain">session.handler.pdo</span>
+        <span class="l-Scalar-Plain">handler_id</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">session.handler.pdo</span>
 
 <span class="l-Scalar-Plain">parameters</span><span class="p-Indicator">:</span>
     <span class="l-Scalar-Plain">pdo.db_options</span><span class="p-Indicator">:</span>
@@ -184,7 +176,7 @@ the session storage connection only. This is OK when you use a separate
 database for the session data.</p>
 <p>But if you&#8217;d like to store the session data in the same database as the rest
 of your project&#8217;s data, you can use the connection settings from the
-parameter.ini by referencing the database-related parameters defined there:</p>
+<tt class="docutils literal"><span class="pre">parameters.yml</span></tt> file by referencing the database-related parameters defined there:</p>
 <div class="configuration-block">
 <ul class="simple">
 <li><em>YAML</em><div class="highlight-yaml"><div class="highlight"><pre><span class="l-Scalar-Plain">pdo</span><span class="p-Indicator">:</span>
@@ -325,14 +317,14 @@ following (MySQL):</p>
         <li class="right" >
           <a href="external_parameters.html" title="How to Set External Parameters in the Service Container"
              >previous</a> |</li>
-        <li><a href="../../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="../index.html" >The Cookbook</a> &raquo;</li>
           <li><a href="index.html" >Configuration</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>

@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Symfony2 versus Flat PHP &mdash; Symfony Docs 2.3 documentation</title>
+    <title>Symfony2 versus Flat PHP &mdash; Symfony2 Framework Documentation  documentation</title>
     
     <link rel="stylesheet" href="../_static/default.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -16,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '2.3',
+        VERSION:     '',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Symfony Docs 2.3 documentation" href="../index.html" />
+    <link rel="top" title="Symfony2 Framework Documentation  documentation" href="../index.html" />
     <link rel="up" title="The Book" href="index.html" />
     <link rel="next" title="Installing and Configuring Symfony" href="installation.html" />
     <link rel="prev" title="Symfony2 and HTTP Fundamentals" href="http_fundamentals.html" /> 
@@ -43,7 +41,7 @@
         <li class="right" >
           <a href="http_fundamentals.html" title="Symfony2 and HTTP Fundamentals"
              accesskey="P">previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" accesskey="U">The Book</a> &raquo;</li> 
       </ul>
     </div>  
@@ -67,7 +65,7 @@ to where it is now.</p>
 <p>By the end, you&#8217;ll see how Symfony2 can rescue you from mundane tasks and
 let you take back control of your code.</p>
 <div class="section" id="a-simple-blog-in-flat-php">
-<h2>A simple Blog in flat PHP<a class="headerlink" href="#a-simple-blog-in-flat-php" title="Permalink to this headline">¶</a></h2>
+<h2>A Simple Blog in Flat PHP<a class="headerlink" href="#a-simple-blog-in-flat-php" title="Permalink to this headline">¶</a></h2>
 <p>In this chapter, you&#8217;ll build the token blog application using only flat PHP.
 To begin, create a single page that displays blog entries that have been
 persisted to the database. Writing in flat PHP is quick and dirty:</p>
@@ -120,7 +118,6 @@ way to reuse any part of the application for other &#8220;pages&#8221; of the bl
 tied to MySQL. Though not covered here, Symfony2 fully integrates <a class="reference external" href="http://www.doctrine-project.org">Doctrine</a>,
 a library dedicated to database abstraction and mapping.</p>
 </div>
-<p>Let&#8217;s get to work on solving these problems and more.</p>
 <div class="section" id="isolating-the-presentation">
 <h3>Isolating the Presentation<a class="headerlink" href="#isolating-the-presentation" title="Permalink to this headline">¶</a></h3>
 <p>The code can immediately gain from separating the application &#8220;logic&#8221; from
@@ -274,7 +271,7 @@ the layout:</p>
 <p>You&#8217;ve now introduced a methodology that allows for the reuse of the
 layout. Unfortunately, to accomplish this, you&#8217;re forced to use a few ugly
 PHP functions (<tt class="docutils literal"><span class="pre">ob_start()</span></tt>, <tt class="docutils literal"><span class="pre">ob_get_clean()</span></tt>) in the template. Symfony2
-uses a <tt class="docutils literal"><span class="pre">Templating</span></tt> component that allows this to be accomplished cleanly
+uses a Templating component that allows this to be accomplished cleanly
 and easily. You&#8217;ll see it in action shortly.</p>
 </div>
 </div>
@@ -285,20 +282,21 @@ and reusable. To prove it, add a blog &#8220;show&#8221; page, which displays an
 blog post identified by an <tt class="docutils literal"><span class="pre">id</span></tt> query parameter.</p>
 <p>To begin, create a new function in the <tt class="docutils literal"><span class="pre">model.php</span></tt> file that retrieves
 an individual blog result based on a given id:</p>
-<div class="highlight-python"><pre>// model.php
-function get_post_by_id($id)
-{
-    $link = open_database_connection();
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// model.php</span>
+<span class="k">function</span> <span class="nf">get_post_by_id</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="nv">$link</span> <span class="o">=</span> <span class="nx">open_database_connection</span><span class="p">();</span>
 
-    $id = intval($id);
-    $query = 'SELECT date, title, body FROM post WHERE id = '.$id;
-    $result = mysql_query($query);
-    $row = mysql_fetch_assoc($result);
+    <span class="nv">$id</span> <span class="o">=</span> <span class="nb">intval</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
+    <span class="nv">$query</span> <span class="o">=</span> <span class="s1">&#39;SELECT date, title, body FROM post WHERE id = &#39;</span><span class="o">.</span><span class="nv">$id</span><span class="p">;</span>
+    <span class="nv">$result</span> <span class="o">=</span> <span class="nb">mysql_query</span><span class="p">(</span><span class="nv">$query</span><span class="p">);</span>
+    <span class="nv">$row</span> <span class="o">=</span> <span class="nb">mysql_fetch_assoc</span><span class="p">(</span><span class="nv">$result</span><span class="p">);</span>
 
-    close_database_connection($link);
+    <span class="nx">close_database_connection</span><span class="p">(</span><span class="nv">$link</span><span class="p">);</span>
 
-    return $row;
-}</pre>
+    <span class="k">return</span> <span class="nv">$row</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>Next, create a new file called <tt class="docutils literal"><span class="pre">show.php</span></tt> - the controller for this new
 page:</p>
@@ -439,7 +437,7 @@ without explicitly including the file containing the class.</p>
 content:</p>
 <div class="highlight-json"><div class="highlight"><pre><span class="p">{</span>
     <span class="nt">&quot;require&quot;</span><span class="p">:</span> <span class="p">{</span>
-        <span class="nt">&quot;symfony/symfony&quot;</span><span class="p">:</span> <span class="s2">&quot;2.3.*&quot;</span>
+        <span class="nt">&quot;symfony/symfony&quot;</span><span class="p">:</span> <span class="s2">&quot;2.4.*&quot;</span>
     <span class="p">},</span>
     <span class="nt">&quot;autoload&quot;</span><span class="p">:</span> <span class="p">{</span>
         <span class="nt">&quot;files&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;model.php&quot;</span><span class="p">,</span><span class="s2">&quot;controllers.php&quot;</span><span class="p">]</span>
@@ -477,12 +475,15 @@ the HTTP response being returned. Use them to improve the blog:</p>
     <span class="nv">$response</span> <span class="o">=</span> <span class="nx">show_action</span><span class="p">(</span><span class="nv">$request</span><span class="o">-&gt;</span><span class="na">query</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">));</span>
 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
     <span class="nv">$html</span> <span class="o">=</span> <span class="s1">&#39;&lt;html&gt;&lt;body&gt;&lt;h1&gt;Page Not Found&lt;/h1&gt;&lt;/body&gt;&lt;/html&gt;&#39;</span><span class="p">;</span>
-    <span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="nv">$html</span><span class="p">,</span> <span class="mi">404</span><span class="p">);</span>
+    <span class="nv">$response</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Response</span><span class="p">(</span><span class="nv">$html</span><span class="p">,</span> <span class="nx">Response</span><span class="o">::</span><span class="na">HTTP_NOT_FOUND</span><span class="p">);</span>
 <span class="p">}</span>
 
 <span class="c1">// echo the headers and send the response</span>
 <span class="nv">$response</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
 </pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 2.4: </span>Support for HTTP status code constants was introduced in Symfony 2.4.</p>
 </div>
 <p>The controllers are now responsible for returning a <tt class="docutils literal"><span class="pre">Response</span></tt> object.
 To make this easier, you can add a new <tt class="docutils literal"><span class="pre">render_template()</span></tt> function, which,
@@ -539,47 +540,48 @@ from scratch, you could at least use Symfony&#8217;s standalone <a class="refere
 <a class="reference external" href="https://github.com/symfony/Templating">Templating</a> components, which already solve these problems.</p>
 <p>Instead of re-solving common problems, you can let Symfony2 take care of
 them for you. Here&#8217;s the same sample application, now built in Symfony2:</p>
-<div class="highlight-python"><pre>// src/Acme/BlogBundle/Controller/BlogController.php
-namespace Acme\BlogBundle\Controller;
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// src/Acme/BlogBundle/Controller/BlogController.php</span>
+<span class="k">namespace</span> <span class="nx">Acme\BlogBundle\Controller</span><span class="p">;</span>
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+<span class="k">use</span> <span class="nx">Symfony\Bundle\FrameworkBundle\Controller\Controller</span><span class="p">;</span>
 
-class BlogController extends Controller
-{
-    public function listAction()
-    {
-        $posts = $this-&gt;get('doctrine')-&gt;getManager()
-            -&gt;createQuery('SELECT p FROM AcmeBlogBundle:Post p')
-            -&gt;execute();
+<span class="k">class</span> <span class="nc">BlogController</span> <span class="k">extends</span> <span class="nx">Controller</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">listAction</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="nv">$posts</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;doctrine&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">getManager</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">createQuery</span><span class="p">(</span><span class="s1">&#39;SELECT p FROM AcmeBlogBundle:Post p&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">execute</span><span class="p">();</span>
 
-        return $this-&gt;render(
-            'AcmeBlogBundle:Blog:list.html.php',
-            array('posts' =&gt; $posts)
-        );
-    }
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
+            <span class="s1">&#39;AcmeBlogBundle:Blog:list.html.php&#39;</span><span class="p">,</span>
+            <span class="k">array</span><span class="p">(</span><span class="s1">&#39;posts&#39;</span> <span class="o">=&gt;</span> <span class="nv">$posts</span><span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
 
-    public function showAction($id)
-    {
-        $post = $this-&gt;get('doctrine')
-            -&gt;getManager()
-            -&gt;getRepository('AcmeBlogBundle:Post')
-            -&gt;find($id)
-        ;
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">showAction</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="nv">$post</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;doctrine&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">getManager</span><span class="p">()</span>
+            <span class="o">-&gt;</span><span class="na">getRepository</span><span class="p">(</span><span class="s1">&#39;AcmeBlogBundle:Post&#39;</span><span class="p">)</span>
+            <span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="nv">$id</span><span class="p">);</span>
 
-        if (!$post) {
-            // cause the 404 page not found to be displayed
-            throw $this-&gt;createNotFoundException();
-        }
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nv">$post</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">// cause the 404 page not found to be displayed</span>
+            <span class="k">throw</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">createNotFoundException</span><span class="p">();</span>
+        <span class="p">}</span>
 
-        return $this-&gt;render(
-            'AcmeBlogBundle:Blog:show.html.php',
-            array('post' =&gt; $post)
-        );
-    }
-}</pre>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
+            <span class="s1">&#39;AcmeBlogBundle:Blog:show.html.php&#39;</span><span class="p">,</span>
+            <span class="k">array</span><span class="p">(</span><span class="s1">&#39;post&#39;</span> <span class="o">=&gt;</span> <span class="nv">$post</span><span class="p">)</span>
+        <span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
 </div>
 <p>The two controllers are still lightweight. Each uses the <a class="reference internal" href="doctrine.html"><em>Doctrine ORM library</em></a>
-to retrieve objects from the database and the <tt class="docutils literal"><span class="pre">Templating</span></tt> component to
+to retrieve objects from the database and the Templating component to
 render a template and return a <tt class="docutils literal"><span class="pre">Response</span></tt> object. The list template is
 now quite a bit simpler:</p>
 <div class="highlight-html+php"><div class="highlight"><pre><span class="c">&lt;!-- src/Acme/BlogBundle/Resources/views/Blog/list.html.php --&gt;</span>
@@ -640,14 +642,15 @@ A routing configuration map provides this information in a readable format:</p>
 is dead simple. And since it does so little, you&#8217;ll never have to touch
 it once it&#8217;s created (and if you use a Symfony2 distribution, you won&#8217;t
 even need to create it!):</p>
-<div class="highlight-python"><pre>// web/app.php
-require_once __DIR__.'/../app/bootstrap.php';
-require_once __DIR__.'/../app/AppKernel.php';
+<div class="highlight-php"><div class="highlight"><pre><span class="c1">// web/app.php</span>
+<span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/bootstrap.php&#39;</span><span class="p">;</span>
+<span class="k">require_once</span> <span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../app/AppKernel.php&#39;</span><span class="p">;</span>
 
-use Symfony\Component\HttpFoundation\Request;
+<span class="k">use</span> <span class="nx">Symfony\Component\HttpFoundation\Request</span><span class="p">;</span>
 
-$kernel = new AppKernel('prod', false);
-$kernel-&gt;handle(Request::createFromGlobals())-&gt;send();</pre>
+<span class="nv">$kernel</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">AppKernel</span><span class="p">(</span><span class="s1">&#39;prod&#39;</span><span class="p">,</span> <span class="k">false</span><span class="p">);</span>
+<span class="nv">$kernel</span><span class="o">-&gt;</span><span class="na">handle</span><span class="p">(</span><span class="nx">Request</span><span class="o">::</span><span class="na">createFromGlobals</span><span class="p">())</span><span class="o">-&gt;</span><span class="na">send</span><span class="p">();</span>
+</pre></div>
 </div>
 <p>The front controller&#8217;s only job is to initialize Symfony2&#8217;s engine (<tt class="docutils literal"><span class="pre">Kernel</span></tt>)
 and pass it a <tt class="docutils literal"><span class="pre">Request</span></tt> object to handle. Symfony2&#8217;s core then uses the
@@ -660,8 +663,8 @@ There&#8217;s really not much else to it.</p>
 <div class="section" id="where-symfony2-delivers">
 <h3>Where Symfony2 Delivers<a class="headerlink" href="#where-symfony2-delivers" title="Permalink to this headline">¶</a></h3>
 <p>In the upcoming chapters, you&#8217;ll learn more about how each piece of Symfony
-works and the recommended organization of a project. For now, let&#8217;s see how
-migrating the blog from flat PHP to Symfony2 has improved life:</p>
+works and the recommended organization of a project. For now, have a look
+at how migrating the blog from flat PHP to Symfony2 has improved life:</p>
 <ul class="simple">
 <li>Your application now has <strong>clear and consistently organized code</strong> (though
 Symfony doesn&#8217;t force you into this). This promotes <strong>reusability</strong> and
@@ -672,7 +675,7 @@ to develop or maintain low-level utilities</strong> such as <a class="reference 
 <li>Symfony2 gives you <strong>access to open source tools</strong> such as Doctrine and the
 Templating, Security, Form, Validation and Translation components (to name
 a few);</li>
-<li>The application now enjoys <strong>fully-flexible URLs</strong> thanks to the <tt class="docutils literal"><span class="pre">Routing</span></tt>
+<li>The application now enjoys <strong>fully-flexible URLs</strong> thanks to the Routing
 component;</li>
 <li>Symfony2&#8217;s HTTP-centric architecture gives you access to powerful tools
 such as <strong>HTTP caching</strong> powered by <strong>Symfony2&#8217;s internal HTTP cache</strong> or
@@ -685,7 +688,7 @@ A good selection of Symfony2 community tools can be found on <a class="reference
 </div>
 </div>
 <div class="section" id="better-templates">
-<h2>Better templates<a class="headerlink" href="#better-templates" title="Permalink to this headline">¶</a></h2>
+<h2>Better Templates<a class="headerlink" href="#better-templates" title="Permalink to this headline">¶</a></h2>
 <p>If you choose to use it, Symfony2 comes standard with a templating engine
 called <a class="reference external" href="http://twig.sensiolabs.org">Twig</a> that makes templates faster to write and easier to read.
 It means that the sample application could contain even less code! Take,
@@ -744,7 +747,7 @@ be discussed. For more information, see the <a class="reference internal" href="
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Symfony2 versus Flat PHP</a><ul>
-<li><a class="reference internal" href="#a-simple-blog-in-flat-php">A simple Blog in flat PHP</a><ul>
+<li><a class="reference internal" href="#a-simple-blog-in-flat-php">A Simple Blog in Flat PHP</a><ul>
 <li><a class="reference internal" href="#isolating-the-presentation">Isolating the Presentation</a></li>
 <li><a class="reference internal" href="#isolating-the-application-domain-logic">Isolating the Application (Domain) Logic</a></li>
 <li><a class="reference internal" href="#isolating-the-layout">Isolating the Layout</a></li>
@@ -758,7 +761,7 @@ be discussed. For more information, see the <a class="reference internal" href="
 <li><a class="reference internal" href="#where-symfony2-delivers">Where Symfony2 Delivers</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#better-templates">Better templates</a></li>
+<li><a class="reference internal" href="#better-templates">Better Templates</a></li>
 <li><a class="reference internal" href="#learn-more-from-the-cookbook">Learn more from the Cookbook</a></li>
 </ul>
 </li>
@@ -804,13 +807,13 @@ be discussed. For more information, see the <a class="reference internal" href="
         <li class="right" >
           <a href="http_fundamentals.html" title="Symfony2 and HTTP Fundamentals"
              >previous</a> |</li>
-        <li><a href="../index.html">Symfony Docs 2.3 documentation</a> &raquo;</li>
+        <li><a href="../index.html">Symfony2 Framework Documentation  documentation</a> &raquo;</li>
           <li><a href="index.html" >The Book</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2013, Symfony Team.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright .
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
     </div>
   </body>
 </html>
